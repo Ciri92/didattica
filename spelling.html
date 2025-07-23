@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizi di Spelling in Inglese</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- jsPDF CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            color: #334155; /* Darker text */
+        }
+        .container {
+            max-width: 900px; /* Adjusted for a single exercise page */
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .btn-primary {
+            @apply bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out;
+        }
+        .btn-secondary {
+            @apply bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-md hover:bg-gray-400 transition duration-300 ease-in-out;
+        }
+        .feedback-correct {
+            @apply text-green-600 font-semibold mt-2;
+        }
+        .feedback-incorrect {
+            @apply text-red-600 font-semibold mt-2;
+        }
+        .results-button-container {
+            @apply flex justify-center mt-8;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container min-h-screen flex flex-col items-center">
+        <header class="w-full text-center py-8 bg-blue-600 text-white rounded-b-xl shadow-lg mb-8">
+            <h1 class="text-4xl font-bold mb-2">Esercizi di Spelling in Inglese</h1>
+            <p class="text-lg">Metti alla prova le tue abilità di spelling!</p>
+        </header>
+
+        <main class="w-full">
+            <!-- Esercizio 5: Spelling -->
+            <section id="exercise5" class="exercise-section active card">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Esercizio di Spelling</h2>
+
+                <!-- Fase 1: Ascolta lo spelling, scrivi la parola -->
+                <div class="mb-8 p-4 bg-gray-50 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">Fase 1: Ascolta e Scrivi (5 parole)</h3>
+                    <p class="mb-4 text-gray-700">Ascolta lo spelling della parola (lettera per lettera) e scrivila correttamente.</p>
+                    <div class="flex flex-col items-center justify-center space-y-4">
+                        <button id="ex5-f1-listen-btn" class="btn-primary flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.79 2-4 2s-4-.895-4-2 1.79-2 4-2 4 .895 4 2zm12-3c0 1.105-1.79 2-4 2s-4-.895-4-2 1.79-2 4-2 4 .895 4 2zM9 6c0 1.105-1.79 2-4 2S1 7.105 1 6s1.79-2 4-2 4 .895 4 2z" />
+                            </svg>
+                            <span>Ascolta Spelling</span>
+                        </button>
+                        <input type="text" id="ex5-f1-answer-input" class="p-3 border border-gray-300 rounded-lg w-full max-w-sm text-center text-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Scrivi la parola">
+                        <div id="ex5-f1-feedback" class="text-lg"></div>
+                        <div class="flex space-x-4">
+                            <button id="ex5-f1-check-btn" class="btn-primary">Controlla</button>
+                            <button id="ex5-f1-next-btn" class="btn-secondary" style="display: none;">Prossimo</button>
+                        </div>
+                        <div class="text-xl font-semibold mt-4">Punteggio: <span id="ex5-f1-score">0</span> / <span id="ex5-f1-total">0</span></div>
+                    </div>
+                </div>
+
+                <!-- Fase 2: Dì lo spelling della parola -->
+                <div class="mb-8 p-4 bg-gray-50 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">Fase 2: Dì lo Spelling (5 parole)</h3>
+                    <p class="mb-4 text-gray-700">Ti verrà mostrata una parola. Clicca sul microfono e pronuncia lo spelling.</p>
+                    <div class="flex flex-col items-center justify-center space-y-4">
+                        <div class="text-4xl font-bold text-purple-700" id="ex5-f2-word-display"></div>
+                        <button id="ex5-f2-speak-btn" class="btn-primary flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a4 4 0 01-4-4V6a4 4 0 014-4v0a4 4 0 014 4v2a4 4 0 01-4 4z" />
+                            </svg>
+                            <span>Parla</span>
+                        </button>
+                        <div id="ex5-f2-recognized-text" class="text-lg text-gray-600 italic"></div>
+                        <div id="ex5-f2-feedback" class="text-lg"></div>
+                        <button id="ex5-f2-next-btn" class="btn-secondary" style="display: none;">Prossimo</button>
+                        <div class="text-xl font-semibold mt-4">Punteggio: <span id="ex5-f2-score">0</span> / <span id="ex5-f2-total">0</span></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div class="results-button-container">
+            <button id="generate-pdf-btn" class="btn-primary">Il mio risultato (PDF)</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Variabili Globali e Utilità ---
+        // Lista di parole per l'esercizio di spelling
+        const spellingWordsList = ["apple", "banana", "cat", "dog", "house", "table", "chair", "water", "happy", "friend", "school", "book", "pencil", "computer", "music"];
+
+
+        // Store exercise history for PDF generation
+        const exerciseHistory = {
+            exercise5F1: [], // History for Exercise 5 Phase 1
+            exercise5F2: []  // History for Exercise 5 Phase 2
+        };
+
+        // Funzione per generare un numero casuale (usata per selezionare parole)
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Funzione per la sintesi vocale (Text-to-Speech)
+        function speakText(text, lang = 'en-US') {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang;
+                utterance.rate = 0.9;
+                speechSynthesis.speak(utterance);
+            } else {
+                console.warn("Il tuo browser non supporta l'API SpeechSynthesis.");
+            }
+        }
+
+        // Funzione per il riconoscimento vocale (Speech-to-Text)
+        // Restituisce una Promise che si risolve con il testo riconosciuto
+        function startSpeechRecognition(callback) {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                console.warn("Il tuo browser non supporta l'API SpeechRecognition.");
+                alert("Spiacente, il tuo browser non supporta il riconoscimento vocale. Prova con Google Chrome o Microsoft Edge.");
+                return;
+            }
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+
+            recognition.lang = 'en-US'; // Lingua per il riconoscimento (inglese americano)
+            recognition.interimResults = false; // Restituisce solo il risultato finale
+            recognition.maxAlternatives = 1; // Solo la migliore alternativa
+
+            let recognizedText = ''; // Per memorizzare il testo riconosciuto
+
+            recognition.onstart = () => {
+                console.log('Riconoscimento vocale avviato...');
+                // Potresti aggiungere un feedback visivo all'utente qui (es. icona microfono che pulsa)
+            };
+
+            recognition.onresult = (event) => {
+                recognizedText = event.results[0][0].transcript;
+                console.log('Testo riconosciuto:', recognizedText);
+                callback(recognizedText); // Richiama il callback con il testo riconosciuto
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Errore riconoscimento vocale:', event.error);
+                callback(null, event.error); // Richiama il callback con un errore
+            };
+
+            recognition.onend = () => {
+                console.log('Riconoscimento vocale terminato.');
+                // Rimuovi il feedback visivo qui
+            };
+
+            recognition.start();
+        }
+
+        // --- Funzione per lo spelling vocale ---
+        function speakSpelling(word, callback, index = 0) {
+            if (index < word.length) {
+                speakText(word[index], 'en-US');
+                setTimeout(() => {
+                    speakSpelling(word, callback, index + 1);
+                }, 1000); // Pausa di 1 secondo tra le lettere
+            } else {
+                if (callback) callback();
+            }
+        }
+
+        // --- PDF Generation Function ---
+        function generateResultsPdf() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            let yOffset = 20;
+            const lineHeight = 10;
+            const margin = 15;
+
+            doc.setFontSize(22);
+            doc.text("Riepilogo Risultati Esercizi di Spelling", 105, yOffset, { align: 'center' });
+            yOffset += lineHeight * 2;
+
+            doc.setFontSize(12);
+            doc.text(`Data: ${new Date().toLocaleDateString()}`, margin, yOffset);
+            yOffset += lineHeight * 2;
+
+            function addExerciseSection(title, history, questionFormatter, userAnswerFormatter, correctAnswerFormatter) {
+                if (history.length === 0) return; // Skip if no questions answered
+
+                doc.addPage();
+                yOffset = margin;
+                doc.setFontSize(18);
+                doc.text(title, margin, yOffset);
+                yOffset += lineHeight * 1.5;
+
+                let correctCount = 0;
+                history.forEach(item => {
+                    if (item.isCorrect) correctCount++;
+                });
+                doc.setFontSize(12);
+                doc.text(`Punteggio: ${correctCount} / ${history.length}`, margin, yOffset);
+                yOffset += lineHeight * 1.5;
+
+                doc.setFontSize(10);
+                history.forEach((item, index) => {
+                    if (yOffset > 280) { // Check if new page is needed
+                        doc.addPage();
+                        yOffset = margin;
+                    }
+                    doc.text(`Domanda ${index + 1}: ${questionFormatter(item.question)}`, margin, yOffset);
+                    yOffset += lineHeight;
+                    doc.text(`La tua risposta: ${userAnswerFormatter(item.userAnswer)}`, margin + 5, yOffset);
+                    yOffset += lineHeight;
+                    doc.text(`Risposta corretta: ${correctAnswerFormatter(item.correctAnswer)}`, margin + 5, yOffset);
+                    yOffset += lineHeight;
+                    doc.setTextColor(item.isCorrect ? '#047857' : '#DC2626'); // Tailwind green-700 / red-700
+                    doc.text(`Esito: ${item.isCorrect ? 'Corretto' : 'Sbagliato'}`, margin + 5, yOffset);
+                    doc.setTextColor('#334155'); // Reset color
+                    yOffset += lineHeight * 1.5;
+                });
+            }
+
+            // Exercise 5 Phase 1 Formatting
+            addExerciseSection(
+                "Esercizio di Spelling - Fase 1: Ascolta e Scrivi",
+                exerciseHistory.exercise5F1,
+                (q) => `Parola da spellare: "${q}"`, // Question is the word
+                (a) => a, // User answer is typed text
+                (c) => c // Correct answer is the word
+            );
+
+            // Exercise 5 Phase 2 Formatting
+            addExerciseSection(
+                "Esercizio di Spelling - Fase 2: Dì lo Spelling",
+                exerciseHistory.exercise5F2,
+                (q) => `Parola: "${q}"`, // Question is the word
+                (a) => a ? a : "Nessuna risposta riconosciuta", // User answer is recognized text
+                (c) => c.split('').join(' ').toUpperCase() // Correct answer is the word spelled out
+            );
+
+
+            doc.save('Riepilogo_Esercizi_Spelling.pdf');
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Reset di tutti gli stati degli esercizi (specifico per questa pagina singola) ---
+            function resetExerciseState() {
+                // Pulisci tutti gli array della cronologia
+                for (const key in exerciseHistory) {
+                    exerciseHistory[key] = [];
+                }
+
+                // Reset per Esercizio 5 - Fase 1
+                ex5F1CurrentIndex = 0;
+                ex5F1Score = 0;
+                ex5F1Words = [];
+                document.getElementById('ex5-f1-answer-input').value = '';
+                document.getElementById('ex5-f1-feedback').textContent = '';
+                document.getElementById('ex5-f1-listen-btn').style.display = 'inline-block';
+                document.getElementById('ex5-f1-check-btn').style.display = 'inline-block';
+                document.getElementById('ex5-f1-next-btn').style.display = 'none';
+                document.getElementById('ex5-f1-answer-input').style.display = 'inline-block';
+                updateEx5F1ScoreDisplay();
+                initEx5Phase1();
+
+                // Reset per Esercizio 5 - Fase 2
+                ex5F2CurrentIndex = 0;
+                ex5F2Score = 0;
+                ex5F2Words = [];
+                document.getElementById('ex5-f2-word-display').textContent = '';
+                document.getElementById('ex5-f2-recognized-text').textContent = '';
+                document.getElementById('ex5-f2-feedback').textContent = '';
+                document.getElementById('ex5-f2-speak-btn').style.display = 'inline-block';
+                document.getElementById('ex5-f2-next-btn').style.display = 'none';
+                updateEx5F2ScoreDisplay();
+                initEx5Phase2();
+            }
+
+
+            // --- Esercizio 5: Spelling (NUOVO) ---
+            // Fase 1: Ascolta lo spelling, scrivi la parola
+            let ex5F1Words = [];
+            let ex5F1CurrentIndex = 0;
+            let ex5F1Score = 0;
+            const EX5F1_TOTAL_QUESTIONS = 5;
+
+            const ex5F1ListenBtn = document.getElementById('ex5-f1-listen-btn');
+            const ex5F1AnswerInput = document.getElementById('ex5-f1-answer-input');
+            const ex5F1Feedback = document.getElementById('ex5-f1-feedback');
+            const ex5F1CheckBtn = document.getElementById('ex5-f1-check-btn');
+            const ex5F1NextBtn = document.getElementById('ex5-f1-next-btn');
+            const ex5F1ScoreDisplay = document.getElementById('ex5-f1-score');
+            const ex5F1TotalDisplay = document.getElementById('ex5-f1-total');
+
+            function initEx5Phase1() {
+                ex5F1Words = Array.from({ length: EX5F1_TOTAL_QUESTIONS }, () => spellingWordsList[getRandomNumber(0, spellingWordsList.length - 1)]);
+                ex5F1CurrentIndex = 0;
+                ex5F1Score = 0;
+                ex5F1TotalDisplay.textContent = EX5F1_TOTAL_QUESTIONS;
+                displayEx5F1Question();
+                updateEx5F1ScoreDisplay();
+            }
+
+            function displayEx5F1Question() {
+                if (ex5F1CurrentIndex < EX5F1_TOTAL_QUESTIONS) {
+                    ex5F1AnswerInput.value = '';
+                    ex5F1Feedback.textContent = '';
+                    ex5F1Feedback.classList.remove('feedback-correct', 'feedback-incorrect');
+                    ex5F1ListenBtn.style.display = 'inline-block';
+                    ex5F1CheckBtn.style.display = 'inline-block';
+                    ex5F1NextBtn.style.display = 'none';
+                    ex5F1AnswerInput.style.display = 'inline-block';
+                    ex5F1AnswerInput.focus();
+                } else {
+                    ex5F1AnswerInput.style.display = 'none';
+                    ex5F1ListenBtn.style.display = 'none';
+                    ex5F1CheckBtn.style.display = 'none';
+                    ex5F1NextBtn.style.display = 'none';
+                    ex5F1Feedback.textContent = `Fase 1 Completata! Hai totalizzato ${ex5F1Score} risposte corrette su ${EX5F1_TOTAL_QUESTIONS}!`;
+                    ex5F1Feedback.classList.add('feedback-correct');
+                }
+            }
+
+            function updateEx5F1ScoreDisplay() {
+                ex5F1ScoreDisplay.textContent = ex5F1Score;
+            }
+
+            ex5F1ListenBtn.addEventListener('click', () => {
+                const currentWord = ex5F1Words[ex5F1CurrentIndex];
+                speakSpelling(currentWord);
+            });
+
+            ex5F1CheckBtn.addEventListener('click', () => {
+                const currentWord = ex5F1Words[ex5F1CurrentIndex];
+                const userAnswer = ex5F1AnswerInput.value.trim().toLowerCase();
+                const correctAnswer = currentWord.toLowerCase();
+
+                const isCorrect = (userAnswer === correctAnswer);
+                exerciseHistory.exercise5F1.push({
+                    question: currentWord,
+                    userAnswer: ex5F1AnswerInput.value.trim(),
+                    correctAnswer: currentWord,
+                    isCorrect: isCorrect
+                });
+
+                if (isCorrect) {
+                    ex5F1Feedback.textContent = 'Corretto!';
+                    ex5F1Feedback.classList.remove('feedback-incorrect');
+                    ex5F1Feedback.classList.add('feedback-correct');
+                    ex5F1Score++;
+                } else {
+                    ex5F1Feedback.textContent = `Sbagliato. La risposta corretta era: "${currentWord}"`;
+                    ex5F1Feedback.classList.remove('feedback-correct');
+                    ex5F1Feedback.classList.add('feedback-incorrect');
+                }
+                updateEx5F1ScoreDisplay();
+                ex5F1CheckBtn.style.display = 'none';
+                ex5F1NextBtn.style.display = 'inline-block';
+            });
+
+            ex5F1NextBtn.addEventListener('click', () => {
+                ex5F1CurrentIndex++;
+                displayEx5F1Question();
+            });
+
+            initEx5Phase1();
+
+            // Fase 2: Dì lo spelling della parola
+            let ex5F2Words = [];
+            let ex5F2CurrentIndex = 0;
+            let ex5F2Score = 0;
+            const EX5F2_TOTAL_QUESTIONS = 5;
+
+            const ex5F2WordDisplay = document.getElementById('ex5-f2-word-display');
+            const ex5F2SpeakBtn = document.getElementById('ex5-f2-speak-btn');
+            const ex5F2RecognizedText = document.getElementById('ex5-f2-recognized-text');
+            const ex5F2Feedback = document.getElementById('ex5-f2-feedback');
+            const ex5F2NextBtn = document.getElementById('ex5-f2-next-btn');
+            const ex5F2ScoreDisplay = document.getElementById('ex5-f2-score');
+            const ex5F2TotalDisplay = document.getElementById('ex5-f2-total');
+
+            function initEx5Phase2() {
+                ex5F2Words = Array.from({ length: EX5F2_TOTAL_QUESTIONS }, () => spellingWordsList[getRandomNumber(0, spellingWordsList.length - 1)]);
+                ex5F2CurrentIndex = 0;
+                ex5F2Score = 0;
+                ex5F2TotalDisplay.textContent = EX5F2_TOTAL_QUESTIONS;
+                displayEx5F2Question();
+                updateEx5F2ScoreDisplay();
+            }
+
+            // Helper to normalize recognized spelling (e.g., "C A T" or "see ay tee" to "CAT")
+            function normalizeSpokenSpelling(spokenText) {
+                if (!spokenText) return '';
+                // Remove non-alphabetic characters, convert to uppercase, remove extra spaces
+                return spokenText.toUpperCase().replace(/[^A-Z]/g, '').trim();
+            }
+
+            function displayEx5F2Question() {
+                if (ex5F2CurrentIndex < EX5F2_TOTAL_QUESTIONS) {
+                    ex5F2WordDisplay.textContent = ex5F2Words[ex5F2CurrentIndex];
+                    ex5F2RecognizedText.textContent = '';
+                    ex5F2Feedback.textContent = '';
+                    ex5F2Feedback.classList.remove('feedback-correct', 'feedback-incorrect');
+                    ex5F2SpeakBtn.style.display = 'inline-block';
+                    ex5F2NextBtn.style.display = 'none';
+                } else {
+                    ex5F2WordDisplay.textContent = 'Fase 2 Completata!';
+                    ex5F2SpeakBtn.style.display = 'none';
+                    ex5F2NextBtn.style.display = 'none';
+                    ex5F2RecognizedText.textContent = '';
+                    ex5F2Feedback.textContent = `Hai totalizzato ${ex5F2Score} risposte corrette su ${EX5F2_TOTAL_QUESTIONS}!`;
+                    ex5F2Feedback.classList.add('feedback-correct');
+                }
+            }
+
+            function updateEx5F2ScoreDisplay() {
+                ex5F2ScoreDisplay.textContent = ex5F2Score;
+            }
+
+            ex5F2SpeakBtn.addEventListener('click', () => {
+                ex5F2RecognizedText.textContent = 'Ascoltando...';
+                startSpeechRecognition((recognized) => {
+                    const currentWord = ex5F2Words[ex5F2CurrentIndex];
+                    const expectedSpelling = currentWord.toUpperCase().replace(/[^A-Z]/g, ''); // e.g., "CAT"
+
+                    const recognizedClean = normalizeSpokenSpelling(recognized); // e.g., "CAT" from "C A T"
+
+                    const isCorrect = (recognizedClean === expectedSpelling);
+                    exerciseHistory.exercise5F2.push({
+                        question: currentWord,
+                        userAnswer: recognized || "Nessuna risposta",
+                        correctAnswer: currentWord.toUpperCase().split('').join(' '), // For PDF display
+                        isCorrect: isCorrect
+                    });
+
+                    if (recognized) {
+                        ex5F2RecognizedText.textContent = `Hai detto: "${recognized}"`;
+                        if (isCorrect) {
+                            ex5F2Feedback.textContent = 'Corretto!';
+                            ex5F2Feedback.classList.remove('feedback-incorrect');
+                            ex5F2Feedback.classList.add('feedback-correct');
+                            ex5F2Score++;
+                        } else {
+                            ex5F2Feedback.textContent = `Sbagliato. La risposta corretta era: "${currentWord.toUpperCase().split('').join(' ')}"`;
+                            ex5F2Feedback.classList.remove('feedback-correct');
+                            ex5F2Feedback.classList.add('feedback-incorrect');
+                        }
+                    } else {
+                        ex5F2RecognizedText.textContent = 'Nessun parlato riconosciuto o errore.';
+                        ex5F2Feedback.textContent = `Sbagliato. La risposta corretta era: "${currentWord.toUpperCase().split('').join(' ')}"`;
+                        ex5F2Feedback.classList.remove('feedback-correct');
+                        ex5F2Feedback.classList.add('feedback-incorrect');
+                    }
+                    updateEx5F2ScoreDisplay();
+                    ex5F2SpeakBtn.style.display = 'none';
+                    ex5F2NextBtn.style.display = 'inline-block';
+                });
+            });
+
+            ex5F2NextBtn.addEventListener('click', () => {
+                ex5F2CurrentIndex++;
+                displayEx5F2Question();
+            });
+
+            initEx5Phase2();
+
+
+            // Mostra la prima fase all'avvio (in questa pagina singola)
+            document.getElementById('exercise5').classList.add('active');
+
+            // Event listener per il pulsante di generazione PDF
+            generatePdfBtn.addEventListener('click', generateResultsPdf);
+        });
+    </script>
+</body>
+</html>
