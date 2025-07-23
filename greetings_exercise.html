@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio: Rispondi al Saluto Vocale</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #f0f4f8;
+            color: #334155;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .btn-primary {
+            @apply bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out;
+        }
+        .btn-secondary {
+            @apply bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-md hover:bg-gray-400 transition duration-300 ease-in-out;
+        }
+        .feedback-correct {
+            @apply text-green-600 font-semibold mt-2;
+        }
+        .feedback-incorrect {
+            @apply text-red-600 font-semibold mt-2;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container min-h-screen flex flex-col items-center justify-center">
+        <header class="w-full text-center py-8 bg-blue-600 text-white rounded-b-xl shadow-lg mb-8">
+            <h1 class="text-4xl font-bold mb-2">Esercizio: Rispondi al Saluto Vocale</h1>
+            <p class="text-lg">Pratica i tuoi saluti in inglese!</p>
+        </header>
+
+        <main class="w-full card text-center">
+            <div id="start-screen">
+                <h2 class="text-2xl font-bold mb-4">Benvenuto!</h2>
+                <p class="mb-4">Inserisci il tuo nome per iniziare l'esercizio:</p>
+                <input type="text" id="student-name-input" class="p-3 border border-gray-300 rounded-lg w-full max-w-sm text-center text-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Il tuo nome">
+                <button id="start-exercise-btn" class="btn-primary mt-6">Inizia Esercizio</button>
+            </div>
+
+            <div id="exercise-screen" class="hidden">
+                <h2 class="text-2xl font-bold mb-4">È il tuo turno di rispondere!</h2>
+                <p class="mb-4 text-gray-700" id="instruction-text">Clicca su "Ascolta Saluto" per sentire il saluto, poi su "Parla" per rispondere.</p>
+
+                <div class="flex flex-col items-center justify-center space-y-4">
+                    <button id="listen-greeting-btn" class="btn-primary flex items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.79 2-4 2s-4-.895-4-2 1.79-2 4-2 4 .895 4 2zm12-3c0 1.105-1.79 2-4 2s-4-.895-4-2 1.79-2 4-2 4 .895 4 2zM9 6c0 1.105-1.79 2-4 2S1 7.105 1 6s1.79-2 4-2 4 .895 4 2z" />
+                        </svg>
+                        <span>Ascolta Saluto</span>
+                    </button>
+                    <div id="spoken-greeting-text" class="text-xl font-semibold text-blue-700"></div>
+
+                    <button id="speak-response-btn" class="btn-secondary flex items-center space-x-2" style="display: none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a4 4 0 01-4-4V6a4 4 0 014-4v0a4 4 0 014 4v2a4 4 0 01-4 4z" />
+                        </svg>
+                        <span>Parla</span>
+                    </button>
+                    <div id="recognized-response-text" class="text-lg text-gray-600 italic"></div>
+                    <div id="feedback" class="text-lg"></div>
+                    <button id="next-dialogue-btn" class="btn-primary" style="display: none;">Prossima Interazione</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Funzione per la sintesi vocale (Text-to-Speech)
+        function speakText(text, lang = 'en-US', rate = 0.9) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang;
+                utterance.rate = rate;
+                speechSynthesis.speak(utterance);
+            } else {
+                console.warn("Il tuo browser non supporta l'API SpeechSynthesis.");
+            }
+        }
+
+        // Funzione per il riconoscimento vocale (Speech-to-Text)
+        function startSpeechRecognition(callback) {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                alert("Spiacente, il tuo browser non supporta il riconoscimento vocale. Prova con Google Chrome o Microsoft Edge.");
+                callback(null, "Browser non supportato");
+                return;
+            }
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onstart = () => {
+                console.log('Riconoscimento vocale avviato...');
+            };
+
+            recognition.onresult = (event) => {
+                const recognizedText = event.results[0][0].transcript;
+                console.log('Testo riconosciuto:', recognizedText);
+                callback(recognizedText);
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Errore riconoscimento vocale:', event.error);
+                callback(null, event.error);
+            };
+
+            recognition.onend = () => {
+                console.log('Riconoscimento vocale terminato.');
+            };
+
+            recognition.start();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const startScreen = document.getElementById('start-screen');
+            const exerciseScreen = document.getElementById('exercise-screen');
+            const studentNameInput = document.getElementById('student-name-input');
+            const startExerciseBtn = document.getElementById('start-exercise-btn');
+            const listenGreetingBtn = document.getElementById('listen-greeting-btn');
+            const spokenGreetingText = document.getElementById('spoken-greeting-text');
+            const speakResponseBtn = document.getElementById('speak-response-btn');
+            const recognizedResponseText = document.getElementById('recognized-response-text');
+            const feedback = document.getElementById('feedback');
+            const nextDialogueBtn = document.getElementById('next-dialogue-btn');
+            const instructionText = document.getElementById('instruction-text');
+
+            let studentName = '';
+            let currentGreetingType = ''; // 'morning', 'afternoon', 'evening', 'hi', 'hello'
+            let currentGreetingPhrase = '';
+
+            const greetingsData = [
+                { type: 'morning', phrase: 'Good morning, NAME!', expected_responses: ['good morning', 'hi', 'hello'] },
+                { type: 'afternoon', phrase: 'Good afternoon, NAME!', expected_responses: ['good afternoon', 'hi', 'hello'] },
+                { type: 'evening', phrase: 'Good evening, NAME!', expected_responses: ['good evening', 'hi', 'hello'] },
+                { type: 'hi', phrase: 'Hi, NAME! How are you?', expected_responses: ['hi', 'hello', 'i am fine', 'i am good', 'not bad'] },
+                { type: 'hello', phrase: 'Hello, NAME! How are you doing?', expected_responses: ['hello', 'hi', 'i am fine', 'i am good', 'not bad'] }
+            ];
+
+            function getRandomGreeting() {
+                const randomIndex = Math.floor(Math.random() * greetingsData.length);
+                return greetingsData[randomIndex];
+            }
+
+            startExerciseBtn.addEventListener('click', () => {
+                studentName = studentNameInput.value.trim();
+                if (studentName === '') {
+                    alert('Per favore, inserisci il tuo nome per iniziare!');
+                    return;
+                }
+                startScreen.classList.add('hidden');
+                exerciseScreen.classList.remove('hidden');
+                startNewInteraction();
+            });
+
+            function startNewInteraction() {
+                feedback.textContent = '';
+                feedback.classList.remove('feedback-correct', 'feedback-incorrect');
+                recognizedResponseText.textContent = '';
+                spokenGreetingText.textContent = '';
+                listenGreetingBtn.style.display = 'inline-block';
+                speakResponseBtn.style.display = 'none';
+                nextDialogueBtn.style.display = 'none';
+                instructionText.textContent = 'Clicca su "Ascolta Saluto" per sentire il saluto, poi su "Parla" per rispondere.';
+            }
+
+            listenGreetingBtn.addEventListener('click', () => {
+                const greeting = getRandomGreeting();
+                currentGreetingType = greeting.type;
+                currentGreetingPhrase = greeting.phrase.replace('NAME', studentName);
+                spokenGreetingText.textContent = `La voce dice: "${currentGreetingPhrase}"`;
+                speakText(currentGreetingPhrase);
+
+                listenGreetingBtn.style.display = 'none';
+                speakResponseBtn.style.display = 'inline-block';
+                instructionText.textContent = 'Ora clicca su "Parla" e rispondi al saluto.';
+            });
+
+            speakResponseBtn.addEventListener('click', () => {
+                recognizedResponseText.textContent = 'Ascoltando...';
+                startSpeechRecognition((recognized) => {
+                    if (recognized) {
+                        recognizedResponseText.textContent = `Hai detto: "${recognized}"`;
+                        const userResponseClean = recognized.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim();
+                        const expectedResponses = greetingsData.find(g => g.type === currentGreetingType).expected_responses;
+
+                        let isCorrect = false;
+                        for (const expected of expectedResponses) {
+                            if (userResponseClean.includes(expected.replace(/[^a-z0-9\s]/g, '').trim())) {
+                                isCorrect = true;
+                                break;
+                            }
+                        }
+
+                        if (isCorrect) {
+                            feedback.textContent = 'Corretto! Ottima risposta!';
+                            feedback.classList.add('feedback-correct');
+                        } else {
+                            feedback.textContent = `Sbagliato. Prova a rispondere con qualcosa come "${expectedResponses[0]}".`;
+                            feedback.classList.add('feedback-incorrect');
+                        }
+                    } else {
+                        recognizedResponseText.textContent = 'Nessun parlato riconosciuto o errore.';
+                        feedback.textContent = 'Sbagliato. Non ho riconosciuto la tua risposta.';
+                        feedback.classList.add('feedback-incorrect');
+                    }
+                    speakResponseBtn.style.display = 'none';
+                    nextDialogueBtn.style.display = 'inline-block';
+                    instructionText.textContent = 'Clicca su "Prossima Interazione" per continuare.';
+                });
+            });
+
+            nextDialogueBtn.addEventListener('click', startNewInteraction);
+        });
+    </script>
+</body>
+</html>
