@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizi sui Numeri in Inglese</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- jsPDF CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            color: #334155; /* Darker text */
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .exercise-section {
+            display: none; /* Hidden by default, shown via JS */
+        }
+        .exercise-section.active {
+            display: block;
+        }
+        .btn-primary {
+            @apply bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out;
+        }
+        .btn-secondary {
+            @apply bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-md hover:bg-gray-400 transition duration-300 ease-in-out;
+        }
+        .feedback-correct {
+            @apply text-green-600 font-semibold mt-2;
+        }
+        .feedback-incorrect {
+            @apply text-red-600 font-semibold mt-2;
+        }
+        .tab-button {
+            @apply px-6 py-3 text-lg font-semibold rounded-t-lg transition duration-300 ease-in-out;
+        }
+        .tab-button.active {
+            @apply bg-blue-600 text-white;
+        }
+        .tab-button:not(.active) {
+            @apply bg-gray-200 text-gray-700 hover:bg-gray-300;
+        }
+        .results-button-container {
+            @apply flex justify-center mt-8;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container min-h-screen flex flex-col items-center">
+        <header class="w-full text-center py-8 bg-blue-600 text-white rounded-b-xl shadow-lg mb-8">
+            <h1 class="text-4xl font-bold mb-2">Esercizi sui Numeri in Inglese</h1>
+            <p class="text-lg">Metti alla prova le tue conoscenze!</p>
+        </header>
+
+        <nav class="w-full mb-8 flex justify-center space-x-2">
+            <button id="tab1-btn" class="tab-button active" data-target="exercise1">Esercizio 1 (Scrivi)</button>
+            <button id="tab2-btn" class="tab-button" data-target="exercise2">Esercizio 2 (Voce)</button>
+            <button id="tab3-btn" class="tab-button" data-target="exercise3">Esercizio 3 (Matematica)</button>
+            <button id="tab4-btn" class="tab-button" data-target="exercise4">Esercizio 4 (Ascolta & Cifra)</button>
+        </nav>
+
+        <main class="w-full">
+            <!-- Esercizio 1: Scrivi il numero in lettere -->
+            <section id="exercise1" class="exercise-section active card">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Esercizio 1: Scrivi il Numero (1-100)</h2>
+                <p class="mb-4 text-gray-700">Ti verrà mostrato un numero. Scrivilo in lettere nel campo sottostante.</p>
+
+                <div class="flex flex-col items-center justify-center space-y-4">
+                    <div class="text-5xl font-bold text-blue-700" id="ex1-number-display"></div>
+                    <input type="text" id="ex1-answer-input" class="p-3 border border-gray-300 rounded-lg w-full max-w-sm text-center text-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Scrivi il numero in lettere">
+                    <div id="ex1-feedback" class="text-lg"></div>
+                    <div class="flex space-x-4">
+                        <button id="ex1-check-btn" class="btn-primary">Controlla</button>
+                        <button id="ex1-next-btn" class="btn-secondary" style="display: none;">Prossimo</button>
+                    </div>
+                    <div class="text-xl font-semibold mt-4">Punteggio: <span id="ex1-score">0</span> / <span id="ex1-total">0</span></div>
+                </div>
+            </section>
+
+            <!-- Esercizio 2: Riconoscimento Vocale del Numero -->
+            <section id="exercise2" class="exercise-section card">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Esercizio 2: Dì il Numero (1-100)</h2>
+                <p class="mb-4 text-gray-700">Ti verrà mostrato un numero. Clicca sul microfono e pronuncia il numero in inglese.</p>
+
+                <div class="flex flex-col items-center justify-center space-y-4">
+                    <div class="text-5xl font-bold text-blue-700" id="ex2-number-display"></div>
+                    <button id="ex2-speak-btn" class="btn-primary flex items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a4 4 0 01-4-4V6a4 4 0 014-4v0a4 4 0 014 4v2a4 4 0 01-4 4z" />
+                        </svg>
+                        <span>Parla</span>
+                    </button>
+                    <div id="ex2-recognized-text" class="text-lg text-gray-600 italic"></div>
+                    <div id="ex2-feedback" class="text-lg"></div>
+                    <button id="ex2-next-btn" class="btn-secondary" style="display: none;">Prossimo</button>
+                    <div class="text-xl font-semibold mt-4">Punteggio: <span id="ex2-score">0</span> / <span id="ex2-total">0</span></div>
+                </div>
+            </section>
+
+            <!-- Esercizio 3: Operazioni Matematiche -->
+            <section id="exercise3" class="exercise-section card">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Esercizio 3: Operazioni Matematiche</h2>
+
+                <!-- Spiegazione delle Operazioni -->
+                <div class="mb-8 p-4 bg-blue-50 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2 text-blue-800">Come Leggere le Operazioni in Inglese</h3>
+                    <ul class="list-disc list-inside ml-4 text-gray-700">
+                        <li><strong>Addizione (+):</strong> Si legge "plus" (es. 5 + 3 &rarr; "five plus three")</li>
+                        <li><strong>Sottrazione (-):</strong> Si legge "minus" (es. 10 - 2 &rarr; "ten minus two")</li>
+                        <li><strong>Moltiplicazione (x):</strong> Si legge "times" (es. 4 x 5 &rarr; "four times five")</li>
+                        <li><strong>Divisione (/):</strong> Si legge "divided by" (es. 12 / 4 &rarr; "twelve divided by four")</li>
+                    </ul>
+                </div>
+
+                <!-- Round 1: Scrivi l'Operazione in Lettere -->
+                <div class="mb-8 p-4 bg-gray-50 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">Round 1: Scrivi l'Operazione (5 operazioni)</h3>
+                    <p class="mb-4 text-gray-700">Ti verrà mostrata un'operazione. Scrivila in lettere.</p>
+                    <div class="flex flex-col items-center justify-center space-y-4">
+                        <div class="text-4xl font-bold text-purple-700" id="ex3-r1-operation-display"></div>
+                        <input type="text" id="ex3-r1-answer-input" class="p-3 border border-gray-300 rounded-lg w-full max-w-sm text-center text-lg focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Es. five plus three">
+                        <div id="ex3-r1-feedback" class="text-lg"></div>
+                        <div class="flex space-x-4">
+                            <button id="ex3-r1-check-btn" class="btn-primary">Controlla</button>
+                            <button id="ex3-r1-next-btn" class="btn-secondary" style="display: none;">Prossimo</button>
+                        </div>
+                        <div class="text-xl font-semibold mt-4">Punteggio: <span id="ex3-r1-score">0</span> / <span id="ex3-r1-total">0</span></div>
+                    </div>
+                </div>
+
+                <!-- Round 2: Ascolta l'Operazione, Scrivi l'Operazione in Lettere -->
+                <div class="mb-8 p-4 bg-gray-50 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">Round 2: Ascolta e Scrivi l'Operazione (5 operazioni)</h3>
+                    <p class="mb-4 text-gray-700">Ascolta l'operazione e scrivila in lettere.</p>
+                    <div class="flex flex-col items-center justify-center space-y-4">
+                        <button id="ex3-r2-listen-btn" class="btn-primary flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.79 2-4 2s-4-.895-4-2 1.79-2 4-2 4 .895 4 2zm12-3c0 1.105-1.79 2-4 2s-4-.895-4-2 1.79-2 4-2 4 .895 4 2zM9 6c0 1.105-1.79 2-4 2S1 7.105 1 6s1.79-2 4-2 4 .895 4 2z" />
+                            </svg>
+                            <span>Ascolta Operazione</span>
+                        </button>
+                        <input type="text" id="ex3-r2-answer-input" class="p-3 border border-gray-300 rounded-lg w-full max-w-sm text-center text-lg focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Es. five plus three">
+                        <div id="ex3-r2-feedback" class="text-lg"></div>
+                        <div class="flex space-x-4">
+                            <button id="ex3-r2-check-btn" class="btn-primary">Controlla</button>
+                            <button id="ex3-r2-next-btn" class="btn-secondary" style="display: none;">Prossimo</button>
+                        </div>
+                        <div class="text-xl font-semibold mt-4">Punteggio: <span id="ex3-r2-score">0</span> / <span id="ex3-r2-total">0</span></div>
+                    </div>
+                </div>
+
+                <!-- Round 3: Ascolta l'Operazione, Dì il Risultato -->
+                <div class="mb-8 p-4 bg-gray-50 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">Round 3: Ascolta l'Operazione, Dì il Risultato (5 operazioni)</h3>
+                    <p class="mb-4 text-gray-700">Ascolta l'operazione e pronuncia il risultato in inglese.</p>
+                    <div class="flex flex-col items-center justify-center space-y-4">
+                        <button id="ex3-r3-listen-btn" class="btn-primary flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.79 2-4 2s-4-.895-4-2 1.79-2 4-2 4 .895 4 2zm12-3c0 1.105-1.79 2-4 2s-4-.895-4-2 1.79-2 4-2 4 .895 4 2zM9 6c0 1.105-1.79 2-4 2S1 7.105 1 6s1.79-2 4-2 4 .895 4 2z" />
+                            </svg>
+                            <span>Ascolta Operazione</span>
+                        </button>
+                        <button id="ex3-r3-speak-btn" class="btn-secondary flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a4 4 0 01-4-4V6a4 4 0 014-4v0a4 4 0 014 4v2a4 4 0 01-4 4z" />
+                        </svg>
+                            <span>Dì il Risultato</span>
+                        </button>
+                        <div id="ex3-r3-recognized-text" class="text-lg text-gray-600 italic"></div>
+                        <div id="ex3-r3-feedback" class="text-lg"></div>
+                        <button id="ex3-r3-next-btn" class="btn-secondary" style="display: none;">Prossimo</button>
+                        <div class="text-xl font-semibold mt-4">Punteggio: <span id="ex3-r3-score">0</span> / <span id="ex3-r3-total">0</span></div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Esercizio 4: Ascolta il Numero, Scrivi in Cifre -->
+            <section id="exercise4" class="exercise-section card">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Esercizio 4: Ascolta il Numero, Scrivi in Cifre (1-100)</h2>
+                <p class="mb-4 text-gray-700">Ascolta il numero pronunciato e scrivilo in cifre nel campo sottostante.</p>
+
+                <div class="flex flex-col items-center justify-center space-y-4">
+                    <button id="ex4-listen-btn" class="btn-primary flex items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.79 2-4 2s-4-.895-4-2 1.79-2 4-2 4 .895 4 2zm12-3c0 1.105-1.79 2-4 2s-4-.895-4-2 1.79-2 4-2 4 .895 4 2zM9 6c0 1.105-1.79 2-4 2S1 7.105 1 6s1.79-2 4-2 4 .895 4 2z" />
+                        </svg>
+                        <span>Ascolta Numero</span>
+                    </button>
+                    <input type="number" id="ex4-answer-input" class="p-3 border border-gray-300 rounded-lg w-full max-w-sm text-center text-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Scrivi il numero in cifre">
+                    <div id="ex4-feedback" class="text-lg"></div>
+                    <div class="flex space-x-4">
+                        <button id="ex4-check-btn" class="btn-primary">Controlla</button>
+                        <button id="ex4-next-btn" class="btn-secondary" style="display: none;">Prossimo</button>
+                    </div>
+                    <div class="text-xl font-semibold mt-4">Punteggio: <span id="ex4-score">0</span> / <span id="ex4-total">0</span></div>
+                </div>
+            </section>
+        </main>
+        <div class="results-button-container">
+            <button id="generate-pdf-btn" class="btn-primary">Il mio risultato (PDF)</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Variabili Globali e Utilità ---
+        const units = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+                       "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+                       "seventeen", "eighteen", "nineteen"];
+        const tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+        const operators = ['+', '-', '*']; // Per ora, evitando la divisione per semplicità
+
+        // Store exercise history for PDF generation
+        const exerciseHistory = {
+            exercise1: [],
+            exercise2: [],
+            exercise3R1: [],
+            exercise3R2: [],
+            exercise3R3: [],
+            exercise4: [] // New history for Exercise 4
+        };
+
+        // Funzione per convertire numeri in parole (fino a 100)
+        function convertNumberToWords(num) {
+            if (num === 0) return "zero";
+            if (num < 20) return units[num];
+            if (num < 100) {
+                const tenPart = tens[Math.floor(num / 10)];
+                const unitPart = units[num % 10];
+                return unitPart === "" ? tenPart : `${tenPart}-${unitPart}`;
+            }
+            if (num === 100) return "one hundred";
+            return "";
+        }
+
+        // Funzione per convertire parole numeriche o cifre in numeri (fino a 100)
+        function convertWordsToNumber(words) {
+            const cleanWords = words.toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim();
+
+            // Tenta di analizzare come un numero intero prima (per casi come "29")
+            const parsedInt = parseInt(cleanWords);
+            if (!isNaN(parsedInt) && parsedInt >= 0 && parsedInt <= 100) {
+                return parsedInt;
+            }
+
+            // Quindi tenta la conversione basata su parole
+            if (cleanWords === "zero") return 0;
+
+            let num = 0;
+            const parts = cleanWords.split('-');
+
+            if (parts.length === 1) {
+                const unitIndex = units.indexOf(cleanWords);
+                if (unitIndex !== -1) return unitIndex;
+
+                const tenIndex = tens.indexOf(cleanWords);
+                if (tenIndex !== -1) return tenIndex * 10;
+
+                if (cleanWords === "one hundred") return 100;
+
+            } else if (parts.length === 2) {
+                const tenPart = parts[0];
+                const unitPart = parts[1];
+
+                const tenIndex = tens.indexOf(tenPart);
+                const unitIndex = units.indexOf(unitPart);
+
+                if (tenIndex !== -1 && unitIndex !== -1) {
+                    return (tenIndex * 10) + unitIndex;
+                }
+            }
+            return NaN; // Restituisce NaN se la conversione fallisce
+        }
+
+
+        // Funzione per convertire operatori in parole
+        function convertOperatorToWords(operator) {
+            switch (operator) {
+                case '+': return 'plus';
+                case '-': return 'minus';
+                case '*': return 'times';
+                case '/': return 'divided by';
+                default: return '';
+            }
+        }
+
+        // Funzione per convertire un'operazione in parole (es. "5 + 3" -> "five plus three")
+        function convertOperationToWords(num1, operator, num2) {
+            const num1Words = convertNumberToWords(num1);
+            const operatorWords = convertOperatorToWords(operator);
+            const num2Words = convertNumberToWords(num2);
+            return `${num1Words} ${operatorWords} ${num2Words}`;
+        }
+
+        // Funzione per valutare un'operazione matematica
+        function evaluateOperation(num1, operator, num2) {
+            switch (operator) {
+                case '+': return num1 + num2;
+                case '-': return num1 - num2;
+                case '*': return num1 * num2;
+                case '/': return num1 / num2;
+                default: return NaN;
+            }
+        }
+
+        // Funzione per generare un numero casuale
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Funzione per generare un'operazione matematica casuale
+        function generateRandomOperation() {
+            let num1 = getRandomNumber(1, 10);
+            let num2 = getRandomNumber(1, 10);
+            const operator = operators[getRandomNumber(0, operators.length - 1)];
+            let result;
+
+            // Assicurati operazioni valide (es. risultati positivi per la sottrazione)
+            if (operator === '-') {
+                if (num1 < num2) { // Scambia se num1 è più piccolo per un risultato positivo
+                    [num1, num2] = [num2, num1];
+                }
+            } else if (operator === '*') {
+                // Mantieni i risultati della moltiplicazione ragionevoli, es. max 50
+                if (num1 * num2 > 50) {
+                    num1 = getRandomNumber(1, 5);
+                    num2 = getRandomNumber(1, 10);
+                }
+            } else if (operator === '/') {
+                // Assicurati che num1 sia un multiplo di num2 per una divisione pulita
+                num2 = getRandomNumber(1, 5); // Divisore più piccolo
+                num1 = num2 * getRandomNumber(1, 10); // Rendi num1 un multiplo di num2
+            }
+
+            result = evaluateOperation(num1, operator, num2);
+            return { num1, operator, num2, result, words: convertOperationToWords(num1, operator, num2) };
+        }
+
+        // Funzione per la sintesi vocale (Text-to-Speech)
+        function speakText(text, lang = 'en-US') {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang;
+                utterance.rate = 0.9;
+                speechSynthesis.speak(utterance);
+            } else {
+                console.warn("Il tuo browser non supporta l'API SpeechSynthesis.");
+            }
+        }
+
+        // Funzione per il riconoscimento vocale (Speech-to-Text)
+        // Restituisce una Promise che si risolve con il testo riconosciuto
+        function startSpeechRecognition(callback) {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                console.warn("Il tuo browser non supporta l'API SpeechRecognition.");
+                alert("Spiacente, il tuo browser non supporta il riconoscimento vocale. Prova con Google Chrome o Microsoft Edge.");
+                return;
+            }
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+
+            recognition.lang = 'en-US'; // Lingua per il riconoscimento (inglese americano)
+            recognition.interimResults = false; // Restituisce solo il risultato finale
+            recognition.maxAlternatives = 1; // Solo la migliore alternativa
+
+            let recognizedText = ''; // Per memorizzare il testo riconosciuto
+
+            recognition.onstart = () => {
+                console.log('Riconoscimento vocale avviato...');
+                // Potresti aggiungere un feedback visivo all'utente qui (es. icona microfono che pulsa)
+            };
+
+            recognition.onresult = (event) => {
+                recognizedText = event.results[0][0].transcript;
+                console.log('Testo riconosciuto:', recognizedText);
+                callback(recognizedText); // Richiama il callback con il testo riconosciuto
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Errore riconoscimento vocale:', event.error);
+                callback(null, event.error); // Richiama il callback con un errore
+            };
+
+            recognition.onend = () => {
+                console.log('Riconoscimento vocale terminato.');
+                // Rimuovi il feedback visivo qui
+            };
+
+            recognition.start();
+        }
+
+        // --- PDF Generation Function ---
+        function generateResultsPdf() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            let yOffset = 20;
+            const lineHeight = 10;
+            const margin = 15;
+
+            doc.setFontSize(22);
+            doc.text("Riepilogo Risultati Esercizi", 105, yOffset, { align: 'center' });
+            yOffset += lineHeight * 2;
+
+            doc.setFontSize(12);
+            doc.text(`Data: ${new Date().toLocaleDateString()}`, margin, yOffset);
+            yOffset += lineHeight * 2;
+
+            function addExerciseSection(title, history, questionFormatter, userAnswerFormatter, correctAnswerFormatter) {
+                if (history.length === 0) return; // Skip if no questions answered
+
+                doc.addPage();
+                yOffset = margin;
+                doc.setFontSize(18);
+                doc.text(title, margin, yOffset);
+                yOffset += lineHeight * 1.5;
+
+                let correctCount = 0;
+                history.forEach(item => {
+                    if (item.isCorrect) correctCount++;
+                });
+                doc.setFontSize(12);
+                doc.text(`Punteggio: ${correctCount} / ${history.length}`, margin, yOffset);
+                yOffset += lineHeight * 1.5;
+
+                doc.setFontSize(10);
+                history.forEach((item, index) => {
+                    if (yOffset > 280) { // Check if new page is needed
+                        doc.addPage();
+                        yOffset = margin;
+                    }
+                    doc.text(`Domanda ${index + 1}: ${questionFormatter(item.question)}`, margin, yOffset);
+                    yOffset += lineHeight;
+                    doc.text(`La tua risposta: ${userAnswerFormatter(item.userAnswer)}`, margin + 5, yOffset);
+                    yOffset += lineHeight;
+                    doc.text(`Risposta corretta: ${correctAnswerFormatter(item.correctAnswer)}`, margin + 5, yOffset);
+                    yOffset += lineHeight;
+                    doc.setTextColor(item.isCorrect ? '#047857' : '#DC2626'); // Tailwind green-700 / red-700
+                    doc.text(`Esito: ${item.isCorrect ? 'Corretto' : 'Sbagliato'}`, margin + 5, yOffset);
+                    doc.setTextColor('#334155'); // Reset color
+                    yOffset += lineHeight * 1.5;
+                });
+            }
+
+            // Exercise 1 Formatting
+            addExerciseSection(
+                "Esercizio 1: Scrivi il Numero",
+                exerciseHistory.exercise1,
+                (q) => q, // Question is just the number
+                (a) => a, // User answer is text
+                (c) => c  // Correct answer is text
+            );
+
+            // Exercise 2 Formatting
+            addExerciseSection(
+                "Esercizio 2: Dì il Numero",
+                exerciseHistory.exercise2,
+                (q) => q, // Question is just the number
+                (a) => a ? a : "Nessuna risposta riconosciuta", // User answer is recognized text
+                (c) => c  // Correct answer is text
+            );
+
+            // Exercise 3 Round 1 Formatting
+            addExerciseSection(
+                "Esercizio 3 - Round 1: Scrivi l'Operazione",
+                exerciseHistory.exercise3R1,
+                (q) => `${q.num1} ${q.operator} ${q.num2}`, // Question is the operation string
+                (a) => a, // User answer is text
+                (c) => c  // Correct answer is text
+            );
+
+            // Exercise 3 Round 2 Formatting
+            addExerciseSection(
+                "Esercizio 3 - Round 2: Ascolta e Scrivi l'Operazione",
+                exerciseHistory.exercise3R2,
+                (q) => `Operazione ascoltata: "${q.words}"`, // Question is the words spoken
+                (a) => a, // User answer is text
+                (c) => c  // Correct answer is text
+            );
+
+            // Exercise 3 Round 3 Formatting
+            addExerciseSection(
+                "Esercizio 3 - Round 3: Ascolta l'Operazione, Dì il Risultato",
+                exerciseHistory.exercise3R3,
+                (q) => `Operazione ascoltata: "${q.words}"`, // Question is the words spoken
+                (a) => a ? a : "Nessuna risposta riconosciuta", // User answer is recognized text
+                (c) => c  // Correct answer is number
+            );
+
+            // Exercise 4 Formatting (NUOVO)
+            addExerciseSection(
+                "Esercizio 4: Ascolta il Numero, Scrivi in Cifre",
+                exerciseHistory.exercise4,
+                (q) => `Numero ascoltato: "${q}"`, // Question is the number in words
+                (a) => a, // User answer is number string
+                (c) => c  // Correct answer is number
+            );
+
+
+            doc.save('Riepilogo_Esercizi_Inglese.pdf');
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Gestione delle Tab ---
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const exerciseSections = document.querySelectorAll('.exercise-section');
+            const generatePdfBtn = document.getElementById('generate-pdf-btn');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetId = button.dataset.target;
+
+                    // Rimuovi 'active' da tutti i bottoni e sezioni
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    exerciseSections.forEach(section => section.classList.remove('active'));
+
+                    // Aggiungi 'active' al bottone cliccato e alla sezione corrispondente
+                    button.classList.add('active');
+                    document.getElementById(targetId).classList.add('active');
+
+                    // Reset di eventuali stati o input quando si cambia tab
+                    resetExerciseState();
+                });
+            });
+
+            function resetExerciseState() {
+                // Pulisci tutti gli array della cronologia
+                for (const key in exerciseHistory) {
+                    exerciseHistory[key] = [];
+                }
+
+                // Reset per Esercizio 1
+                ex1CurrentIndex = 0;
+                ex1Score = 0;
+                ex1Numbers = [];
+                document.getElementById('ex1-answer-input').value = '';
+                document.getElementById('ex1-feedback').textContent = '';
+                document.getElementById('ex1-check-btn').style.display = 'inline-block';
+                document.getElementById('ex1-next-btn').style.display = 'none';
+                document.getElementById('ex1-answer-input').style.display = 'inline-block'; // Assicurati che l'input sia visibile
+                updateEx1ScoreDisplay();
+                initExercise1();
+
+                // Reset per Esercizio 2
+                ex2CurrentIndex = 0;
+                ex2Score = 0;
+                ex2Numbers = [];
+                document.getElementById('ex2-recognized-text').textContent = '';
+                document.getElementById('ex2-feedback').textContent = '';
+                document.getElementById('ex2-speak-btn').style.display = 'inline-block';
+                document.getElementById('ex2-next-btn').style.display = 'none';
+                document.getElementById('ex2-number-display').textContent = ''; // Pulisci il display se mostrava "completato"
+                updateEx2ScoreDisplay();
+                initExercise2();
+
+                // Reset per Esercizio 3 - Round 1
+                ex3R1CurrentIndex = 0;
+                ex3R1Score = 0;
+                ex3R1Operations = [];
+                document.getElementById('ex3-r1-answer-input').value = '';
+                document.getElementById('ex3-r1-feedback').textContent = '';
+                document.getElementById('ex3-r1-check-btn').style.display = 'inline-block';
+                document.getElementById('ex3-r1-next-btn').style.display = 'none';
+                document.getElementById('ex3-r1-answer-input').style.display = 'inline-block'; // Assicurati che l'input sia visibile
+                updateEx3R1ScoreDisplay();
+                initEx3Round1();
+
+                // Reset per Esercizio 3 - Round 2
+                ex3R2CurrentIndex = 0;
+                ex3R2Score = 0;
+                ex3R2Operations = [];
+                document.getElementById('ex3-r2-answer-input').value = '';
+                document.getElementById('ex3-r2-feedback').textContent = '';
+                document.getElementById('ex3-r2-listen-btn').style.display = 'inline-block';
+                document.getElementById('ex3-r2-check-btn').style.display = 'inline-block';
+                document.getElementById('ex3-r2-next-btn').style.display = 'none';
+                document.getElementById('ex3-r2-answer-input').style.display = 'inline-block'; // Assicurati che l'input sia visibile
+                updateEx3R2ScoreDisplay();
+                initEx3Round2();
+
+                // Reset per Esercizio 3 - Round 3
+                ex3R3CurrentIndex = 0;
+                ex3R3Score = 0;
+                ex3R3Operations = [];
+                document.getElementById('ex3-r3-recognized-text').textContent = '';
+                document.getElementById('ex3-r3-feedback').textContent = '';
+                document.getElementById('ex3-r3-listen-btn').style.display = 'inline-block';
+                document.getElementById('ex3-r3-speak-btn').style.display = 'inline-block';
+                document.getElementById('ex3-r3-next-btn').style.display = 'none';
+                updateEx3R3ScoreDisplay();
+                initEx3Round3();
+
+                // Reset per Esercizio 4 (NUOVO)
+                ex4CurrentIndex = 0;
+                ex4Score = 0;
+                ex4Numbers = [];
+                document.getElementById('ex4-answer-input').value = '';
+                document.getElementById('ex4-feedback').textContent = '';
+                document.getElementById('ex4-listen-btn').style.display = 'inline-block';
+                document.getElementById('ex4-check-btn').style.display = 'inline-block';
+                document.getElementById('ex4-next-btn').style.display = 'none';
+                document.getElementById('ex4-answer-input').style.display = 'inline-block'; // Assicurati che l'input sia visibile
+                updateEx4ScoreDisplay();
+                initExercise4();
+            }
+
+
+            // --- Esercizio 1: Scrivi il Numero ---
+            let ex1Numbers = [];
+            let ex1CurrentIndex = 0;
+            let ex1Score = 0;
+            const EX1_TOTAL_QUESTIONS = 10;
+
+            const ex1NumberDisplay = document.getElementById('ex1-number-display');
+            const ex1AnswerInput = document.getElementById('ex1-answer-input');
+            const ex1Feedback = document.getElementById('ex1-feedback');
+            const ex1CheckBtn = document.getElementById('ex1-check-btn');
+            const ex1NextBtn = document.getElementById('ex1-next-btn');
+            const ex1ScoreDisplay = document.getElementById('ex1-score');
+            const ex1TotalDisplay = document.getElementById('ex1-total');
+
+            function initExercise1() {
+                ex1Numbers = Array.from({ length: EX1_TOTAL_QUESTIONS }, () => getRandomNumber(1, 100));
+                ex1CurrentIndex = 0;
+                ex1Score = 0;
+                ex1TotalDisplay.textContent = EX1_TOTAL_QUESTIONS;
+                displayEx1Question();
+                updateEx1ScoreDisplay();
+            }
+
+            function displayEx1Question() {
+                if (ex1CurrentIndex < EX1_TOTAL_QUESTIONS) {
+                    ex1NumberDisplay.textContent = ex1Numbers[ex1CurrentIndex];
+                    ex1AnswerInput.value = '';
+                    ex1Feedback.textContent = '';
+                    ex1Feedback.classList.remove('feedback-correct', 'feedback-incorrect');
+                    ex1CheckBtn.style.display = 'inline-block';
+                    ex1NextBtn.style.display = 'none';
+                    ex1AnswerInput.style.display = 'inline-block'; // Assicurati che l'input sia visibile
+                    ex1AnswerInput.focus();
+                } else {
+                    ex1NumberDisplay.textContent = 'Esercizio Completato!';
+                    ex1AnswerInput.style.display = 'none';
+                    ex1CheckBtn.style.display = 'none';
+                    ex1NextBtn.style.display = 'none';
+                    ex1Feedback.textContent = `Hai totalizzato ${ex1Score} risposte corrette su ${EX1_TOTAL_QUESTIONS}!`;
+                    ex1Feedback.classList.add('feedback-correct');
+                }
+            }
+
+            function updateEx1ScoreDisplay() {
+                ex1ScoreDisplay.textContent = ex1Score;
+            }
+
+            ex1CheckBtn.addEventListener('click', () => {
+                const currentNumber = ex1Numbers[ex1CurrentIndex];
+                // Pulisci e normalizza la risposta dell'utente e la risposta corretta
+                const userAnswer = ex1AnswerInput.value.trim().toLowerCase().replace(/[^a-z0-9\s-]/g, '');
+                const correctAnswer = convertNumberToWords(currentNumber).toLowerCase().replace(/[^a-z0-9\s-]/g, '');
+
+                const isCorrect = (userAnswer === correctAnswer);
+                exerciseHistory.exercise1.push({
+                    question: currentNumber,
+                    userAnswer: ex1AnswerInput.value.trim(),
+                    correctAnswer: convertNumberToWords(currentNumber),
+                    isCorrect: isCorrect
+                });
+
+                if (isCorrect) {
+                    ex1Feedback.textContent = 'Corretto!';
+                    ex1Feedback.classList.remove('feedback-incorrect');
+                    ex1Feedback.classList.add('feedback-correct');
+                    ex1Score++;
+                } else {
+                    ex1Feedback.textContent = `Sbagliato. La risposta corretta era: "${convertNumberToWords(currentNumber)}"`;
+                    ex1Feedback.classList.remove('feedback-correct');
+                    ex1Feedback.classList.add('feedback-incorrect');
+                }
+                updateEx1ScoreDisplay();
+                ex1CheckBtn.style.display = 'none';
+                ex1NextBtn.style.display = 'inline-block';
+            });
+
+            ex1NextBtn.addEventListener('click', () => {
+                ex1CurrentIndex++;
+                displayEx1Question();
+            });
+
+            // Inizializza Esercizio 1 all'avvio
+            initExercise1();
+
+
+            // --- Esercizio 2: Riconoscimento Vocale del Numero ---
+            let ex2Numbers = [];
+            let ex2CurrentIndex = 0;
+            let ex2Score = 0;
+            const EX2_TOTAL_QUESTIONS = 10;
+
+            const ex2NumberDisplay = document.getElementById('ex2-number-display');
+            const ex2SpeakBtn = document.getElementById('ex2-speak-btn');
+            const ex2RecognizedText = document.getElementById('ex2-recognized-text');
+            const ex2Feedback = document.getElementById('ex2-feedback');
+            const ex2NextBtn = document.getElementById('ex2-next-btn');
+            const ex2ScoreDisplay = document.getElementById('ex2-score');
+            const ex2TotalDisplay = document.getElementById('ex2-total');
+
+            function initExercise2() {
+                ex2Numbers = Array.from({ length: EX2_TOTAL_QUESTIONS }, () => getRandomNumber(1, 100));
+                ex2CurrentIndex = 0;
+                ex2Score = 0;
+                ex2TotalDisplay.textContent = EX2_TOTAL_QUESTIONS;
+                displayEx2Question();
+                updateEx2ScoreDisplay();
+            }
+
+            function displayEx2Question() {
+                if (ex2CurrentIndex < EX2_TOTAL_QUESTIONS) {
+                    ex2NumberDisplay.textContent = ex2Numbers[ex2CurrentIndex];
+                    ex2RecognizedText.textContent = '';
+                    ex2Feedback.textContent = '';
+                    ex2Feedback.classList.remove('feedback-correct', 'feedback-incorrect');
+                    ex2SpeakBtn.style.display = 'inline-block';
+                    ex2NextBtn.style.display = 'none';
+                } else {
+                    ex2NumberDisplay.textContent = 'Esercizio Completato!';
+                    ex2SpeakBtn.style.display = 'none';
+                    ex2NextBtn.style.display = 'none';
+                    ex2RecognizedText.textContent = '';
+                    ex2Feedback.textContent = `Hai totalizzato ${ex2Score} risposte corrette su ${EX2_TOTAL_QUESTIONS}!`;
+                    ex2Feedback.classList.add('feedback-correct');
+                }
+            }
+
+            function updateEx2ScoreDisplay() {
+                ex2ScoreDisplay.textContent = ex2Score;
+            }
+
+            ex2SpeakBtn.addEventListener('click', () => {
+                ex2RecognizedText.textContent = 'Ascoltando...';
+                startSpeechRecognition((recognized) => {
+                    const currentNumber = ex2Numbers[ex2CurrentIndex];
+                    const correctAnswerWords = convertNumberToWords(currentNumber).toLowerCase().replace(/[^a-z0-9\s-]/g, ''); // Es: "twenty-nine"
+
+                    let recognizedAsWords = '';
+                    if (recognized) {
+                        // Tenta di convertire il testo riconosciuto in un numero, poi quel numero in parole
+                        const tempNum = convertWordsToNumber(recognized); // Gestisce sia "29" che "twenty-nine"
+                        if (!isNaN(tempNum)) {
+                            recognizedAsWords = convertNumberToWords(tempNum).toLowerCase().replace(/[^a-z0-9\s-]/g, '');
+                        } else {
+                            // Se non è un numero valido, assumi che sia già in formato parole
+                            recognizedAsWords = recognized.toLowerCase().replace(/[^a-z0-9\s-]/g, '');
+                        }
+                    }
+
+                    const isCorrect = (recognizedAsWords === correctAnswerWords);
+                    exerciseHistory.exercise2.push({
+                        question: currentNumber,
+                        userAnswer: recognized || "Nessuna risposta",
+                        correctAnswer: convertNumberToWords(currentNumber),
+                        isCorrect: isCorrect
+                    });
+
+                    if (recognized) {
+                        ex2RecognizedText.textContent = `Hai detto: "${recognized}"`;
+                        if (isCorrect) {
+                            ex2Feedback.textContent = 'Corretto!';
+                            ex2Feedback.classList.remove('feedback-incorrect');
+                            ex2Feedback.classList.add('feedback-correct');
+                            ex2Score++;
+                        } else {
+                            ex2Feedback.textContent = `Sbagliato. La risposta corretta era: "${convertNumberToWords(currentNumber)}"`;
+                            ex2Feedback.classList.remove('feedback-correct');
+                            ex2Feedback.classList.add('feedback-incorrect');
+                        }
+                    } else {
+                        ex2RecognizedText.textContent = 'Nessun parlato riconosciuto o errore.';
+                        ex2Feedback.textContent = `Sbagliato. La risposta corretta era: "${convertNumberToWords(currentNumber)}"`;
+                        ex2Feedback.classList.remove('feedback-correct');
+                        ex2Feedback.classList.add('feedback-incorrect');
+                    }
+                    updateEx2ScoreDisplay();
+                    ex2SpeakBtn.style.display = 'none';
+                    ex2NextBtn.style.display = 'inline-block';
+                });
+            });
+
+            ex2NextBtn.addEventListener('click', () => {
+                ex2CurrentIndex++;
+                displayEx2Question();
+            });
+
+            // Inizializza Esercizio 2 all'avvio (ma non lo mostra finché la tab non è attiva)
+            initExercise2();
+
+
+            // --- Esercizio 3: Operazioni Matematiche ---
+
+            // Round 1: Scrivi l'Operazione in Lettere
+            let ex3R1Operations = [];
+            let ex3R1CurrentIndex = 0;
+            let ex3R1Score = 0;
+            const EX3R1_TOTAL_QUESTIONS = 5;
+
+            const ex3R1OperationDisplay = document.getElementById('ex3-r1-operation-display');
+            const ex3R1AnswerInput = document.getElementById('ex3-r1-answer-input');
+            const ex3R1Feedback = document.getElementById('ex3-r1-feedback');
+            const ex3R1CheckBtn = document.getElementById('ex3-r1-check-btn');
+            const ex3R1NextBtn = document.getElementById('ex3-r1-next-btn');
+            const ex3R1ScoreDisplay = document.getElementById('ex3-r1-score');
+            const ex3R1TotalDisplay = document.getElementById('ex3-r1-total');
+
+            function initEx3Round1() {
+                ex3R1Operations = Array.from({ length: EX3R1_TOTAL_QUESTIONS }, () => generateRandomOperation());
+                ex3R1CurrentIndex = 0;
+                ex3R1Score = 0;
+                ex3R1TotalDisplay.textContent = EX3R1_TOTAL_QUESTIONS;
+                displayEx3R1Question();
+                updateEx3R1ScoreDisplay();
+            }
+
+            function displayEx3R1Question() {
+                if (ex3R1CurrentIndex < EX3R1_TOTAL_QUESTIONS) {
+                    const currentOp = ex3R1Operations[ex3R1CurrentIndex];
+                    ex3R1OperationDisplay.textContent = `${currentOp.num1} ${currentOp.operator} ${currentOp.num2}`;
+                    ex3R1AnswerInput.value = '';
+                    ex3R1Feedback.textContent = '';
+                    ex3R1Feedback.classList.remove('feedback-correct', 'feedback-incorrect');
+                    ex3R1CheckBtn.style.display = 'inline-block';
+                    ex3R1NextBtn.style.display = 'none';
+                    ex3R1AnswerInput.style.display = 'inline-block'; // Assicurati che l'input sia visibile
+                    ex3R1AnswerInput.focus();
+                } else {
+                    ex3R1OperationDisplay.textContent = 'Round Completato!';
+                    ex3R1AnswerInput.style.display = 'none';
+                    ex3R1CheckBtn.style.display = 'none';
+                    ex3R1NextBtn.style.display = 'none';
+                    ex3R1Feedback.textContent = `Hai totalizzato ${ex3R1Score} risposte corrette su ${EX3R1_TOTAL_QUESTIONS}!`;
+                    ex3R1Feedback.classList.add('feedback-correct');
+                }
+            }
+
+            function updateEx3R1ScoreDisplay() {
+                ex3R1ScoreDisplay.textContent = ex3R1Score;
+            }
+
+            ex3R1CheckBtn.addEventListener('click', () => {
+                const currentOp = ex3R1Operations[ex3R1CurrentIndex];
+                const userAnswer = ex3R1AnswerInput.value.trim().toLowerCase().replace(/[^a-z0-9\s-]/g, '');
+                const correctAnswer = currentOp.words.toLowerCase().replace(/[^a-z0-9\s-]/g, '');
+
+                const isCorrect = (userAnswer === correctAnswer);
+                exerciseHistory.exercise3R1.push({
+                    question: `${currentOp.num1} ${currentOp.operator} ${currentOp.num2}`,
+                    userAnswer: ex3R1AnswerInput.value.trim(),
+                    correctAnswer: currentOp.words,
+                    isCorrect: isCorrect
+                });
+
+                if (isCorrect) {
+                    ex3R1Feedback.textContent = 'Corretto!';
+                    ex3R1Feedback.classList.remove('feedback-incorrect');
+                    ex3R1Feedback.classList.add('feedback-correct');
+                    ex3R1Score++;
+                } else {
+                    ex3R1Feedback.textContent = `Sbagliato. La risposta corretta era: "${currentOp.words}"`;
+                    ex3R1Feedback.classList.remove('feedback-correct');
+                    ex3R1Feedback.classList.add('feedback-incorrect');
+                }
+                updateEx3R1ScoreDisplay();
+                ex3R1CheckBtn.style.display = 'none';
+                ex3R1NextBtn.style.display = 'inline-block';
+            });
+
+            ex3R1NextBtn.addEventListener('click', () => {
+                ex3R1CurrentIndex++;
+                displayEx3R1Question();
+            });
+
+            initEx3Round1();
+
+
+            // Round 2: Ascolta l'Operazione, Scrivi l'Operazione in Lettere
+            let ex3R2Operations = [];
+            let ex3R2CurrentIndex = 0;
+            let ex3R2Score = 0;
+            const EX3R2_TOTAL_QUESTIONS = 5;
+
+            const ex3R2ListenBtn = document.getElementById('ex3-r2-listen-btn');
+            const ex3R2AnswerInput = document.getElementById('ex3-r2-answer-input');
+            const ex3R2Feedback = document.getElementById('ex3-r2-feedback');
+            const ex3R2CheckBtn = document.getElementById('ex3-r2-check-btn');
+            const ex3R2NextBtn = document.getElementById('ex3-r2-next-btn');
+            const ex3R2ScoreDisplay = document.getElementById('ex3-r2-score');
+            const ex3R2TotalDisplay = document.getElementById('ex3-r2-total');
+
+            function initEx3Round2() {
+                ex3R2Operations = Array.from({ length: EX3R2_TOTAL_QUESTIONS }, () => generateRandomOperation());
+                ex3R2CurrentIndex = 0;
+                ex3R2Score = 0;
+                ex3R2TotalDisplay.textContent = EX3R2_TOTAL_QUESTIONS;
+                displayEx3R2Question();
+                updateEx3R2ScoreDisplay();
+            }
+
+            function displayEx3R2Question() {
+                if (ex3R2CurrentIndex < EX3R2_TOTAL_QUESTIONS) {
+                    ex3R2AnswerInput.value = '';
+                    ex3R2Feedback.textContent = '';
+                    ex3R2Feedback.classList.remove('feedback-correct', 'feedback-incorrect');
+                    ex3R2ListenBtn.style.display = 'inline-block';
+                    ex3R2CheckBtn.style.display = 'inline-block';
+                    ex3R2NextBtn.style.display = 'none';
+                    ex3R2AnswerInput.style.display = 'inline-block'; // Assicurati che l'input sia visibile
+                    ex3R2AnswerInput.focus();
+                } else {
+                    ex3R2AnswerInput.style.display = 'none';
+                    ex3R2ListenBtn.style.display = 'none';
+                    ex3R2CheckBtn.style.display = 'none';
+                    ex3R2NextBtn.style.display = 'none';
+                    ex3R2Feedback.textContent = `Round Completato! Hai totalizzato ${ex3R2Score} risposte corrette su ${EX3R2_TOTAL_QUESTIONS}!`;
+                    ex3R2Feedback.classList.add('feedback-correct');
+                }
+            }
+
+            function updateEx3R2ScoreDisplay() {
+                ex3R2ScoreDisplay.textContent = ex3R2Score;
+            }
+
+            ex3R2ListenBtn.addEventListener('click', () => {
+                const currentOp = ex3R2Operations[ex3R2CurrentIndex];
+                speakText(`${currentOp.words}`); // Pronuncia l'operazione in parole
+            });
+
+            ex3R2CheckBtn.addEventListener('click', () => {
+                const currentOp = ex3R2Operations[ex3R2CurrentIndex];
+                const userAnswer = ex3R2AnswerInput.value.trim().toLowerCase().replace(/[^a-z0-9\s-]/g, '');
+                const correctAnswer = currentOp.words.toLowerCase().replace(/[^a-z0-9\s-]/g, '');
+
+                const isCorrect = (userAnswer === correctAnswer);
+                exerciseHistory.exercise3R2.push({
+                    question: currentOp, // Salva l'oggetto operazione completo per le parole
+                    userAnswer: ex3R2AnswerInput.value.trim(),
+                    correctAnswer: currentOp.words,
+                    isCorrect: isCorrect
+                });
+
+                if (isCorrect) {
+                    ex3R2Feedback.textContent = 'Corretto!';
+                    ex3R2Feedback.classList.remove('feedback-incorrect');
+                    ex3R2Feedback.classList.add('feedback-correct');
+                    ex3R2Score++;
+                } else {
+                    ex3R2Feedback.textContent = `Sbagliato. La risposta corretta era: "${currentOp.words}"`;
+                    ex3R2Feedback.classList.remove('feedback-correct');
+                    ex3R2Feedback.classList.add('feedback-incorrect');
+                }
+                updateEx3R2ScoreDisplay();
+                ex3R2CheckBtn.style.display = 'none';
+                ex3R2NextBtn.style.display = 'inline-block';
+            });
+
+            ex3R2NextBtn.addEventListener('click', () => {
+                ex3R2CurrentIndex++;
+                displayEx3R2Question();
+            });
+
+            initEx3Round2();
+
+
+            // Round 3: Ascolta l'Operazione, Dì il Risultato
+            let ex3R3Operations = [];
+            let ex3R3CurrentIndex = 0;
+            let ex3R3Score = 0;
+            const EX3R3_TOTAL_QUESTIONS = 5;
+
+            const ex3R3ListenBtn = document.getElementById('ex3-r3-listen-btn');
+            const ex3R3SpeakBtn = document.getElementById('ex3-r3-speak-btn');
+            const ex3R3RecognizedText = document.getElementById('ex3-r3-recognized-text');
+            const ex3R3Feedback = document.getElementById('ex3-r3-feedback');
+            const ex3R3NextBtn = document.getElementById('ex3-r3-next-btn');
+            const ex3R3ScoreDisplay = document.getElementById('ex3-r3-score');
+            const ex3R3TotalDisplay = document.getElementById('ex3-r3-total');
+
+            function initEx3Round3() {
+                ex3R3Operations = Array.from({ length: EX3R3_TOTAL_QUESTIONS }, () => generateRandomOperation());
+                ex3R3CurrentIndex = 0;
+                ex3R3Score = 0;
+                ex3R3TotalDisplay.textContent = EX3R3_TOTAL_QUESTIONS;
+                displayEx3R3Question();
+                updateEx3R3ScoreDisplay();
+            }
+
+            function displayEx3R3Question() {
+                if (ex3R3CurrentIndex < EX3R3_TOTAL_QUESTIONS) {
+                    ex3R3RecognizedText.textContent = '';
+                    ex3R3Feedback.textContent = '';
+                    ex3R3Feedback.classList.remove('feedback-correct', 'feedback-incorrect');
+                    ex3R3ListenBtn.style.display = 'inline-block';
+                    ex3R3SpeakBtn.style.display = 'inline-block';
+                    ex3R3NextBtn.style.display = 'none';
+                } else {
+                    ex3R3ListenBtn.style.display = 'none';
+                    ex3R3SpeakBtn.style.display = 'none';
+                    ex3R3NextBtn.style.display = 'none';
+                    ex3R3RecognizedText.textContent = '';
+                    ex3R3Feedback.textContent = `Round Completato! Hai totalizzato ${ex3R3Score} risposte corrette su ${EX3R3_TOTAL_QUESTIONS}!`;
+                    ex3R3Feedback.classList.add('feedback-correct');
+                }
+            }
+
+            function updateEx3R3ScoreDisplay() {
+                ex3R3ScoreDisplay.textContent = ex3R3Score;
+            }
+
+            ex3R3ListenBtn.addEventListener('click', () => {
+                const currentOp = ex3R3Operations[ex3R3CurrentIndex];
+                speakText(`What is ${currentOp.words}?`);
+            });
+
+            ex3R3SpeakBtn.addEventListener('click', () => {
+                ex3R3RecognizedText.textContent = 'Ascoltando...';
+                startSpeechRecognition((recognized) => {
+                    const currentOp = ex3R3Operations[ex3R3CurrentIndex];
+                    const correctAnswerNum = currentOp.result;
+                    const recognizedNum = convertWordsToNumber(recognized || ''); // Converti le parole o cifre riconosciute in numero
+
+                    const isCorrect = (!isNaN(recognizedNum) && recognizedNum === correctAnswerNum);
+                    exerciseHistory.exercise3R3.push({
+                        question: currentOp, // Salva l'oggetto operazione completo per le parole
+                        userAnswer: recognized || "Nessuna risposta",
+                        correctAnswer: correctAnswerNum,
+                        isCorrect: isCorrect
+                    });
+
+                    if (recognized) {
+                        ex3R3RecognizedText.textContent = `Hai detto: "${recognized}"`;
+                        if (isCorrect) {
+                            ex3R3Feedback.textContent = 'Corretto!';
+                            ex3R3Feedback.classList.remove('feedback-incorrect');
+                            ex3R3Feedback.classList.add('feedback-correct');
+                            ex3R3Score++;
+                        } else {
+                            ex3R3Feedback.textContent = `Sbagliato. La risposta corretta era: "${correctAnswerNum}"`;
+                            ex3R3Feedback.classList.remove('feedback-correct');
+                            ex3R3Feedback.classList.add('feedback-incorrect');
+                        }
+                    } else {
+                        ex3R3RecognizedText.textContent = 'Nessun parlato riconosciuto o errore.';
+                        ex3R3Feedback.textContent = `Sbagliato. La risposta corretta era: "${correctAnswerNum}"`;
+                        ex3R3Feedback.classList.remove('feedback-correct');
+                        ex3R3Feedback.classList.add('feedback-incorrect');
+                    }
+                    updateEx3R3ScoreDisplay();
+                    ex3R3ListenBtn.style.display = 'none';
+                    ex3R3SpeakBtn.style.display = 'none';
+                    ex3R3NextBtn.style.display = 'inline-block';
+                });
+            });
+
+            ex3R3NextBtn.addEventListener('click', () => {
+                ex3R3CurrentIndex++;
+                displayEx3R3Question();
+            });
+
+            initEx3Round3();
+
+            // --- Esercizio 4: Ascolta il Numero, Scrivi in Cifre (NUOVO) ---
+            let ex4Numbers = [];
+            let ex4CurrentIndex = 0;
+            let ex4Score = 0;
+            const EX4_TOTAL_QUESTIONS = 10;
+
+            const ex4ListenBtn = document.getElementById('ex4-listen-btn');
+            const ex4AnswerInput = document.getElementById('ex4-answer-input');
+            const ex4Feedback = document.getElementById('ex4-feedback');
+            const ex4CheckBtn = document = document.getElementById('ex4-check-btn'); // Corrected typo here
+            const ex4NextBtn = document.getElementById('ex4-next-btn');
+            const ex4ScoreDisplay = document.getElementById('ex4-score');
+            const ex4TotalDisplay = document.getElementById('ex4-total');
+
+            function initExercise4() {
+                ex4Numbers = Array.from({ length: EX4_TOTAL_QUESTIONS }, () => getRandomNumber(1, 100));
+                ex4CurrentIndex = 0;
+                ex4Score = 0;
+                ex4TotalDisplay.textContent = EX4_TOTAL_QUESTIONS;
+                displayEx4Question();
+                updateEx4ScoreDisplay();
+            }
+
+            function displayEx4Question() {
+                if (ex4CurrentIndex < EX4_TOTAL_QUESTIONS) {
+                    ex4AnswerInput.value = '';
+                    ex4Feedback.textContent = '';
+                    ex4Feedback.classList.remove('feedback-correct', 'feedback-incorrect');
+                    ex4ListenBtn.style.display = 'inline-block';
+                    ex4CheckBtn.style.display = 'inline-block';
+                    ex4NextBtn.style.display = 'none';
+                    ex4AnswerInput.style.display = 'inline-block'; // Assicurati che l'input sia visibile
+                    ex4AnswerInput.focus();
+                } else {
+                    ex4AnswerInput.style.display = 'none';
+                    ex4ListenBtn.style.display = 'none';
+                    ex4CheckBtn.style.display = 'none';
+                    ex4NextBtn.style.display = 'none';
+                    ex4Feedback.textContent = `Esercizio Completato! Hai totalizzato ${ex4Score} risposte corrette su ${EX4_TOTAL_QUESTIONS}!`;
+                    ex4Feedback.classList.add('feedback-correct');
+                }
+            }
+
+            function updateEx4ScoreDisplay() {
+                ex4ScoreDisplay.textContent = ex4Score;
+            }
+
+            ex4ListenBtn.addEventListener('click', () => {
+                const currentNumber = ex4Numbers[ex4CurrentIndex];
+                speakText(convertNumberToWords(currentNumber)); // Pronuncia il numero in inglese
+            });
+
+            ex4CheckBtn.addEventListener('click', () => {
+                const currentNumber = ex4Numbers[ex4CurrentIndex];
+                const userAnswer = parseInt(ex4AnswerInput.value.trim()); // Converti in numero intero
+                const correctAnswer = currentNumber;
+
+                const isCorrect = (!isNaN(userAnswer) && userAnswer === correctAnswer);
+                exerciseHistory.exercise4.push({
+                    question: convertNumberToWords(currentNumber), // La domanda è il numero in parole
+                    userAnswer: ex4AnswerInput.value.trim(),
+                    correctAnswer: currentNumber,
+                    isCorrect: isCorrect
+                });
+
+                if (isCorrect) {
+                    ex4Feedback.textContent = 'Corretto!';
+                    ex4Feedback.classList.remove('feedback-incorrect');
+                    ex4Feedback.classList.add('feedback-correct');
+                    ex4Score++;
+                } else {
+                    ex4Feedback.textContent = `Sbagliato. La risposta corretta era: "${correctAnswer}"`;
+                    ex4Feedback.classList.remove('feedback-correct');
+                    ex4Feedback.classList.add('feedback-incorrect');
+                }
+                updateEx4ScoreDisplay();
+                ex4CheckBtn.style.display = 'none';
+                ex4NextBtn.style.display = 'inline-block';
+            });
+
+            ex4NextBtn.addEventListener('click', () => {
+                ex4CurrentIndex++;
+                displayEx4Question();
+            });
+
+            initExercise4();
+
+
+            // Mostra la prima tab all'avvio
+            document.getElementById('exercise1').classList.add('active');
+
+            // Event listener per il pulsante di generazione PDF
+            generatePdfBtn.addEventListener('click', generateResultsPdf);
+        });
+    </script>
+</body>
+</html>
