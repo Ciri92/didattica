@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografica: I Saluti in Inglese</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif; /* Dyslexia-friendly font */
+            background-color: #f0f4f8;
+        }
+        .flow-arrow {
+            position: relative;
+            width: 100%;
+            height: 2px;
+            background-color: #118AB2;
+            margin: 1rem 0;
+        }
+        .flow-arrow::after {
+            content: '';
+            position: absolute;
+            right: -1px;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 10px solid #118AB2;
+        }
+        .listen-text {
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-color: #118AB2;
+            transition: color 0.2s ease;
+        }
+        .listen-text:hover {
+            color: #073B4C;
+        }
+        /* Table specific styles for better visual appeal */
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+        .styled-table th, .styled-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0; /* Light gray border */
+        }
+        .styled-table th {
+            background-color: #118AB2; /* Blue header */
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        .styled-table tr:nth-child(even) {
+            background-color: #f8fafc; /* Lighter row background */
+        }
+        .styled-table tr:hover {
+            background-color: #e0f2fe; /* Light blue on hover */
+        }
+    </style>
+</head>
+<body class="antialiased text-[#073B4C]">
+    <!-- 
+    Palette Name: Energetic & Playful
+    Red: #FF6B6B
+    Yellow: #FFD166
+    Green: #06D6A0
+    Blue: #118AB2
+    Dark Blue: #073B4C
+    -->
+    <!-- 
+    Narrative Plan:
+    1. Hook: Big title and intro.
+    2. Section 1 (Change): Greetings by Time of Day, visualized with a table.
+    3. Section 2 (Compare): Formal vs. Informal greetings, now presented with text and listen options.
+    4. Section 3 (Inform): First impressions, using styled cards.
+    5. Section 4 (Organize): How to say goodbye, visualized with a simple flowchart.
+    -->
+    <!-- 
+    Visualization Choices:
+    - Table -> Goal: Change/Inform -> Method: Styled HTML/CSS with Tailwind. Justification: Clear and concise way to present time-based greetings. Confirmed NO SVG/Mermaid.
+    - Text Lists with Listen Option -> Goal: Compare/Inform -> Method: Styled HTML/CSS with Tailwind + JS for audio. Justification: Presents distinct categories clearly and adds interactive learning. Confirmed NO SVG.
+    - Styled Cards -> Goal: Inform -> Method: Styled HTML/CSS with Tailwind. Justification: Simple and clear way to present distinct pieces of information. Confirmed NO SVG.
+    - Flowchart -> Goal: Organize -> Method: Styled HTML/CSS with Tailwind. Justification: Shows a simple decision-making process clearly using basic web elements. Confirmed NO SVG/Mermaid.
+    -->
+    <!-- Explicit confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in this output. -->
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-[#118AB2] mb-4">Come Salutare in Inglese!</h1>
+            <p class="text-lg md:text-xl max-w-3xl mx-auto">Una guida super facile per imparare a dire "ciao" nel modo giusto, a seconda del momento e della persona che incontri.</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <div class="md:col-span-2 bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-3xl font-bold text-[#073B4C] mb-4 text-center">I Saluti del Giorno (e della Notte!)</h2>
+                <p class="text-center mb-6">L'ora del giorno è super importante! Usa il saluto giusto al momento giusto.</p>
+                
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Saluto</th>
+                            <th>Quando usarlo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong class="listen-text" data-greeting="Good morning">Good morning</strong></td>
+                            <td>Dalla mezzanotte fino a mezzogiorno. Va bene per tutti!</td>
+                        </tr>
+                        <tr>
+                            <td><strong class="listen-text" data-greeting="Good afternoon">Good afternoon</strong></td>
+                            <td>Da mezzogiorno fino alla sera (tipo le 17:00/18:00). Anche questo per tutti.</td>
+                        </tr>
+                        <tr>
+                            <td><strong class="listen-text" data-greeting="Good evening">Good evening</strong></td>
+                            <td>Dal tardo pomeriggio in poi (dalle 17:00/18:00 in poi).</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="mt-8 text-center bg-[#FF6B6B] text-white p-4 rounded-lg max-w-md mx-auto">
+                    <h3 class="font-bold text-xl">ATTENZIONE!</h3>
+                    <p>"Good night" non è un saluto! Si usa solo per dire "buonanotte" quando vai via o vai a dormire. <span class="listen-text" data-greeting="Good night">Ascolta</span></p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-3xl font-bold text-[#073B4C] mb-4 text-center">Saluti Formali</h2>
+                <p class="text-center mb-6">Quando parli con un insegnante o un adulto che non conosci bene, usa questi saluti per essere super educato!</p>
+                <ul class="list-none p-0 text-center">
+                    <li class="mb-3 text-lg"><strong class="listen-text" data-greeting="Hello">Hello</strong>: Ciao / Salve (Il più neutro)</li>
+                    <li class="mb-3 text-lg"><strong class="listen-text" data-greeting="Nice to meet you">Nice to meet you</strong>: Piacere di conoscerla/o (Comune)</li>
+                    <li class="mb-3 text-lg"><strong class="listen-text" data-greeting="Pleased to meet you">Pleased to meet you</strong>: Piacere di conoscerla/o (Più formale)</li>
+                    <li class="mb-3 text-lg"><strong class="listen-text" data-greeting="How do you do">How do you do?</strong>: Come sta? (Molto formale/Antiquato)</li>
+                </ul>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-3xl font-bold text-[#073B4C] mb-4 text-center">Saluti Informali</h2>
+                <p class="text-center mb-6">Questi sono perfetti per i tuoi amici, la tua famiglia e le persone che conosci bene. Sentiti libero di usarli!</p>
+                <ul class="list-none p-0 text-center">
+                    <li class="mb-3 text-lg"><strong class="listen-text" data-greeting="Hi">Hi</strong>: Ciao (Il più usato)</li>
+                    <li class="mb-3 text-lg"><strong class="listen-text" data-greeting="Hey">Hey</strong>: Ehi (Molto informale)</li>
+                    <li class="mb-3 text-lg"><strong class="listen-text" data-greeting="How are you">How are you?</strong>: Come stai?</li>
+                    <li class="mb-3 text-lg"><strong class="listen-text" data-greeting="How are you doing">How are you doing?</strong>: Come va?</li>
+                    <li class="mb-3 text-lg"><strong class="listen-text" data-greeting="What's up">What's up?</strong>: Che c'è? / Come va? (Molto colloquiale)</li>
+                    <li class="mb-3 text-lg"><strong class="listen-text" data-greeting="How's it going">How's it going?</strong>: Come va? / Come procede?</li>
+                </ul>
+            </div>
+
+            <div class="md:col-span-2 bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-3xl font-bold text-[#073B4C] mb-4 text-center">La Prima Impressione Conta!</h2>
+                <p class="text-center mb-6">Quando incontri qualcuno per la prima volta, queste frasi sono perfette per fare una bella figura.</p>
+                <div class="flex flex-col md:flex-row justify-around items-center gap-6">
+                    <div class="bg-[#FFD166] p-6 rounded-lg text-center w-full md:w-1/3">
+                        <p class="text-5xl mb-4">🤝</p>
+                        <h3 class="text-xl font-bold"><span class="listen-text" data-greeting="Pleased to meet you">Pleased to meet you</span></h3>
+                        <p class="mt-2">Un po' più formale, perfetto per gli adulti.</p>
+                    </div>
+                    <div class="bg-[#06D6A0] p-6 rounded-lg text-center w-full md:w-1/3">
+                        <p class="text-5xl mb-4">👋</p>
+                        <h3 class="text-xl font-bold"><span class="listen-text" data-greeting="Nice to meet you">Nice to meet you</span></h3>
+                        <p class="mt-2">Super comune e amichevole, va bene quasi sempre!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-3xl font-bold text-[#073B4C] mb-4 text-center">Quando è Ora di Andare!</h2>
+                <p class="text-center mb-6">Anche per dire "arrivederci" ci sono modi diversi. Segui questo schema per scegliere quello giusto.</p>
+                <div class="flex flex-col items-center">
+                    <div class="bg-gray-200 p-4 rounded-lg font-bold text-lg">Stai andando via?</div>
+                    <div class="flow-arrow"></div>
+                    <div class="flex flex-col md:flex-row gap-8 w-full justify-around">
+                        <div class="flex-1 text-center">
+                            <div class="bg-[#118AB2] text-white p-4 rounded-lg font-bold text-lg mb-4">È una situazione formale?</div>
+                            <div class="bg-blue-100 p-3 rounded-md mb-2"><span class="listen-text" data-greeting="Goodbye">Goodbye</span></div>
+                            <div class="bg-blue-100 p-3 rounded-md"><span class="listen-text" data-greeting="Have a nice day">Have a nice day!</span></div>
+                        </div>
+                        <div class="flex-1 text-center">
+                            <div class="bg-[#06D6A0] text-white p-4 rounded-lg font-bold text-lg mb-4">È una situazione informale?</div>
+                            <div class="bg-green-100 p-3 rounded-md mb-2"><span class="listen-text" data-greeting="Bye">Bye</span> / <span class="listen-text" data-greeting="Bye-bye">Bye-bye</span></div>
+                            <div class="bg-green-100 p-3 rounded-md mb-2"><span class="listen-text" data-greeting="See you later">See you later!</span></div>
+                            <div class="bg-green-100 p-3 rounded-md"><span class="listen-text" data-greeting="See you soon">See you soon!</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function speakText(text, lang = 'en-US') {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang;
+                utterance.rate = 0.9;
+                speechSynthesis.speak(utterance);
+            } else {
+                console.warn("Il tuo browser non supporta l'API SpeechSynthesis.");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const listenElements = document.querySelectorAll('.listen-text');
+            listenElements.forEach(element => {
+                element.addEventListener('click', function() {
+                    const greeting = this.dataset.greeting;
+                    speakText(greeting);
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
