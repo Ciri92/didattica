@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Language Practice</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for microphone icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 960px; /* Increased max-width for better layout */
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .exercise-section {
+            background-color: #f8fafc; /* Lighter background for sections */
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+        .exercise-title {
+            font-size: 1.75rem; /* Larger title */
+            font-weight: 700;
+            color: #1e3a8a; /* Dark blue */
+            margin-bottom: 0.75rem;
+        }
+        .instructions {
+            font-size: 1.125rem;
+            color: #334155; /* Slate gray */
+            margin-bottom: 1rem;
+        }
+        .instructions-it {
+            font-size: 0.9rem;
+            color: #64748b; /* Lighter slate gray */
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        .button {
+            background-color: #3b82f6; /* Blue */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .button:hover {
+            background-color: #2563eb; /* Darker blue on hover */
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .input-field {
+            border: 1px solid #cbd5e1; /* Light gray border */
+            padding: 0.6rem 1rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            font-size: 1rem;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6; /* Blue on focus */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+        .feedback-correct {
+            color: #10b981; /* Green */
+            font-weight: 600;
+        }
+        .feedback-incorrect {
+            color: #ef4444; /* Red */
+            font-weight: 600;
+        }
+        .microphone-button {
+            background-color: #ef4444; /* Red */
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .microphone-button:hover {
+            background-color: #dc2626; /* Darker red on hover */
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+        }
+        .microphone-button.recording {
+            background-color: #10b981; /* Green when recording */
+        }
+        .microphone-button.recording:hover {
+            background-color: #059669; /* Darker green */
+        }
+        .microphone-button i {
+            margin-right: 0.5rem;
+        }
+        .day-item {
+            background-color: #e0f2fe; /* Light blue for day items */
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            border: 1px solid #bfdbfe;
+        }
+        .day-item span {
+            font-weight: 600;
+            color: #1e40af;
+        }
+        .drag-handle {
+            cursor: grab;
+            color: #60a5fa;
+        }
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="container">
+        <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">English Language Practice</h1>
+
+        <!-- Exercise 1: Order the Days of the Week -->
+        <div class="exercise-section">
+            <h2 class="exercise-title">Exercise 1: Order the Days of the Week</h2>
+            <p class="instructions">Put the days of the week in the correct order, starting from Monday. Drag and drop the days to reorder them.</p>
+            <p class="instructions-it">Metti i giorni della settimana nell'ordine corretto, iniziando da Lunedì. Trascina e rilascia i giorni per riordinarli.</p>
+            <div id="days-of-week-list" class="flex flex-col space-y-2 mt-4">
+                <!-- Days will be dynamically generated and shuffled here -->
+            </div>
+            <button class="button mt-4" onclick="checkDaysOfWeek()">Check Answers</button>
+            <p id="days-of-week-feedback" class="mt-2 text-sm"></p>
+        </div>
+
+        <!-- Exercise 2: Seasons and Months (Northern Hemisphere) -->
+        <div class="exercise-section">
+            <h2 class="exercise-title">Exercise 2: Seasons and Months (Northern Hemisphere)</h2>
+            <p class="instructions">Write the months that correspond to each season in the Northern Hemisphere.</p>
+            <p class="instructions-it">Scrivi i mesi che corrispondono a ogni stagione nell'Emisfero Settentrionale.</p>
+            <div id="northern-seasons" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <!-- Season blocks will be dynamically generated here -->
+            </div>
+            <button class="button mt-4" onclick="checkNorthernSeasons()">Check Answers</button>
+            <p id="northern-seasons-feedback" class="mt-2 text-sm"></p>
+        </div>
+
+        <!-- Southern Hemisphere Explanation -->
+        <div class="exercise-section">
+            <h2 class="exercise-title">Understanding Seasons in the Southern Hemisphere</h2>
+            <p class="instructions">Did you know that seasons are inverted in the Southern Hemisphere? When it's summer in the Northern Hemisphere, it's winter in the Southern Hemisphere, and vice-versa.</p>
+            <p class="instructions-it">Sapevi che le stagioni sono invertite nell'Emisfero Australe? Quando è estate nell'Emisfero Settentrionale, è inverno nell'Emisfero Australe, e viceversa.</p>
+        </div>
+
+        <!-- Exercise 3: Seasons and Months (Southern Hemisphere) -->
+        <div class="exercise-section">
+            <h2 class="exercise-title">Exercise 3: Seasons and Months (Southern Hemisphere)</h2>
+            <p class="instructions">Now, write the months that correspond to each season in the Southern Hemisphere.</p>
+            <p class="instructions-it">Ora, scrivi i mesi che corrispondono a ogni stagione nell'Emisfero Australe.</p>
+            <div id="southern-seasons" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <!-- Season blocks will be dynamically generated here -->
+            </div>
+            <button class="button mt-4" onclick="checkSouthernSeasons()">Check Answers</button>
+            <p id="southern-seasons-feedback" class="mt-2 text-sm"></p>
+        </div>
+
+        <!-- Date Explanation Section -->
+        <div class="exercise-section">
+            <h2 class="exercise-title">How to Write Dates in English</h2>
+            <p class="instructions">In English, dates are commonly written in a few ways. The most common formats are "Month Day, Year" (American English) or "Day Month Year" (British English). We also use ordinal numbers for the day.</p>
+            <p class="instructions-it">In inglese, le date sono comunemente scritte in diversi modi. I formati più comuni sono "Mese Giorno, Anno" (inglese americano) o "Giorno Mese Anno" (inglese britannico). Usiamo anche i numeri ordinali per il giorno.</p>
+
+            <h3 class="font-semibold text-lg text-gray-700 mb-2 mt-4">Ordinal Numbers (1st to 31st)</h3>
+            <p class="instructions">Here are the ordinal numbers from 1 to 31:</p>
+            <p class="instructions-it">Ecco i numeri ordinali da 1 a 31:</p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 text-gray-700 text-sm">
+                <div>1st (first)</div><div>2nd (second)</div><div>3rd (third)</div><div>4th (fourth)</div>
+                <div>5th (fifth)</div><div>6th (sixth)</div><div>7th (seventh)</div><div>8th (eighth)</div>
+                <div>9th (ninth)</div><div>10th (tenth)</div><div>11th (eleventh)</div><div>12th (twelfth)</div>
+                <div>13th (thirteenth)</div><div>14th (fourteenth)</div><div>15th (fifteenth)</div><div>16th (sixteenth)</div>
+                <div>17th (seventeenth)</div><div>18th (eighteenth)</div><div>19th (nineteenth)</div><div>20th (twentieth)</div>
+                <div>21st (twenty-first)</div><div>22nd (twenty-second)</div><div>23rd (twenty-third)</div><div>24th (twenty-fourth)</div>
+                <div>25th (twenty-fifth)</div><div>26th (twenty-sixth)</div><div>27th (twenty-seventh)</div><div>28th (twenty-eighth)</div>
+                <div>29th (twenty-ninth)</div><div>30th (thirtieth)</div><div>31st (thirty-first)</div>
+            </div>
+
+            <h3 class="font-semibold text-lg text-gray-700 mb-2 mt-4">How to Read Dates Aloud</h3>
+            <p class="instructions">When speaking dates, we usually say "the [ordinal number] of [month]" or "[Month] [ordinal number]".</p>
+            <p class="instructions-it">Quando si pronunciano le date, di solito diciamo "the [numero ordinale] of [mese]" o "[Mese] [numero ordinale]".</p>
+            <ul class="list-disc list-inside ml-4 text-gray-700">
+                <li>**January 1st** can be read as: "January first" or "the first of January".</li>
+                <li>**December 25th** can be read as: "December twenty-fifth" or "the twenty-fifth of December".</li>
+                <li>**July 4th** can be read as: "July fourth" or "the fourth of July".</li>
+            </ul>
+            <p class="instructions mt-4">Examples of written dates:</p>
+            <p class="instructions-it">Esempi di date scritte:</p>
+            <ul class="list-disc list-inside ml-4 text-gray-700">
+                <li>January 1st, 2025 (American) or 1st January 2025 (British)</li>
+                <li>December 25th, 2024 (American) or 25th December 2024 (British)</li>
+            </ul>
+        </div>
+
+        <!-- Exercise 4: Holidays and Dates (Text Input) -->
+        <div class="exercise-section">
+            <h2 class="exercise-title">Exercise 4: Holidays and Dates (Text Input)</h2>
+            <p class="instructions">Write the date for each holiday in the format "Month Day, Year" (e.g., January 1st, 2025).</p>
+            <p class="instructions-it">Scrivi la data per ogni festività nel formato "Mese Giorno, Anno" (es. 1° gennaio 2025).</p>
+            <div id="holidays-text-input" class="flex flex-col space-y-3 mt-4">
+                <!-- Holiday inputs will be dynamically generated here -->
+            </div>
+            <button class="button mt-4" onclick="checkHolidaysTextInput()">Check Answers</button>
+            <p id="holidays-text-feedback" class="mt-2 text-sm"></p>
+        </div>
+
+        <!-- Exercise 5: Holidays and Dates (Voice Recognition) -->
+        <div class="exercise-section">
+            <h2 class="exercise-title">Exercise 5: Holidays and Dates (Voice Recognition)</h2>
+            <p class="instructions">Read aloud the date for each holiday. Click the microphone icon to start speaking. The system will understand common ways of saying the date (e.g., "January first" or "the first of January").</p>
+            <p class="instructions-it">Leggi a voce alta la data per ogni festività. Clicca sull'icona del microfono per iniziare a parlare. Il sistema capirà i modi comuni di dire la data (es. "primo gennaio" o "il primo di gennaio").</p>
+            <div id="holidays-voice-input" class="flex flex-col space-y-3 mt-4">
+                <!-- Holiday voice inputs will be dynamically generated here -->
+            </div>
+            <p id="voice-recognition-status" class="mt-2 text-sm text-gray-600"></p>
+            <button class="button mt-4" onclick="checkHolidaysVoiceInput()">Check Answers</button>
+            <p id="holidays-voice-feedback" class="mt-2 text-sm"></p>
+        </div>
+
+        <!-- My Results Button -->
+        <div class="text-center mt-8">
+            <button class="button text-lg px-6 py-3" onclick="generateReport()">My Results</button>
+            <p class="instructions-it text-sm mt-2">Clicca il bottone "I miei risultati" al termine dell'esercizio per scaricare il report con le tue risposte.</p>
+        </div>
+    </div>
+
+    <script>
+        // Global variable to store all answers for the report
+        const userAnswers = {};
+
+        // --- Exercise 1: Order the Days of the Week ---
+        const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        let shuffledDays = [...daysOfWeek]; // Copy to shuffle
+
+        // Function to shuffle an array (Fisher-Yates algorithm)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function renderDaysOfWeek() {
+            const container = document.getElementById('days-of-week-list');
+            container.innerHTML = ''; // Clear previous content
+            shuffleArray(shuffledDays); // Shuffle days for display
+
+            shuffledDays.forEach((day, index) => {
+                const dayItem = document.createElement('div');
+                dayItem.className = 'day-item';
+                dayItem.draggable = true;
+                dayItem.id = `day-${day.toLowerCase()}`; // Unique ID for each day
+                dayItem.setAttribute('data-day', day); // Store original day name
+
+                dayItem.innerHTML = `
+                    <span>${day}</span>
+                    <span class="drag-handle text-xl cursor-grab"><i class="fas fa-grip-lines"></i></span>
+                `;
+                container.appendChild(dayItem);
+            });
+
+            addDragAndDropListeners();
+        }
+
+        let draggedItem = null;
+
+        function addDragAndDropListeners() {
+            const list = document.getElementById('days-of-week-list');
+            const items = Array.from(list.children);
+
+            items.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    draggedItem = item;
+                    setTimeout(() => {
+                        item.classList.add('opacity-50');
+                    }, 0);
+                });
+
+                item.addEventListener('dragend', () => {
+                    draggedItem.classList.remove('opacity-50');
+                    draggedItem = null;
+                });
+
+                item.addEventListener('dragover', (e) => {
+                    e.preventDefault(); // Allow dropping
+                    const draggingOver = e.target.closest('.day-item');
+                    if (draggingOver && draggedItem !== draggingOver) {
+                        const boundingBox = draggingOver.getBoundingClientRect();
+                        const offset = e.clientY - boundingBox.top;
+                        const middle = boundingBox.height / 2;
+
+                        if (offset > middle) {
+                            list.insertBefore(draggedItem, draggingOver.nextSibling);
+                        } else {
+                            list.insertBefore(draggedItem, draggingOver);
+                        }
+                    }
+                });
+            });
+        }
+
+        function checkDaysOfWeek() {
+            const list = document.getElementById('days-of-week-list');
+            const currentOrder = Array.from(list.children).map(item => item.getAttribute('data-day'));
+            const feedback = document.getElementById('days-of-week-feedback');
+
+            const correctOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+            let isCorrect = true;
+            for (let i = 0; i < correctOrder.length; i++) {
+                if (currentOrder[i] !== correctOrder[i]) {
+                    isCorrect = false;
+                    break;
+                }
+            }
+
+            if (isCorrect) {
+                feedback.textContent = "Correct! Well done!";
+                feedback.className = "mt-2 text-sm feedback-correct";
+            } else {
+                feedback.textContent = "Incorrect. Please try again!";
+                feedback.className = "mt-2 text-sm feedback-incorrect";
+            }
+            userAnswers['daysOfWeek'] = currentOrder; // Store user's final order
+        }
+
+        // --- Exercise 2 & 3: Seasons and Months ---
+        const northernSeasonsData = {
+            "Spring": ["March", "April", "May"],
+            "Summer": ["June", "July", "August"],
+            "Autumn (Fall)": ["September", "October", "November"],
+            "Winter": ["December", "January", "February"]
+        };
+
+        const southernSeasonsData = {
+            "Spring": ["September", "October", "November"],
+            "Summer": ["December", "January", "February"],
+            "Autumn (Fall)": ["March", "April", "May"],
+            "Winter": ["June", "July", "August"]
+        };
+
+        function renderSeasons(containerId, seasonsData, prefix) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            for (const season in seasonsData) {
+                const seasonBlock = document.createElement('div');
+                seasonBlock.className = 'bg-white p-4 rounded-lg shadow-sm border border-gray-200';
+                seasonBlock.innerHTML = `
+                    <h3 class="font-semibold text-lg text-gray-700 mb-3">${season}</h3>
+                    <div class="flex flex-col space-y-2">
+                        <input type="text" class="input-field" placeholder="Month 1" id="${prefix}-${season.toLowerCase().replace(/ /g, '-')}-1">
+                        <input type="text" class="input-field" placeholder="Month 2" id="${prefix}-${season.toLowerCase().replace(/ /g, '-')}-2">
+                        <input type="text" class="input-field" placeholder="Month 3" id="${prefix}-${season.toLowerCase().replace(/ /g, '-')}-3">
+                    </div>
+                `;
+                container.appendChild(seasonBlock);
+            }
+        }
+
+        function checkSeasons(seasonsData, prefix, feedbackId) {
+            let allCorrect = true;
+            const answers = {}; // To store user answers for the report
+
+            for (const season in seasonsData) {
+                const correctMonths = seasonsData[season].map(m => m.toLowerCase());
+                const userMonths = [];
+                let seasonCorrect = true;
+
+                for (let i = 1; i <= 3; i++) {
+                    const input = document.getElementById(`${prefix}-${season.toLowerCase().replace(/ /g, '-')}-${i}`);
+                    const userAnswer = input.value.trim().toLowerCase();
+                    userMonths.push(input.value.trim()); // Store original case for report
+
+                    if (!correctMonths.includes(userAnswer) || userMonths.filter(m => m.toLowerCase() === userAnswer).length > 1) {
+                        // Check if month is correct and not duplicated within the same season's answer
+                        seasonCorrect = false;
+                        allCorrect = false;
+                    }
+                }
+                // Also check if all correct months are present and no extra incorrect ones
+                const sortedUserMonthsLower = userMonths.map(m => m.toLowerCase()).sort();
+                const sortedCorrectMonths = correctMonths.sort();
+
+                if (sortedUserMonthsLower.length !== sortedCorrectMonths.length ||
+                    !sortedUserMonthsLower.every((val, index) => val === sortedCorrectMonths[index])) {
+                    seasonCorrect = false;
+                    allCorrect = false;
+                }
+
+                answers[season] = userMonths;
+            }
+
+            const feedback = document.getElementById(feedbackId);
+            if (allCorrect) {
+                feedback.textContent = "Correct! All seasons are matched correctly!";
+                feedback.className = "mt-2 text-sm feedback-correct";
+            } else {
+                feedback.textContent = "Incorrect. Please review your answers and try again.";
+                feedback.className = "mt-2 text-sm feedback-incorrect";
+            }
+            userAnswers[prefix + 'Seasons'] = answers;
+        }
+
+        function checkNorthernSeasons() {
+            checkSeasons(northernSeasonsData, 'northern', 'northern-seasons-feedback');
+        }
+
+        function checkSouthernSeasons() {
+            checkSeasons(southernSeasonsData, 'southern', 'southern-seasons-feedback');
+        }
+
+        // --- Exercise 4 & 5: Holidays and Dates ---
+        const holidaysData = [
+            { name: "New Year's Day", date: "January 1st" },
+            { name: "Valentine's Day", date: "February 14th" },
+            { name: "St. Patrick's Day", date: "March 17th" },
+            { name: "Easter Sunday (example)", date: "April 20th" }, // Example, as it varies
+            { name: "Memorial Day", date: "May 27th" }, // Last Monday in May (example for 2024)
+            { name: "Independence Day (USA)", date: "July 4th" },
+            { name: "Halloween", date: "October 31st" },
+            { name: "Thanksgiving Day (USA)", date: "November 28th" }, // Fourth Thursday in Nov (example for 2024)
+            { name: "Christmas Day", date: "December 25th" },
+            { name: "Boxing Day (UK)", date: "December 26th" }
+        ];
+
+        function getOrdinalSuffix(day) {
+            if (day > 3 && day < 21) return 'th'; // Covers 11th, 12th, 13th
+            switch (day % 10) {
+                case 1: return 'st';
+                case 2: return 'nd';
+                case 3: return 'rd';
+                default: return 'th';
+            }
+        }
+
+        // Function to normalize written date strings for comparison (e.g., "January 1st" -> "january 1st")
+        function normalizeWrittenDateString(dateString) {
+            return dateString.toLowerCase()
+                             .replace(/,/g, '') // Remove commas
+                             .replace(/\s+/g, ' ') // Normalize spaces
+                             .trim();
+        }
+
+        // Helper to convert a number (day) to its spoken ordinal word (e.g., 1 -> "first")
+        function convertNumberToSpokenOrdinal(dayNum) {
+            const spokenWords = {
+                1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth",
+                6: "sixth", 7: "seventh", 8: "eighth", 9: "ninth", 10: "tenth",
+                11: "eleventh", 12: "twelfth", 13: "thirteenth", 14: "fourteenth", 15: "fifteenth",
+                16: "sixteenth", 17: "seventeenth", 18: "eighteenth", 19: "nineteenth", 20: "twentieth",
+                21: "twenty-first", 22: "twenty-second", 23: "twenty-third", 24: "twenty-fourth", 25: "twenty-fifth",
+                26: "twenty-sixth", 27: "twenty-seventh", 28: "twenty-eighth", 29: "twenty-ninth", 30: "thirtieth",
+                31: "thirty-first"
+            };
+            return spokenWords[dayNum] || String(dayNum); // Fallback to number string if not found
+        }
+
+        // Function to get the normalized spoken form of a correct date for comparison
+        function getNormalizedSpokenCorrectDate(writtenDate) {
+            // Example writtenDate: "January 1st"
+            const parts = writtenDate.split(' ');
+            if (parts.length < 2) return writtenDate.toLowerCase().trim();
+
+            const month = parts[0].toLowerCase();
+            const dayString = parts[1]; // e.g., "1st", "14th"
+
+            const dayNumMatch = dayString.match(/^(\d+)(st|nd|rd|th)$/);
+            if (!dayNumMatch) {
+                // If it's already a word like "first", just use it
+                return `${month} ${dayString.toLowerCase()}`;
+            }
+
+            const dayNum = parseInt(dayNumMatch[1]);
+            const spokenDay = convertNumberToSpokenOrdinal(dayNum);
+
+            // Returns "month spokenDay" format for consistent comparison
+            return `${month} ${spokenDay}`;
+        }
+
+        // Function to normalize user's spoken input for comparison
+        function normalizeSpokenUserInput(spokenInput) {
+            let normalized = spokenInput.toLowerCase().replace(/,/g, '').replace(/\s+/g, ' ').trim();
+
+            // Case 1: "Month [spoken day]" e.g., "january first"
+            // This is the target format for comparison
+            const monthSpokenDayMatch = normalized.match(/^([a-z]+)\s+([a-z-]+)$/);
+            if (monthSpokenDayMatch) {
+                return normalized;
+            }
+
+            // Case 2: "the [spoken day] of [month]" e.g., "the first of january"
+            const theDayOfMonthMatch = normalized.match(/^the\s+([a-z-]+)\s+of\s+([a-z]+)$/);
+            if (theDayOfMonthMatch) {
+                // Reformat to "month spokenDay"
+                return `${theDayOfMonthMatch[2]} ${theDayOfMonthMatch[1]}`;
+            }
+
+            // Fallback: If input contains a number+suffix, try to convert it
+            const parts = normalized.split(' ');
+            if (parts.length >= 2) {
+                const month = parts[0];
+                let dayPart = parts[1];
+                const dayNumMatch = dayPart.match(/^(\d+)(st|nd|rd|th)$/);
+                if (dayNumMatch) {
+                    dayPart = convertNumberToSpokenOrdinal(parseInt(dayNumMatch[1]));
+                }
+                return `${month} ${dayPart}`;
+            }
+
+            return normalized; // Return as is if cannot parse
+        }
+
+
+        function renderHolidays(containerId, type) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            holidaysData.forEach((holiday, index) => {
+                const holidayBlock = document.createElement('div');
+                holidayBlock.className = 'flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 bg-white rounded-lg shadow-sm border border-gray-200';
+                holidayBlock.innerHTML = `
+                    <span class="font-semibold text-gray-700 mb-2 sm:mb-0 sm:w-1/2">${holiday.name}:</span>
+                    <div class="flex items-center w-full sm:w-1/2">
+                        <input type="text" class="input-field flex-grow" placeholder="e.g., January 1st" id="${type}-holiday-${index}">
+                        ${type === 'voice' ? `<button class="microphone-button ml-2" data-index="${index}" onclick="startVoiceRecognition(this)"><i class="fas fa-microphone"></i></button>` : ''}
+                    </div>
+                    <p id="${type}-holiday-feedback-${index}" class="text-sm mt-2 sm:mt-0 sm:ml-4 w-full sm:w-auto"></p>
+                `;
+                container.appendChild(holidayBlock);
+            });
+        }
+
+        function checkHolidaysTextInput() {
+            let allCorrect = true;
+            const answers = {};
+            holidaysData.forEach((holiday, index) => {
+                const input = document.getElementById(`text-holiday-${index}`);
+                const userAnswer = input.value.trim();
+                const feedback = document.getElementById(`text-holiday-feedback-${index}`);
+
+                const normalizedUserAnswer = normalizeWrittenDateString(userAnswer);
+                const normalizedCorrectDate = normalizeWrittenDateString(holiday.date);
+
+                if (normalizedUserAnswer === normalizedCorrectDate) {
+                    feedback.textContent = "Correct!";
+                    feedback.className = "text-sm feedback-correct";
+                } else {
+                    feedback.textContent = `Incorrect. Correct: ${holiday.date}`;
+                    feedback.className = "text-sm feedback-incorrect";
+                    allCorrect = false;
+                }
+                answers[holiday.name] = userAnswer;
+            });
+            const overallFeedback = document.getElementById('holidays-text-feedback');
+            if (allCorrect) {
+                overallFeedback.textContent = "All text input dates are correct!";
+                overallFeedback.className = "mt-2 text-sm feedback-correct";
+            } else {
+                overallFeedback.textContent = "Some dates are incorrect. Please review.";
+                overallFeedback.className = "mt-2 text-sm feedback-incorrect";
+            }
+            userAnswers['holidaysTextInput'] = answers;
+        }
+
+        // --- Voice Recognition ---
+        let recognition = null;
+        let currentVoiceInputIndex = -1;
+        let currentMicrophoneButton = null;
+
+        if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.lang = 'en-US'; // Set language to English (US)
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onstart = () => {
+                document.getElementById('voice-recognition-status').textContent = "Listening...";
+                if (currentMicrophoneButton) {
+                    currentMicrophoneButton.classList.add('recording');
+                }
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                const inputField = document.getElementById(`voice-holiday-${currentVoiceInputIndex}`);
+                if (inputField) {
+                    inputField.value = transcript;
+                }
+                document.getElementById('voice-recognition-status').textContent = `Recognized: "${transcript}"`;
+            };
+
+            recognition.onerror = (event) => {
+                document.getElementById('voice-recognition-status').textContent = `Error: ${event.error}`;
+                if (currentMicrophoneButton) {
+                    currentMicrophoneButton.classList.remove('recording');
+                }
+            };
+
+            recognition.onend = () => {
+                document.getElementById('voice-recognition-status').textContent = "Recognition ended.";
+                if (currentMicrophoneButton) {
+                    currentMicrophoneButton.classList.remove('recording');
+                }
+            };
+        } else {
+            document.getElementById('voice-recognition-status').textContent = "Voice recognition not supported in this browser.";
+            // Disable voice recognition buttons
+            document.querySelectorAll('.microphone-button').forEach(button => {
+                button.disabled = true;
+                button.style.opacity = 0.5;
+                button.style.cursor = 'not-allowed';
+            });
+        }
+
+        function startVoiceRecognition(button) {
+            if (recognition) {
+                currentVoiceInputIndex = parseInt(button.getAttribute('data-index'));
+                currentMicrophoneButton = button;
+                recognition.start();
+            } else {
+                // Using a custom message box instead of alert()
+                const messageBox = document.createElement('div');
+                messageBox.style.cssText = `
+                    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                    background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                    z-index: 1000; text-align: center;
+                `;
+                messageBox.innerHTML = `
+                    <p class="text-lg font-semibold text-gray-800 mb-4">Browser Not Supported</p>
+                    <p class="text-gray-700 mb-6">Voice recognition is not supported by your browser. Please use a browser like Chrome, Edge, or Firefox.</p>
+                    <button class="button" onclick="this.parentNode.remove()">OK</button>
+                `;
+                document.body.appendChild(messageBox);
+            }
+        }
+
+        function checkHolidaysVoiceInput() {
+            let allCorrect = true;
+            const answers = {};
+            holidaysData.forEach((holiday, index) => {
+                const input = document.getElementById(`voice-holiday-${index}`);
+                const userAnswer = input.value.trim();
+                const feedback = document.getElementById(`voice-holiday-feedback-${index}`);
+
+                // Normalize both the user's spoken input and the correct date for comparison
+                const normalizedUserSpokenAnswer = normalizeSpokenUserInput(userAnswer);
+                const normalizedCorrectSpokenDate = getNormalizedSpokenCorrectDate(holiday.date);
+
+                if (normalizedUserSpokenAnswer === normalizedCorrectSpokenDate) {
+                    feedback.textContent = "Correct!";
+                    feedback.className = "text-sm feedback-correct";
+                } else {
+                    feedback.textContent = `Incorrect. Expected: "${getNormalizedSpokenCorrectDate(holiday.date).replace(/([a-z]+)\s+([a-z-]+)/, (match, p1, p2) => p1.charAt(0).toUpperCase() + p1.slice(1) + ' ' + p2)}"`;
+                    feedback.className = "text-sm feedback-incorrect";
+                    allCorrect = false;
+                }
+                answers[holiday.name] = userAnswer;
+            });
+            const overallFeedback = document.getElementById('holidays-voice-feedback');
+            if (allCorrect) {
+                overallFeedback.textContent = "All voice input dates are correct!";
+                overallFeedback.className = "mt-2 text-sm feedback-correct";
+            } else {
+                overallFeedback.textContent = "Some dates are incorrect. Please review.";
+                overallFeedback.className = "mt-2 text-sm feedback-incorrect";
+            }
+            userAnswers['holidaysVoiceInput'] = answers;
+        }
+
+        // --- Report Generation ---
+        function generateReport() {
+            let reportContent = "English Language Practice Report\n\n";
+            reportContent += "--------------------------------------\n";
+            reportContent += "Exercise 1: Order the Days of the Week\n";
+            reportContent += "Your Order: " + (userAnswers.daysOfWeek ? userAnswers.daysOfWeek.join(', ') : 'Not attempted') + "\n\n";
+
+            reportContent += "--------------------------------------\n";
+            reportContent += "Exercise 2: Seasons and Months (Northern Hemisphere)\n";
+            if (userAnswers.northernSeasons) {
+                for (const season in userAnswers.northernSeasons) {
+                    reportContent += `${season}: ${userAnswers.northernSeasons[season].join(', ')}\n`;
+                }
+            } else {
+                reportContent += "Not attempted\n";
+            }
+            reportContent += "\n";
+
+            reportContent += "--------------------------------------\n";
+            reportContent += "Exercise 3: Seasons and Months (Southern Hemisphere)\n";
+            if (userAnswers.southernSeasons) {
+                for (const season in userAnswers.southernSeasons) {
+                    reportContent += `${season}: ${userAnswers.southernSeasons[season].join(', ')}\n`;
+                }
+            } else {
+                reportContent += "Not attempted\n";
+            }
+            reportContent += "\n";
+
+            reportContent += "--------------------------------------\n";
+            reportContent += "Exercise 4: Holidays and Dates (Text Input)\n";
+            if (userAnswers.holidaysTextInput) {
+                for (const holiday in userAnswers.holidaysTextInput) {
+                    reportContent += `${holiday}: ${userAnswers.holidaysTextInput[holiday]}\n`;
+                }
+            } else {
+                reportContent += "Not attempted\n";
+            }
+            reportContent += "\n";
+
+            reportContent += "--------------------------------------\n";
+            reportContent += "Exercise 5: Holidays and Dates (Voice Recognition)\n";
+            if (userAnswers.holidaysVoiceInput) {
+                for (const holiday in userAnswers.holidaysVoiceInput) {
+                    reportContent += `${holiday}: ${userAnswers.holidaysVoiceInput[holiday]}\n`;
+                }
+            } else {
+                reportContent += "Not attempted\n";
+            }
+            reportContent += "\n";
+
+            const blob = new Blob([reportContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'english_practice_report.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize exercises on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDaysOfWeek();
+            renderSeasons('northern-seasons', northernSeasonsData, 'northern');
+            renderSeasons('southern-seasons', southernSeasonsData, 'southern');
+            renderHolidays('holidays-text-input', 'text');
+            renderHolidays('holidays-voice-input', 'voice');
+        });
+    </script>
+</body>
+</html>
