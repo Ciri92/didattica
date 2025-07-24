@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Words - Spiegazioni ed Esercizi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- jsPDF library for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #2d3748;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2.5rem;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a365d;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 4px solid #bee3f8;
+            padding-bottom: 1rem;
+        }
+        .subsection-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #2c5282;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            padding-left: 0.75rem;
+            border-left: 6px solid #63b3ed;
+        }
+        .explanation-box {
+            background-color: #e0f2fe;
+            border-left: 6px solid #3182ce;
+            padding: 1.75rem;
+            margin-bottom: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+        }
+        .explanation-box p {
+            margin-bottom: 0.75rem;
+        }
+        .explanation-box ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .table-explanation {
+            background-color: #f7fafc;
+            border: 1px solid #ebf8ff;
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .table-explanation table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .table-explanation th, .table-explanation td {
+            border: 1px solid #cbd5e0;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .table-explanation th {
+            background-color: #e2e8f0;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .table-explanation td {
+            background-color: #ffffff;
+        }
+
+        /* Colored Bricks for Sentence Structure */
+        .sentence-example {
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f7fafc;
+            border-radius: 0.5rem;
+            border: 1px solid #ebf8ff;
+        }
+        .sentence-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            align-items: center;
+        }
+        .word-brick {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+            min-width: 60px; /* Ensure some minimum width */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        /* Define colors for bricks */
+        .color-blue { background-color: #3182ce; } /* Question Word */
+        .color-green { background-color: #38a169; } /* Auxiliary Verb / To Be */
+        .color-purple { background-color: #805ad5; } /* Subject */
+        .color-orange { background-color: #dd6b20; } /* Main Verb */
+        .color-red { background-color: #e53e3e; } /* Object / Complement */
+        .color-yellow { background-color: #d69e2e; } /* Adjective / Adverb */
+        .color-pink { background-color: #d53f8c; } /* Preposition */
+        .color-gray { background-color: #718096; } /* Other */
+
+        /* Exercise Boxes */
+        .exercise-box {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        .exercise-prompt {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #2d3748;
+        }
+        .words-to-order {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            padding: 1rem;
+            border: 2px dashed #cbd5e0;
+            border-radius: 0.5rem;
+            min-height: 80px;
+            margin-bottom: 1.5rem;
+            background-color: #f7fafc;
+        }
+        .word-item {
+            padding: 0.6rem 1.2rem;
+            background-color: #63b3ed;
+            color: white;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-weight: 500;
+        }
+        .word-item:hover {
+            background-color: #4299e1;
+            transform: translateY(-1px);
+        }
+        .word-item.selected {
+            border: 2px solid #ecc94b; /* Yellow border when selected */
+            box-shadow: 0 0 0 3px rgba(236, 201, 75, 0.5);
+        }
+        .ordered-sentence {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            padding: 1rem;
+            border: 2px solid #a0aec0;
+            border-radius: 0.5rem;
+            min-height: 80px;
+            background-color: #edf2f7;
+            margin-bottom: 1.5rem;
+        }
+        .ordered-sentence .word-item {
+            background-color: #48bb78; /* Green for placed words */
+        }
+        .ordered-sentence .word-item:hover {
+            background-color: #38a169;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center; /* Center buttons */
+        }
+        .check-button, .reset-button, .start-listening-button, .generate-pdf-button {
+            padding: 0.8rem 1.8rem;
+            border-radius: 0.6rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .check-button { background-color: #4299e1; color: white; }
+        .check-button:hover { background-color: #3182ce; transform: translateY(-2px); box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); }
+        .reset-button { background-color: #e53e3e; color: white; }
+        .reset-button:hover { background-color: #c53030; transform: translateY(-2px); box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); }
+        .start-listening-button { background-color: #319795; color: white; }
+        .start-listening-button:hover { background-color: #2c7a7b; transform: translateY(-2px); box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); }
+        .generate-pdf-button {
+            background-color: #667eea; /* Indigo */
+            color: white;
+            margin-top: 3rem;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+        .generate-pdf-button:hover {
+            background-color: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .feedback {
+            margin-top: 0.75rem;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-align: center;
+        }
+        .correct { color: #38a169; }
+        .incorrect { color: #e53e3e; }
+
+        /* Voice Input Section Specific Styles */
+        .voice-input-area {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f0f8ff;
+            border: 1px solid #b3e0ff;
+            border-radius: 0.75rem;
+        }
+        #voice-prompt {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #4a5568;
+        }
+        #voice-result {
+            margin-top: 1rem;
+            font-style: italic;
+            color: #4c51bf;
+            min-height: 30px;
+            border: 1px dashed #a7c0f1;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            background-color: #eaf5ff;
+        }
+        #voice-status {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #718096;
+        }
+        #voice-exercise-complete {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #38a169;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container">
+        <h1 class="section-title">Le "Question Words" in Inglese</h1>
+
+        <!-- Sezione 1: Spiegazione -->
+        <h2 class="subsection-title">1. Cosa sono le "Question Words"?</h2>
+        <div class="explanation-box">
+            <p>"Question Words" (o "Wh-words") sono parole che usiamo all'inizio di una domanda per chiedere informazioni specifiche. Sono fondamentali per formulare domande complete e precise in inglese.</p>
+
+            <div class="table-explanation">
+                <p class="font-semibold mb-2">Significato delle principali "Question Words":</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Question Word</th>
+                            <th>Significato</th>
+                            <th>Esempio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>What</strong></td><td>Cosa / Quale</td><td>What is your name? (Qual è il tuo nome?)</td></tr>
+                        <tr><td><strong>Who</strong></td><td>Chi</td><td>Who is that person? (Chi è quella persona?)</td></tr>
+                        <tr><td><strong>How</strong></td><td>Come</td><td>How do you go to school? (Come vai a scuola?)</td></tr>
+                        <tr><td><strong>How old</strong></td><td>Quanti anni</td><td>How old are you? (Quanti anni hai?)</td></tr>
+                        <tr><td><strong>Where</strong></td><td>Dove</td><td>Where do you live? (Dove vivi?)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3 text-gray-800">Struttura della Frase: Italiano vs. Inglese</h3>
+            <p>L'ordine delle parole in inglese è spesso diverso dall'italiano, soprattutto nelle domande. Vediamo con i "mattoncini colorati" come si costruiscono le frasi.</p>
+
+            <div class="sentence-example">
+                <p class="font-semibold">Esempio 1: "Qual è il tuo nome?" (What is your name?)</p>
+                <div class="sentence-row">
+                    <div class="word-brick color-blue">Qual</div>
+                    <div class="word-brick color-green">è</div>
+                    <div class="word-brick color-red">il tuo nome</div>
+                    <div class="word-brick color-gray">?</div>
+                </div>
+                <div class="sentence-row">
+                    <div class="word-brick color-blue">What</div>
+                    <div class="word-brick color-green">is</div>
+                    <div class="word-brick color-purple">your</div>
+                    <div class="word-brick color-red">name</div>
+                    <div class="word-brick color-gray">?</div>
+                </div>
+            </div>
+
+            <div class="sentence-example">
+                <p class="font-semibold">Esempio 2: "Chi è lui?" (Who is he?)</p>
+                <div class="sentence-row">
+                    <div class="word-brick color-blue">Chi</div>
+                    <div class="word-brick color-green">è</div>
+                    <div class="word-brick color-purple">lui</div>
+                    <div class="word-brick color-gray">?</div>
+                </div>
+                <div class="sentence-row">
+                    <div class="word-brick color-blue">Who</div>
+                    <div class="word-brick color-green">is</div>
+                    <div class="word-brick color-purple">he</div>
+                    <div class="word-brick color-gray">?</div>
+                </div>
+            </div>
+
+            <div class="sentence-example">
+                <p class="font-semibold">Esempio 3: "Dove vivi?" (Where do you live?)</p>
+                <div class="sentence-row">
+                    <div class="word-brick color-blue">Dove</div>
+                    <div class="word-brick color-orange">vivi</div>
+                    <div class="word-brick color-gray">?</div>
+                </div>
+                <div class="sentence-row">
+                    <div class="word-brick color-blue">Where</div>
+                    <div class="word-brick color-green">do</div>
+                    <div class="word-brick color-purple">you</div>
+                    <div class="word-brick color-orange">live</div>
+                    <div class="word-brick color-gray">?</div>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3 text-gray-800">Preposizioni nelle Domande</h3>
+            <p>Quando una domanda in inglese include una preposizione (come "from", "to", "with", "about"), questa si posiziona quasi sempre alla fine della frase, a differenza dell'italiano.</p>
+
+            <div class="sentence-example">
+                <p class="font-semibold">Esempio: "Da dove vieni?" (Where are you from?)</p>
+                <div class="sentence-row">
+                    <div class="word-brick color-pink">Da</div>
+                    <div class="word-brick color-blue">dove</div>
+                    <div class="word-brick color-orange">vieni</div>
+                    <div class="word-brick color-gray">?</div>
+                </div>
+                <div class="sentence-row">
+                    <div class="word-brick color-blue">Where</div>
+                    <div class="word-brick color-green">are</div>
+                    <div class="word-brick color-purple">you</div>
+                    <div class="word-brick color-pink">from</div>
+                    <div class="word-brick color-gray">?</div>
+                </div>
+            </div>
+
+            <div class="sentence-example">
+                <p class="font-semibold">Esempio: "Di cosa parli?" (What are you talking about?)</p>
+                <div class="sentence-row">
+                    <div class="word-brick color-pink">Di</div>
+                    <div class="word-brick color-blue">cosa</div>
+                    <div class="word-brick color-orange">parli</div>
+                    <div class="word-brick color-gray">?</div>
+                </div>
+                <div class="sentence-row">
+                    <div class="word-brick color-blue">What</div>
+                    <div class="word-brick color-green">are</div>
+                    <div class="word-brick color-purple">you</div>
+                    <div class="word-brick color-orange">talking</div>
+                    <div class="word-brick color-pink">about</div>
+                    <div class="word-brick color-gray">?</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione 2: Riordina le Frasi -->
+        <h2 class="subsection-title">2. Riordina le Frasi</h2>
+        <div class="exercise-box" id="reorder-ex1">
+            <p class="exercise-prompt">Riordina le parole per formare la domanda corretta:</p>
+            <p class="mb-2">1. (your / is / what / name / ?)</p>
+            <div class="words-to-order" data-words="what,is,your,name,?"></div>
+            <div class="ordered-sentence"></div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkReorderExercise('reorder-ex1', ['what', 'is', 'your', 'name', '?'])">Controlla</button>
+                <button class="reset-button" onclick="resetReorderExercise('reorder-ex1')">Reset</button>
+            </div>
+            <div class="feedback" id="reorder-ex1-feedback"></div>
+        </div>
+
+        <div class="exercise-box" id="reorder-ex2">
+            <p class="exercise-prompt">Riordina le parole per formare la domanda corretta:</p>
+            <p class="mb-2">2. (he / is / who / ?)</p>
+            <div class="words-to-order" data-words="who,is,he,?"></div>
+            <div class="ordered-sentence"></div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkReorderExercise('reorder-ex2', ['who', 'is', 'he', '?'])">Controlla</button>
+                <button class="reset-button" onclick="resetReorderExercise('reorder-ex2')">Reset</button>
+            </div>
+            <div class="feedback" id="reorder-ex2-feedback"></div>
+        </div>
+
+        <div class="exercise-box" id="reorder-ex3">
+            <p class="exercise-prompt">Riordina le parole per formare la domanda corretta:</p>
+            <p class="mb-2">3. (do / you / how / school / to / go / ?)</p>
+            <div class="words-to-order" data-words="how,do,you,go,to,school,?"></div>
+            <div class="ordered-sentence"></div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkReorderExercise('reorder-ex3', ['how', 'do', 'you', 'go', 'to', 'school', '?'])">Controlla</button>
+                <button class="reset-button" onclick="resetReorderExercise('reorder-ex3')">Reset</button>
+            </div>
+            <div class="feedback" id="reorder-ex3-feedback"></div>
+        </div>
+
+        <div class="exercise-box" id="reorder-ex4">
+            <p class="exercise-prompt">Riordina le parole per formare la domanda corretta:</p>
+            <p class="mb-2">4. (old / how / she / is / ?)</p>
+            <div class="words-to-order" data-words="how,old,is,she,?"></div>
+            <div class="ordered-sentence"></div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkReorderExercise('reorder-ex4', ['how', 'old', 'is', 'she', '?'])">Controlla</button>
+                <button class="reset-button" onclick="resetReorderExercise('reorder-ex4')">Reset</button>
+            </div>
+            <div class="feedback" id="reorder-ex4-feedback"></div>
+        </div>
+
+        <div class="exercise-box" id="reorder-ex5">
+            <p class="exercise-prompt">Riordina le parole per formare la domanda corretta:</p>
+            <p class="mb-2">5. (live / where / they / do / ?)</p>
+            <div class="words-to-order" data-words="where,do,they,live,?"></div>
+            <div class="ordered-sentence"></div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkReorderExercise('reorder-ex5', ['where', 'do', 'they', 'live', '?'])">Controlla</button>
+                <button class="reset-button" onclick="resetReorderExercise('reorder-ex5')">Reset</button>
+            </div>
+            <div class="feedback" id="reorder-ex5-feedback"></div>
+        </div>
+
+        <div class="exercise-box" id="reorder-ex6">
+            <p class="exercise-prompt">Riordina le parole per formare la domanda corretta:</p>
+            <p class="mb-2">6. (your / is / what / favorite / color / ?)</p>
+            <div class="words-to-order" data-words="what,is,your,favorite,color,?"></div>
+            <div class="ordered-sentence"></div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkReorderExercise('reorder-ex6', ['what', 'is', 'your', 'favorite', 'color', '?'])">Controlla</button>
+                <button class="reset-button" onclick="resetReorderExercise('reorder-ex6')">Reset</button>
+            </div>
+            <div class="feedback" id="reorder-ex6-feedback"></div>
+        </div>
+
+        <div class="exercise-box" id="reorder-ex7">
+            <p class="exercise-prompt">Riordina le parole per formare la domanda corretta:</p>
+            <p class="mb-2">7. (are / you / how / today / ?)</p>
+            <div class="words-to-order" data-words="how,are,you,today,?"></div>
+            <div class="ordered-sentence"></div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkReorderExercise('reorder-ex7', ['how', 'are', 'you', 'today', '?'])">Controlla</button>
+                <button class="reset-button" onclick="resetReorderExercise('reorder-ex7')">Reset</button>
+            </div>
+            <div class="feedback" id="reorder-ex7-feedback"></div>
+        </div>
+
+        <!-- Sezione 3: Riordina le Frasi con Preposizioni -->
+        <h2 class="subsection-title">3. Riordina le Frasi con Preposizioni</h2>
+        <div class="exercise-box" id="reorder-prep-ex1">
+            <p class="exercise-prompt">Riordina le parole per formare la domanda corretta (con preposizione):</p>
+            <p class="mb-2">1. (are / from / you / where / ?)</p>
+            <div class="words-to-order" data-words="where,are,you,from,?"></div>
+            <div class="ordered-sentence"></div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkReorderExercise('reorder-prep-ex1', ['where', 'are', 'you', 'from', '?'])">Controlla</button>
+                <button class="reset-button" onclick="resetReorderExercise('reorder-prep-ex1')">Reset</button>
+            </div>
+            <div class="feedback" id="reorder-prep-ex1-feedback"></div>
+        </div>
+
+        <div class="exercise-box" id="reorder-prep-ex2">
+            <p class="exercise-prompt">Riordina le parole per formare la domanda corretta (con preposizione):</p>
+            <p class="mb-2">2. (are / about / talking / you / what / ?)</p>
+            <div class="words-to-order" data-words="what,are,you,talking,about,?"></div>
+            <div class="ordered-sentence"></div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkReorderExercise('reorder-prep-ex2', ['what', 'are', 'you', 'talking', 'about', '?'])">Controlla</button>
+                <button class="reset-button" onclick="resetReorderExercise('reorder-prep-ex2')">Reset</button>
+            </div>
+            <div class="feedback" id="reorder-prep-ex2-feedback"></div>
+        </div>
+
+        <div class="exercise-box" id="reorder-prep-ex3">
+            <p class="exercise-prompt">Riordina le parole per formare la domanda corretta (con preposizione):</p>
+            <p class="mb-2">3. (are / looking / who / for / you / ?)</p>
+            <div class="words-to-order" data-words="who,are,you,looking,for,?"></div>
+            <div class="ordered-sentence"></div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkReorderExercise('reorder-prep-ex3', ['who', 'are', 'you', 'looking', 'for', '?'])">Controlla</button>
+                <button class="reset-button" onclick="resetReorderExercise('reorder-prep-ex3')">Reset</button>
+            </div>
+            <div class="feedback" id="reorder-prep-ex3-feedback"></div>
+        </div>
+
+        <div class="exercise-box" id="reorder-prep-ex4">
+            <p class="exercise-prompt">Riordina le parole per formare la domanda corretta (con preposizione):</p>
+            <p class="mb-2">4. (do / you / with / go / who / ?)</p>
+            <div class="words-to-order" data-words="who,do,you,go,with,?"></div>
+            <div class="ordered-sentence"></div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkReorderExercise('reorder-prep-ex4', ['who', 'do', 'you', 'go', 'with', '?'])">Controlla</button>
+                <button class="reset-button" onclick="resetReorderExercise('reorder-prep-ex4')">Reset</button>
+            </div>
+            <div class="feedback" id="reorder-prep-ex4-feedback"></div>
+        </div>
+
+        <div class="exercise-box" id="reorder-prep-ex5">
+            <p class="exercise-prompt">Riordina le parole per formare la domanda corretta (con preposizione):</p>
+            <p class="mb-2">5. (are / from / they / where / ?)</p>
+            <div class="words-to-order" data-words="where,are,they,from,?"></div>
+            <div class="ordered-sentence"></div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkReorderExercise('reorder-prep-ex5', ['where', 'are', 'they', 'from', '?'])">Controlla</button>
+                <button class="reset-button" onclick="resetReorderExercise('reorder-prep-ex5')">Reset</button>
+            </div>
+            <div class="feedback" id="reorder-prep-ex5-feedback"></div>
+        </div>
+
+        <!-- Sezione 4: Formula la Domanda (Input Vocale) -->
+        <h2 class="subsection-title">4. Formula la Domanda (Input Vocale)</h2>
+        <div class="exercise-box voice-input-area">
+            <p class="exercise-prompt">Formula la domanda in inglese usando la tua voce. Clicca su "Inizia ad ascoltare" e pronuncia la domanda.</p>
+            <div id="voice-prompt-container">
+                <p id="voice-prompt" class="text-2xl text-indigo-700">Prompt: "Sei felice?"</p>
+            </div>
+            <button class="start-listening-button" id="start-listening-btn" onclick="startVoiceRecognition()">Inizia ad ascoltare</button>
+            <p id="voice-result" class="mt-4 text-lg text-gray-700">Testo riconosciuto: </p>
+            <p id="voice-status" class="text-sm text-gray-500"></p>
+            <div class="feedback" id="voice-feedback"></div>
+            <div id="voice-exercise-complete" style="display:none;">Esercizio completato!</div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkVoiceAnswer()">Controlla Voce</button>
+                <button class="reset-button" onclick="resetVoiceExercise()">Reset Voce</button>
+                <button class="start-listening-button" id="next-voice-btn" onclick="nextVoicePrompt()">Prossima Domanda</button>
+            </div>
+        </div>
+
+        <!-- Pulsante per generare il PDF -->
+        <button class="generate-pdf-button" onclick="generateResultsPdf()">I miei risultati (PDF)</button>
+
+    </div>
+
+    <script>
+        // Global storage for results for PDF generation
+        const allResults = {
+            reorder: {},
+            reorderPrep: {},
+            voice: {}
+        };
+
+        // --- Utility Functions ---
+        function normalizeText(text) {
+            return text.toLowerCase().trim().replace(/[.,!?;]/g, '');
+        }
+
+        function displayFeedback(elementId, isCorrect, message = '') {
+            const feedbackElement = document.getElementById(elementId);
+            if (feedbackElement) {
+                feedbackElement.textContent = message;
+                feedbackElement.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            }
+        }
+
+        // --- Section 2 & 3: Reorder Exercises Logic ---
+        let selectedWordItem = null;
+
+        function initializeReorderExercise(exerciseId) {
+            const exerciseBox = document.getElementById(exerciseId);
+            const wordsToOrderDiv = exerciseBox.querySelector('.words-to-order');
+            const orderedSentenceDiv = exerciseBox.querySelector('.ordered-sentence');
+            const words = wordsToOrderDiv.dataset.words.split(',');
+
+            // Clear previous content
+            wordsToOrderDiv.innerHTML = '';
+            orderedSentenceDiv.innerHTML = '';
+
+            // Shuffle words
+            const shuffledWords = [...words].sort(() => Math.random() - 0.5);
+
+            shuffledWords.forEach(word => {
+                const wordItem = document.createElement('div');
+                wordItem.className = 'word-item';
+                wordItem.textContent = word;
+                wordItem.onclick = () => selectWord(wordItem, wordsToOrderDiv, orderedSentenceDiv);
+                wordsToOrderDiv.appendChild(wordItem);
+            });
+
+            // Store initial state for reset
+            exerciseBox.dataset.initialWords = wordsToOrderDiv.innerHTML;
+        }
+
+        function selectWord(wordItem, sourceDiv, targetDiv) {
+            if (sourceDiv.classList.contains('words-to-order')) {
+                // Moving from words-to-order to ordered-sentence
+                targetDiv.appendChild(wordItem);
+                wordItem.onclick = () => moveWordBack(wordItem, sourceDiv, targetDiv);
+            } else {
+                // Moving from ordered-sentence back to words-to-order
+                sourceDiv.appendChild(wordItem);
+                wordItem.onclick = () => selectWord(wordItem, sourceDiv, targetDiv);
+            }
+            selectedWordItem = null; // Clear selection after move
+            // Optional: Remove selected class from all words
+            document.querySelectorAll('.word-item.selected').forEach(item => item.classList.remove('selected'));
+        }
+
+        function moveWordBack(wordItem, originalSourceDiv, currentParentDiv) {
+            originalSourceDiv.appendChild(wordItem);
+            wordItem.onclick = () => selectWord(wordItem, originalSourceDiv, currentParentDiv);
+            selectedWordItem = null;
+            document.querySelectorAll('.word-item.selected').forEach(item => item.classList.remove('selected'));
+        }
+
+
+        function checkReorderExercise(exerciseId, correctOrder) {
+            const exerciseBox = document.getElementById(exerciseId);
+            const orderedSentenceDiv = exerciseBox.querySelector('.ordered-sentence');
+            const userOrder = Array.from(orderedSentenceDiv.children).map(item => item.textContent.trim());
+            const feedbackId = `${exerciseId}-feedback`;
+
+            const isCorrect = userOrder.join(',') === correctOrder.join(',');
+            const userAnswerText = userOrder.join(' ');
+            const correctAnswerText = correctOrder.join(' ');
+
+            displayFeedback(feedbackId, isCorrect, isCorrect ? 'Corretto!' : 'Sbagliato. Riprova.');
+
+            // Store results for PDF
+            const exerciseType = exerciseId.includes('reorder-prep') ? 'reorderPrep' : 'reorder';
+            allResults[exerciseType][exerciseId] = {
+                question: exerciseBox.querySelector('p:nth-of-type(2)').textContent.trim(), // Get the (word / is / what / name / ?) part
+                userAnswer: userAnswerText,
+                correctAnswer: correctAnswerText,
+                isCorrect: isCorrect
+            };
+        }
+
+        function resetReorderExercise(exerciseId) {
+            const exerciseBox = document.getElementById(exerciseId);
+            const wordsToOrderDiv = exerciseBox.querySelector('.words-to-order');
+            const orderedSentenceDiv = exerciseBox.querySelector('.ordered-sentence');
+            const feedbackElement = document.getElementById(`${exerciseId}-feedback`);
+
+            // Clear ordered sentence
+            orderedSentenceDiv.innerHTML = '';
+
+            // Re-initialize words in words-to-order div
+            initializeReorderExercise(exerciseId);
+
+            // Clear feedback
+            if (feedbackElement) {
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback';
+            }
+        }
+
+        // Initialize all reorder exercises on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.words-to-order').forEach(div => {
+                initializeReorderExercise(div.closest('.exercise-box').id);
+            });
+        });
+
+        // --- Section 4: Voice Input Logic ---
+        const voicePrompts = [
+            { prompt: "Sei felice?", correct: "are you happy" },
+            { prompt: "È un dottore?", correct: "is he a doctor" },
+            { prompt: "Sono stanchi?", correct: "are they tired" },
+            { prompt: "Non è italiano?", correct: "isn't he italian" },
+            { prompt: "Siamo pronti?", correct: "are we ready" }
+        ];
+        const MAX_VOICE_PROMPTS = 5; // Set the limit for voice prompts
+        let currentVoicePromptIndex = 0;
+        let recognition;
+        let voiceRecognitionActive = false;
+
+        function setupVoiceRecognition() {
+            if (!('webkitSpeechRecognition' in window)) {
+                document.getElementById('voice-status').textContent = 'Spiacente, il tuo browser non supporta il riconoscimento vocale.';
+                document.getElementById('start-listening-btn').disabled = true;
+                document.getElementById('next-voice-btn').disabled = true; // Disable next button too
+                return;
+            }
+
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US'; // Set language for recognition to English
+
+            recognition.onstart = () => {
+                voiceRecognitionActive = true;
+                document.getElementById('voice-status').textContent = 'Ascoltando...';
+                document.getElementById('start-listening-btn').textContent = 'Ascoltando...';
+                document.getElementById('start-listening-btn').disabled = true;
+                document.getElementById('next-voice-btn').disabled = true; // Disable next during listening
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('voice-result').textContent = `Testo riconosciuto: ${transcript}`;
+                document.getElementById('voice-status').textContent = 'Riconoscimento completato.';
+                checkVoiceAnswer(transcript); // Automatically check after recognition
+            };
+
+            recognition.onerror = (event) => {
+                voiceRecognitionActive = false;
+                document.getElementById('voice-status').textContent = `Errore riconoscimento vocale: ${event.error}`;
+                document.getElementById('start-listening-btn').textContent = 'Inizia ad ascoltare';
+                document.getElementById('start-listening-btn').disabled = false;
+                if (currentVoicePromptIndex < MAX_VOICE_PROMPTS) { // Only enable if not finished
+                    document.getElementById('next-voice-btn').disabled = false;
+                }
+            };
+
+            recognition.onend = () => {
+                voiceRecognitionActive = false;
+                document.getElementById('start-listening-btn').textContent = 'Inizia ad ascoltare';
+                document.getElementById('start-listening-btn').disabled = false;
+                if (currentVoicePromptIndex < MAX_VOICE_PROMPTS) { // Only enable if not finished
+                    document.getElementById('next-voice-btn').disabled = false;
+                }
+            };
+        }
+
+        function startVoiceRecognition() {
+            if (recognition && !voiceRecognitionActive && currentVoicePromptIndex < MAX_VOICE_PROMPTS) {
+                document.getElementById('voice-result').textContent = 'Testo riconosciuto: ';
+                document.getElementById('voice-feedback').textContent = '';
+                recognition.start();
+            } else if (currentVoicePromptIndex >= MAX_VOICE_PROMPTS) {
+                document.getElementById('voice-status').textContent = 'L\'esercizio è completo!';
+            }
+        }
+
+        function checkVoiceAnswer(transcript = null) {
+            if (currentVoicePromptIndex >= MAX_VOICE_PROMPTS) return; // Prevent checking if exercise is complete
+
+            const currentPrompt = voicePrompts[currentVoicePromptIndex];
+            const userAnswer = normalizeText(transcript || document.getElementById('voice-result').textContent.replace('Testo riconosciuto: ', ''));
+            const isCorrect = userAnswer === normalizeText(currentPrompt.correct);
+
+            displayFeedback('voice-feedback', isCorrect, isCorrect ? 'Corretto!' : `Sbagliato. La risposta corretta è: "${currentPrompt.correct}".`);
+
+            // Store results for PDF
+            allResults.voice[`voice-q${currentVoicePromptIndex + 1}`] = {
+                question: currentPrompt.prompt,
+                userAnswer: userAnswer,
+                correctAnswer: currentPrompt.correct,
+                isCorrect: isCorrect
+            };
+        }
+
+        function nextVoicePrompt() {
+            if (currentVoicePromptIndex < MAX_VOICE_PROMPTS - 1) {
+                currentVoicePromptIndex++;
+                document.getElementById('voice-prompt').textContent = `Prompt: "${voicePrompts[currentVoicePromptIndex].prompt}"`;
+                resetVoiceExercise();
+            } else {
+                // Exercise is complete
+                document.getElementById('voice-prompt').textContent = 'Esercizio completato!';
+                document.getElementById('voice-exercise-complete').style.display = 'block';
+                document.getElementById('start-listening-btn').disabled = true;
+                document.getElementById('next-voice-btn').disabled = true;
+                document.getElementById('voice-status').textContent = '';
+                document.getElementById('voice-result').textContent = '';
+                document.getElementById('voice-feedback').textContent = '';
+            }
+        }
+
+        function resetVoiceExercise() {
+            document.getElementById('voice-result').textContent = 'Testo riconosciuto: ';
+            document.getElementById('voice-status').textContent = '';
+            document.getElementById('voice-feedback').textContent = '';
+            document.getElementById('voice-exercise-complete').style.display = 'none'; // Hide completion message
+            if (currentVoicePromptIndex < MAX_VOICE_PROMPTS) {
+                 document.getElementById('start-listening-btn').disabled = false;
+                 document.getElementById('next-voice-btn').disabled = false;
+            }
+        }
+
+        // Initialize voice recognition on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setupVoiceRecognition();
+            // Set initial prompt
+            document.getElementById('voice-prompt').textContent = `Prompt: "${voicePrompts[currentVoicePromptIndex].prompt}"`;
+        });
+
+        // --- PDF Generation Function ---
+        function generateResultsPdf() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            let y = 10; // Y-coordinate for text placement
+            const margin = 10;
+            const lineHeight = 7;
+
+            doc.setFontSize(22);
+            doc.text("I Tuoi Risultati - Question Words", doc.internal.pageSize.width / 2, y, { align: "center" });
+            y += 15;
+
+            // Helper to add page if content overflows
+            const checkPageBreak = () => {
+                if (y + lineHeight * 5 > doc.internal.pageSize.height - margin) { // Estimate space needed for next question
+                    doc.addPage();
+                    y = margin;
+                }
+            };
+
+            // Section 2: Reorder Exercises
+            doc.setFontSize(18);
+            doc.text("Sezione 2: Riordina le Frasi", margin, y);
+            y += 10;
+            doc.setFontSize(12);
+            // Iterate through the reorder exercises by their IDs
+            const reorderExerciseIds = ['reorder-ex1', 'reorder-ex2', 'reorder-ex3', 'reorder-ex4', 'reorder-ex5', 'reorder-ex6', 'reorder-ex7'];
+            reorderExerciseIds.forEach(exerciseId => {
+                if (allResults.reorder[exerciseId]) { // Only include if the exercise was attempted
+                    checkPageBreak();
+                    const result = allResults.reorder[exerciseId];
+                    doc.text(`Domanda: ${result.question}`, margin, y);
+                    y += lineHeight;
+                    doc.text(`La tua risposta: ${result.userAnswer} (${result.isCorrect ? 'Corretto' : 'Sbagliato'})`, margin + 5, y);
+                    y += lineHeight;
+                    doc.text(`Risposta corretta: ${result.correctAnswer}`, margin + 5, y);
+                    y += lineHeight * 2;
+                }
+            });
+
+
+            // Section 3: Reorder with Prepositions Exercises
+            doc.setFontSize(18);
+            checkPageBreak();
+            doc.text("Sezione 3: Riordina le Frasi con Preposizioni", margin, y);
+            y += 10;
+            doc.setFontSize(12);
+            // Iterate through the reorder with prepositions exercises by their IDs
+            const reorderPrepExerciseIds = ['reorder-prep-ex1', 'reorder-prep-ex2', 'reorder-prep-ex3', 'reorder-prep-ex4', 'reorder-prep-ex5'];
+            reorderPrepExerciseIds.forEach(exerciseId => {
+                if (allResults.reorderPrep[exerciseId]) { // Only include if the exercise was attempted
+                    checkPageBreak();
+                    const result = allResults.reorderPrep[exerciseId];
+                    doc.text(`Domanda: ${result.question}`, margin, y);
+                    y += lineHeight;
+                    doc.text(`La tua risposta: ${result.userAnswer} (${result.isCorrect ? 'Corretto' : 'Sbagliato'})`, margin + 5, y);
+                    y += lineHeight;
+                    doc.text(`Risposta corretta: ${result.correctAnswer}`, margin + 5, y);
+                    y += lineHeight * 2;
+                }
+            });
+
+            // Section 4: Voice Input Exercises
+            doc.setFontSize(18);
+            checkPageBreak();
+            doc.text("Sezione 4: Formula la Domanda (Input Vocale)", margin, y);
+            y += 10;
+            doc.setFontSize(12);
+            // Iterate through the voice input exercises by their IDs
+            for (let i = 1; i <= MAX_VOICE_PROMPTS; i++) { // Use MAX_VOICE_PROMPTS for iteration
+                const exerciseId = `voice-q${i}`;
+                if (allResults.voice[exerciseId]) { // Only include if the exercise was attempted
+                    checkPageBreak();
+                    const result = allResults.voice[exerciseId];
+                    doc.text(`Prompt: ${result.question}`, margin, y);
+                    y += lineHeight;
+                    doc.text(`La tua risposta: ${result.userAnswer} (${result.isCorrect ? 'Corretto' : 'Sbagliato'})`, margin + 5, y);
+                    y += lineHeight;
+                    doc.text(`Risposta corretta: ${result.correctAnswer}`, margin + 5, y);
+                    y += lineHeight * 2;
+                }
+            }
+
+            doc.save('I_Miei_Risultati_Question_Words.pdf');
+        }
+    </script>
+</body>
+</html>
