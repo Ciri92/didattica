@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Verbo To Be - Spiegazioni ed Esercizi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- jsPDF library for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            color: #2d3748; /* Dark gray text */
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 1rem; /* More rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Enhanced shadow */
+            padding: 2.5rem;
+        }
+        .section-title {
+            font-size: 2.5rem; /* Larger title */
+            font-weight: 700;
+            color: #1a365d; /* Darker blue for titles */
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 4px solid #bee3f8; /* Thicker, lighter blue underline */
+            padding-bottom: 1rem;
+        }
+        .subsection-title {
+            font-size: 2rem; /* Larger subsection title */
+            font-weight: 600;
+            color: #2c5282; /* Medium blue for subsection titles */
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            padding-left: 0.75rem;
+            border-left: 6px solid #63b3ed; /* Accent border */
+        }
+        .explanation-box {
+            background-color: #e0f2fe; /* Very light blue */
+            border-left: 6px solid #3182ce; /* Stronger blue border */
+            padding: 1.75rem;
+            margin-bottom: 2rem;
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06); /* Inner shadow for depth */
+        }
+        .explanation-box p {
+            margin-bottom: 0.75rem;
+        }
+        .explanation-box ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .exercise-box {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Soft shadow */
+        }
+        .exercise-question {
+            margin-bottom: 1.25rem;
+        }
+        .exercise-question p {
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        .exercise-question input[type="text"] {
+            border: 1px solid #a0aec0; /* Medium gray border */
+            padding: 0.6rem;
+            border-radius: 0.375rem; /* Slightly rounded */
+            width: calc(100% - 10px); /* Adjust width for padding */
+            max-width: 350px;
+            font-size: 1rem;
+        }
+        .exercise-question select {
+            border: 1px solid #a0aec0;
+            padding: 0.6rem;
+            border-radius: 0.375rem;
+            background-color: white;
+            width: auto; /* Auto width for select */
+            min-width: 120px;
+            font-size: 1rem;
+        }
+        .button-group {
+            display: flex;
+            gap: 1rem; /* Space between buttons */
+            margin-top: 1.5rem;
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+        }
+        .check-button, .reset-button, .generate-pdf-button { /* Added .generate-pdf-button */
+            padding: 0.8rem 1.8rem;
+            border-radius: 0.6rem; /* More rounded buttons */
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out; /* Smooth transition for all properties */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Button shadow */
+        }
+        .check-button {
+            background-color: #4299e1; /* Blue */
+            color: white;
+        }
+        .check-button:hover {
+            background-color: #3182ce; /* Darker blue on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        .reset-button {
+            background-color: #e53e3e; /* Red */
+            color: white;
+        }
+        .reset-button:hover {
+            background-color: #c53030; /* Darker red on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        .generate-pdf-button { /* Styling for the new PDF button */
+            background-color: #319795; /* Teal */
+            color: white;
+            margin-top: 2.5rem; /* More space from exercises */
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            display: block; /* Center the button */
+        }
+        .generate-pdf-button:hover {
+            background-color: #2c7a7b; /* Darker teal on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        .feedback {
+            margin-top: 0.75rem;
+            font-weight: 700; /* Bolder feedback */
+            font-size: 1.05rem;
+        }
+        .correct {
+            color: #38a169; /* Green */
+        }
+        .incorrect {
+            color: #e53e3e; /* Red */
+        }
+        /* Removed .answer-key styles as it's no longer displayed on page */
+        .table-explanation {
+            background-color: #f7fafc;
+            border: 1px solid #ebf8ff;
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .table-explanation table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .table-explanation th, .table-explanation td {
+            border: 1px solid #cbd5e0;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .table-explanation th {
+            background-color: #e2e8f0;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .table-explanation td {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container">
+        <h1 class="section-title">Il Verbo "To Be" in Inglese</h1>
+
+        <!-- Sezione To Be (Forma Affermativa) -->
+        <h2 class="subsection-title">1. Forma Affermativa</h2>
+        <div class="explanation-box">
+            <p>Il verbo "to be" è uno dei verbi più importanti in inglese e corrisponde al verbo "essere" in italiano. Lo usiamo per parlare di:</p>
+            <ul class="list-disc list-inside ml-4">
+                <li><strong>Identità o descrizione:</strong> "I'm English." (Sono inglese.)</li>
+                <li><strong>Relazioni:</strong> "They're my friends." (Sono i miei amici.)</li>
+                <li><strong>Età:</strong> "I'm 12." (Ho 12 anni.) - Attenzione! In italiano usiamo "avere" per l'età, in inglese sempre "to be".</li>
+                <li><strong>Condizioni fisiche o stati d'animo:</strong> "She's beautiful." (È bella.) "I'm cold." (Ho freddo.)</li>
+            </ul>
+
+            <div class="table-explanation">
+                <p>Ecco le forme estese e contratte del verbo "to be" nella forma affermativa:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Forma Estesa</th>
+                            <th>Forma Contratta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>I am</td><td>I'm</td></tr>
+                        <tr><td>You are</td><td>You're</td></tr>
+                        <tr><td>He is</td><td>He's</td></tr>
+                        <tr><td>She is</td><td>She's</td></tr>
+                        <tr><td>It is</td><td>It's</td></tr>
+                        <tr><td>We are</td><td>We're</td></tr>
+                        <tr><td>You are</td><td>You're</td></tr>
+                        <tr><td>They are</td><td>They're</td></tr>
+                    </tbody>
+                </table>
+                <p class="mt-2 text-sm text-gray-700">Le forme contratte sono molto comuni nel linguaggio parlato e informale. Ricorda che le forme contratte al plurale (We're, You're, They're) si usano solo con i pronomi soggetto, non con nomi propri o comuni (es. "Jamie and Leyla are brother and sister" - non "Jamie and Leyla're").</p>
+            </div>
+
+            <p class="mt-4"><strong>Casi particolari con "to be":</strong></p>
+            <ul class="list-disc list-inside ml-4">
+                <li>be cold (avere freddo)</li>
+                <li>be hot (avere caldo)</li>
+                <li>be hungry (avere fame)</li>
+                <li>be thirsty (avere sete)</li>
+                <li>be sleepy (avere sonno)</li>
+                <li>be right/wrong (avere ragione/torto)</li>
+                <li>be afraid of (avere paura di)</li>
+                <li>be in a hurry (avere fretta)</li>
+            </ul>
+        </div>
+
+        <div class="exercise-box">
+            <h3 class="text-xl font-semibold mb-4">Esercizio A1: Completa le frasi con la forma corretta del verbo "to be" (estesa o contratta).</h3>
+            <div class="exercise-question" id="exA1-q1">
+                <p>1. My name <input type="text" id="exA1-q1-input" class="rounded-md w-24" placeholder="is/am/are"> Sarah.</p>
+                <div id="exA1-q1-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exA1-q2">
+                <p>2. They <input type="text" id="exA1-q2-input" class="rounded-md w-24" placeholder="is/am/are"> from Italy.</p>
+                <div id="exA1-q2-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exA1-q3">
+                <p>3. He <input type="text" id="exA1-q3-input" class="rounded-md w-24" placeholder="is/am/are"> a doctor.</p>
+                <div id="exA1-q3-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exA1-q4">
+                <p>4. We <input type="text" id="exA1-q4-input" class="rounded-md w-24" placeholder="is/am/are"> very happy today.</p>
+                <div id="exA1-q4-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exA1-q5">
+                <p>5. I <input type="text" id="exA1-q5-input" class="rounded-md w-24" placeholder="is/am/are"> 15 years old.</p>
+                <div id="exA1-q5-feedback" class="feedback"></div>
+            </div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkExerciseA1()">Controlla Risposte</button>
+                <button class="reset-button" onclick="resetExerciseA1()">Reset</button>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <h3 class="text-xl font-semibold mb-4">Esercizio A2: Traduci le seguenti frasi in inglese.</h3>
+            <div class="exercise-question" id="exA2-q1">
+                <p>1. Ho fame. <input type="text" id="exA2-q1-input" class="rounded-md" placeholder="La tua risposta"></p>
+                <div id="exA2-q1-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exA2-q2">
+                <p>2. Lei ha ragione. <input type="text" id="exA2-q2-input" class="rounded-md" placeholder="La tua risposta"></p>
+                <div id="exA2-q2-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exA2-q3">
+                <p>3. Loro hanno sonno. <input type="text" id="exA2-q3-input" class="rounded-md" placeholder="La tua risposta"></p>
+                <div id="exA2-q3-feedback" class="feedback"></div>
+            </div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkExerciseA2()">Controlla Risposte</button>
+                <button class="reset-button" onclick="resetExerciseA2()">Reset</button>
+            </div>
+        </div>
+
+        <!-- Sezione To Be (Forma Negativa) -->
+        <h2 class="subsection-title">2. Forma Negativa</h2>
+        <div class="explanation-box">
+            <p>Per formare la negativa del verbo "to be", basta aggiungere la parola "not" dopo la forma del verbo.</p>
+            <div class="table-explanation">
+                <p>Ecco le forme estese e contratte del verbo "to be" nella forma negativa:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Forma Estesa</th>
+                            <th>Forma Contratta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>I am not</td><td>I'm not</td></tr>
+                        <tr><td>You are not</td><td>You aren't</td></tr>
+                        <tr><td>He is not</td><td>He isn't</td></tr>
+                        <tr><td>She is not</td><td>She isn't</td></tr>
+                        <tr><td>It is not</td><td>It isn't</td></tr>
+                        <tr><td>We are not</td><td>We aren't</td></tr>
+                        <tr><td>You are not</td><td>You aren't</td></tr>
+                        <tr><td>They are not</td><td>They aren't</td></tr>
+                    </tbody>
+                </table>
+                <p class="mt-2 text-sm text-gray-700">La forma contratta è quella più usata nel linguaggio quotidiano.</p>
+            </div>
+            <p class="mt-4">Esempi:</p>
+            <ul class="list-disc list-inside ml-4">
+                <li>"This is not my car." (Questa non è la mia macchina.)</li>
+                <li>"They aren't at school today." (Non sono a scuola oggi.)</li>
+            </ul>
+        </div>
+
+        <div class="exercise-box">
+            <h3 class="text-xl font-semibold mb-4">Esercizio N1: Riscrivi le frasi usando la forma negativa contratta del verbo "to be".</h3>
+            <div class="exercise-question" id="exN1-q1">
+                <p>1. I am happy. <input type="text" id="exN1-q1-input" class="rounded-md" placeholder="La tua risposta"></p>
+                <div id="exN1-q1-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exN1-q2">
+                <p>2. She is a teacher. <input type="text" id="exN1-q2-input" class="rounded-md" placeholder="La tua risposta"></p>
+                <div id="exN1-q2-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exN1-q3">
+                <p>3. We are friends. <input type="text" id="exN1-q3-input" class="rounded-md" placeholder="La tua risposta"></p>
+                <div id="exN1-q3-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exN1-q4">
+                <p>4. It is cold outside. <input type="text" id="exN1-q4-input" class="rounded-md" placeholder="La tua risposta"></p>
+                <div id="exN1-q4-feedback" class="feedback"></div>
+            </div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkExerciseN1()">Controlla Risposte</button>
+                <button class="reset-button" onclick="resetExerciseN1()">Reset</button>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <h3 class="text-xl font-semibold mb-4">Esercizio N2: Completa le frasi con la forma negativa contratta di "to be".</h3>
+            <div class="exercise-question" id="exN2-q1">
+                <p>1. My parents <input type="text" id="exN2-q1-input" class="rounded-md w-28" placeholder="aren't/isn't"> at home.</p>
+                <div id="exN2-q1-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exN2-q2">
+                <p>2. I <input type="text" id="exN2-q2-input" class="rounded-md w-28" placeholder="am not/isn't"> tired.</p>
+                <div id="exN2-q2-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exN2-q3">
+                <p>3. This book <input type="text" id="exN2-q3-input" class="rounded-md w-28" placeholder="isn't/aren't"> interesting.</p>
+                <div id="exN2-q3-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exN2-q4">
+                <p>4. You <input type="text" id="exN2-q4-input" class="rounded-md w-28" placeholder="aren't/isn't"> wrong.</p>
+                <div id="exN2-q4-feedback" class="feedback"></div>
+            </div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkExerciseN2()">Controlla Risposte</button>
+                <button class="reset-button" onclick="resetExerciseN2()">Reset</button>
+            </div>
+        </div>
+
+        <!-- Sezione To Be (Forma Interrogativa) -->
+        <h2 class="subsection-title">3. Forma Interrogativa e Risposte Brevi</h2>
+        <div class="explanation-box">
+            <p>Per fare una domanda con il verbo "to be", invertiamo l'ordine del soggetto e del verbo. Il verbo "to be" va prima del soggetto.</p>
+            <div class="table-explanation">
+                <p>Ecco le forme interrogative del verbo "to be":</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Domanda</th>
+                            <th>Risposta Breve Affermativa</th>
+                            <th>Risposta Breve Negativa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Am I?</td><td>Yes, I am.</td><td>No, I'm not.</td></tr>
+                        <tr><td>Are you?</td><td>Yes, you are.</td><td>No, you aren't.</td></tr>
+                        <tr><td>Is he?</td><td>Yes, he is.</td><td>No, he isn't.</td></tr>
+                        <tr><td>Is she?</td><td>Yes, she is.</td><td>No, she isn't.</td></tr>
+                        <tr><td>Is it?</td><td>Yes, it is.</td><td>No, it isn't.</td></tr>
+                        <tr><td>Are we?</td><td>Yes, we are.</td><td>No, we aren't.</td></tr>
+                        <tr><td>Are you?</td><td>Yes, you are.</td><td>No, you aren't.</td></tr>
+                        <tr><td>Are they?</td><td>Yes, they are.</td><td>No, they aren't.</td></tr>
+                    </tbody>
+                </table>
+                <p class="mt-2 text-sm text-gray-700">Nelle risposte brevi affermative, usiamo sempre la forma estesa (es. "Yes, he is."). Nelle risposte brevi negative, usiamo la forma contratta (es. "No, it isn't.").</p>
+            </div>
+            <p class="mt-4">Esempi:</p>
+            <ul class="list-disc list-inside ml-4">
+                <li>"Is he the new director?" (È il nuovo direttore?)</li>
+                <li>"Are they my books?" (Sono i miei libri?)</li>
+                <li>"Is Simon your son? Yes, he is." (Simon è tuo figlio? Sì.)</li>
+                <li>"Is it a good book? No, it isn't." (È un buon libro? No.)</li>
+            </ul>
+        </div>
+
+        <div class="exercise-box">
+            <h3 class="text-xl font-semibold mb-4">Esercizio I1: Scrivi le domande usando le parole date.</h3>
+            <div class="exercise-question" id="exI1-q1">
+                <p>1. (she / happy?) <input type="text" id="exI1-q1-input" class="rounded-md" placeholder="La tua domanda"></p>
+                <div id="exI1-q1-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exI1-q2">
+                <p>2. (you / a student?) <input type="text" id="exI1-q2-input" class="rounded-md" placeholder="La tua domanda"></p>
+                <div id="exI1-q2-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exI1-q3">
+                <p>3. (they / in London?) <input type="text" id="exI1-q3-input" class="rounded-md" placeholder="La tua domanda"></p>
+                <div id="exI1-q3-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exI1-q4">
+                <p>4. (it / a big house?) <input type="text" id="exI1-q4-input" class="rounded-md" placeholder="La tua domanda"></p>
+                <div id="exI1-q4-feedback" class="feedback"></div>
+            </div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkExerciseI1()">Controlla Risposte</button>
+                <button class="reset-button" onclick="resetExerciseI1()">Reset</button>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <h3 class="text-xl font-semibold mb-4">Esercizio I2: Rispondi alle domande con risposte brevi (affermative o negative) come indicato.</h3>
+            <div class="exercise-question" id="exI2-q1">
+                <p>1. Are you tired? (✔) <input type="text" id="exI2-q1-input" class="rounded-md" placeholder="La tua risposta"></p>
+                <div id="exI2-q1-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exI2-q2">
+                <p>2. Is Mark a good student? (X) <input type="text" id="exI2-q2-input" class="rounded-md" placeholder="La tua risposta"></p>
+                <div id="exI2-q2-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exI2-q3">
+                <p>3. Are we late? (✔) <input type="text" id="exI2-q3-input" class="rounded-md" placeholder="La tua risposta"></p>
+                <div id="exI2-q3-feedback" class="feedback"></div>
+            </div>
+            <div class="exercise-question" id="exI2-q4">
+                <p>4. Is it a red car? (X) <input type="text" id="exI2-q4-input" class="rounded-md" placeholder="La tua risposta"></p>
+                <div id="exI2-q4-feedback" class="feedback"></div>
+            </div>
+            <div class="button-group">
+                <button class="check-button" onclick="checkExerciseI2()">Controlla Risposte</button>
+                <button class="reset-button" onclick="resetExerciseI2()">Reset</button>
+            </div>
+        </div>
+
+        <button class="generate-pdf-button" onclick="generateResultsPdf()">I miei risultati (PDF)</button>
+
+    </div>
+
+    <script>
+        // Define correct answers for all exercises
+        const correctAnswers = {
+            'exA1': {
+                'q1': 'is',
+                'q2': 'are',
+                'q3': 'is',
+                'q4': 'are',
+                'q5': 'am'
+            },
+            'exA2': {
+                'q1': 'i am hungry',
+                'q2': 'she is right',
+                'q3': 'they are sleepy'
+            },
+            'exN1': {
+                'q1': "i'm not happy",
+                'q2': "she isn't a teacher",
+                'q3': "we aren't friends",
+                'q4': "it isn't cold outside"
+            },
+            'exN2': {
+                'q1': "aren't",
+                'q2': "i'm not", // Special handling for "am not"
+                'q3': "isn't",
+                'q4': "aren't"
+            },
+            'exI1': {
+                'q1': "is she happy",
+                'q2': "are you a student",
+                'q3': "are they in london",
+                'q4': "is it a big house"
+            },
+            'exI2': {
+                'q1': "yes i am",
+                'q2': "no he isn't",
+                'q3': "yes we are",
+                'q4': "no it isn't"
+            }
+        };
+
+        // Function to normalize answers for checking (trim, lowercase, remove punctuation)
+        function normalizeAnswer(answer) {
+            return answer.toLowerCase().trim().replace(/[.,!?;]/g, '');
+        }
+
+        // Function to display feedback on the page
+        function displayFeedback(elementId, isCorrect) {
+            const feedbackElement = document.getElementById(elementId);
+            if (isCorrect) {
+                feedbackElement.textContent = "Corretto!";
+                feedbackElement.className = "feedback correct";
+            } else {
+                feedbackElement.textContent = "Sbagliato. Riprova.";
+                feedbackElement.className = "feedback incorrect";
+            }
+        }
+
+        // Function to reset input fields and feedback for a specific exercise box
+        function resetExercise(exercisePrefix) {
+            const exerciseBox = document.querySelector(`#${exercisePrefix}-q1`).closest('.exercise-box');
+            const inputs = exerciseBox.querySelectorAll('input[type="text"], select');
+            inputs.forEach(input => {
+                if (input.tagName === 'SELECT') {
+                    input.value = ''; // Reset select to default option
+                } else {
+                    input.value = '';
+                }
+                input.classList.remove('border-green-500', 'border-red-500');
+            });
+            const feedbacks = exerciseBox.querySelectorAll('.feedback');
+            feedbacks.forEach(feedback => {
+                feedback.textContent = '';
+                feedback.className = "feedback";
+            });
+            // Remove overall feedback if present
+            const overallFeedback = exerciseBox.querySelector('.feedback.mt-4');
+            if (overallFeedback) overallFeedback.remove();
+        }
+
+        // --- Exercise A1 Functions ---
+        function checkExerciseA1() {
+            const exerciseId = 'exA1';
+            let allCorrect = true;
+            for (let i = 1; i <= 5; i++) {
+                const inputId = `${exerciseId}-q${i}-input`;
+                const input = document.getElementById(inputId);
+                const userAnswer = normalizeAnswer(input.value);
+                const isCorrect = userAnswer === correctAnswers[exerciseId][`q${i}`];
+                displayFeedback(inputId + '-feedback', isCorrect);
+                if (!isCorrect) allCorrect = false;
+            }
+            const overallFeedback = document.createElement('div');
+            overallFeedback.className = 'feedback mt-4';
+            if (allCorrect) {
+                overallFeedback.textContent = "Ottimo lavoro! Tutte le risposte sono corrette.";
+                overallFeedback.classList.add('correct');
+            } else {
+                overallFeedback.textContent = "Ci sono ancora errori. Riprova!";
+                overallFeedback.classList.add('incorrect');
+            }
+            document.getElementById(`${exerciseId}-q5`).closest('.exercise-box').appendChild(overallFeedback);
+        }
+
+        function resetExerciseA1() {
+            resetExercise('exA1');
+        }
+
+        // --- Exercise A2 Functions ---
+        function checkExerciseA2() {
+            const exerciseId = 'exA2';
+            let allCorrect = true;
+            for (let i = 1; i <= 3; i++) {
+                const inputId = `${exerciseId}-q${i}-input`;
+                const input = document.getElementById(inputId);
+                const userAnswer = normalizeAnswer(input.value);
+                const isCorrect = userAnswer === correctAnswers[exerciseId][`q${i}`];
+                displayFeedback(inputId + '-feedback', isCorrect);
+                if (!isCorrect) allCorrect = false;
+            }
+            const overallFeedback = document.createElement('div');
+            overallFeedback.className = 'feedback mt-4';
+            if (allCorrect) {
+                overallFeedback.textContent = "Ben fatto! Tutte le traduzioni sono corrette.";
+                overallFeedback.classList.add('correct');
+            } else {
+                overallFeedback.textContent = "Controlla le tue traduzioni. Ci sono errori.";
+                overallFeedback.classList.add('incorrect');
+            }
+            document.getElementById(`${exerciseId}-q3`).closest('.exercise-box').appendChild(overallFeedback);
+        }
+
+        function resetExerciseA2() {
+            resetExercise('exA2');
+        }
+
+        // --- Exercise N1 Functions ---
+        function checkExerciseN1() {
+            const exerciseId = 'exN1';
+            let allCorrect = true;
+            for (let i = 1; i <= 4; i++) {
+                const inputId = `${exerciseId}-q${i}-input`;
+                const input = document.getElementById(inputId);
+                const userAnswer = normalizeAnswer(input.value);
+                const isCorrect = userAnswer === correctAnswers[exerciseId][`q${i}`];
+                displayFeedback(inputId + '-feedback', isCorrect);
+                if (!isCorrect) allCorrect = false;
+            }
+            const overallFeedback = document.createElement('div');
+            overallFeedback.className = 'feedback mt-4';
+            if (allCorrect) {
+                overallFeedback.textContent = "Eccellente! Hai riscritto tutto correttamente.";
+                overallFeedback.classList.add('correct');
+            } else {
+                overallFeedback.textContent = "Rivedi le forme negative contratte.";
+                overallFeedback.classList.add('incorrect');
+            }
+            document.getElementById(`${exerciseId}-q4`).closest('.exercise-box').appendChild(overallFeedback);
+        }
+
+        function resetExerciseN1() {
+            resetExercise('exN1');
+        }
+
+        // --- Exercise N2 Functions ---
+        function checkExerciseN2() {
+            const exerciseId = 'exN2';
+            let allCorrect = true;
+            for (let i = 1; i <= 4; i++) {
+                const inputId = `${exerciseId}-q${i}-input`;
+                const input = document.getElementById(inputId);
+                let userAnswer = normalizeAnswer(input.value);
+                let isCorrect = false;
+
+                // Special handling for "I'm not" vs "am not" for N2-q2
+                if (i === 2) {
+                    isCorrect = (userAnswer === "i'm not" || userAnswer === "am not");
+                } else {
+                    isCorrect = userAnswer === correctAnswers[exerciseId][`q${i}`];
+                }
+
+                displayFeedback(inputId + '-feedback', isCorrect);
+                if (!isCorrect) allCorrect = false;
+            }
+            const overallFeedback = document.createElement('div');
+            overallFeedback.className = 'feedback mt-4';
+            if (allCorrect) {
+                overallFeedback.textContent = "Fantastico! Hai completato tutte le frasi.";
+                overallFeedback.classList.add('correct');
+            } else {
+                overallFeedback.textContent = "Controlla le tue risposte e le forme contratte.";
+                overallFeedback.classList.add('incorrect');
+            }
+            document.getElementById(`${exerciseId}-q4`).closest('.exercise-box').appendChild(overallFeedback);
+        }
+
+        function resetExerciseN2() {
+            resetExercise('exN2');
+        }
+
+        // --- Exercise I1 Functions ---
+        function checkExerciseI1() {
+            const exerciseId = 'exI1';
+            let allCorrect = true;
+            for (let i = 1; i <= 4; i++) {
+                const inputId = `${exerciseId}-q${i}-input`;
+                const input = document.getElementById(inputId);
+                const userAnswer = normalizeAnswer(input.value);
+                const isCorrect = userAnswer === correctAnswers[exerciseId][`q${i}`];
+                displayFeedback(inputId + '-feedback', isCorrect);
+                if (!isCorrect) allCorrect = false;
+            }
+            const overallFeedback = document.createElement('div');
+            overallFeedback.className = 'feedback mt-4';
+            if (allCorrect) {
+                overallFeedback.textContent = "Perfetto! Le tue domande sono ben formate.";
+                overallFeedback.classList.add('correct');
+            } else {
+                overallFeedback.textContent = "Rivedi la struttura delle domande.";
+                overallFeedback.classList.add('incorrect');
+            }
+            document.getElementById(`${exerciseId}-q4`).closest('.exercise-box').appendChild(overallFeedback);
+        }
+
+        function resetExerciseI1() {
+            resetExercise('exI1');
+        }
+
+        // --- Exercise I2 Functions ---
+        function checkExerciseI2() {
+            const exerciseId = 'exI2';
+            let allCorrect = true;
+            for (let i = 1; i <= 4; i++) {
+                const inputId = `${exerciseId}-q${i}-input`;
+                const input = document.getElementById(inputId);
+                const userAnswer = normalizeAnswer(input.value);
+                const isCorrect = userAnswer === correctAnswers[exerciseId][`q${i}`];
+                displayFeedback(inputId + '-feedback', isCorrect);
+                if (!isCorrect) allCorrect = false;
+            }
+            const overallFeedback = document.createElement('div');
+            overallFeedback.className = 'feedback mt-4';
+            if (allCorrect) {
+                overallFeedback.textContent = "Ottimo lavoro con le risposte brevi!";
+                overallFeedback.classList.add('correct');
+            } else {
+                overallFeedback.textContent = "Controlla le tue risposte brevi.";
+                overallFeedback.classList.add('incorrect');
+            }
+            document.getElementById(`${exerciseId}-q4`).closest('.exercise-box').appendChild(overallFeedback);
+        }
+
+        function resetExerciseI2() {
+            resetExercise('exI2');
+        }
+
+        // --- PDF Generation Function ---
+        function generateResultsPdf() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            let y = 10; // Y-coordinate for text placement
+
+            doc.setFontSize(22);
+            doc.text("I Tuoi Risultati - Il Verbo To Be", 105, y, null, null, "center");
+            y += 15;
+
+            const exercises = [
+                { id: 'exA1', title: 'Esercizio A1: Completa le frasi con la forma corretta del verbo "to be" (estesa o contratta).' },
+                { id: 'exA2', title: 'Esercizio A2: Traduci le seguenti frasi in inglese.' },
+                { id: 'exN1', title: 'Esercizio N1: Riscrivi le frasi usando la forma negativa contratta del verbo "to be".' },
+                { id: 'exN2', title: 'Esercizio N2: Completa le frasi con la forma negativa contratta di "to be".' },
+                { id: 'exI1', title: 'Esercizio I1: Scrivi le domande usando le parole date.' },
+                { id: 'exI2', title: 'Esercizio I2: Rispondi alle domande con risposte brevi (affermative o negative) come indicato.' }
+            ];
+
+            exercises.forEach(exercise => {
+                const exerciseBox = document.querySelector(`#${exercise.id}-q1`).closest('.exercise-box');
+                const questions = exerciseBox.querySelectorAll('.exercise-question');
+                let correctCount = 0;
+                let totalQuestions = questions.length;
+
+                // Add new page if content exceeds current page height
+                if (y + 20 > doc.internal.pageSize.height - 20) {
+                    doc.addPage();
+                    y = 10;
+                }
+
+                doc.setFontSize(16);
+                doc.text(exercise.title, 10, y);
+                y += 10;
+
+                doc.setFontSize(12);
+                questions.forEach((qElement, index) => {
+                    const qNum = index + 1;
+                    let questionText = qElement.querySelector('p').innerText.trim();
+                    let userAnswer = '';
+                    let isCorrect = false;
+                    let correctAnswer = correctAnswers[exercise.id][`q${qNum}`];
+
+                    const inputElement = qElement.querySelector('input[type="text"]');
+                    if (inputElement) {
+                        userAnswer = inputElement.value;
+                        let normalizedUserAnswer = normalizeAnswer(userAnswer);
+
+                        if (exercise.id === 'exN2' && qNum === 2) {
+                            isCorrect = (normalizedUserAnswer === "i'm not" || normalizedUserAnswer === "am not");
+                        } else {
+                            isCorrect = normalizedUserAnswer === normalizeAnswer(correctAnswer);
+                        }
+                    }
+
+                    if (isCorrect) {
+                        correctCount++;
+                    }
+
+                    // Clean up question text for PDF
+                    questionText = questionText.replace(/\[\s*is\/am\/are\s*\]/g, '___');
+                    questionText = questionText.replace(/\[\s*aren't\/isn't\s*\]/g, '___');
+                    questionText = questionText.replace(/\(La tua risposta\)/g, '');
+                    questionText = questionText.replace(/\(La tua domanda\)/g, '');
+                    questionText = questionText.replace(/\(✔\)/g, '(CORRETTO)');
+                    questionText = questionText.replace(/\(X\)/g, '(ERRATO)');
+
+                    // Add new page if content exceeds current page height
+                    if (y + 30 > doc.internal.pageSize.height - 20) {
+                        doc.addPage();
+                        y = 10;
+                    }
+
+                    doc.text(`${qNum}. ${questionText}`, 10, y);
+                    y += 7;
+                    doc.text(`La tua risposta: ${userAnswer} (${isCorrect ? 'Corretto' : 'Sbagliato'})`, 15, y);
+                    y += 7;
+                    doc.text(`Risposta corretta: ${correctAnswer}`, 15, y);
+                    y += 10; // Space after each question
+                });
+
+                doc.setFontSize(14);
+                doc.text(`Risultato per questo esercizio: ${correctCount} su ${totalQuestions} risposte corrette.`, 10, y);
+                y += 15; // Space after exercise summary
+            });
+
+            doc.save('I_Miei_Risultati_Verbo_To_Be.pdf');
+        }
+    </script>
+</body>
+</html>
