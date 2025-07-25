@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torta al Cioccolato: Dialogo e Comprensione</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        h1 { font-size: 2.25rem; font-weight: bold; text-align: center; }
+        h2 { font-size: 1.75rem; font-weight: bold; border-bottom: 2px solid #e0e7ff; padding-bottom: 0.5rem; margin-top: 2rem; }
+
+        /* Dialogue Section */
+        .dialogue-box {
+            background-color: #edf2f7;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 3rem;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+        .dialogue-line {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+            cursor: pointer; /* Makes the line clickable */
+            padding: 0.2rem 0.5rem; /* Add padding for easier clicking */
+            border-radius: 0.25rem;
+            transition: background-color 0.2s ease;
+        }
+        .dialogue-line:hover {
+            background-color: #dbeafe; /* Light blue on hover */
+        }
+        .speaker {
+            font-weight: bold;
+            color: #4f46e5;
+            margin-right: 0.5rem;
+        }
+        .speaker.leo {
+            color: #ef4444; /* Red for Leo */
+        }
+        .speaker.dad {
+            color: #3b82f6; /* Blue for Dad */
+        }
+        .speaker.friends {
+            color: #10b981; /* Green for Friends */
+        }
+        .dialogue-text {
+            display: inline;
+        }
+        .dialogue-separator {
+            text-align: center;
+            font-style: italic;
+            margin: 1.5rem 0;
+            color: #6b7280;
+        }
+
+        /* Quiz Section */
+        .quiz-question {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e0;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        }
+        .quiz-question p {
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            font-size: 1.05rem;
+        }
+        .quiz-options label {
+            display: block;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem 1rem;
+            background-color: #e0f2fe;
+            border: 1px solid #93c5fd;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .quiz-options label:hover {
+            background-color: #bfdbfe;
+        }
+        .quiz-options input[type="radio"] {
+            margin-right: 0.75rem;
+        }
+        .quiz-feedback {
+            margin-top: 0.5rem;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+        .quiz-feedback.correct {
+            color: #10b981;
+        }
+        .quiz-feedback.incorrect {
+            color: #ef4444;
+        }
+        .check-quiz-button {
+            background-color: #4f46e5;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1rem;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .check-quiz-button:hover {
+            background-color: #4338ca;
+        }
+        .results-button {
+            background-color: #007bff; /* A nice blue for results */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 2rem;
+            display: block; /* Make it a block element to center */
+            margin-left: auto;
+            margin-right: auto;
+            width: fit-content;
+        }
+        .results-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            h1 { font-size: 1.75rem; }
+            h2 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Torta al Cioccolato: Dialogo e Comprensione</h1>
+        <p class="text-center text-gray-700 mb-6">Leggi il dialogo tra Leo e suo papà mentre preparano una torta, e poi rispondi alle domande di comprensione.</p>
+
+        <h2 class="mt-8">Il Dialogo</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line" onclick="speak('Hey Dad, can we make a chocolate cake today?')"><span class="speaker leo">Leo:</span> <span class="dialogue-text">Hey Dad, can we make a chocolate cake today?</span></div>
+            <div class="dialogue-line" onclick="speak('Hmm, good idea, Leo! Let\'s check the recipe. Do we have all the ingredients?')"><span class="speaker dad">Dad:</span> <span class="dialogue-text">Hmm, good idea, Leo! Let's check the recipe. Do we have all the ingredients?</span></div>
+            <div class="dialogue-line" onclick="speak('We need flour, sugar, cocoa powder, eggs, milk, and butter.')"><span class="speaker leo">Leo:</span> <span class="dialogue-text">We need flour, sugar, cocoa powder, eggs, milk, and butter.</span></div>
+            <div class="dialogue-line" onclick="speak('Okay, we have some flour and a lot of sugar. And there\'s plenty of cocoa powder in the pantry.')"><span class="speaker dad">Dad:</span> <span class="dialogue-text">Okay, we have some flour and a lot of sugar. And there's plenty of cocoa powder in the pantry.</span></div>
+            <div class="dialogue-line" onclick="speak('How many eggs do we need?')"><span class="speaker leo">Leo:</span> <span class="dialogue-text">How many eggs do we need?</span></div>
+            <div class="dialogue-line" onclick="speak('The recipe says four eggs. Let me see... Oh, we only have two eggs in the fridge.')"><span class="speaker dad">Dad:</span> <span class="dialogue-text">The recipe says four eggs. Let me see... Oh, we only have two eggs in the fridge.</span></div>
+            <div class="dialogue-line" onclick="speak('And what about milk and butter? Do we have any?')"><span class="speaker leo">Leo:</span> <span class="dialogue-text">And what about milk and butter? Do we have any?</span></div>
+            <div class="dialogue-line" onclick="speak('No, we don\'t have any milk, and there\'s no butter either. Looks like we need to go to the shop.')"><span class="speaker dad">Dad:</span> <span class="dialogue-text">No, we don't have any milk, and there's no butter either. Looks like we need to go to the shop.</span></div>
+            <div class="dialogue-line" onclick="speak('Okay! How much money do you need, Dad?')"><span class="speaker leo">Leo:</span> <span class="dialogue-text">Okay! How much money do you need, Dad?</span></div>
+            <div class="dialogue-line" onclick="speak('About £5 for the eggs, milk, and butter. Here\'s £20.')"><span class="speaker dad">Dad:</span> <span class="dialogue-text">About £5 for the eggs, milk, and butter. Here's £20.</span></div>
+            <div class="dialogue-line" onclick="speak('Great! Can I invite my friends for a slice of cake this afternoon?')"><span class="speaker leo">Leo:</span> <span class="dialogue-text">Great! Can I invite my friends for a slice of cake this afternoon?</span></div>
+            <div class="dialogue-line" onclick="speak('Of course, Leo! That\'s a wonderful idea.')"><span class="speaker dad">Dad:</span> <span class="dialogue-text">Of course, Leo! That's a wonderful idea.</span></div>
+            <div class="dialogue-line" onclick="speak('Thanks, Dad! I\'ll go to the shop now.')"><span class="speaker leo">Leo:</span> <span class="dialogue-text">Thanks, Dad! I\'ll go to the shop now.</span></div>
+
+            <div class="dialogue-separator">Later, after the cake is baked...</div>
+
+            <div class="dialogue-line" onclick="speak('Wow, Leo! This chocolate cake is amazing!')"><span class="speaker friends">Leo's Friends:</span> <span class="dialogue-text">Wow, Leo! This chocolate cake is amazing!</span></div>
+            <div class="dialogue-line" onclick="speak('You\'re a fantastic baker, Leo!')"><span class="speaker friends">Another Friend:</span> <span class="dialogue-text">You're a fantastic baker, Leo!</span></div>
+            <div class="dialogue-line" onclick="speak('Thanks everyone! Enjoy!')"><span class="speaker leo">Leo:</span> <span class="dialogue-text">Thanks everyone! Enjoy!</span></div>
+        </div>
+
+        <h2 class="mt-8">Esercizio di Comprensione</h2>
+        <p class="text-gray-700 mb-4">Scegli la risposta corretta per ogni domanda basata sul dialogo.</p>
+
+        <div id="quiz-form">
+            <div class="quiz-question">
+                <p>1. What kind of cake do Leo and his Dad want to make?</p>
+                <div class="quiz-options">
+                    <label>
+                        <input type="radio" name="q1" value="a"> A fruit cake
+                    </label>
+                    <label>
+                        <input type="radio" name="q1" value="b"> A chocolate cake
+                    </label>
+                    <label>
+                        <input type="radio" name="q1" value="c"> A vanilla cake
+                    </label>
+                    <label>
+                        <input type="radio" name="q1" value="d"> A blackberry pie
+                    </label>
+                </div>
+                <div class="quiz-feedback" id="feedback1"></div>
+            </div>
+
+            <div class="quiz-question">
+                <p>2. Which ingredients do they already have a lot of?</p>
+                <div class="quiz-options">
+                    <label>
+                        <input type="radio" name="q2" value="a"> Eggs and milk
+                    </label>
+                    <label>
+                        <input type="radio" name="q2" value="b"> Flour, sugar, and cocoa powder
+                    </label>
+                    <label>
+                        <input type="radio" name="q2" value="c"> Butter and chocolate
+                    </label>
+                    <label>
+                        <input type="radio" name="q2" value="d"> All ingredients
+                    </label>
+                </div>
+                <div class="quiz-feedback" id="feedback2"></div>
+            </div>
+
+            <div class="quiz-question">
+                <p>3. How many eggs does the recipe say they need?</p>
+                <div class="quiz-options">
+                    <label>
+                        <input type="radio" name="q3" value="a"> Two
+                    </label>
+                    <label>
+                        <input type="radio" name="q3" value="b"> Three
+                    </label>
+                    <label>
+                        <input type="radio" name="q3" value="c"> Four
+                    </label>
+                    <label>
+                        <input type="radio" name="q3" value="d"> A lot
+                    </label>
+                </div>
+                <div class="quiz-feedback" id="feedback3"></div>
+            </div>
+
+            <div class="quiz-question">
+                <p>4. What do they need to buy from the shop?</p>
+                <div class="quiz-options">
+                    <label>
+                        <input type="radio" name="q4" value="a"> Flour and sugar
+                    </label>
+                    <label>
+                        <input type="radio" name="q4" value="b"> Eggs, milk, and butter
+                    </label>
+                    <label>
+                        <input type="radio" name="q4" value="c"> Cocoa powder and eggs
+                    </label>
+                    <label>
+                        <input type="radio" name="q4" value="d"> All ingredients for the cake
+                    </label>
+                </div>
+                <div class="quiz-feedback" id="feedback4"></div>
+            </div>
+
+            <div class="quiz-question">
+                <p>5. How much money does Dad give Leo for shopping?</p>
+                <div class="quiz-options">
+                    <label>
+                        <input type="radio" name="q5" value="a"> £5
+                    </label>
+                    <label>
+                        <input type="radio" name="q5" value="b"> £10
+                    </label>
+                    <label>
+                        <input type="radio" name="q5" value="c"> £15
+                    </label>
+                    <label>
+                        <input type="radio" name="q5" value="d"> £20
+                    </label>
+                </div>
+                <div class="quiz-feedback" id="feedback5"></div>
+            </div>
+
+            <div class="quiz-question">
+                <p>6. What does Leo want to invite his friends for?</p>
+                <div class="quiz-options">
+                    <label>
+                        <input type="radio" name="q6" value="a"> Dinner
+                    </label>
+                    <label>
+                        <input type="radio" name="q6" value="b"> A slice of cake
+                    </label>
+                    <label>
+                        <input type="radio" name="q6" value="c"> A cooking lesson
+                    </label>
+                    <label>
+                        <input type="radio" name="q6" value="d"> Tea and cookies
+                    </label>
+                </div>
+                <div class="quiz-feedback" id="feedback6"></div>
+            </div>
+
+            <div class="quiz-question">
+                <p>7. How do Leo's friends describe his cake?</p>
+                <div class="quiz-options">
+                    <label>
+                        <input type="radio" name="q7" value="a"> It's okay.
+                    </label>
+                    <label>
+                        <input type="radio" name="q7" value="b"> It's too sweet.
+                    </label>
+                    <label>
+                        <input type="radio" name="q7" value="c"> It's amazing and he's a fantastic baker.
+                    </label>
+                    <label>
+                        <input type="radio" name="q7" value="d"> They don't comment on it.
+                    </label>
+                </div>
+                <div class="quiz-feedback" id="feedback7"></div>
+            </div>
+
+            <button class="check-quiz-button" onclick="checkQuizAnswers()">Controlla Risposte</button>
+        </div>
+
+        <button class="results-button" onclick="generatePdfResults()">I miei risultati</button>
+    </div>
+
+    <script>
+        // Funzione per la sintesi vocale
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US'; // Imposta la lingua inglese
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Variabile per memorizzare i risultati del quiz
+        let quizResults = [];
+
+        // Logica per il quiz di comprensione
+        function checkQuizAnswers() {
+            const answers = {
+                q1: 'b', // A chocolate cake
+                q2: 'b', // Flour, sugar, and cocoa powder
+                q3: 'c', // Four
+                q4: 'b', // Eggs, milk, and butter
+                q5: 'd', // £20
+                q6: 'b', // A slice of cake
+                q7: 'c'  // It's amazing and he's a fantastic baker.
+            };
+
+            quizResults = []; // Reset results for new check
+
+            for (let i = 1; i <= 7; i++) {
+                const questionName = `q${i}`;
+                const questionElement = document.querySelector(`.quiz-question:nth-of-type(${i}) p`);
+                const questionText = questionElement ? questionElement.textContent.trim() : `Question ${i}`;
+
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                const feedbackDiv = document.getElementById(`feedback${i}`);
+
+                let userAnswerText = "Nessuna risposta";
+                let isCorrect = false;
+
+                if (selectedOption) {
+                    userAnswerText = document.querySelector(`label[for="${selectedOption.id}"]`).textContent.trim();
+                    if (selectedOption.value === answers[questionName]) {
+                        feedbackDiv.textContent = 'Corretto!';
+                        feedbackDiv.className = 'quiz-feedback correct';
+                        isCorrect = true;
+                    } else {
+                        feedbackDiv.textContent = 'Sbagliato. Riprova!';
+                        feedbackDiv.className = 'quiz-feedback incorrect';
+                    }
+                } else {
+                    feedbackDiv.textContent = 'Per favore, seleziona una risposta.';
+                    feedbackDiv.className = 'quiz-feedback incorrect';
+                }
+
+                // Get correct answer text for PDF
+                const correctAnswerValue = answers[questionName];
+                const correctAnswerLabel = document.querySelector(`input[name="${questionName}"][value="${correctAnswerValue}"]`).closest('label').textContent.trim();
+
+                quizResults.push({
+                    question: questionText,
+                    userAnswer: userAnswerText,
+                    correctAnswer: correctAnswerLabel,
+                    isCorrect: isCorrect
+                });
+            }
+        }
+
+        // PDF Generation Logic
+        async function generatePdfResults() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            let y = 20; // Starting Y position
+
+            doc.setFontSize(18);
+            doc.text("Risultati Quiz: Torta al Cioccolato", 105, y, { align: 'center' });
+            y += 20;
+
+            doc.setFontSize(12);
+            if (quizResults.length === 0) {
+                doc.text("Nessun tentativo di quiz registrato. Per favore, completa il quiz prima di generare il PDF.", 10, y);
+            } else {
+                quizResults.forEach((result, index) => {
+                    if (y > 270) { // Check for page break
+                        doc.addPage();
+                        y = 20;
+                    }
+                    doc.setFontSize(11);
+                    doc.text(`${index + 1}. ${result.question}`, 15, y);
+                    y += 7;
+                    doc.setFontSize(10);
+                    doc.text(`La tua risposta: ${result.userAnswer}`, 20, y);
+                    y += 5;
+                    doc.text(`Risposta corretta: ${result.correctAnswer}`, 20, y);
+                    y += 5;
+                    doc.text(`Esito: ${result.isCorrect ? 'Corretto' : 'Sbagliato'}`, 20, y);
+                    y += 10; // Space between questions
+                });
+            }
+
+            doc.save('risultati_quiz_torta_cioccolato.pdf');
+        }
+    </script>
+</body>
+</html>
