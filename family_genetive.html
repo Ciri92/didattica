@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione sulla Famiglia e Grammatica Inglese</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        h1 { font-size: 2.25rem; font-weight: bold; text-align: center; }
+        h2 { font-size: 1.75rem; font-weight: bold; border-bottom: 2px solid #e0e7ff; padding-bottom: 0.5rem; margin-top: 2rem; }
+        h3 { font-size: 1.25rem; font-weight: bold; margin-top: 1.5rem; }
+
+        /* Family Tree Display Styles */
+        .family-tree-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            border: 1px dashed #a0aec0;
+            border-radius: 0.75rem;
+            background-color: #edf2f7;
+            margin-bottom: 3rem;
+        }
+        .generation {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        .person-card {
+            background-color: #ffffff;
+            border: 2px solid #6366f1;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            width: 120px; /* Fixed width for consistency */
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .person-card.emma {
+            background-color: #e0f2fe;
+            border-color: #3b82f6;
+        }
+        .person-card span.emoji {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .person-card .relationship-en {
+            font-weight: bold;
+            color: #4338ca;
+            font-size: 0.9rem;
+        }
+        .person-card .relationship-it {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 0.2rem;
+        }
+        .person-card .person-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-top: 0.25rem;
+        }
+
+        /* Lines for family tree (simplified for no images) */
+        .line-connector-static {
+            width: 2px;
+            background-color: #6366f1;
+            height: 30px;
+            margin: 0 auto;
+        }
+        .family-group-static {
+            display: flex;
+            align-items: flex-start; /* Align top for multi-line groups */
+            justify-content: center;
+            gap: 1.5rem; /* Space between cards/sub-groups */
+            position: relative;
+        }
+        .family-group-static.vertical {
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .family-group-static.branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .family-group-static.branch .generation {
+            margin-bottom: 0; /* No extra margin within a branch */
+        }
+        .marriage-line {
+            height: 2px;
+            background-color: #6366f1;
+            width: 50px; /* Small line between spouses */
+            margin: 0 10px;
+        }
+        .children-line-horizontal {
+            height: 2px;
+            background-color: #6366f1;
+            width: 100%; /* Spans across children */
+            margin-top: -1rem; /* Adjust to connect */
+            margin-bottom: 1rem;
+        }
+        .children-line-vertical {
+            width: 2px;
+            background-color: #6366f1;
+            height: 20px;
+            margin: 0 auto;
+        }
+
+        /* Table for Like Verb */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background-color: #f8fafc;
+        }
+        th, td {
+            border: 1px solid #cbd5e0;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th {
+            background-color: #e0e7ff;
+            color: #3730a3;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f1f5f9;
+        }
+
+        /* Exercise Styles */
+        .exercise-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .exercise-item label {
+            margin-right: 0.5rem;
+            font-weight: 500;
+        }
+        .exercise-item input[type="text"] {
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.9rem;
+            flex-grow: 1;
+            min-width: 150px;
+        }
+        .exercise-item .feedback {
+            margin-left: 0.75rem;
+            font-weight: bold;
+        }
+        .exercise-item .feedback.correct {
+            color: #10b981;
+        }
+        .exercise-item .feedback.incorrect {
+            color: #ef4444;
+        }
+        .check-button {
+            background-color: #4f46e5;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1rem;
+        }
+        .check-button:hover {
+            background-color: #4338ca;
+        }
+
+        /* Voice Exercise Styles */
+        .voice-exercise-container {
+            border: 1px dashed #a0aec0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            background-color: #edf2f7;
+            text-align: center;
+        }
+        .voice-exercise-container button {
+            background-color: #10b981;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 0.5rem;
+        }
+        .voice-exercise-container button:hover {
+            background-color: #059669;
+        }
+        .voice-exercise-container button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+        .voice-exercise-container .message {
+            margin-top: 1rem;
+            font-style: italic;
+            color: #4b5563;
+        }
+        .voice-exercise-container .ai-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #dbeafe;
+            border: 1px solid #93c5fd;
+            border-radius: 0.5rem;
+            text-align: left;
+        }
+        .voice-exercise-container .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            h1 { font-size: 1.75rem; }
+            h2 { font-size: 1.5rem; }
+            .generation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .person-card {
+                width: 100%; /* Full width on small screens */
+            }
+            .exercise-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .exercise-item input[type="text"] {
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+            .exercise-item .feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+            .family-group-static {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .family-group-static.branch {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lezione di Inglese: La Famiglia e la Grammatica</h1>
+
+        <h2 class="mt-8">L'Albero Genealogico di Emma</h2>
+        <p class="text-center text-gray-700 mb-6">Ecco l'albero genealogico della famiglia di Emma. Ogni riquadro mostra un membro della famiglia, la sua relazione in inglese e la traduzione in italiano.</p>
+        <div class="family-tree-display">
+            <!-- Grandparents Generation -->
+            <div class="generation">
+                <!-- George & Mary (David's Parents) -->
+                <div class="family-group-static">
+                    <div class="person-card"><span class="emoji">👴</span><div class="relationship-en">Grandfather</div><div class="relationship-it">Nonno</div><div class="person-name">George</div></div>
+                    <div class="marriage-line"></div>
+                    <div class="person-card"><span class="emoji">👵</span><div class="relationship-en">Grandmother</div><div class="relationship-it">Nonna</div><div class="person-name">Mary</div></div>
+                </div>
+                <!-- Robert & Susan (Sarah's Parents) -->
+                <div class="family-group-static">
+                    <div class="person-card"><span class="emoji">👴</span><div class="relationship-en">Grandfather</div><div class="relationship-it">Nonno</div><div class="person-name">Robert</div></div>
+                    <div class="marriage-line"></div>
+                    <div class="person-card"><span class="emoji">👵</span><div class="relationship-en">Grandmother</div><div class="relationship-it">Nonna</div><div class="person-name">Susan</div></div>
+                </div>
+            </div>
+
+            <div class="line-connector-static h-12"></div>
+
+            <!-- Parents and Aunts/Uncles Generation -->
+            <div class="generation">
+                <!-- David & Sarah Branch -->
+                <div class="family-group-static branch">
+                    <div class="family-group-static">
+                        <div class="person-card"><span class="emoji">👨‍🦰</span><div class="relationship-en">Father</div><div class="relationship-it">Padre</div><div class="person-name">David</div></div>
+                        <div class="marriage-line"></div>
+                        <div class="person-card"><span class="emoji">👩‍🦰</span><div class="relationship-en">Mother</div><div class="relationship-it">Madre</div><div class="person-name">Sarah</div></div>
+                    </div>
+                </div>
+                <!-- Michael & Olivia Branch (David's brother) -->
+                <div class="family-group-static branch">
+                    <div class="family-group-static">
+                        <div class="person-card"><span class="emoji">👨‍🦳</span><div class="relationship-en">Uncle</div><div class="relationship-it">Zio</div><div class="person-name">Michael</div></div>
+                        <div class="marriage-line"></div>
+                        <div class="person-card"><span class="emoji">👩‍🦳</span><div class="relationship-en">Aunt</div><div class="relationship-it">Zia</div><div class="person-name">Olivia</div></div>
+                    </div>
+                </div>
+                <!-- Emily & James Branch (Sarah's sister) -->
+                <div class="family-group-static branch">
+                    <div class="family-group-static">
+                        <div class="person-card"><span class="emoji">👩‍🦱</span><div class="relationship-en">Aunt</div><div class="relationship-it">Zia</div><div class="person-name">Emily</div></div>
+                        <div class="marriage-line"></div>
+                        <div class="person-card"><span class="emoji">👨‍🦱</span><div class="relationship-en">Uncle</div><div class="relationship-it">Zio</div><div class="person-name">James</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="line-connector-static h-12"></div>
+
+            <!-- Emma's Generation and Cousins Generation -->
+            <div class="generation">
+                <!-- Emma's immediate family -->
+                <div class="family-group-static vertical">
+                    <div class="person-card"><span class="emoji">👦</span><div class="relationship-en">Brother</div><div class="relationship-it">Fratello</div><div class="person-name">Tom</div></div>
+                    <div class="person-card emma"><span class="emoji">👧</span><div class="relationship-en">Emma</div><div class="relationship-it">Me</div><div class="person-name">(You)</div></div>
+                    <div class="person-card"><span class="emoji">👧</span><div class="relationship-en">Sister</div><div class="relationship-it">Sorella</div><div class="person-name">Lily</div></div>
+                </div>
+                <!-- Children of Michael & Olivia (Cousins) -->
+                <div class="family-group-static vertical">
+                    <div class="person-card"><span class="emoji">👦</span><div class="relationship-en">Cousin</div><div class="relationship-it">Cugino</div><div class="person-name">Noah</div></div>
+                    <div class="person-card"><span class="emoji">👧</span><div class="relationship-en">Cousin</div><div class="relationship-it">Cugina</div><div class="person-name">Mia</div></div>
+                </div>
+                <!-- Children of Emily & James (Cousins) -->
+                <div class="family-group-static vertical">
+                    <div class="person-card"><span class="emoji">🧒</span><div class="relationship-en">Cousin</div><div class="relationship-it">Cugina</div><div class="person-name">Chloe</div></div>
+                    <div class="person-card"><span class="emoji">👦</span><div class="relationship-en">Cousin</div><div class="relationship-it">Cugino</div><div class="person-name">Max</div></div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="mt-12">Ricostruisci le Relazioni Familiari</h2>
+        <p class="text-gray-700 mb-4">Usa queste frasi per ricostruire l'albero genealogico della famiglia di Emma sul tuo quaderno o mentalmente:</p>
+        <ul class="list-disc list-inside ml-4 mt-2 mb-12 text-gray-700">
+            <li>George and Mary are Emma's paternal grandparents.</li>
+            <li>Robert and Susan are Emma's maternal grandparents.</li>
+            <li>David is George and Mary's son and Emma's father.</li>
+            <li>Sarah is Robert and Susan's daughter and Emma's mother.</li>
+            <li>David and Sarah are married.</li>
+            <li>Tom and Lily are Emma's siblings.</li>
+            <li>Michael is David's brother and Emma's paternal uncle. Olivia is Michael's wife and Emma's paternal aunt.</li>
+            <li>Noah and Mia are Michael and Olivia's children, making them Emma's paternal cousins.</li>
+            <li>Emily is Sarah's sister and Emma's maternal aunt. James is Emily's husband and Emma's maternal uncle.</li>
+            <li>Chloe and Max are Emily and James's children, making them Emma's maternal cousins.</li>
+        </ul>
+
+        <h2 class="mt-12">Lessico delle Relazioni Familiari</h2>
+        <p class="text-gray-700 mb-4">Ecco un elenco delle principali relazioni familiari in inglese con la traduzione in italiano:</p>
+        <ul class="list-disc list-inside ml-4 mt-2 mb-12 text-gray-700">
+            <li>Father &rarr; Padre</li>
+            <li>Mother &rarr; Madre</li>
+            <li>Parents &rarr; Genitori</li>
+            <li>Son &rarr; Figlio</li>
+            <li>Daughter &rarr; Figlia</li>
+            <li>Children &rarr; Figli / Bambini</li>
+            <li>Brother &rarr; Fratello</li>
+            <li>Sister &rarr; Sorella</li>
+            <li>Siblings &rarr; Fratelli e sorelle (senza specificare il genere)</li>
+            <li>Grandfather &rarr; Nonno</li>
+            <li>Grandmother &rarr; Nonna</li>
+            <li>Grandparents &rarr; Nonni</li>
+            <li>Uncle &rarr; Zio</li>
+            <li>Aunt &rarr; Zia</li>
+            <li>Cousin &rarr; Cugino / Cugina</li>
+            <li>Nephew &rarr; Nipote (figlio di fratello/sorella)</li>
+            <li>Niece &rarr; Nipote (figlia di fratello/sorella)</li>
+            <li>Husband &rarr; Marito</li>
+            <li>Wife &rarr; Moglie</li>
+            <li>Spouse &rarr; Coniuge</li>
+        </ul>
+
+        <h2 class="mt-12">Spiegazione del Genitivo Sassone (Saxon Genitive)</h2>
+        <p class="text-gray-700">Il genitivo sassone è un modo per indicare possesso o relazione in inglese. Si forma aggiungendo un apostrofo e una 's' (<b>'s</b>) al nome della persona o cosa che possiede qualcosa. Se il nome è plurale e termina già in 's', si aggiunge solo l'apostrofo (<b>'</b>).</p>
+        <ul class="list-disc list-inside ml-4 mt-2 text-gray-700">
+            <li><b>Per nomi singolari:</b> Si aggiunge <b>'s</b>. <br>Esempio: <b>Emma's</b> brother (il fratello di Emma)</li>
+            <li><b>Per nomi plurali che non terminano in 's':</b> Si aggiunge <b>'s</b>. <br>Esempio: The <b>children's</b> toys (i giocattoli dei bambini)</li>
+            <li><b>Per nomi plurali che terminano in 's':</b> Si aggiunge solo l'apostrofo <b>'</b>. <br>Esempio: The <b>parents'</b> house (la casa dei genitori)</li>
+        </ul>
+        <p class="text-gray-700 mt-2 mb-12">Si usa principalmente per persone, animali o quando si parla di tempo.</p>
+
+        <h2 class="mt-12">Esercizio: Completa le Frasi con il Genitivo Sassone</h2>
+        <p class="text-gray-700 mb-4">Completa le frasi usando il genitivo sassone. Scrivi il nome della persona seguito da <b>'s</b> o <b>'</b>.</p>
+        <div id="genitive-exercise-form" class="mb-12">
+            <div class="exercise-item">
+                <label for="q1">1. Tom is _______ brother.</label>
+                <input type="text" id="q1" data-answer="Emma's">
+                <span class="feedback" id="f1"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q2">2. Lily is _______ sister.</label>
+                <input type="text" id="q2" data-answer="Emma's">
+                <span class="feedback" id="f2"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q3">3. David is _______ father.</label>
+                <input type="text" id="q3" data-answer="Emma's">
+                <span class="feedback" id="f3"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q4">4. Sarah is _______ mother.</label>
+                <input type="text" id="q4" data-answer="Emma's">
+                <span class="feedback" id="f4"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q5">5. George and Mary are _______ grandparents.</label>
+                <input type="text" id="q5" data-answer="Emma's">
+                <span class="feedback" id="f5"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q6">6. Robert and Susan are _______ grandparents.</label>
+                <input type="text" id="q6" data-answer="Emma's">
+                <span class="feedback" id="f6"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q7">7. Michael is _______ uncle.</label>
+                <input type="text" id="q7" data-answer="Emma's">
+                <span class="feedback" id="f7"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q8">8. Olivia is _______ aunt.</label>
+                <input type="text" id="q8" data-answer="Emma's">
+                <span class="feedback" id="f8"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q9">9. Emily is _______ aunt.</label>
+                <input type="text" id="q9" data-answer="Emma's">
+                <span class="feedback" id="f9"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q10">10. James is _______ uncle.</label>
+                <input type="text" id="q10" data-answer="Emma's">
+                <span class="feedback" id="f10"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q11">11. Noah and Mia are _______ cousins.</label>
+                <input type="text" id="q11" data-answer="Emma's">
+                <span class="feedback" id="f11"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q12">12. Chloe and Max are _______ cousins.</label>
+                <input type="text" id="q12" data-answer="Emma's">
+                <span class="feedback" id="f12"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q13">13. David is _______ son.</label>
+                <input type="text" id="q13" data-answer="George's">
+                <span class="feedback" id="f13"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q14">14. Sarah is _______ daughter.</label>
+                <input type="text" id="q14" data-answer="Susan's">
+                <span class="feedback" id="f14"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q15">15. Emily is _______ sister.</label>
+                <input type="text" id="q15" data-answer="Sarah's">
+                <span class="feedback" id="f15"></span>
+            </div>
+            <button class="check-button" onclick="checkAnswers()">Controlla Risposte</button>
+        </div>
+
+        <h2 class="mt-12">Espressioni Comuni per Parlare della Famiglia</h2>
+        <p class="text-gray-700">Ecco alcune frasi utili per parlare della tua famiglia in inglese:</p>
+        <ul class="list-disc list-inside ml-4 mt-2 mb-12 text-gray-700">
+            <li><b>Quanti siete in famiglia?</b> <br>English: <b>How many people are there in your family?</b> <br>Risposta: There are X people in my family.</li>
+            <li><b>Quanti fratelli/sorelle hai?</b> <br>English: <b>How many siblings do you have?</b> <br>Risposta: I have X brothers/sisters/siblings. (Or: I don't have any siblings.)</li>
+            <li><b>Hai animali domestici?</b> <br>English: <b>Do you have any pets?</b> <br>Risposta: Yes, I have a dog/cat/etc. (Or: No, I don't have any pets.)</li>
+            <li><b>Sei sposato/a?</b> <br>English: <b>Are you married?</b> <br>Risposta: Yes, I am. / No, I'm not.</li>
+            <li><b>Hai figli?</b> <br>English: <b>Do you have any children?</b> <br>Risposta: Yes, I have X children. / No, I don't have any children.</li>
+        </ul>
+
+        <h2 class="mt-12">Esercizio Interattivo: Parla della Tua Famiglia</h2>
+        <p class="text-gray-700 mb-4">Rispondi alle domande sulla tua famiglia usando la tua voce. Clicca su "Inizia a parlare" per registrare la tua risposta.</p>
+        <div class="voice-exercise-container">
+            <p id="voice-question" class="text-lg font-semibold mb-4 text-indigo-700">Clicca "Avvia Esercizio" per iniziare.</p>
+            <button id="startButton" class="bg-blue-600 hover:bg-blue-700">Avvia Esercizio</button>
+            <button id="recordButton" disabled class="bg-green-600 hover:bg-green-700">Inizia a parlare</button>
+            <button id="stopButton" disabled class="bg-red-600 hover:bg-red-700">Ferma e Invia</button>
+            <p id="status" class="message">Pronto.</p>
+            <p id="user-response" class="message text-base mt-2">La tua risposta: </p>
+            <div id="ai-feedback-area" class="ai-feedback hidden">
+                <h3>Feedback dell'AI:</h3>
+                <div id="ai-feedback-content"></div>
+                <div id="ai-feedback-loading" class="loading-spinner hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Genitive Exercise Logic
+        function checkAnswers() {
+            const questions = document.querySelectorAll('#genitive-exercise-form input[type="text"]');
+            questions.forEach((input, index) => {
+                const userAnswer = input.value.trim();
+                const correctAnswer = input.dataset.answer;
+                const feedbackSpan = document.getElementById(`f${index + 1}`);
+
+                if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+                    feedbackSpan.textContent = 'Corretto!';
+                    feedbackSpan.className = 'feedback correct';
+                } else {
+                    feedbackSpan.textContent = `Sbagliato. La risposta corretta è: ${correctAnswer}`;
+                    feedbackSpan.className = 'feedback incorrect';
+                }
+            });
+        }
+
+        // Voice Exercise Logic
+        const startButton = document.getElementById('startButton');
+        const recordButton = document.getElementById('recordButton');
+        const stopButton = document.getElementById('stopButton');
+        const voiceQuestionDisplay = document.getElementById('voice-question');
+        const statusDisplay = document.getElementById('status');
+        const userResponseDisplay = document.getElementById('user-response');
+        const aiFeedbackArea = document.getElementById('ai-feedback-area');
+        const aiFeedbackContent = document.getElementById('ai-feedback-content');
+        const aiFeedbackLoading = document.getElementById('ai-feedback-loading');
+
+        let recognition;
+        let currentQuestionIndex = 0;
+        const questions = [
+            { id: 1, text: "How many people are there in your family?", expected_answer_type: "number of people" },
+            { id: 2, text: "How many siblings do you have?", expected_answer_type: "number of brothers/sisters/siblings or 'none'" },
+            { id: 3, text: "Do you have any pets?", expected_answer_type: "yes/no and type of pet or 'none'" },
+            { id: 4, text: "Are you married?", expected_answer_type: "yes/no" },
+            { id: 5, text: "Do you have any children?", expected_answer_type: "yes/no and number of children or 'none'" }
+        ];
+
+        // Initialize SpeechRecognition
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = false; // Stop after a single utterance
+            recognition.interimResults = false; // Only return final results
+            recognition.lang = 'en-US'; // Set language to English
+
+            recognition.onstart = () => {
+                statusDisplay.textContent = 'Registrazione in corso... Parla ora.';
+                recordButton.disabled = true;
+                stopButton.disabled = false;
+                aiFeedbackArea.classList.add('hidden'); // Hide previous feedback
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                userResponseDisplay.textContent = `La tua risposta: "${transcript}"`;
+                statusDisplay.textContent = 'Elaborazione della risposta...';
+                stopButton.disabled = true;
+                sendToAIForFeedback(questions[currentQuestionIndex].text, transcript, questions[currentQuestionIndex].expected_answer_type);
+            };
+
+            recognition.onerror = (event) => {
+                statusDisplay.textContent = `Errore di riconoscimento vocale: ${event.error}`;
+                recordButton.disabled = false;
+                stopButton.disabled = true;
+                startButton.disabled = false; // Re-enable start button if error
+            };
+
+            recognition.onend = () => {
+                if (statusDisplay.textContent === 'Registrazione in corso... Parla ora.') {
+                    statusDisplay.textContent = 'Nessuna voce rilevata. Riprova.';
+                    recordButton.disabled = false;
+                    stopButton.disabled = true;
+                }
+            };
+        } else {
+            statusDisplay.textContent = 'Il riconoscimento vocale non è supportato dal tuo browser.';
+            startButton.disabled = true;
+            recordButton.disabled = true;
+            stopButton.disabled = true;
+        }
+
+        startButton.addEventListener('click', () => {
+            currentQuestionIndex = 0;
+            startButton.disabled = true;
+            recordButton.disabled = false;
+            voiceQuestionDisplay.textContent = questions[currentQuestionIndex].text;
+            statusDisplay.textContent = 'Clicca "Inizia a parlare" per rispondere.';
+            userResponseDisplay.textContent = 'La tua risposta: ';
+            aiFeedbackArea.classList.add('hidden');
+        });
+
+        recordButton.addEventListener('click', () => {
+            if (recognition) {
+                recognition.start();
+            }
+        });
+
+        stopButton.addEventListener('click', () => {
+            if (recognition) {
+                recognition.stop();
+            }
+        });
+
+        async function sendToAIForFeedback(question, userAnswer, expectedAnswerType) {
+            aiFeedbackArea.classList.remove('hidden');
+            aiFeedbackContent.textContent = '';
+            aiFeedbackLoading.classList.remove('hidden');
+
+            const prompt = `Valuta la seguente risposta dello studente ad una domanda.
+            Domanda: "${question}"
+            Risposta dello studente: "${userAnswer}"
+            Tipo di risposta attesa: ${expectedAnswerType}.
+
+            Fornisci un feedback costruttivo e incoraggiante in italiano, indicando se la risposta è grammaticalmente corretta e se risponde alla domanda in modo appropriato. Suggerisci miglioramenti se necessario.`;
+
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            const apiKey = ""; // If you want to use models other than gemini-2.0-flash or imagen-3.0-generate-002, provide an API key here. Otherwise, leave this as-is.
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const feedbackText = result.candidates[0].content.parts[0].text;
+                    aiFeedbackContent.innerHTML = feedbackText.replace(/\n/g, '<br>'); // Preserve newlines
+                } else {
+                    aiFeedbackContent.textContent = 'Non è stato possibile ottenere un feedback dall\'AI. Riprova.';
+                }
+            } catch (error) {
+                console.error("Error fetching AI feedback:", error);
+                aiFeedbackContent.textContent = 'Si è verificato un errore durante la comunicazione con l\'AI.';
+            } finally {
+                aiFeedbackLoading.classList.add('hidden');
+                // Move to next question or end exercise
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    voiceQuestionDisplay.textContent = questions[currentQuestionIndex].text;
+                    statusDisplay.textContent = 'Clicca "Inizia a parlare" per rispondere alla prossima domanda.';
+                    recordButton.disabled = false;
+                    stopButton.disabled = true;
+                } else {
+                    voiceQuestionDisplay.textContent = 'Esercizio completato!';
+                    statusDisplay.textContent = 'Hai risposto a tutte le domande. Clicca "Avvia Esercizio" per ricominciare.';
+                    recordButton.disabled = true;
+                    stopButton.disabled = true;
+                    startButton.disabled = false; // Allow restarting
+                }
+            }
+        }
+    </script>
+</body>
+</html>
