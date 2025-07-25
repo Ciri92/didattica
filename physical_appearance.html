@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione: Aspetto Fisico e Verbo 'To Have'</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        h1 { font-size: 2.25rem; font-weight: bold; text-align: center; }
+        h2 { font-size: 1.75rem; font-weight: bold; border-bottom: 2px solid #e0e7ff; padding-bottom: 0.5rem; margin-top: 2rem; }
+        h3 { font-size: 1.25rem; font-weight: bold; margin-top: 1.5rem; }
+
+        /* Vocabulary Section */
+        .vocabulary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .vocab-item {
+            background-color: #e0f2fe;
+            border: 1px solid #93c5fd;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .vocab-item .emoji {
+            font-size: 2.25rem;
+            line-height: 1;
+        }
+        .vocab-item .text-content {
+            flex-grow: 1;
+        }
+        .vocab-item .english-word {
+            font-weight: bold;
+            color: #1d4ed8;
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 1.1rem;
+        }
+        .vocab-item .italian-translation {
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        /* Grammar Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background-color: #f8fafc;
+            margin-bottom: 3rem;
+        }
+        th, td {
+            border: 1px solid #cbd5e0;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th {
+            background-color: #e0e7ff;
+            color: #3730a3;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f1f5f9;
+        }
+
+        /* Exercise Styles */
+        .exercise-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .exercise-item label {
+            margin-right: 0.5rem;
+            font-weight: 500;
+        }
+        .exercise-item input[type="text"] {
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.9rem;
+            flex-grow: 1;
+            min-width: 150px;
+        }
+        .exercise-item .feedback {
+            margin-left: 0.75rem;
+            font-weight: bold;
+        }
+        .exercise-item .feedback.correct {
+            color: #10b981;
+        }
+        .exercise-item .feedback.incorrect {
+            color: #ef4444;
+        }
+        .check-button {
+            background-color: #4f46e5;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1rem;
+            margin-bottom: 3rem;
+        }
+        .check-button:hover {
+            background-color: #4338ca;
+        }
+
+        /* Memory Game Styles */
+        .memory-game-container {
+            border: 1px dashed #a0aec0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            background-color: #edf2f7;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        #memory-emoji {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+        #memory-input {
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            font-size: 1.1rem;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        #memory-feedback {
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        #memory-feedback.correct {
+            color: #10b981;
+        }
+        #memory-feedback.incorrect {
+            color: #ef4444;
+        }
+        .memory-buttons button {
+            background-color: #10b981;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 0.5rem;
+        }
+        .memory-buttons button:hover {
+            background-color: #059669;
+        }
+        .memory-buttons button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+        .results-button {
+            background-color: #007bff; /* A nice blue for results */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 2rem;
+            display: block; /* Make it a block element to center */
+            margin-left: auto;
+            margin-right: auto;
+            width: fit-content;
+        }
+        .results-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            h1 { font-size: 1.75rem; }
+            h2 { font-size: 1.5rem; }
+            .vocabulary-grid {
+                grid-template-columns: 1fr;
+            }
+            .exercise-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .exercise-item input[type="text"] {
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+            .exercise-item .feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+            #memory-input {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lezione: Aspetto Fisico e Verbo 'To Have'</h1>
+
+        <h2 class="mt-8">Vocabolario: Descrivere l'Aspetto Fisico</h2>
+        <p class="text-gray-700 mb-4">Clicca sulla parola inglese per ascoltarne la pronuncia.</p>
+        <div class="vocabulary-grid">
+            <div class="vocab-item">
+                <span class="emoji">🐻</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('plump')">plump</span>
+                    <div class="italian-translation">robusto/a, paffuto/a</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">🧍‍♀️</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('slim')">slim</span>
+                    <div class="italian-translation">snello/a</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">🦒</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('tall')">tall</span>
+                    <div class="italian-translation">alto/a</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">🩱</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('short')">short</span>
+                    <div class="italian-translation">basso/a</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">👴</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('old')">old</span>
+                    <div class="italian-translation">vecchio/a</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">👶</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('young')">young</span>
+                    <div class="italian-translation">giovane</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">👨‍🦲</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('bald')">bald</span>
+                    <div class="italian-translation">calvo</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">🧑‍🦱</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('middle-aged')">middle-aged</span>
+                    <div class="italian-translation">di mezza età</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">😎</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('handsome')">handsome</span>
+                    <div class="italian-translation">bello (per uomo)</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">✨</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('pretty')">pretty</span>
+                    <div class="italian-translation">carino/a, grazioso/a</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">✨</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('beautiful')">beautiful</span>
+                    <div class="italian-translation">bello/a (per donna/cose)</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">🔵👁️</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('blue eyes')">blue eyes</span>
+                    <div class="italian-translation">occhi blu</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">🟫👁️</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('brown eyes')">brown eyes</span>
+                    <div class="italian-translation">occhi marroni</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">⚫👁️</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('dark eyes')">dark eyes</span>
+                    <div class="italian-translation">occhi scuri</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">🟢👁️</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('green eyes')">green eyes</span>
+                    <div class="italian-translation">occhi verdi</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">⚪👁️</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('grey eyes')">grey eyes</span>
+                    <div class="italian-translation">occhi grigi</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">👩‍🦱</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('brown hair')">brown hair</span>
+                    <div class="italian-translation">capelli castani</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">👩‍🦳</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('black hair')">black hair</span>
+                    <div class="italian-translation">capelli neri</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">👱‍♀️</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('blond hair')">blond hair</span>
+                    <div class="italian-translation">capelli biondi</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">👩‍🦰</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('red hair')">red hair</span>
+                    <div class="italian-translation">capelli rossi</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">🧑‍🦱</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('freckles')">freckles</span>
+                    <div class="italian-translation">lentiggini</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">🌊💇‍♀️</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('wavy hair')">wavy hair</span>
+                    <div class="italian-translation">capelli mossi</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">🧑‍🦱</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('curly hair')">curly hair</span>
+                    <div class="italian-translation">capelli ricci</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">📏💇‍♀️</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('straight hair')">straight hair</span>
+                    <div class="italian-translation">capelli lisci</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">💇‍♀️</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('short hair')">short hair</span>
+                    <div class="italian-translation">capelli corti</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">👩‍🦳</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('long hair')">long hair</span>
+                    <div class="italian-translation">capelli lunghi</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">🧑‍🦱</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('medium length hair')">medium length hair</span>
+                    <div class="italian-translation">capelli di media lunghezza</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">👓</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('glasses')">glasses</span>
+                    <div class="italian-translation">occhiali</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">🧔</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('a beard')">a beard</span>
+                    <div class="italian-translation">barba</div>
+                </div>
+            </div>
+            <div class="vocab-item">
+                <span class="emoji">👨‍ mustache</span>
+                <div class="text-content">
+                    <span class="english-word" onclick="speak('a moustache')">a moustache</span>
+                    <div class="italian-translation">baffi</div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="mt-12">Grammatica: "To Be" vs "To Have" per Descrivere</h2>
+        <p class="text-gray-700">In inglese, per descrivere l'aspetto fisico, si usano principalmente due verbi: "to be" (essere) e "to have" (avere).</p>
+        <ul class="list-disc list-inside ml-4 mt-2 text-gray-700">
+            <li>Usiamo "to be" con gli aggettivi: Per descrivere qualità generali o caratteristiche fisiche.
+                <br>Esempio: She <b>is</b> tall. (Lei è alta.) / He <b>is</b> bald. (Lui è calvo.)
+                <br>Esempio: They <b>are</b> young. (Loro sono giovani.)
+            </li>
+            <li>Usiamo "to have" per descrivere parti del corpo o accessori: Per indicare che qualcuno "possiede" una certa caratteristica fisica (occhi, capelli, barba, occhiali, ecc.).
+                <br>Esempio: She <b>has</b> blue eyes. (Lei ha gli occhi blu.) / He <b>has</b> a beard. (Lui ha la barba.)
+                <br>Esempio: They <b>have</b> long hair. (Loro hanno i capelli lunghi.)
+            </li>
+        </ul>
+
+        <h3 class="mt-8">Coniugazione del Verbo "To Have" (Present Simple)</h3>
+        <p class="text-gray-700">Ecco come si coniuga il verbo "to have" al Present Simple nelle forme affermativa, negativa e interrogativa.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pronome</th>
+                    <th>Forma Affermativa</th>
+                    <th>Forma Negativa</th>
+                    <th>Forma Interrogativa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>I</td>
+                    <td>have</td>
+                    <td>do not have / don't have</td>
+                    <td>Do I have?</td>
+                </tr>
+                <tr>
+                    <td>You</td>
+                    <td>have</td>
+                    <td>do not have / don't have</td>
+                    <td>Do you have?</td>
+                </tr>
+                <tr>
+                    <td>He</td>
+                    <td>has</td>
+                    <td>does not have / doesn't have</td>
+                    <td>Does he have?</td>
+                </tr>
+                <tr>
+                    <td>She</td>
+                    <td>has</td>
+                    <td>does not have / doesn't have</td>
+                    <td>Does she have?</td>
+                </tr>
+                <tr>
+                    <td>It</td>
+                    <td>has</td>
+                    <td>does not have / doesn't have</td>
+                    <td>Does it have?</td>
+                </tr>
+                <tr>
+                    <td>We</td>
+                    <td>have</td>
+                    <td>do not have / don't have</td>
+                    <td>Do we have?</td>
+                </tr>
+                <tr>
+                    <td>You</td>
+                    <td>have</td>
+                    <td>do not have / don't have</td>
+                    <td>Do you have?</td>
+                </tr>
+                <tr>
+                    <td>They</td>
+                    <td>have</td>
+                    <td>do not have / don't have</td>
+                    <td>Do they have?</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 class="mt-12">Esercizio: Coniuga il Verbo "To Have"</h2>
+        <p class="text-gray-700 mb-4">Completa le frasi coniugando correttamente il verbo "to have" al Present Simple (affermativa, negativa o interrogativa).</p>
+        <div id="have-exercise-form">
+            <div class="exercise-item">
+                <label for="h1">1. My brother _______ a new bike. (affermativa)</label>
+                <input type="text" id="h1" data-answer="has">
+                <span class="feedback" id="hf1"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="h2">2. We _______ a lot of homework tonight. (affermativa)</label>
+                <input type="text" id="h2" data-answer="have">
+                <span class="feedback" id="hf2"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="h3">3. _______ you _______ a pet? (interrogativa)</label>
+                <input type="text" id="h3" data-answer="Do have">
+                <span class="feedback" id="hf3"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="h4">4. She _______ not _______ long hair. (negativa)</label>
+                <input type="text" id="h4" data-answer="does have">
+                <span class="feedback" id="hf4"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="h5">5. I _______ a big family. (affermativa)</label>
+                <input type="text" id="h5" data-answer="have">
+                <span class="feedback" id="hf5"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="h6">6. _______ he _______ any siblings? (interrogativa)</label>
+                <input type="text" id="h6" data-answer="Does have">
+                <span class="feedback" id="hf6"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="h7">7. They _______ a new car. (affermativa)</label>
+                <input type="text" id="h7" data-answer="have">
+                <span class="feedback" id="hf7"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="h8">8. My dog _______ short legs. (affermativa)</label>
+                <input type="text" id="h8" data-answer="has">
+                <span class="feedback" id="hf8"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="h9">9. We _______ not _______ much time. (negativa)</label>
+                <input type="text" id="h9" data-answer="do have">
+                <span class="feedback" id="hf9"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="h10">10. _______ your parents _______ a big house? (interrogativa)</label>
+                <input type="text" id="h10" data-answer="Do have">
+                <span class="feedback" id="hf10"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="h11">11. The cat _______ green eyes. (affermativa)</label>
+                <input type="text" id="h11" data-answer="has">
+                <span class="feedback" id="hf11"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="h12">12. You _______ a beautiful smile. (affermativa)</label>
+                <input type="text" id="h12" data-answer="have">
+                <span class="feedback" id="hf12"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="h13">13. _______ she _______ a lot of friends? (interrogativa)</label>
+                <input type="text" id="h13" data-answer="Does have">
+                <span class="feedback" id="hf13"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="h14">14. They _______ not _______ any money. (negativa)</label>
+                <input type="text" id="h14" data-answer="do have">
+                <span class="feedback" id="hf14"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="h15">15. My sister _______ a new phone. (affermativa)</label>
+                <input type="text" id="h15" data-answer="has">
+                <span class="feedback" id="hf15"></span>
+            </div>
+            <button class="check-button" onclick="checkHaveAnswers()">Controlla Risposte</button>
+        </div>
+
+        <h2 class="mt-12">Esercizio di Memorizzazione: Descrivi l'Aspetto Fisico</h2>
+        <p class="text-gray-700 mb-4">Guarda l'emoji e scrivi l'aggettivo o l'espressione che descrive l'aspetto fisico. Clicca "Prossima Carta" per continuare.</p>
+        <div class="memory-game-container">
+            <div id="memory-emoji"></div>
+            <input type="text" id="memory-input" placeholder="Scrivi l'aggettivo qui">
+            <div id="memory-feedback"></div>
+            <div class="memory-buttons">
+                <button onclick="checkMemoryAnswer()">Controlla</button>
+                <button onclick="nextMemoryCard()">Prossima Carta</button>
+            </div>
+        </div>
+
+        <button class="results-button" onclick="generatePdfResults()">I miei risultati</button>
+    </div>
+
+    <script>
+        // Text-to-speech function
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US'; // Ensure English pronunciation
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // "To Have" Exercise Logic
+        function checkHaveAnswers() {
+            const questions = document.querySelectorAll('#have-exercise-form input[type="text"]');
+            questions.forEach((input, index) => {
+                const userAnswer = input.value.trim().toLowerCase();
+                const correctAnswer = input.dataset.answer.toLowerCase();
+                const feedbackSpan = document.getElementById(`hf${index + 1}`);
+
+                if (userAnswer === correctAnswer) {
+                    feedbackSpan.textContent = 'Corretto!';
+                    feedbackSpan.className = 'feedback correct';
+                } else {
+                    feedbackSpan.textContent = `Sbagliato. La risposta corretta è: ${correctAnswer}`;
+                    feedbackSpan.className = 'feedback incorrect';
+                }
+            });
+        }
+
+        // Memory Game Logic
+        const memoryCards = [
+            { emoji: '🐻', adjective: 'plump' },
+            { emoji: '🧍‍♀️', adjective: 'slim' },
+            { emoji: '🦒', adjective: 'tall' },
+            { emoji: '🩱', adjective: 'short' },
+            { emoji: '👴', adjective: 'old' },
+            { emoji: '👶', adjective: 'young' },
+            { emoji: '👨‍🦲', adjective: 'bald' },
+            { emoji: '🧑‍🦱', adjective: 'middle-aged' },
+            { emoji: '😎', adjective: 'handsome' },
+            { emoji: '✨', adjective: 'pretty' },
+            { emoji: '✨', adjective: 'beautiful' },
+            { emoji: '🔵👁️', adjective: 'blue eyes' },
+            { emoji: '🟫👁️', adjective: 'brown eyes' },
+            { emoji: '⚫👁️', adjective: 'dark eyes' },
+            { emoji: '🟢👁️', adjective: 'green eyes' },
+            { emoji: '⚪👁️', adjective: 'grey eyes' },
+            { emoji: '👩‍🦱', adjective: 'brown hair' },
+            { emoji: '👩‍🦳', adjective: 'black hair' },
+            { emoji: '👱‍♀️', adjective: 'blond hair' },
+            { emoji: '👩‍🦰', adjective: 'red hair' },
+            { emoji: '🧑‍🦱', adjective: 'freckles' },
+            { emoji: '🌊💇‍♀️', adjective: 'wavy hair' },
+            { emoji: '🧑‍🦱', adjective: 'curly hair' },
+            { emoji: '📏💇‍♀️', adjective: 'straight hair' },
+            { emoji: '💇‍♀️', adjective: 'short hair' },
+            { emoji: '👩‍🦳', adjective: 'long hair' },
+            { emoji: '🧑‍🦱', adjective: 'medium length hair' },
+            { emoji: '👓', adjective: 'glasses' },
+            { emoji: '🧔', adjective: 'a beard' },
+            { emoji: '👨‍ mustache', adjective: 'a moustache' }
+        ];
+
+        let shuffledMemoryCards = [];
+        let currentMemoryCardIndex = 0;
+        let memoryGameResults = []; // To store results for PDF
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function displayMemoryCard() {
+            if (shuffledMemoryCards.length === 0 || currentMemoryCardIndex >= shuffledMemoryCards.length) {
+                shuffledMemoryCards = [...memoryCards]; // Reset and shuffle if all cards seen
+                shuffleArray(shuffledMemoryCards);
+                currentMemoryCardIndex = 0; // Reset index for new round
+            }
+            const card = shuffledMemoryCards[currentMemoryCardIndex];
+            document.getElementById('memory-emoji').textContent = card.emoji;
+            document.getElementById('memory-input').value = '';
+            document.getElementById('memory-feedback').textContent = '';
+            document.getElementById('memory-input').focus();
+        }
+
+        function checkMemoryAnswer() {
+            const userAnswer = document.getElementById('memory-input').value.trim().toLowerCase();
+            const currentCard = shuffledMemoryCards[currentMemoryCardIndex];
+            const correctAnswer = currentCard.adjective.toLowerCase();
+            const feedbackDiv = document.getElementById('memory-feedback');
+            const isCorrect = (userAnswer === correctAnswer);
+
+            if (isCorrect) {
+                feedbackDiv.textContent = 'Corretto!';
+                feedbackDiv.className = 'correct';
+            } else {
+                feedbackDiv.textContent = `Sbagliato. La risposta corretta è: ${correctAnswer}`;
+                feedbackDiv.className = 'incorrect';
+            }
+
+            // Store result for PDF
+            memoryGameResults.push({
+                emoji: currentCard.emoji,
+                question: currentCard.adjective, // The "question" is the adjective itself for this game
+                userAnswer: userAnswer,
+                correctAnswer: correctAnswer,
+                isCorrect: isCorrect
+            });
+        }
+
+        function nextMemoryCard() {
+            currentMemoryCardIndex++;
+            displayMemoryCard();
+        }
+
+        // PDF Generation Logic
+        async function generatePdfResults() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            let y = 20; // Starting Y position
+
+            doc.setFontSize(18);
+            doc.text("Risultati degli Esercizi", 105, y, { align: 'center' });
+            y += 20;
+
+            // Results for "To Have" Exercise
+            doc.setFontSize(14);
+            doc.text("1. Esercizio: Coniuga il Verbo 'To Have'", 10, y);
+            y += 10;
+            doc.setFontSize(10);
+            const haveQuestions = document.querySelectorAll('#have-exercise-form .exercise-item');
+            haveQuestions.forEach((item, index) => {
+                const label = item.querySelector('label').textContent;
+                const input = item.querySelector('input');
+                const userAnswer = input.value.trim();
+                const correctAnswer = input.dataset.answer;
+                const isCorrect = (userAnswer.toLowerCase() === correctAnswer.toLowerCase());
+                const status = isCorrect ? 'Corretto' : 'Sbagliato';
+
+                doc.text(`${index + 1}. ${label.replace('(affermativa)', '').replace('(negativa)', '').replace('(interrogativa)', '').trim()} La tua risposta: "${userAnswer}" - Corretta: "${correctAnswer}" (${status})`, 15, y);
+                y += 7;
+                if (y > 280) { // Check for page break
+                    doc.addPage();
+                    y = 20;
+                }
+            });
+
+            y += 15; // Add space before next section
+
+            // Results for Memory Game
+            doc.setFontSize(14);
+            doc.text("2. Esercizio di Memorizzazione: Descrivi l'Aspetto Fisico", 10, y);
+            y += 10;
+            doc.setFontSize(10);
+            if (memoryGameResults.length === 0) {
+                doc.text("Nessun tentativo registrato per l'esercizio di memorizzazione.", 15, y);
+                y += 7;
+            } else {
+                memoryGameResults.forEach((result, index) => {
+                    const status = result.isCorrect ? 'Corretto' : 'Sbagliato';
+                    doc.text(`${index + 1}. Emoji: ${result.emoji} - Parola: "${result.question}" - La tua risposta: "${result.userAnswer}" - Corretta: "${result.correctAnswer}" (${status})`, 15, y);
+                    y += 7;
+                    if (y > 280) { // Check for page break
+                        doc.addPage();
+                        y = 20;
+                    }
+                });
+            }
+
+            doc.save('I_miei_risultati_inglese.pdf');
+        }
+
+        // Initialize memory game on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            displayMemoryCard();
+        });
+    </script>
+</body>
+</html>
