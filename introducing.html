@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione: Presentarsi in Inglese</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        h1 { font-size: 2.25rem; font-weight: bold; text-align: center; }
+        h2 { font-size: 1.75rem; font-weight: bold; border-bottom: 2px solid #e0e7ff; padding-bottom: 0.5rem; margin-top: 2rem; }
+        h3 { font-size: 1.25rem; font-weight: bold; margin-top: 1.5rem; }
+
+        /* Section 1: Interview Examples */
+        .interview-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .questions-box {
+            flex: 1;
+            min-width: 280px;
+            background-color: #e0f2fe;
+            border: 1px solid #93c5fd;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .questions-box p {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            color: #1d4ed8;
+        }
+        .questions-box span.translation {
+            font-size: 0.9rem;
+            color: #4b5563;
+            font-weight: normal;
+            display: block;
+            margin-top: 0.2rem;
+        }
+        .vignettes-grid {
+            flex: 2;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        .vignette-card {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e0;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+        .vignette-card .emoji {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        .vignette-card p {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #333;
+        }
+
+        /* Section 2: Self Introduction */
+        #self-introduction-textarea {
+            width: 100%;
+            min-height: 150px;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            font-size: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        .submit-button {
+            background-color: #4f46e5;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1rem;
+            margin-bottom: 3rem;
+        }
+        .submit-button:hover {
+            background-color: #4338ca;
+        }
+
+        /* Section 3: Family Description (Voice) */
+        .voice-exercise-container {
+            border: 1px dashed #a0aec0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            background-color: #edf2f7;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .voice-exercise-container button {
+            background-color: #10b981;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 0.5rem;
+        }
+        .voice-exercise-container button:hover {
+            background-color: #059669;
+        }
+        .voice-exercise-container button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+        .voice-exercise-container .message {
+            margin-top: 1rem;
+            font-style: italic;
+            color: #4b5563;
+        }
+        .voice-exercise-container .ai-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #dbeafe;
+            border: 1px solid #93c5fd;
+            border-radius: 0.5rem;
+            text-align: left;
+        }
+        .voice-exercise-container .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Results Button */
+        .results-button {
+            background-color: #007bff; /* A nice blue for results */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 2rem;
+            display: block; /* Make it a block element to center */
+            margin-left: auto;
+            margin-right: auto;
+            width: fit-content;
+        }
+        .results-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            h1 { font-size: 1.75rem; }
+            h2 { font-size: 1.5rem; }
+            .interview-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .questions-box, .vignettes-grid {
+                min-width: unset;
+                width: 100%;
+            }
+            .vignettes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lezione: Presentarsi in Inglese</h1>
+
+        <h2 class="mt-8">Sezione 1: Esempi di Presentazione</h2>
+        <p class="text-gray-700 mb-4">Osserva come queste persone si presentano. Le domande a sinistra ti guideranno.</p>
+        <div class="interview-section">
+            <div class="questions-box">
+                <p>What's your name? <span class="translation">Qual è il tuo nome?</span></p>
+                <p>How old are you? <span class="translation">Quanti anni hai?</span></p>
+                <p>Where are you from? <span class="translation">Di dove sei?</span></p>
+                <p>Where do you live? <span class="translation">Dove vivi?</span></p>
+                <p>What's your phone number? <span class="translation">Qual è il tuo numero di telefono?</span></p>
+                <p>What's your email? <span class="translation">Qual è la tua email?</span></p>
+                <p>What's your hobby? <span class="translation">Qual è il tuo hobby?</span></p>
+            </div>
+            <div class="vignettes-grid">
+                <div class="vignette-card">
+                    <span class="emoji">🧑‍🦰</span>
+                    <p>Hi, my name is Alex. I'm 25 years old. I'm from London, and I live in Manchester. My phone number is 07700 900345. My email is alex.smith@example.com. My hobby is playing football.</p>
+                </div>
+                <div class="vignette-card">
+                    <span class="emoji">👩‍🦱</span>
+                    <p>Hello, I'm Maria. I'm 30. I'm from Rome, Italy, but I live in Barcelona. My phone is +34 612 345 678. You can email me at maria.rossi@email.es. I love painting in my free time.</p>
+                </div>
+                <div class="vignette-card">
+                    <span class="emoji">👨‍🦳</span>
+                    <p>Good morning, I'm Mr. Johnson. I'm 60 years old. I'm from New York City and I still live there. My number is 212-555-1234. My email is john.johnson@work.com. My hobby is gardening.</p>
+                </div>
+                <div class="vignette-card">
+                    <span class="emoji">👩‍🦲</span>
+                    <p>Hey there! My name is Chloe. I'm 19. I'm from Sydney, Australia, and I live in a student apartment. My phone is 0412 345 678. My email is chloe.student@uni.au. I enjoy playing video games.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="mt-12">Sezione 2: La Tua Presentazione</h2>
+        <p class="text-gray-700 mb-4">Scrivi la tua presentazione in inglese, rispondendo alle domande che hai visto sopra. Cerca di essere il più completo possibile.</p>
+        <textarea id="self-introduction-textarea" placeholder="Inizia a scrivere la tua presentazione qui..."></textarea>
+        <button class="submit-button" onclick="saveSelfIntroduction()">Salva la mia presentazione</button>
+
+        <h2 class="mt-12">Sezione 3: Descrivi le Persone della Tua Famiglia (a Voce)</h2>
+        <p class="text-gray-700 mb-4">Descrivi tre persone della tua famiglia usando la tua voce. Clicca su "Avvia Esercizio" per iniziare e poi "Inizia a parlare" per registrare la tua risposta per ogni domanda.</p>
+        <div class="voice-exercise-container">
+            <p id="voice-question" class="text-lg font-semibold mb-4 text-indigo-700">Clicca "Avvia Esercizio" per iniziare.</p>
+            <button id="startButton" class="bg-blue-600 hover:bg-blue-700">Avvia Esercizio</button>
+            <button id="recordButton" disabled class="bg-green-600 hover:bg-green-700">Inizia a parlare</button>
+            <button id="stopButton" disabled class="bg-red-600 hover:bg-red-700">Ferma e Invia</button>
+            <p id="status" class="message">Pronto.</p>
+            <p id="user-response" class="message text-base mt-2">La tua risposta: </p>
+            <div id="ai-feedback-area" class="ai-feedback hidden">
+                <h3>Feedback dell'AI:</h3>
+                <div id="ai-feedback-content"></div>
+                <div id="ai-feedback-loading" class="loading-spinner hidden"></div>
+            </div>
+        </div>
+
+        <button class="results-button" onclick="generatePdfResults()">I miei risultati</button>
+    </div>
+
+    <script>
+        // Global variables for results
+        let selfIntroductionText = "";
+        let familyDescriptions = []; // Stores { question, userAnswer, aiFeedback }
+
+        // Section 2: Self Introduction Logic
+        function saveSelfIntroduction() {
+            selfIntroductionText = document.getElementById('self-introduction-textarea').value.trim();
+            if (selfIntroductionText) {
+                alert('La tua presentazione è stata salvata per il PDF!');
+            } else {
+                alert('Per favore, scrivi qualcosa nella tua presentazione prima di salvarla.');
+            }
+        }
+
+        // Section 3: Voice Exercise Logic
+        const startButton = document.getElementById('startButton');
+        const recordButton = document.getElementById('recordButton');
+        const stopButton = document.getElementById('stopButton');
+        const voiceQuestionDisplay = document.getElementById('voice-question');
+        const statusDisplay = document.getElementById('status');
+        const userResponseDisplay = document.getElementById('user-response');
+        const aiFeedbackArea = document.getElementById('ai-feedback-area');
+        const aiFeedbackContent = document.getElementById('ai-feedback-content');
+        const aiFeedbackLoading = document.getElementById('ai-feedback-loading');
+
+        let recognition;
+        let currentQuestionIndex = 0;
+        const familyQuestions = [
+            { id: 1, text: "Describe your mother or father. Tell me about their physical appearance.", expected_answer_type: "description of physical appearance" },
+            { id: 2, text: "Describe a brother or sister, or another close family member. Focus on their appearance.", expected_answer_type: "description of physical appearance" },
+            { id: 3, text: "Describe one more family member. What do they look like?", expected_answer_type: "description of physical appearance" }
+        ];
+
+        // Initialize SpeechRecognition
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = false; // Stop after a single utterance
+            recognition.interimResults = false; // Only return final results
+            recognition.lang = 'en-US'; // Set language to English for recording
+
+            recognition.onstart = () => {
+                statusDisplay.textContent = 'Registrazione in corso... Parla ora.';
+                recordButton.disabled = true;
+                stopButton.disabled = false;
+                aiFeedbackArea.classList.add('hidden'); // Hide previous feedback
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                userResponseDisplay.textContent = `La tua risposta: "${transcript}"`;
+                statusDisplay.textContent = 'Elaborazione della risposta...';
+                stopButton.disabled = true;
+                sendToAIForFeedback(familyQuestions[currentQuestionIndex].text, transcript, familyQuestions[currentQuestionIndex].expected_answer_type);
+            };
+
+            recognition.onerror = (event) => {
+                statusDisplay.textContent = `Errore di riconoscimento vocale: ${event.error}`;
+                recordButton.disabled = false;
+                stopButton.disabled = true;
+                startButton.disabled = false; // Re-enable start button if error
+            };
+
+            recognition.onend = () => {
+                if (statusDisplay.textContent === 'Registrazione in corso... Parla ora.') {
+                    statusDisplay.textContent = 'Nessuna voce rilevata. Riprova.';
+                    recordButton.disabled = false;
+                    stopButton.disabled = true;
+                }
+            };
+        } else {
+            statusDisplay.textContent = 'Il riconoscimento vocale non è supportato dal tuo browser.';
+            startButton.disabled = true;
+            recordButton.disabled = true;
+            stopButton.disabled = true;
+        }
+
+        startButton.addEventListener('click', () => {
+            currentQuestionIndex = 0;
+            familyDescriptions = []; // Clear previous results
+            startButton.disabled = true;
+            recordButton.disabled = false;
+            voiceQuestionDisplay.textContent = familyQuestions[currentQuestionIndex].text;
+            statusDisplay.textContent = 'Clicca "Inizia a parlare" per rispondere.';
+            userResponseDisplay.textContent = 'La tua risposta: ';
+            aiFeedbackArea.classList.add('hidden');
+        });
+
+        recordButton.addEventListener('click', () => {
+            if (recognition) {
+                recognition.start();
+            }
+        });
+
+        stopButton.addEventListener('click', () => {
+            if (recognition) {
+                recognition.stop();
+            }
+        });
+
+        async function sendToAIForFeedback(question, userAnswer, expectedAnswerType) {
+            aiFeedbackArea.classList.remove('hidden');
+            aiFeedbackContent.textContent = '';
+            aiFeedbackLoading.classList.remove('hidden');
+
+            const prompt = `Valuta la seguente risposta dello studente ad una domanda in inglese.
+            Domanda: "${question}"
+            Risposta dello studente: "${userAnswer}"
+            Tipo di risposta attesa: ${expectedAnswerType}.
+
+            Fornisci un feedback costruttivo e incoraggiante in italiano, indicando se la risposta è grammaticalmente corretta, se il vocabolario è appropriato per descrivere l'aspetto fisico e se risponde alla domanda in modo appropriato. Suggerisci miglioramenti se necessario.`;
+
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            const apiKey = ""; // If you want to use models other than gemini-2.0-flash or imagen-3.0-generate-002, provide an API key here. Otherwise, leave this as-is.
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                let feedbackText = 'Non è stato possibile ottenere un feedback dall\'AI. Riprova.';
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    feedbackText = result.candidates[0].content.parts[0].text;
+                }
+                aiFeedbackContent.innerHTML = feedbackText.replace(/\n/g, '<br>'); // Preserve newlines
+
+                // Store result for PDF
+                familyDescriptions.push({
+                    question: question,
+                    userAnswer: userAnswer,
+                    aiFeedback: feedbackText
+                });
+
+            } catch (error) {
+                console.error("Error fetching AI feedback:", error);
+                aiFeedbackContent.textContent = 'Si è verificato un errore durante la comunicazione con l\'AI.';
+            } finally {
+                aiFeedbackLoading.classList.add('hidden');
+                // Move to next question or end exercise
+                currentQuestionIndex++;
+                if (currentQuestionIndex < familyQuestions.length) {
+                    voiceQuestionDisplay.textContent = familyQuestions[currentQuestionIndex].text;
+                    statusDisplay.textContent = 'Clicca "Inizia a parlare" per rispondere alla prossima domanda.';
+                    recordButton.disabled = false;
+                    stopButton.disabled = true;
+                } else {
+                    voiceQuestionDisplay.textContent = 'Esercizio completato!';
+                    statusDisplay.textContent = 'Hai risposto a tutte le domande. Clicca "Avvia Esercizio" per ricominciare.';
+                    recordButton.disabled = true;
+                    stopButton.disabled = true;
+                    startButton.disabled = false; // Allow restarting
+                }
+            }
+        }
+
+        // PDF Generation Logic
+        async function generatePdfResults() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            let y = 20; // Starting Y position
+
+            doc.setFontSize(18);
+            doc.text("I Miei Risultati - Lezione di Inglese", 105, y, { align: 'center' });
+            y += 20;
+
+            // Section 2 Results: Self Introduction
+            doc.setFontSize(14);
+            doc.text("1. La Tua Presentazione:", 10, y);
+            y += 10;
+            doc.setFontSize(10);
+            if (selfIntroductionText) {
+                doc.text(selfIntroductionText, 15, y, { maxWidth: 180 });
+                y += (doc.splitTextToSize(selfIntroductionText, 180).length * 5) + 5; // Adjust Y based on text length
+            } else {
+                doc.text("Nessuna presentazione salvata.", 15, y);
+                y += 10;
+            }
+            y += 15; // Add space before next section
+
+            // Section 3 Results: Family Descriptions
+            doc.setFontSize(14);
+            doc.text("2. Descrizione delle Persone della Tua Famiglia (a Voce):", 10, y);
+            y += 10;
+            doc.setFontSize(10);
+            if (familyDescriptions.length === 0) {
+                doc.text("Nessuna descrizione vocale registrata.", 15, y);
+                y += 10;
+            } else {
+                familyDescriptions.forEach((result, index) => {
+                    if (y > 270) { // Check for page break before adding new description
+                        doc.addPage();
+                        y = 20;
+                    }
+                    doc.text(`Domanda ${index + 1}: ${result.question}`, 15, y);
+                    y += 7;
+                    doc.text(`La tua risposta: "${result.userAnswer}"`, 15, y);
+                    y += 7;
+                    doc.text(`Feedback AI:`, 15, y);
+                    y += 7;
+                    doc.text(result.aiFeedback, 20, y, { maxWidth: 175 });
+                    y += (doc.splitTextToSize(result.aiFeedback, 175).length * 5) + 10; // Adjust Y based on text length
+                });
+            }
+
+            doc.save('I_miei_risultati_presentazione.pdf');
+        }
+    </script>
+</body>
+</html>
