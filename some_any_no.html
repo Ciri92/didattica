@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione: Some, Any, No e Oggetti della Casa</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        h1 { font-size: 2.25rem; font-weight: bold; text-align: center; }
+        h2 { font-size: 1.75rem; font-weight: bold; border-bottom: 2px solid #e0e7ff; padding-bottom: 0.5rem; margin-top: 2rem; }
+        h3 { font-size: 1.25rem; font-weight: bold; margin-top: 1.5rem; }
+
+        /* Explanation Section */
+        .explanation-box {
+            background-color: #e0f2fe;
+            border: 1px solid #93c5fd;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .explanation-box p {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+            color: #333;
+        }
+        .explanation-box strong {
+            color: #1d4ed8;
+        }
+        .example {
+            background-color: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0.25rem;
+            font-style: italic;
+        }
+
+        /* Exercise Styles */
+        .exercise-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .exercise-item label {
+            margin-right: 0.5rem;
+            font-weight: 500;
+        }
+        .exercise-item input[type="text"] {
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.9rem;
+            flex-grow: 1;
+            min-width: 150px;
+        }
+        .exercise-item .feedback {
+            margin-left: 0.75rem;
+            font-weight: bold;
+        }
+        .exercise-item .feedback.correct {
+            color: #10b981;
+        }
+        .exercise-item .feedback.incorrect {
+            color: #ef4444;
+        }
+        .check-button {
+            background-color: #4f46e5;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1rem;
+            margin-bottom: 3rem;
+        }
+        .check-button:hover {
+            background-color: #4338ca;
+        }
+
+        /* Room Exercise Styles */
+        #item-pool {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 2px dashed #6366f1;
+            border-radius: 0.75rem;
+            background-color: #e0f2fe;
+            min-height: 120px;
+            margin-bottom: 2rem;
+        }
+        .draggable-item-card {
+            background-color: #ffffff;
+            border: 1px solid #93c5fd;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: grab;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .draggable-item-card .emoji {
+            font-size: 1.8rem;
+            margin-bottom: 0.2rem;
+        }
+        .draggable-item-card:active {
+            cursor: grabbing;
+            transform: scale(1.05);
+        }
+
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .room-drop-zone {
+            background-color: #f8fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Items stack from top */
+            position: relative;
+        }
+        .room-drop-zone.hover {
+            background-color: #e2e8f0;
+            border-color: #6366f1;
+        }
+        .room-drop-zone .room-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .room-drop-zone.correct {
+            border-color: #10b981;
+            background-color: #d1fae5;
+        }
+        .room-drop-zone.incorrect {
+            border-color: #ef4444;
+            background-color: #fee2e2;
+        }
+        .room-drop-zone .dropped-items-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            h1 { font-size: 1.75rem; }
+            h2 { font-size: 1.5rem; }
+            .room-grid {
+                grid-template-columns: 1fr;
+            }
+            .exercise-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .exercise-item input[type="text"] {
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+            .exercise-item .feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lezione: Some, Any, No</h1>
+
+        <h2 class="mt-8">Spiegazione: Some, Any, No</h2>
+        <div class="explanation-box">
+            <p>Queste parole si usano per parlare di quantità non specifiche o per indicare l'assenza di qualcosa.</p>
+
+            <h3>Some</h3>
+            <p>Usiamo <b>some</b> principalmente nelle frasi affermative con nomi numerabili plurali e nomi non numerabili.</p>
+            <div class="example">
+                <p>I have some friends in London. (Ho alcuni amici a Londra.)</p>
+                <p>There is some milk in the fridge. (C'è del latte in frigo.)</p>
+            </div>
+            <p>Possiamo usare <b>some</b> anche nelle domande quando offriamo qualcosa o chiediamo qualcosa che ci aspettiamo di ricevere.</p>
+            <div class="example">
+                <p>Would you like some coffee? (Vorresti del caffè? - Offerta)</p>
+                <p>Can I have some water, please? (Posso avere dell'acqua, per favore? - Richiesta)</p>
+            </div>
+
+            <h3>Any</h3>
+            <p>Usiamo <b>any</b> principalmente nelle frasi negative e interrogative con nomi numerabili plurali e nomi non numerabili.</p>
+            <div class="example">
+                <p>I don't have any money. (Non ho soldi.)</p>
+                <p>Is there any sugar? (C'è dello zucchero?)</p>
+                <p>Do you have any questions? (Hai delle domande?)</p>
+            </div>
+            <p>Possiamo usare <b>any</b> anche nelle frasi affermative con il significato di "qualsiasi" o "ogni".</p>
+            <div class="example">
+                <p>You can choose any book you like. (Puoi scegliere qualsiasi libro ti piaccia.)</p>
+                <p>Any student can answer this question. (Qualsiasi studente può rispondere a questa domanda.)</p>
+            </div>
+
+            <h3>No</h3>
+            <p>Usiamo <b>no</b> per esprimere una quantità zero o l'assenza totale di qualcosa. Si usa nelle frasi affermative, ma rende il significato negativo.</p>
+            <div class="example">
+                <p>I have no money. (Non ho soldi. - Stesso significato di "I don't have any money.")</p>
+                <p>There are no students in the classroom. (Non ci sono studenti in classe.)</p>
+            </div>
+            <p>Ricorda che in inglese non si usa la doppia negazione, quindi "no" non si usa con "not".</p>
+            <div class="example">
+                <p>Corretto: I have no money. / I don't have any money.</p>
+                <p>Sbagliato: I don't have no money.</p>
+            </div>
+        </div>
+
+        <h2 class="mt-12">Esercizio: Completa con Some, Any o No</h2>
+        <p class="text-gray-700 mb-4">Completa le frasi inserendo <b>some</b>, <b>any</b> o <b>no</b>.</p>
+        <div id="some-any-no-exercise-form">
+            <div class="exercise-item">
+                <label for="q1">1. I need _______ help with my homework.</label>
+                <input type="text" id="q1" data-answer="some">
+                <span class="feedback" id="f1"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q2">2. Do you have _______ brothers or sisters?</label>
+                <input type="text" id="q2" data-answer="any">
+                <span class="feedback" id="f2"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q3">3. There is _______ water in the bottle. It's empty.</label>
+                <input type="text" id="q3" data-answer="no">
+                <span class="feedback" id="f3"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q4">4. We don't have _______ milk left.</label>
+                <input type="text" id="q4" data-answer="any">
+                <span class="feedback" id="f4"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q5">5. Can I have _______ more tea, please?</label>
+                <input type="text" id="q5" data-answer="some">
+                <span class="feedback" id="f5"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q6">6. She has _______ interesting ideas.</label>
+                <input type="text" id="q6" data-answer="some">
+                <span class="feedback" id="f6"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q7">7. Are there _______ good restaurants nearby?</label>
+                <input type="text" id="q7" data-answer="any">
+                <span class="feedback" id="f7"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q8">8. There are _______ clouds in the sky today. It's perfectly clear.</label>
+                <input type="text" id="q8" data-answer="no">
+                <span class="feedback" id="f8"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q9">9. I didn't see _______ one I knew at the party.</label>
+                <input type="text" id="q9" data-answer="any">
+                <span class="feedback" id="f9"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q10">10. Would you like _______ fruit?</label>
+                <input type="text" id="q10" data-answer="some">
+                <span class="feedback" id="f10"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q11">11. He has _______ patience with rude people.</label>
+                <input type="text" id="q11" data-answer="no">
+                <span class="feedback" id="f11"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q12">12. Is there _______ sugar in your coffee?</label>
+                <input type="text" id="q12" data-answer="any">
+                <span class="feedback" id="f12"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q13">13. I bought _______ new books yesterday.</label>
+                <input type="text" id="q13" data-answer="some">
+                <span class="feedback" id="f13"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q14">14. She doesn't have _______ experience in this field.</label>
+                <input type="text" id="q14" data-answer="any">
+                <span class="feedback" id="f14"></span>
+            </div>
+            <div class="exercise-item">
+                <label for="q15">15. There's _______ doubt about it. It's true.</label>
+                <input type="text" id="q15" data-answer="no">
+                <span class="feedback" id="f15"></span>
+            </div>
+            <button class="check-button" onclick="checkSomeAnyNoAnswers()">Controlla Risposte</button>
+        </div>
+
+        <h2 class="mt-12">Esercizio di Ripasso: Oggetti della Casa</h2>
+        <p class="text-gray-700 mb-4">Trascina gli oggetti nella stanza corretta della casa.</p>
+
+        <div id="item-pool">
+            <!-- Draggable items will be populated here by JS -->
+        </div>
+
+        <div class="room-grid">
+            <div class="room-drop-zone" data-room="Living Room">
+                <p class="room-title">Living Room</p>
+                <p class="italian-translation text-sm text-gray-600 mb-2">(Salotto)</p>
+                <div class="dropped-items-container"></div>
+            </div>
+            <div class="room-drop-zone" data-room="Kitchen">
+                <p class="room-title">Kitchen</p>
+                <p class="italian-translation text-sm text-gray-600 mb-2">(Cucina)</p>
+                <div class="dropped-items-container"></div>
+            </div>
+            <div class="room-drop-zone" data-room="Bedroom">
+                <p class="room-title">Bedroom</p>
+                <p class="italian-translation text-sm text-gray-600 mb-2">(Camera da letto)</p>
+                <div class="dropped-items-container"></div>
+            </div>
+            <div class="room-drop-zone" data-room="Bathroom">
+                <p class="room-title">Bathroom</p>
+                <p class="italian-translation text-sm text-gray-600 mb-2">(Bagno)</p>
+                <div class="dropped-items-container"></div>
+            </div>
+        </div>
+        <button class="check-button" onclick="checkRoomPlacement()">Controlla Posizionamento</button>
+    </div>
+
+    <script>
+        // Exercise 1: Some, Any, No Logic
+        function checkSomeAnyNoAnswers() {
+            const questions = document.querySelectorAll('#some-any-no-exercise-form input[type="text"]');
+            questions.forEach((input, index) => {
+                const userAnswer = input.value.trim().toLowerCase();
+                const correctAnswer = input.dataset.answer.toLowerCase();
+                const feedbackSpan = document.getElementById(`f${index + 1}`);
+
+                if (userAnswer === correctAnswer) {
+                    feedbackSpan.textContent = 'Corretto!';
+                    feedbackSpan.className = 'feedback correct';
+                } else {
+                    feedbackSpan.textContent = `Sbagliato. La risposta corretta è: ${correctAnswer}`;
+                    feedbackSpan.className = 'feedback incorrect';
+                }
+            });
+        }
+
+        // Exercise 2: Household Items & Rooms Drag & Drop Logic
+        const householdItems = [
+            { name: 'Sofa', emoji: '🛋️', room: 'Living Room' },
+            { name: 'TV', emoji: '📺', room: 'Living Room' },
+            { name: 'Bookshelf', emoji: '📚', room: 'Living Room' },
+            { name: 'Painting', emoji: '🖼️', room: 'Living Room' },
+            { name: 'Frying Pan', emoji: '🍳', room: 'Kitchen' },
+            { name: 'Plate', emoji: '🍽️', room: '🍽️ Kitchen' },
+            { name: 'Mug', emoji: '☕', room: 'Kitchen' },
+            { name: 'Apple', emoji: '🍎', room: 'Kitchen' },
+            { name: 'Bed', emoji: '🛏️', room: 'Bedroom' },
+            { name: 'Lamp', emoji: '💡', room: 'Bedroom' },
+            { name: 'T-shirt', emoji: '👕', room: 'Bedroom' },
+            { name: 'Alarm Clock', emoji: '⏰', room: 'Bedroom' },
+            { name: 'Bathtub', emoji: '🛁', room: 'Bathroom' },
+            { name: 'Toilet', emoji: '🚽', room: 'Bathroom' },
+            { name: 'Soap', emoji: '🧴', room: 'Bathroom' },
+            { name: 'Shower', emoji: '🚿', room: 'Bathroom' }
+        ];
+
+        let draggedItem = null;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function populateItemPool() {
+            const itemPool = document.getElementById('item-pool');
+            itemPool.innerHTML = ''; // Clear existing items
+            const shuffledItems = [...householdItems];
+            shuffleArray(shuffledItems);
+
+            shuffledItems.forEach(item => {
+                const card = document.createElement('div');
+                card.classList.add('draggable-item-card');
+                card.draggable = true;
+                card.dataset.item = item.name; // Store item name for checking
+                card.dataset.correctRoom = item.room; // Store correct room for checking
+                card.innerHTML = `
+                    <span class="emoji">${item.emoji}</span>
+                    <span>${item.name}</span>
+                `;
+                itemPool.appendChild(card);
+            });
+        }
+
+        document.addEventListener('dragstart', (e) => {
+            if (e.target.classList.contains('draggable-item-card')) {
+                draggedItem = e.target;
+                e.dataTransfer.setData('text/plain', e.target.dataset.item); // Pass item name
+                e.dataTransfer.setData('text/correctRoom', e.target.dataset.correctRoom); // Pass correct room
+                setTimeout(() => {
+                    e.target.style.opacity = '0.5';
+                }, 0);
+            }
+        });
+
+        document.addEventListener('dragend', (e) => {
+            if (e.target.classList.contains('draggable-item-card')) {
+                e.target.style.opacity = '1';
+                draggedItem = null;
+            }
+        });
+
+        document.querySelectorAll('.room-drop-zone').forEach(zone => {
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault(); // Allow drop
+                zone.classList.add('hover');
+            });
+
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('hover');
+            });
+
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                zone.classList.remove('hover');
+
+                const droppedItemName = e.dataTransfer.getData('text/plain');
+                const droppedItemCorrectRoom = e.dataTransfer.getData('text/correctRoom');
+                const cardToMove = document.querySelector(`.draggable-item-card[data-item="${droppedItemName}"]`);
+
+                if (cardToMove) {
+                    // Append to the specific container for dropped items
+                    zone.querySelector('.dropped-items-container').appendChild(cardToMove);
+                    // Store the room where it was dropped for checking
+                    cardToMove.dataset.droppedRoom = zone.dataset.room;
+                }
+            });
+        });
+
+        function checkRoomPlacement() {
+            document.querySelectorAll('.room-drop-zone').forEach(zone => {
+                zone.classList.remove('correct', 'incorrect'); // Clear previous status
+            });
+
+            let allCorrect = true;
+            document.querySelectorAll('.draggable-item-card').forEach(card => {
+                const droppedRoom = card.dataset.droppedRoom;
+                const correctRoom = card.dataset.correctRoom;
+
+                if (droppedRoom === correctRoom) {
+                    // Find the parent drop zone and mark it correct if all its items are correct
+                    // This logic is simplified: we'll check the room itself based on its contents
+                } else {
+                    allCorrect = false;
+                }
+            });
+
+            // Re-evaluate drop zones based on their current contents
+            document.querySelectorAll('.room-drop-zone').forEach(zone => {
+                const itemsInZone = zone.querySelectorAll('.draggable-item-card');
+                let zoneCorrect = true;
+                if (itemsInZone.length === 0) {
+                    zoneCorrect = false; // A room with no items is incorrect for this check
+                } else {
+                    itemsInZone.forEach(item => {
+                        if (item.dataset.correctRoom !== zone.dataset.room) {
+                            zoneCorrect = false;
+                        }
+                    });
+                }
+
+                if (zoneCorrect) {
+                    zone.classList.add('correct');
+                } else {
+                    zone.classList.add('incorrect');
+                }
+            });
+
+            const allItemsPlacedCorrectly = Array.from(document.querySelectorAll('.draggable-item-card')).every(card => card.dataset.droppedRoom === card.dataset.correctRoom);
+
+            if (allItemsPlacedCorrectly) {
+                alert('Complimenti! Hai posizionato tutti gli oggetti nelle stanze corrette!');
+            } else {
+                alert('Ci sono alcuni errori nel posizionamento degli oggetti. Riprova!');
+            }
+        }
+
+
+        // Initialize item pool on page load
+        document.addEventListener('DOMContentLoaded', populateItemPool);
+    </script>
+</body>
+</html>
