@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantificatori: Much, Many, A lot of, How much, How many</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+        }
+        .container-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .exercise-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .exercise-item label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #334155; /* Slate 700 */
+        }
+        .exercise-item select, .exercise-item input[type="radio"] {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #cbd5e1; /* Slate 300 */
+            background-color: #ffffff;
+            color: #1e293b; /* Slate 900 */
+            width: 100%;
+            max-width: 200px;
+            text-align: center;
+        }
+        .exercise-item .radio-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            width: 100%;
+            max-width: 200px;
+        }
+        .exercise-item .radio-group label {
+            margin-bottom: 0;
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .feedback {
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+        .feedback.correct {
+            color: #10b981; /* Emerald 500 */
+        }
+        .feedback.incorrect {
+            color: #ef4444; /* Red 500 */
+        }
+        .button-primary {
+            background-color: #3b82f6; /* Blue 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-primary:hover {
+            background-color: #2563eb; /* Blue 600 */
+        }
+        .button-secondary {
+            background-color: #64748b; /* Slate 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-secondary:hover {
+            background-color: #475569; /* Slate 600 */
+        }
+        .pronunciation-button {
+            background-color: #60a5fa; /* Blue 400 */
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .pronunciation-button:hover {
+            background-color: #3b82f6; /* Blue 500 */
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-extrabold text-center text-gray-900 mb-8">Quantificatori: Much, Many, A lot of, How much, How many</h1>
+
+        <!-- Much / Many / A lot of -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Much / Many / A lot of</h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Questi quantificatori sono usati per esprimere grandi quantità di qualcosa. La scelta tra loro dipende dal tipo di nome (numerabile o non numerabile) e dal tipo di frase (affermativa, negativa, interrogativa).
+            </p>
+            <ul class="list-disc list-inside text-gray-700 mb-4 pl-4">
+                <li>
+                    Much: Usato con nomi non numerabili, principalmente in frasi negative e interrogative.
+                    <ul class="list-circle list-inside ml-6">
+                        <li>Esempi: <em>I don't have <span class="font-semibold text-blue-600">much money</span>.</em> (Non ho molti soldi.) <em>Do you have <span class="font-semibold text-blue-600">much time</span>?</em> (Hai molto tempo?)</li>
+                    </ul>
+                </li>
+                <li>
+                    Many: Usato con nomi numerabili plurali, principalmente in frasi negative e interrogative.
+                    <ul class="list-circle list-inside ml-6">
+                        <li>Esempi: <em>There aren't <span class="font-semibold text-blue-600">many people</span> here.</em> (Non ci sono molte persone qui.) <em>Did you buy <span class="font-semibold text-blue-600">many books</span>?</em> (Hai comprato molti libri?)</li>
+                    </ul>
+                </li>
+                <li>
+                    A lot of / Lots of: Usato con entrambi i tipi di nomi (numerabili plurali e non numerabili) in tutti i tipi di frasi (affermative, negative, interrogative). È più comune e meno formale di "much" e "many" nelle frasi affermative.
+                    <ul class="list-circle list-inside ml-6">
+                        <li>Esempi: <em>I have <span class="font-semibold text-blue-600">a lot of friends</span>.</em> (Ho molti amici.) <em>She drinks <span class="font-semibold text-blue-600">a lot of coffee</span>.</em> (Beve molto caffè.) <em>Do you have <span class="font-semibold text-blue-600">a lot of work</span>?</em> (Hai molto lavoro?)</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Esercizio 1: Much / Many / A lot of -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Esercizio 1: Scegli Much, Many o A lot of</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Completa le frasi scegliendo il quantificatore corretto.
+            </p>
+
+            <div id="exercise1-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- How much / How many -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">How much / How many</h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Queste espressioni sono usate per chiedere informazioni sulla quantità.
+            </p>
+            <ul class="list-disc list-inside text-gray-700 mb-4 pl-4">
+                <li>
+                    How much: Usato per chiedere la quantità di nomi non numerabili o per chiedere il prezzo.
+                    <ul class="list-circle list-inside ml-6">
+                        <li>Esempi: <em><span class="font-semibold text-blue-600">How much sugar</span> do you want?</em> (Quanto zucchero vuoi?) <em><span class="font-semibold text-blue-600">How much is</span> this shirt?</em> (Quanto costa questa camicia?)</li>
+                    </ul>
+                </li>
+                <li>
+                    How many: Usato per chiedere la quantità di nomi numerabili plurali.
+                    <ul class="list-circle list-inside ml-6">
+                        <li>Esempi: <em><span class="font-semibold text-blue-600">How many apples</span> are there?</em> (Quante mele ci sono?) <em><span class="font-semibold text-blue-600">How many students</span> are in your class?</em> (Quanti studenti ci sono nella tua classe?)</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Esercizio 2: How much / How many -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Esercizio 2: Scegli How much o How many</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Completa le domande scegliendo l'espressione corretta.
+            </p>
+
+            <div id="exercise2-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <button id="check-all-answers" class="button-primary">Controlla Tutte le Risposte</button>
+            <button id="get-all-results" class="button-primary">I miei risultati</button>
+            <button id="reset-all-exercises" class="button-secondary">Reset Tutti gli Esercizi</button>
+        </div>
+    </div>
+
+    <script>
+        // Exercise 1 data (Much/Many/A lot of)
+        const exercise1Items = [
+            { id: "e1-1", sentence: "I don't have ___ time.", correct: "much", options: ["much", "many", "a lot of"] },
+            { id: "e1-2", sentence: "She has ___ friends.", correct: "a lot of", options: ["much", "many", "a lot of"] },
+            { id: "e1-3", sentence: "Are there ___ students in the class?", correct: "many", options: ["much", "many", "a lot of"] },
+            { id: "e1-4", sentence: "He doesn't drink ___ coffee.", correct: "much", options: ["much", "many", "a lot of"] },
+            { id: "e1-5", sentence: "We see ___ birds in the park.", correct: "a lot of", options: ["much", "many", "a lot of"] }, // Changed to Present Simple
+            { id: "e1-6", sentence: "Do you eat ___ food?", correct: "much", options: ["much", "many", "a lot of"] }, // Changed to Present Simple
+            { id: "e1-7", sentence: "There are ___ cars on the road.", correct: "a lot of", options: ["much", "many", "a lot of"] }, // Changed to Present Simple
+            { id: "e1-8", sentence: "I don't have ___ patience.", correct: "much", options: ["much", "many", "a lot of"] },
+            { id: "e1-9", sentence: "She buys ___ new clothes.", correct: "a lot of", options: ["much", "many", "a lot of"] }, // Changed to Present Simple
+            { id: "e1-10", sentence: "Do you have ___ homework?", correct: "much", options: ["much", "many", "a lot of"] }
+        ];
+
+        // Exercise 2 data (How much/How many)
+        const exercise2Items = [
+            { id: "e2-1", sentence: "___ money do you need?", correct: "How much", options: ["How much", "How many"] },
+            { id: "e2-2", sentence: "___ books do you read?", correct: "How many", options: ["How much", "How many"] }, // Changed to Present Simple
+            { id: "e2-3", sentence: "___ water is in the bottle?", correct: "How much", options: ["How much", "How many"] },
+            { id: "e2-4", sentence: "___ apples are on the table?", correct: "How many", options: ["How much", "How many"] },
+            { id: "e2-5", sentence: "___ sugar do you want in your tea?", correct: "How much", options: ["How much", "How many"] },
+            { id: "e2-6", sentence: "___ countries do you visit?", correct: "How many", options: ["How much", "How many"] }, // Changed to Present Simple
+            { id: "e2-7", sentence: "___ time do we have left?", correct: "How much", options: ["How much", "How many"] },
+            { id: "e2-8", sentence: "___ chairs are in the room?", correct: "How many", options: ["How much", "How many"] },
+            { id: "e2-9", sentence: "___ information do you need?", correct: "How much", options: ["How much", "How many"] },
+            { id: "e2-10", sentence: "___ languages can you speak?", correct: "How many", options: ["How much", "How many"] }
+        ];
+
+        const exercise1Container = document.getElementById('exercise1-container');
+        const exercise2Container = document.getElementById('exercise2-container');
+
+        const checkAllAnswersBtn = document.getElementById('check-all-answers');
+        const getAllResultsBtn = document.getElementById('get-all-results');
+        const resetAllExercisesBtn = document.getElementById('reset-all-exercises');
+
+        // Function to speak text (kept for potential future use or if user changes mind)
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US'; // Set language to English for pronunciation
+                speechSynthesis.speak(utterance);
+            } else {
+                console.warn('SpeechSynthesis API not supported in this browser.');
+                alert('Il tuo browser non supporta la sintesi vocale.');
+            }
+        }
+
+        // --- Exercise 1 (Much/Many/A lot of) Functions ---
+        function createExercise1Item(item, index) {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.innerHTML = `
+                <label for="${item.id}">${item.sentence.replace('___', '<span class="text-blue-600">___</span>')}</label>
+                <div class="radio-group" id="radio-group-${item.id}">
+                    ${item.options.map(option => `
+                        <label>
+                            <input type="radio" name="${item.id}" value="${option}" class="mr-1">
+                            ${option}
+                        </label>
+                    `).join('')}
+                </div>
+                <div id="feedback-${item.id}" class="feedback text-sm"></div>
+            `;
+            exercise1Container.appendChild(div);
+        }
+
+        function loadExercise1() {
+            exercise1Container.innerHTML = ''; // Clear previous items
+            exercise1Items.forEach((item, index) => createExercise1Item(item, index));
+        }
+
+        function checkExercise1Answers() {
+            let results = [];
+            exercise1Items.forEach(item => {
+                const selectedRadio = document.querySelector(`input[name="${item.id}"]:checked`);
+                const feedbackElement = document.getElementById(`feedback-${item.id}`);
+                const selectedValue = selectedRadio ? selectedRadio.value : '';
+                const isCorrect = (selectedValue === item.correct);
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (selectedValue === '') {
+                    feedbackElement.textContent = 'Seleziona una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. La risposta corretta è: ${item.correct}.`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: item.sentence,
+                    yourAnswer: selectedValue === '' ? 'Non selezionato' : selectedValue,
+                    correctAnswer: item.correct,
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise1() {
+            exercise1Items.forEach(item => {
+                const radioGroup = document.getElementById(`radio-group-${item.id}`);
+                if (radioGroup) {
+                    const radios = radioGroup.querySelectorAll('input[type="radio"]');
+                    radios.forEach(radio => radio.checked = false);
+                }
+                const feedbackElement = document.getElementById(`feedback-${item.id}`);
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+        // --- Exercise 2 (How much/How many) Functions ---
+        function createExercise2Item(item, index) {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.innerHTML = `
+                <label for="${item.id}">${item.sentence.replace('___', '<span class="text-blue-600">___</span>')}</label>
+                <div class="radio-group" id="radio-group-${item.id}">
+                    ${item.options.map(option => `
+                        <label>
+                            <input type="radio" name="${item.id}" value="${option}" class="mr-1">
+                            ${option}
+                        </label>
+                    `).join('')}
+                </div>
+                <div id="feedback-${item.id}" class="feedback text-sm"></div>
+            `;
+            exercise2Container.appendChild(div);
+        }
+
+        function loadExercise2() {
+            exercise2Container.innerHTML = '';
+            exercise2Items.forEach((item, index) => createExercise2Item(item, index));
+        }
+
+        function checkExercise2Answers() {
+            let results = [];
+            exercise2Items.forEach(item => {
+                const selectedRadio = document.querySelector(`input[name="${item.id}"]:checked`);
+                const feedbackElement = document.getElementById(`feedback-${item.id}`);
+                const selectedValue = selectedRadio ? selectedRadio.value : '';
+                const isCorrect = (selectedValue === item.correct);
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (selectedValue === '') {
+                    feedbackElement.textContent = 'Seleziona una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. La risposta corretta è: ${item.correct}.`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: item.sentence,
+                    yourAnswer: selectedValue === '' ? 'Non selezionato' : selectedValue,
+                    correctAnswer: item.correct,
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise2() {
+            exercise2Items.forEach(item => {
+                const radioGroup = document.getElementById(`radio-group-${item.id}`);
+                if (radioGroup) {
+                    const radios = radioGroup.querySelectorAll('input[type="radio"]');
+                    radios.forEach(radio => radio.checked = false);
+                }
+                const feedbackElement = document.getElementById(`feedback-${item.id}`);
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+        // --- Global Functions ---
+        function checkAllAnswers() {
+            checkExercise1Answers(); // Now for Much/Many/A lot of
+            checkExercise2Answers(); // Now for How much/How many
+        }
+
+        function generateAllResultsPDF() {
+            const results1 = checkExercise1Answers(); // Now for Much/Many/A lot of
+            const results2 = checkExercise2Answers(); // Now for How much/How many
+
+            let totalCorrect = 0;
+            let totalQuestions = 0;
+
+            let resultsContent = `
+                <h1 style="text-align: center; font-family: 'Inter', sans-serif;">I Miei Risultati - Esercizi di Grammatica Inglese</h1>
+                <p style="font-family: 'Inter', sans-serif;">Data: ${new Date().toLocaleDateString()}</p>
+            `;
+
+            // Function to append exercise results to content
+            const appendExerciseResults = (title, results) => {
+                let correctCount = 0;
+                resultsContent += `<h2 style="margin-top: 30px; font-family: 'Inter', sans-serif;">${title}</h2>`;
+                resultsContent += `
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-family: 'Inter', sans-serif;">
+                        <thead>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Domanda</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">La Tua Risposta</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Risposta Corretta</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Esito</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                results.forEach(item => {
+                    if (item.isCorrect) {
+                        correctCount++;
+                    }
+                    resultsContent += `
+                        <tr>
+                            <td style="border: 1px solid #ddd; padding: 8px;">${item.question}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">${item.yourAnswer}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">${item.correctAnswer}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px; color: ${item.isCorrect ? '#10b981' : '#ef4444'}; font-weight: bold;">${item.isCorrect ? 'Corretto' : 'Sbagliato'}</td>
+                        </tr>
+                    `;
+                });
+                resultsContent += `
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 10px; font-weight: bold; font-family: 'Inter', sans-serif;">
+                        Punteggio: ${correctCount} su ${results.length} (${((correctCount / results.length) * 100).toFixed(2)}%)
+                    </p>
+                `;
+                totalCorrect += correctCount;
+                totalQuestions += results.length;
+            };
+
+            appendExerciseResults("Esercizio 1: Much / Many / A lot of", results1);
+            appendExerciseResults("Esercizio 2: How much / How many", results2);
+
+            const overallPercentage = (totalCorrect / totalQuestions) * 100;
+            resultsContent += `
+                <h2 style="margin-top: 30px; font-family: 'Inter', sans-serif;">Riepilogo Generale</h2>
+                <p style="font-weight: bold; font-family: 'Inter', sans-serif;">
+                    Punteggio Totale: ${totalCorrect} su ${totalQuestions} (${overallPercentage.toFixed(2)}%)
+                </p>
+            `;
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>I Miei Risultati</title>');
+            printWindow.document.write('<style>');
+            printWindow.document.write(`
+                body { font-family: 'Inter', sans-serif; margin: 20px; }
+                h1, h2 { color: #1e293b; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+                .correct { color: #10b981; }
+                .incorrect { color: #ef4444; }
+            `);
+            printWindow.document.write('</style></head><body>');
+            printWindow.document.write(resultsContent);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print(); // Trigger print dialog
+        }
+
+        function resetAllExercises() {
+            resetExercise1(); // Now for Much/Many/A lot of
+            resetExercise2(); // Now for How much/How many
+        }
+
+        // Event Listeners for global buttons
+        checkAllAnswersBtn.addEventListener('click', checkAllAnswers);
+        getAllResultsBtn.addEventListener('click', generateAllResultsPDF);
+        resetAllExercisesBtn.addEventListener('click', resetAllExercises);
+
+        // Load all exercises on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadExercise1(); // Now for Much/Many/A lot of
+            loadExercise2(); // Now for How much/How many
+        });
+    </script>
+</body>
+</html>
