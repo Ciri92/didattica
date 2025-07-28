@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verbi Irregolari: Past Simple</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+        }
+        .exercise-input {
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            width: 100%;
+            max-width: 200px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .exercise-input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+        .correct-input {
+            border-color: #10b981;
+            background-color: #ecfdf5;
+        }
+        .incorrect-input {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+        }
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .result-item {
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div id="page-content" class="bg-white rounded-xl shadow-lg p-6 md:p-10 max-w-5xl w-full">
+        <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-8">Verbi Irregolari: Past Simple</h1>
+
+        <!-- Sezione Spiegazione -->
+        <div class="mb-12 p-6 bg-blue-50 rounded-lg shadow-inner">
+            <h2 class="text-2xl font-bold text-blue-700 mb-4 text-center">Il Past Simple e i Verbi Irregolari</h2>
+            <p class="text-gray-800 leading-relaxed mb-4">
+                Il Past Simple (Passato Semplice) in inglese si usa per azioni che si sono concluse in un momento specifico nel passato.
+            </p>
+            <p class="text-gray-800 leading-relaxed mb-4">
+                Mentre la maggior parte dei verbi inglesi forma il Past Simple aggiungendo -ed alla fine (verbi regolari, es. `play` → `played`), ci sono molti verbi che non seguono questa regola. Questi sono i verbi irregolari.
+            </p>
+            <p class="text-gray-800 leading-relaxed mb-4">
+                I verbi irregolari hanno una forma specifica al Past Simple che non si può prevedere e deve essere memorizzata. Di seguito trovi alcuni dei più comuni:
+            </p>
+
+            <div class="overflow-x-auto mb-4">
+                <table class="min-w-full bg-white rounded-lg shadow">
+                    <thead>
+                        <tr class="bg-blue-200 text-blue-800">
+                            <th class="py-2 px-4 text-left">Presente</th>
+                            <th class="py-2 px-4 text-left">Past Simple</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="py-1 px-4">know</td><td class="py-1 px-4">knew</td></tr>
+                        <tr><td class="py-1 px-4">leave</td><td class="py-1 px-4">left</td></tr>
+                        <tr><td class="py-1 px-4">lend</td><td class="py-1 px-4">lent</td></tr>
+                        <tr><td class="py-1 px-4">let</td><td class="py-1 px-4">let</td></tr>
+                        <tr><td class="py-1 px-4">lose</td><td class="py-1 px-4">lost</td></tr>
+                        <tr><td class="py-1 px-4">make</td><td class="py-1 px-4">made</td></tr>
+                        <tr><td class="py-1 px-4">mean</td><td class="py-1 px-4">meant</td></tr>
+                        <tr><td class="py-1 px-4">meet</td><td class="py-1 px-4">met</td></tr>
+                        <tr><td class="py-1 px-4">pay</td><td class="py-1 px-4">paid</td></tr>
+                        <tr><td class="py-1 px-4">put</td><td class="py-1 px-4">put</td></tr>
+                        <tr><td class="py-1 px-4">read</td><td class="py-1 px-4">read</td></tr>
+                        <tr><td class="py-1 px-4">ride</td><td class="py-1 px-4">rode</td></tr>
+                        <tr><td class="py-1 px-4">ring</td><td class="py-1 px-4">rang</td></tr>
+                        <tr><td class="py-1 px-4">rise</td><td class="py-1 px-4">rose</td></tr>
+                        <tr><td class="py-1 px-4">run</td><td class="py-1 px-4">ran</td></tr>
+                        <tr><td class="py-1 px-4">say</td><td class="py-1 px-4">said</td></tr>
+                        <tr><td class="py-1 px-4">see</td><td class="py-1 px-4">saw</td></tr>
+                        <tr><td class="py-1 px-4">seek</td><td class="py-1 px-4">sought</td></tr>
+                        <tr><td class="py-1 px-4">sell</td><td class="py-1 px-4">sold</td></tr>
+                        <tr><td class="py-1 px-4">send</td><td class="py-1 px-4">sent</td></tr>
+                        <tr><td class="py-1 px-4">set</td><td class="py-1 px-4">set</td></tr>
+                        <tr><td class="py-1 px-4">shake</td><td class="py-1 px-4">shook</td></tr>
+                        <tr><td class="py-1 px-4">sing</td><td class="py-1 px-4">sang</td></tr>
+                        <tr><td class="py-1 px-4">sit</td><td class="py-1 px-4">sat</td></tr>
+                        <tr><td class="py-1 px-4">sleep</td><td class="py-1 px-4">slept</td></tr>
+                        <tr><td class="py-1 px-4">smell</td><td class="py-1 px-4">smelt/smelled</td></tr>
+                        <tr><td class="py-1 px-4">speak</td><td class="py-1 px-4">spoke</td></tr>
+                        <tr><td class="py-1 px-4">spell</td><td class="py-1 px-4">spelled/spelt</td></tr>
+                        <tr><td class="py-1 px-4">spend</td><td class="py-1 px-4">spent</td></tr>
+                        <tr><td class="py-1 px-4">stand</td><td class="py-1 px-4">stood</td></tr>
+                        <tr><td class="py-1 px-4">swear</td><td class="py-1 px-4">swore</td></tr>
+                        <tr><td class="py-1 px-4">swim</td><td class="py-1 px-4">swam</td></tr>
+                        <tr><td class="py-1 px-4">take</td><td class="py-1 px-4">took</td></tr>
+                        <tr><td class="py-1 px-4">teach</td><td class="py-1 px-4">taught</td></tr>
+                        <tr><td class="py-1 px-4">tell</td><td class="py-1 px-4">told</td></tr>
+                        <tr><td class="py-1 px-4">think</td><td class="py-1 px-4">thought</td></tr>
+                        <tr><td class="py-1 px-4">understand</td><td class="py-1 px-4">understood</td></tr>
+                        <tr><td class="py-1 px-4">wake</td><td class="py-1 px-4">woke</td></tr>
+                        <tr><td class="py-1 px-4">wear</td><td class="py-1 px-4">wore</td></tr>
+                        <tr><td class="py-1 px-4">win</td><td class="py-1 px-4">won</td></tr>
+                        <tr><td class="py-1 px-4">write</td><td class="py-1 px-4">wrote</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Esercizio 1 -->
+        <div class="mb-12 p-6 bg-purple-50 rounded-lg shadow-inner">
+            <h2 class="text-2xl font-bold text-purple-700 mb-6 text-center">Esercizio 1: Presente → Past Simple</h2>
+            <p class="text-gray-800 mb-4 text-center">Scrivi la forma al Past Simple del verbo al presente mostrato.</p>
+            <div id="ex1-quiz-area" class="text-center">
+                <p class="text-3xl font-bold text-indigo-800 mb-4" id="ex1-current-verb"></p>
+                <input type="text" class="exercise-input text-lg text-center mb-4" id="ex1-answer" placeholder="Past Simple">
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-300 ease-in-out" id="ex1-check-btn">Verifica</button>
+                <p id="ex1-feedback" class="mt-2 text-lg font-semibold"></p>
+                <p id="ex1-progress" class="mt-4 text-gray-600"></p>
+                <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-300 ease-in-out mt-4 hidden" id="ex1-reset-btn">Ricominciada zero</button>
+            </div>
+        </div>
+
+        <!-- Esercizio 2 -->
+        <div class="mb-12 p-6 bg-teal-50 rounded-lg shadow-inner">
+            <h2 class="text-2xl font-bold text-teal-700 mb-6 text-center">Esercizio 2: Italiano → Presente + Past Simple</h2>
+            <p class="text-gray-800 mb-4 text-center">Scrivi il presente e il Past Simple del verbo italiano mostrato.</p>
+            <div id="ex2-quiz-area" class="text-center">
+                <p class="text-3xl font-bold text-indigo-800 mb-4" id="ex2-current-verb-it"></p>
+                <input type="text" class="exercise-input text-lg text-center mb-2" id="ex2-present-answer" placeholder="Presente (Inglese)">
+                <input type="text" class="exercise-input text-lg text-center mb-4" id="ex2-past-answer" placeholder="Past Simple (Inglese)">
+                <button class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-300 ease-in-out" id="ex2-check-btn">Verifica</button>
+                <p id="ex2-feedback" class="mt-2 text-lg font-semibold"></p>
+                <p id="ex2-progress" class="mt-4 text-gray-600"></p>
+                <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-300 ease-in-out mt-4 hidden" id="ex2-reset-btn">Ricominciada zero</button>
+            </div>
+        </div>
+
+        <div class="mt-10 text-center">
+            <button id="downloadPdfBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                Scarica i miei risultati (PDF)
+            </button>
+        </div>
+    </div>
+
+    <div id="resultsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3 class="text-2xl font-bold text-indigo-700 mb-4">I Tuoi Risultati</h3>
+            <div id="modalDetails" class="text-left text-gray-700"></div>
+            <button onclick="closeModal()" class="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full">Chiudi</button>
+        </div>
+    </div>
+
+    <script>
+        // Updated irregular verbs list based on the provided image
+        const irregularVerbs = [
+            { italian: "sapere, conoscere", present: "know", pastSimple: "knew" },
+            { italian: "lasciare, partire", present: "leave", pastSimple: "left" },
+            { italian: "prestare", present: "lend", pastSimple: "lent" },
+            { italian: "lasciare", present: "let", pastSimple: "let" },
+            { italian: "perdere", present: "lose", pastSimple: "lost" },
+            { italian: "fare", present: "make", pastSimple: "made" },
+            { italian: "significare", present: "mean", pastSimple: "meant" },
+            { italian: "incontrare", present: "meet", pastSimple: "met" },
+            { italian: "pagare", present: "pay", pastSimple: "paid" },
+            { italian: "mettere", present: "put", pastSimple: "put" },
+            { italian: "leggere", present: "read", pastSimple: "read" },
+            { italian: "cavalcare", present: "ride", pastSimple: "rode" },
+            { italian: "suonare", present: "ring", pastSimple: "rang" },
+            { italian: "salire", present: "rise", pastSimple: "rose" },
+            { italian: "correre", present: "run", pastSimple: "ran" },
+            { italian: "dire", present: "say", pastSimple: "said" },
+            { italian: "vedere", present: "see", pastSimple: "saw" },
+            { italian: "cercare", present: "seek", pastSimple: "sought" },
+            { italian: "vendere", present: "sell", pastSimple: "sold" },
+            { italian: "spedire", present: "send", pastSimple: "sent" },
+            { italian: "mettere", present: "set", pastSimple: "set" },
+            { italian: "scuotere", present: "shake", pastSimple: "shook" },
+            { italian: "cantare", present: "sing", pastSimple: "sang" },
+            { italian: "sedere", present: "sit", pastSimple: "sat" },
+            { italian: "dormire", present: "sleep", pastSimple: "slept" },
+            { italian: "odorare", present: "smell", pastSimple: "smelt/smelled" },
+            { italian: "parlare", present: "speak", pastSimple: "spoke" },
+            { italian: "sillabare", present: "spell", pastSimple: "spelled/spelt" },
+            { italian: "spendere", present: "spend", pastSimple: "spent" },
+            { italian: "stare", present: "stand", pastSimple: "stood" },
+            { italian: "giurare", present: "swear", pastSimple: "swore" },
+            { italian: "nuotare", present: "swim", pastSimple: "swam" },
+            { italian: "prendere", present: "take", pastSimple: "took" },
+            { italian: "insegnare", present: "teach", pastSimple: "taught" },
+            { italian: "raccontare", present: "tell", pastSimple: "told" },
+            { italian: "pensare", present: "think", pastSimple: "thought" },
+            { italian: "capire", present: "understand", pastSimple: "understood" },
+            { italian: "svegliare", present: "wake", pastSimple: "woke" },
+            { italian: "indossare", present: "wear", pastSimple: "wore" },
+            { italian: "vincere", present: "win", pastSimple: "won" },
+            { italian: "scrivere", present: "write", pastSimple: "wrote" }
+        ];
+
+
+        // --- Utility function for checking answers with multiple accepted forms ---
+        function checkMultipleForms(userAnswer, correctFormsString) {
+            const correctForms = correctFormsString.split('/').map(s => s.trim().toLowerCase());
+            return correctForms.includes(userAnswer.toLowerCase());
+        }
+
+        // --- Exercise 1 Logic ---
+        let ex1RemainingVerbs = [...irregularVerbs];
+        let ex1CurrentVerb = null;
+        const ex1Results = {}; // Stores the last attempt for each verb {verbPresent: {userAnswer: '', isCorrect: true/false}}
+
+        function displayNextEx1Verb() {
+            if (ex1RemainingVerbs.length === 0) {
+                document.getElementById('ex1-current-verb').textContent = "Hai indovinato tutti i verbi! Complimenti!";
+                document.getElementById('ex1-answer').disabled = true;
+                document.getElementById('ex1-check-btn').disabled = true;
+                document.getElementById('ex1-check-btn').classList.add('hidden');
+                document.getElementById('ex1-reset-btn').classList.remove('hidden');
+                document.getElementById('ex1-progress').textContent = "Completato!";
+                return;
+            }
+            const randomIndex = Math.floor(Math.random() * ex1RemainingVerbs.length);
+            ex1CurrentVerb = ex1RemainingVerbs[randomIndex];
+            document.getElementById('ex1-current-verb').textContent = ex1CurrentVerb.present;
+            document.getElementById('ex1-answer').value = '';
+            document.getElementById('ex1-answer').classList.remove('correct-input', 'incorrect-input');
+            document.getElementById('ex1-feedback').textContent = '';
+            updateEx1Progress();
+        }
+
+        function checkEx1Answer() {
+            if (!ex1CurrentVerb) return;
+
+            const userAnswer = document.getElementById('ex1-answer').value.trim();
+            const isCorrect = checkMultipleForms(userAnswer, ex1CurrentVerb.pastSimple);
+
+            ex1Results[ex1CurrentVerb.present] = { userAnswer: userAnswer, isCorrect: isCorrect, correctForm: ex1CurrentVerb.pastSimple };
+
+            if (isCorrect) {
+                document.getElementById('ex1-answer').classList.add('correct-input');
+                document.getElementById('ex1-answer').classList.remove('incorrect-input');
+                document.getElementById('ex1-feedback').textContent = "Corretto!";
+                // Remove from remaining verbs only if correctly guessed
+                ex1RemainingVerbs = ex1RemainingVerbs.filter(v => v.present !== ex1CurrentVerb.present);
+                setTimeout(displayNextEx1Verb, 1000); // Show next verb after a short delay
+            } else {
+                document.getElementById('ex1-answer').classList.add('incorrect-input');
+                document.getElementById('ex1-answer').classList.remove('correct-input');
+                document.getElementById('ex1-feedback').textContent = `Sbagliato. La forma corretta per '${ex1CurrentVerb.present}' è '${ex1CurrentVerb.pastSimple}'.`;
+            }
+            updateEx1Progress();
+        }
+
+        function updateEx1Progress() {
+            const total = irregularVerbs.length;
+            const remaining = ex1RemainingVerbs.length;
+            document.getElementById('ex1-progress').textContent = `Verbi indovinati: ${total - remaining} / ${total}`;
+        }
+
+        function resetEx1() {
+            ex1RemainingVerbs = [...irregularVerbs];
+            document.getElementById('ex1-answer').disabled = false;
+            document.getElementById('ex1-check-btn').disabled = false;
+            document.getElementById('ex1-check-btn').classList.remove('hidden');
+            document.getElementById('ex1-reset-btn').classList.add('hidden');
+            displayNextEx1Verb();
+        }
+
+        // --- Exercise 2 Logic ---
+        let ex2RemainingVerbs = [...irregularVerbs];
+        let ex2CurrentVerb = null;
+        const ex2Results = {}; // Stores the last attempt for each verb {verbItalian: {userPresent: '', userPast: '', isCorrect: true/false}}
+
+        function displayNextEx2Verb() {
+            if (ex2RemainingVerbs.length === 0) {
+                document.getElementById('ex2-current-verb-it').textContent = "Hai indovinato tutti i verbi! Complimenti!";
+                document.getElementById('ex2-present-answer').disabled = true;
+                document.getElementById('ex2-past-answer').disabled = true;
+                document.getElementById('ex2-check-btn').disabled = true;
+                document.getElementById('ex2-check-btn').classList.add('hidden');
+                document.getElementById('ex2-reset-btn').classList.remove('hidden');
+                document.getElementById('ex2-progress').textContent = "Completato!";
+                return;
+            }
+            const randomIndex = Math.floor(Math.random() * ex2RemainingVerbs.length);
+            ex2CurrentVerb = ex2RemainingVerbs[randomIndex];
+            document.getElementById('ex2-current-verb-it').textContent = ex2CurrentVerb.italian;
+            document.getElementById('ex2-present-answer').value = '';
+            document.getElementById('ex2-past-answer').value = '';
+            document.getElementById('ex2-present-answer').classList.remove('correct-input', 'incorrect-input');
+            document.getElementById('ex2-past-answer').classList.remove('correct-input', 'incorrect-input');
+            document.getElementById('ex2-feedback').textContent = '';
+            updateEx2Progress();
+        }
+
+        function checkEx2Answer() {
+            if (!ex2CurrentVerb) return;
+
+            const userPresent = document.getElementById('ex2-present-answer').value.trim();
+            const userPast = document.getElementById('ex2-past-answer').value.trim();
+
+            const isPresentCorrect = checkMultipleForms(userPresent, ex2CurrentVerb.present);
+            const isPastCorrect = checkMultipleForms(userPast, ex2CurrentVerb.pastSimple);
+            const overallCorrect = isPresentCorrect && isPastCorrect;
+
+            ex2Results[ex2CurrentVerb.italian] = {
+                userPresent: userPresent,
+                userPast: userPast,
+                isPresentCorrect: isPresentCorrect,
+                isPastCorrect: isPastCorrect,
+                correctPresent: ex2CurrentVerb.present,
+                correctPast: ex2CurrentVerb.pastSimple
+            };
+
+            if (isPresentCorrect) {
+                document.getElementById('ex2-present-answer').classList.add('correct-input');
+                document.getElementById('ex2-present-answer').classList.remove('incorrect-input');
+            } else {
+                document.getElementById('ex2-present-answer').classList.add('incorrect-input');
+                document.getElementById('ex2-present-answer').classList.remove('correct-input');
+            }
+
+            if (isPastCorrect) {
+                document.getElementById('ex2-past-answer').classList.add('correct-input');
+                document.getElementById('ex2-past-answer').classList.remove('incorrect-input');
+            } else {
+                document.getElementById('ex2-past-answer').classList.add('incorrect-input');
+                document.getElementById('ex2-past-answer').classList.remove('correct-input');
+            }
+
+            if (overallCorrect) {
+                document.getElementById('ex2-feedback').textContent = "Corretto!";
+                ex2RemainingVerbs = ex2RemainingVerbs.filter(v => v.italian !== ex2CurrentVerb.italian);
+                setTimeout(displayNextEx2Verb, 1000);
+            } else {
+                document.getElementById('ex2-feedback').textContent = "Sbagliato. Riprova!";
+            }
+            updateEx2Progress();
+        }
+
+        function updateEx2Progress() {
+            const total = irregularVerbs.length;
+            const remaining = ex2RemainingVerbs.length;
+            document.getElementById('ex2-progress').textContent = `Verbi indovinati: ${total - remaining} / ${total}`;
+        }
+
+        function resetEx2() {
+            ex2RemainingVerbs = [...irregularVerbs];
+            document.getElementById('ex2-present-answer').disabled = false;
+            document.getElementById('ex2-past-answer').disabled = false;
+            document.getElementById('ex2-check-btn').disabled = false;
+            document.getElementById('ex2-check-btn').classList.remove('hidden');
+            document.getElementById('ex2-reset-btn').classList.add('hidden');
+            displayNextEx2Verb();
+        }
+
+        // --- Overall Results / PDF Download Logic ---
+        function displayOverallResults() {
+            const modalDetails = document.getElementById('modalDetails');
+            modalDetails.innerHTML = '';
+
+            // Results for Exercise 1
+            const ex1CorrectCount = Object.values(ex1Results).filter(res => res.isCorrect).length;
+            const ex1TotalCount = irregularVerbs.length;
+            const h4_ex1 = document.createElement('h4');
+            h4_ex1.classList.add('text-lg', 'font-semibold', 'text-purple-700', 'mb-2', 'mt-4');
+            h4_ex1.textContent = `Esercizio 1: ${ex1CorrectCount}/${ex1TotalCount} Corretti`;
+            modalDetails.appendChild(h4_ex1);
+
+            for (const presentForm in ex1Results) {
+                const res = ex1Results[presentForm];
+                const p = document.createElement('p');
+                p.classList.add('result-item', res.isCorrect ? 'text-green-700' : 'text-red-700');
+                p.innerHTML = `Verbo '${presentForm}': Hai scritto: <strong>${res.userAnswer}</strong>. Corretto: <strong>${res.correctForm}</strong> ${res.isCorrect ? '✅' : '❌'}`;
+                modalDetails.appendChild(p);
+            }
+
+            // Results for Exercise 2
+            const ex2CorrectCount = Object.values(ex2Results).filter(res => res.isPresentCorrect && res.isPastCorrect).length;
+            const ex2TotalCount = irregularVerbs.length;
+            const h4_ex2 = document.createElement('h4');
+            h4_ex2.classList.add('text-lg', 'font-semibold', 'text-teal-700', 'mb-2', 'mt-4');
+            h4_ex2.textContent = `Esercizio 2: ${ex2CorrectCount}/${ex2TotalCount} Corretti`;
+            modalDetails.appendChild(h4_ex2);
+
+            for (const italianForm in ex2Results) {
+                const res = ex2Results[italianForm];
+                const p = document.createElement('p');
+                p.classList.add('result-item', (res.isPresentCorrect && res.isPastCorrect) ? 'text-green-700' : 'text-red-700');
+                p.innerHTML = `Verbo '${italianForm}': Presente: <strong>${res.userPresent}</strong> ${res.isPresentCorrect ? '✅' : '❌'}. Past Simple: <strong>${res.userPast}</strong> ${res.isPastCorrect ? '✅' : '❌'}. Corretto: Presente: <strong>${res.correctPresent}</strong>, Past Simple: <strong>${res.correctPast}</strong>`;
+                modalDetails.appendChild(p);
+            }
+
+            openModal();
+        }
+
+        // Modal functions
+        function openModal() {
+            document.getElementById('resultsModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('resultsModal').style.display = 'none';
+        }
+
+        // PDF Generation
+        async function generatePdf() {
+            const { jsPDF } = window.jspdf;
+            const element = document.getElementById('page-content');
+
+            const pdf = new jsPDF('p', 'pt', 'a4');
+            const options = {
+                scale: 2,
+                useCORS: true,
+                windowWidth: element.scrollWidth,
+                windowHeight: element.scrollHeight
+            };
+
+            const canvas = await html2canvas(element, options);
+            const imgData = canvas.toDataURL('image/png');
+
+            const imgWidth = 595;
+            const pageHeight = 842;
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            let heightLeft = imgHeight;
+            let position = 0;
+
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            pdf.save('I_miei_Risultati_Verbi_Irregolari.pdf');
+        }
+
+        // --- Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Exercise 1
+            document.getElementById('ex1-check-btn').addEventListener('click', checkEx1Answer);
+            document.getElementById('ex1-answer').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') checkEx1Answer();
+            });
+            document.getElementById('ex1-reset-btn').addEventListener('click', resetEx1);
+            displayNextEx1Verb(); // Start Exercise 1
+
+            // Exercise 2
+            document.getElementById('ex2-check-btn').addEventListener('click', checkEx2Answer);
+            document.getElementById('ex2-present-answer').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') checkEx2Answer();
+            });
+            document.getElementById('ex2-past-answer').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') checkEx2Answer();
+            });
+            document.getElementById('ex2-reset-btn').addEventListener('click', resetEx2);
+            displayNextEx2Verb(); // Start Exercise 2
+
+            // PDF Download Button
+            document.getElementById('downloadPdfBtn').addEventListener('click', displayOverallResults);
+        });
+    </script>
+</body>
+</html>
