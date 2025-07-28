@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Verbo Can: Spiegazione ed Esercizi</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+        }
+        .container-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .exercise-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .exercise-item label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #334155; /* Slate 700 */
+            text-align: center;
+            width: 100%;
+        }
+        .exercise-item input[type="text"], .exercise-item select {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #cbd5e1; /* Slate 300 */
+            background-color: #ffffff;
+            color: #1e293b; /* Slate 900 */
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .feedback {
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+        .feedback.correct {
+            color: #10b981; /* Emerald 500 */
+        }
+        .feedback.incorrect {
+            color: #ef4444; /* Red 500 */
+        }
+        .button-primary {
+            background-color: #3b82f6; /* Blue 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-primary:hover {
+            background-color: #2563eb; /* Blue 600 */
+        }
+        .button-secondary {
+            background-color: #64748b; /* Slate 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1-px rgba(0, 0, 0, 0.06);
+        }
+        .button-secondary:hover {
+            background-color: #475569; /* Slate 600 */
+        }
+        .example-sentence {
+            font-style: italic;
+            color: #475569;
+            margin-top: 0.25rem;
+            font-size: 0.9rem;
+        }
+        .match-question {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+        .match-answer-options {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align radio buttons to the left */
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .match-answer-options label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-align: left; /* Ensure text aligns left */
+            width: auto; /* Allow label to take natural width */
+        }
+        .match-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-extrabold text-center text-gray-900 mb-8">Il Verbo "Can" in Inglese</h1>
+
+        <!-- Spiegazione: Can (abilità) -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">"Can" (Abilità, Richiesta e Permesso)</h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Il verbo "can" è un verbo modale molto comune in inglese. Viene utilizzato principalmente per esprimere:
+            </p>
+            <ul class="list-disc list-inside text-gray-700 mb-4 pl-4">
+                <li>Abilità: Indica la capacità di fare qualcosa. (es. "Io so nuotare.")</li>
+                <li>Richiesta: Per chiedere a qualcuno di fare qualcosa. (es. "Puoi ripetere, per favore?")</li>
+                <li>Permesso: Per chiedere o dare il permesso di fare qualcosa. (es. "Posso uscire?")</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Forma Affermativa:</h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Soggetto + can + forma base del verbo
+            </p>
+            <ul class="list-disc list-inside text-gray-700 mb-4 pl-4">
+                <li>I / You / He / She / It / We / You / They + can + play / swim / sing / cook</li>
+                <li>Esempio: <em>I can swim.</em> (Io so nuotare.)</li>
+            </ul>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                "Can" è un verbo modale, quindi non cambia forma per le diverse persone (non si aggiunge la -s alla terza persona singolare). È sempre seguito dalla forma base del verbo (senza "to").
+            </p>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Forma Negativa:</h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Soggetto + cannot / can't + forma base del verbo
+            </p>
+            <ul class="list-disc list-inside text-gray-700 mb-4 pl-4">
+                <li>I / You / He / She / It / We / You / They + cannot / can't + play / swim / sing / cook</li>
+                <li>Esempio: <em>She cannot sing.</em> o <em>She can't sing.</em> (Lei non sa cantare.)</li>
+            </ul>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                La forma negativa estesa è "cannot" (si scrive come una parola unica). La forma contratta "can't" è molto più comune nelle conversazioni informali.
+            </p>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Forma Interrogativa:</h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Can + soggetto + forma base del verbo
+            </p>
+            <ul class="list-disc list-inside text-gray-700 mb-4 pl-4">
+                <li>Can + I / you / he / she / it / we / you / they + play / swim / sing / cook?</li>
+                <li>Esempio: <em>Can you come to my house?</em> (Puoi venire a casa mia?)</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Risposte Brevi:</h3>
+            <ul class="list-disc list-inside text-gray-700 mb-4 pl-4">
+                <li>Affermativa: <em>Yes, I can.</em> (Sì, posso.)</li>
+                <li>Negativa: <em>No, I can't.</em> (No, non posso.)</li>
+            </ul>
+            <p class="text-gray-700 leading-relaxed">
+                Nelle risposte brevi negative si usa sempre la forma contratta "can't".
+            </p>
+        </div>
+
+        <!-- Spiegazione: Esprimere la Capacità con Avverbi -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Esprimere la Capacità con Avverbi</h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Per indicare la propria capacità o abilità in modo più specifico, si possono usare questi avverbi o espressioni, che di solito vengono messi alla fine della frase:
+            </p>
+            <ul class="list-disc list-inside text-gray-700 mb-4 pl-4">
+                <li>very well (molto bene)</li>
+                <li>quite well (abbastanza bene)</li>
+                <li>a little (un po')</li>
+                <li>(not) very well ((non) molto bene)</li>
+                <li>(not) at all ((non) per niente)</li>
+            </ul>
+            <ul class="list-disc list-inside text-gray-700 pl-4">
+                <li>Esempi: <em>I can speak English very well.</em> (So parlare inglese molto bene.)</li>
+                <li><em>I can't play tennis at all.</em> (Non so giocare a tennis per niente.)</li>
+            </ul>
+        </div>
+
+        <!-- Esercizio 1: Scrivi cosa sanno fare o non sanno fare -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Esercizio 1: Cosa sanno fare?</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Scrivi cosa le persone sanno fare (+) o non sanno fare (-), usando "can" o "can't".
+            </p>
+
+            <div id="exercise1-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Esercizio 2: Scrivi domande con "Can" -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Esercizio 2: Scrivi domande con "Can"</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Trasforma le seguenti affermazioni in domande usando "Can".
+            </p>
+
+            <div id="exercise2-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Esercizio 3: Abbina domande e risposte -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Esercizio 3: Abbina domande e risposte</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Abbina le situazioni alle domande più appropriate.
+            </p>
+
+            <div id="exercise3-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Esercizio 4: Scrivi frasi con avverbi di capacità -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Esercizio 4: Scrivi frasi con avverbi di capacità</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Scrivi frasi affermative o negative usando gli avverbi di capacità.
+            </p>
+
+            <div id="exercise4-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Esercizio 5: Traduci -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Esercizio 5: Traduci in Inglese</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Traduci le seguenti frasi dall'italiano all'inglese.
+            </p>
+
+            <div id="exercise5-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <button id="check-all-answers" class="button-primary">Controlla Tutte le Risposte</button>
+            <button id="get-all-results" class="button-primary">I miei risultati</button>
+            <button id="reset-all-exercises" class="button-secondary">Reset Tutti gli Esercizi</button>
+        </div>
+    </div>
+
+    <script>
+        // Utility function to normalize text for comparison
+        function normalizeAnswer(text) {
+            return text.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
+        }
+
+        // Helper function to shuffle an array (needed for Exercise 3)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // --- Exercise 1 Data (Can/Can't) ---
+        const exercise1Items = [
+            { id: 'e1-1', prompt: 'He / play the guitar (+)', correct: 'he can play the guitar' },
+            { id: 'e1-2', prompt: 'She / ski (-)', correct: 'she can\'t ski' },
+            { id: 'e1-3', prompt: 'My grandfather / use a computer (-)', correct: 'my grandfather can\'t use a computer' },
+            { id: 'e1-4', prompt: 'They / speak French (+)', correct: 'they can speak french' },
+            { id: 'e1-5', prompt: 'Serena / swim (+)', correct: 'serena can swim' },
+            { id: 'e1-6', prompt: 'We / dance (-)', correct: 'we can\'t dance' },
+            { id: 'e1-7', prompt: 'Robert / sing (-)', correct: 'robert can\'t sing' },
+            { id: 'e1-8', prompt: 'Mum / drive a car (-)', correct: 'mum can\'t drive a car' }
+        ];
+        const exercise1Container = document.getElementById('exercise1-container');
+
+        function createExercise1Item(item) {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.innerHTML = `
+                <label for="e1-input-${item.id}">${item.prompt}</label>
+                <input type="text" id="e1-input-${item.id}" placeholder="Scrivi la frase">
+                <div id="e1-feedback-${item.id}" class="feedback text-sm"></div>
+            `;
+            exercise1Container.appendChild(div);
+        }
+
+        function loadExercise1() {
+            exercise1Container.innerHTML = '';
+            exercise1Items.forEach(createExercise1Item);
+        }
+
+        function checkExercise1Answers() {
+            let results = [];
+            exercise1Items.forEach(item => {
+                const inputElement = document.getElementById(`e1-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e1-feedback-${item.id}`);
+                const studentAnswer = normalizeAnswer(inputElement.value);
+                const isCorrect = (studentAnswer === normalizeAnswer(item.correct));
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (inputElement.value.trim() === '') {
+                    feedbackElement.textContent = 'Inserisci una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. Corretto: "${item.correct}".`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: item.prompt,
+                    yourAnswer: inputElement.value.trim() || 'Non risposto',
+                    correctAnswer: item.correct,
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise1() {
+            exercise1Items.forEach(item => {
+                const inputElement = document.getElementById(`e1-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e1-feedback-${item.id}`);
+                inputElement.value = '';
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+        // --- Exercise 2 Data (Write questions with Can) ---
+        const exercise2Items = [
+            { id: 'e2-1', prompt: 'You want to go to the cinema with your friends on Sunday afternoon.', correct: 'can i go to the cinema with my friends on sunday afternoon' },
+            { id: 'e2-2', prompt: 'You want to ride your bike on the main road.', correct: 'can i ride my bike on the main road' },
+            { id: 'e2-3', prompt: 'You want to go skateboarding in the shopping centre.', correct: 'can i go skateboarding in the shopping centre' },
+            { id: 'e2-4', prompt: 'You want to watch a horror movie on TV at midnight.', correct: 'can i watch a horror movie on tv at midnight' },
+            { id: 'e2-5', prompt: 'You want to have a party on your birthday.', correct: 'can i have a party on your birthday' },
+            { id: 'e2-6', prompt: 'You want to play your electric guitar after dinner.', correct: 'can i play my electric guitar after dinner' }
+        ];
+        const exercise2Container = document.getElementById('exercise2-container');
+
+        function createExercise2Item(item) {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.innerHTML = `
+                <label for="e2-input-${item.id}">${item.prompt}</label>
+                <input type="text" id="e2-input-${item.id}" placeholder="Scrivi la domanda">
+                <div id="e2-feedback-${item.id}" class="feedback text-sm"></div>
+            `;
+            exercise2Container.appendChild(div);
+        }
+
+        function loadExercise2() {
+            exercise2Container.innerHTML = '';
+            exercise2Items.forEach(createExercise2Item);
+        }
+
+        function checkExercise2Answers() {
+            let results = [];
+            exercise2Items.forEach(item => {
+                const inputElement = document.getElementById(`e2-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e2-feedback-${item.id}`);
+                const studentAnswer = normalizeAnswer(inputElement.value);
+                const isCorrect = (studentAnswer === normalizeAnswer(item.correct));
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (inputElement.value.trim() === '') {
+                    feedbackElement.textContent = 'Inserisci una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. Corretto: "${item.correct}".`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: item.prompt,
+                    yourAnswer: inputElement.value.trim() || 'Non risposto',
+                    correctAnswer: item.correct,
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise2() {
+            exercise2Items.forEach(item => {
+                const inputElement = document.getElementById(`e2-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e2-feedback-${item.id}`);
+                inputElement.value = '';
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+        // --- Exercise 3 Data (Match questions and answers) ---
+        const exercise3Questions = [
+            { id: 'q3-1', text: 'It\'s very hot in here.' },
+            { id: 'q3-2', text: 'I\'m hungry!' },
+            { id: 'q3-3', text: 'I don\'t understand this word.' },
+            { id: 'q3-4', text: 'This glass is dirty.' },
+            { id: 'q3-5', text: 'I\'m really tired tonight.' },
+            { id: 'q3-6', text: 'I want to make a cake.' }
+        ];
+        const exercise3Answers = [
+            { id: 'a', text: 'Can you change it, please?' },
+            { id: 'b', text: 'Can you tidy up your room?' },
+            { id: 'c', text: 'Can I have a loaf of bread, please?' },
+            { id: 'd', text: 'Can you get some eggs from the supermarket?' },
+            { id: 'e', text: 'Can you lend me your dictionary?' },
+            { id: 'f', text: 'Can you open the window?' }
+        ];
+
+        // Define correct matches
+        const exercise3CorrectMatches = {
+            'q3-1': 'f', // It's very hot in here. -> Can you open the window?
+            'q3-2': 'c', // I'm hungry! -> Can I have a loaf of bread, please?
+            'q3-3': 'e', // I don't understand this word. -> Can you lend me your dictionary?
+            'q3-4': 'a', // This glass is dirty. -> Can you change it, please?
+            'q3-5': 'b', // I'm really tired tonight. -> Can you tidy up your room?
+            'q3-6': 'd'  // I want to make a cake. -> Can you get some eggs from the supermarket?
+        };
+        const exercise3Container = document.getElementById('exercise3-container');
+
+        function loadExercise3() {
+            exercise3Container.innerHTML = '';
+            const shuffledAnswers = shuffleArray([...exercise3Answers]); // Shuffle answers for random order
+
+            exercise3Questions.forEach(question => {
+                const div = document.createElement('div');
+                div.className = 'match-item';
+                div.innerHTML = `
+                    <div class="match-question">${question.text}</div>
+                    <select id="e3-select-${question.id}">
+                        <option value="">Seleziona una risposta</option>
+                        ${shuffledAnswers.map(ans => `<option value="${ans.id}">${ans.text}</option>`).join('')}
+                    </select>
+                    <div id="e3-feedback-${question.id}" class="feedback text-sm"></div>
+                `;
+                exercise3Container.appendChild(div);
+            });
+        }
+
+        function checkExercise3Answers() {
+            let results = [];
+            exercise3Questions.forEach(question => {
+                const selectElement = document.getElementById(`e3-select-${question.id}`);
+                const feedbackElement = document.getElementById(`e3-feedback-${question.id}`);
+                const selectedValue = selectElement.value;
+                const correctId = exercise3CorrectMatches[question.id];
+                const isCorrect = (selectedValue === correctId);
+
+                const correctAnswerText = exercise3Answers.find(ans => ans.id === correctId)?.text || 'N/A';
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (selectedValue === '') {
+                    feedbackElement.textContent = 'Seleziona una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. Corretto: "${correctAnswerText}".`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: question.text,
+                    yourAnswer: selectElement.options[selectElement.selectedIndex].text || 'Non selezionato',
+                    correctAnswer: correctAnswerText,
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise3() {
+            exercise3Questions.forEach(question => {
+                const selectElement = document.getElementById(`e3-select-${question.id}`);
+                const feedbackElement = document.getElementById(`e3-feedback-${question.id}`);
+                selectElement.value = '';
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+        // --- Exercise 4 Data (Ability adverbs) ---
+        const exercise4Items = [
+            { id: 'e4-1', prompt: 'She / speak Italian (very well)', correct: 'she can speak italian very well' },
+            { id: 'e4-2', prompt: 'I / sing (a little)', correct: 'i can sing a little' },
+            { id: 'e4-3', prompt: 'Our music teacher / play the piano (quite well)', correct: 'our music teacher can play the piano quite well' },
+            { id: 'e4-4', prompt: 'My dad / cook (very well)', correct: 'my dad can cook very well' },
+            { id: 'e4-5', prompt: 'My mother / speak French (not very well)', correct: 'my mother can\'t speak french very well' },
+            { id: 'e4-6', prompt: 'I / do this homework (at all)', correct: 'i can do this homework at all' }, // Assuming positive "can do" based on example in image
+            { id: 'e4-7', prompt: 'My brother / ski (not at all)', correct: 'my brother can\'t ski at all' },
+            { id: 'e4-8', prompt: 'He / speak German (quite well)', correct: 'he can speak german quite well' }
+        ];
+        const exercise4Container = document.getElementById('exercise4-container');
+
+        function createExercise4Item(item) {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.innerHTML = `
+                <label for="e4-input-${item.id}">${item.prompt}</label>
+                <input type="text" id="e4-input-${item.id}" placeholder="Scrivi la frase">
+                <div id="e4-feedback-${item.id}" class="feedback text-sm"></div>
+            `;
+            exercise4Container.appendChild(div);
+        }
+
+        function loadExercise4() {
+            exercise4Container.innerHTML = '';
+            exercise4Items.forEach(createExercise4Item);
+        }
+
+        function checkExercise4Answers() {
+            let results = [];
+            exercise4Items.forEach(item => {
+                const inputElement = document.getElementById(`e4-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e4-feedback-${item.id}`);
+                const studentAnswer = normalizeAnswer(inputElement.value);
+                const isCorrect = (studentAnswer === normalizeAnswer(item.correct));
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (inputElement.value.trim() === '') {
+                    feedbackElement.textContent = 'Inserisci una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. Corretto: "${item.correct}".`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: item.prompt,
+                    yourAnswer: inputElement.value.trim() || 'Non risposto',
+                    correctAnswer: item.correct,
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise4() {
+            exercise4Items.forEach(item => {
+                const inputElement = document.getElementById(`e4-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e4-feedback-${item.id}`);
+                inputElement.value = '';
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+        // --- Exercise 5 Data (Translate) ---
+        const exercise5Items = [
+            { id: 'e5-1', italian: 'Posso andare a nuotare con Ryan ed Ellie?', correct: 'can i go swimming with ryan and ellie' },
+            { id: 'e5-2', italian: 'Puoi fare il tuo letto prima di cena, per favore?', correct: 'can you make your bed before dinner please' },
+            { id: 'e5-3', italian: 'Mio padre sa parlare molto bene il tedesco.', correct: 'my father can speak german very well' },
+            { id: 'e5-4', italian: 'Finisci i tuoi compiti. Puoi uscire dopo.', correct: 'finish your homework you can go out after' },
+            { id: 'e5-5', italian: 'Barbara sa suonare molto bene il pianoforte.', correct: 'barbara can play the piano very well' },
+            { id: 'e5-6', italian: 'Sai giocare a tennis? Sì, ma non molto bene.', correct: 'can you play tennis yes but not very well' },
+            { id: 'e5-7', italian: 'Daisy non sa sciare, ma sa nuotare molto bene.', correct: 'daisy can\'t ski but she can swim very well' },
+            { id: 'e5-8', italian: 'Mia madre sa ballare molto bene. Mio padre non sa ballare per niente.', correct: 'my mother can dance very well my father can\'t dance at all' }
+        ];
+        const exercise5Container = document.getElementById('exercise5-container');
+
+        function createExercise5Item(item) {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.innerHTML = `
+                <label for="e5-input-${item.id}">${item.italian}</label>
+                <input type="text" id="e5-input-${item.id}" placeholder="Scrivi la traduzione">
+                <div id="e5-feedback-${item.id}" class="feedback text-sm"></div>
+            `;
+            exercise5Container.appendChild(div);
+        }
+
+        function loadExercise5() {
+            exercise5Container.innerHTML = '';
+            exercise5Items.forEach(createExercise5Item);
+        }
+
+        function checkExercise5Answers() {
+            let results = [];
+            exercise5Items.forEach(item => {
+                const inputElement = document.getElementById(`e5-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e5-feedback-${item.id}`);
+                const studentAnswer = normalizeAnswer(inputElement.value);
+                const isCorrect = (studentAnswer === normalizeAnswer(item.correct));
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (inputElement.value.trim() === '') {
+                    feedbackElement.textContent = 'Inserisci una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. Corretto: "${item.correct}".`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: item.italian,
+                    yourAnswer: inputElement.value.trim() || 'Non risposto',
+                    correctAnswer: item.correct,
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise5() {
+            exercise5Items.forEach(item => {
+                const inputElement = document.getElementById(`e5-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e5-feedback-${item.id}`);
+                inputElement.value = '';
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+
+        // --- Global Functions ---
+        const checkAllAnswersBtn = document.getElementById('check-all-answers');
+        const getAllResultsBtn = document.getElementById('get-all-results');
+        const resetAllExercisesBtn = document.getElementById('reset-all-exercises');
+
+        function checkAllExercises() {
+            checkExercise1Answers();
+            checkExercise2Answers();
+            checkExercise3Answers();
+            checkExercise4Answers();
+            checkExercise5Answers();
+        }
+
+        function generateAllResultsPDF() {
+            const results1 = checkExercise1Answers();
+            const results2 = checkExercise2Answers();
+            const results3 = checkExercise3Answers();
+            const results4 = checkExercise4Answers();
+            const results5 = checkExercise5Answers();
+
+            let totalCorrectOverall = 0;
+            let totalQuestionsOverall = 0;
+
+            let resultsContent = `
+                <h1 style="text-align: center; font-family: 'Inter', sans-serif;">I Miei Risultati - Il Verbo "Can"</h1>
+                <p style="font-family: 'Inter', sans-serif;">Data: ${new Date().toLocaleDateString()}</p>
+            `;
+
+            const appendExerciseResults = (title, results) => {
+                let correctCount = 0;
+                resultsContent += `<h2 style="margin-top: 30px; font-family: 'Inter', sans-serif;">${title}</h2>`;
+                resultsContent += `
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-family: 'Inter', sans-serif;">
+                        <thead>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Domanda</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">La Tua Risposta</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Risposta Corretta</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Esito</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                results.forEach(item => {
+                    if (item.isCorrect) {
+                        correctCount++;
+                    }
+                    resultsContent += `
+                        <tr>
+                            <td style="border: 1px solid #ddd; padding: 8px;">${item.question}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">${item.yourAnswer}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">${item.correctAnswer}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px; color: ${item.isCorrect ? '#10b981' : '#ef4444'}; font-weight: bold;">${item.isCorrect ? 'Corretto' : 'Sbagliato'}</td>
+                        </tr>
+                    `;
+                });
+                resultsContent += `
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 10px; font-weight: bold; font-family: 'Inter', sans-serif;">
+                        Punteggio: ${correctCount} su ${results.length} (${((correctCount / results.length) * 100).toFixed(2)}%)
+                    </p>
+                `;
+                totalCorrectOverall += correctCount;
+                totalQuestionsOverall += results.length;
+            };
+
+            appendExerciseResults("Esercizio 1: Cosa sanno fare?", results1);
+            appendExerciseResults("Esercizio 2: Scrivi domande con \"Can\"", results2);
+            appendExerciseResults("Esercizio 3: Abbina domande e risposte", results3);
+            appendExerciseResults("Esercizio 4: Scrivi frasi con avverbi di capacità", results4);
+            appendExerciseResults("Esercizio 5: Traduci in Inglese", results5);
+
+            const overallPercentage = (totalQuestionsOverall > 0) ? (totalCorrectOverall / totalQuestionsOverall) * 100 : 0;
+            resultsContent += `
+                <h2 style="margin-top: 30px; font-family: 'Inter', sans-serif;">Riepilogo Generale</h2>
+                <p style="font-weight: bold; font-family: 'Inter', sans-serif;">
+                    Punteggio Totale: ${totalCorrectOverall} su ${totalQuestionsOverall} (${overallPercentage.toFixed(2)}%)
+                </p>
+            `;
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>I Miei Risultati</title>');
+            printWindow.document.write('<style>');
+            printWindow.document.write(`
+                body { font-family: 'Inter', sans-serif; margin: 20px; }
+                h1, h2 { color: #1e293b; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+                .correct { color: #10b981; }
+                .incorrect { color: #ef4444; }
+            `);
+            printWindow.document.write('</style></head><body>');
+            printWindow.document.write(resultsContent);
+            printWindow.document.close();
+            printWindow.print(); // Trigger print dialog
+        }
+
+        function resetAllExercises() {
+            resetExercise1();
+            resetExercise2();
+            resetExercise3();
+            resetExercise4();
+            resetExercise5();
+        }
+
+        // Event Listeners for global buttons
+        checkAllAnswersBtn.addEventListener('click', checkAllExercises);
+        getAllResultsBtn.addEventListener('click', generateAllResultsPDF);
+        resetAllExercisesBtn.addEventListener('click', resetAllExercises);
+
+        // Load all exercises on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadExercise1();
+            loadExercise2();
+            loadExercise3(); /* Added this line */
+            loadExercise4(); /* Added this line */
+            loadExercise5(); /* Added this line */
+        });
+    </script>
+</body>
+</html>
