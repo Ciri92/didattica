@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabolario: Sport e Lavori</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+        }
+        .container-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .exercise-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .exercise-item label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #334155; /* Slate 700 */
+            text-align: center;
+            width: 100%;
+        }
+        .exercise-item input[type="text"], .exercise-item select {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #cbd5e1; /* Slate 300 */
+            background-color: #ffffff;
+            color: #1e293b; /* Slate 900 */
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .feedback {
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+        .feedback.correct {
+            color: #10b981; /* Emerald 500 */
+        }
+        .feedback.incorrect {
+            color: #ef4444; /* Red 500 */
+        }
+        .button-primary {
+            background-color: #3b82f6; /* Blue 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-primary:hover {
+            background-color: #2563eb; /* Blue 600 */
+        }
+        .button-secondary {
+            background-color: #64748b; /* Slate 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-secondary:hover {
+            background-color: #475569; /* Slate 600 */
+        }
+        .vocabulary-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 1.5rem;
+        }
+        .vocabulary-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+        .vocabulary-list li:last-child {
+            border-bottom: none;
+        }
+        .vocabulary-list .english-term {
+            font-weight: 600;
+            color: #1e293b;
+            flex-grow: 1;
+        }
+        .vocabulary-list .italian-translation {
+            font-size: 0.875rem;
+            color: #475569;
+            font-style: italic;
+            text-align: right;
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-extrabold text-center text-gray-900 mb-8">Vocabolario: Sport e Lavori</h1>
+
+        <!-- Sezione 1: Sport -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Sezione 1: Sport</h2>
+            <p class="text-gray-700 leading-relaxed mb-6">
+                Ecco un elenco di sport comuni in inglese.
+            </p>
+            <ul class="vocabulary-list">
+                <li><span class="english-term">go skateboarding</span> <span class="italian-translation">(fare skateboard)</span></li>
+                <li><span class="english-term">go swimming</span> <span class="italian-translation">(fare nuoto)</span></li>
+                <li><span class="english-term">go skiing</span> <span class="italian-translation">(fare sci)</span></li>
+                <li><span class="english-term">play rugby</span> <span class="italian-translation">(giocare a rugby)</span></li>
+                <li><span class="english-term">go canoeing</span> <span class="italian-translation">(fare canoa)</span></li>
+                <li><span class="english-term">go snowboarding</span> <span class="italian-translation">(fare snowboard)</span></li>
+                <li><span class="english-term">play volleyball</span> <span class="italian-translation">(giocare a pallavolo)</span></li>
+                <li><span class="english-term">play ice hockey</span> <span class="italian-translation">(giocare a hockey su ghiaccio)</span></li>
+                <li><span class="english-term">do judo</span> <span class="italian-translation">(fare judo)</span></li>
+                <li><span class="english-term">play basketball</span> <span class="italian-translation">(giocare a pallacanestro)</span></li>
+                <li><span class="english-term">go cycling</span> <span class="italian-translation">(fare ciclismo)</span></li>
+                <li><span class="english-term">go rock climbing</span> <span class="italian-translation">(fare arrampicata su roccia)</span></li>
+                <li><span class="english-term">play tennis</span> <span class="italian-translation">(giocare a tennis)</span></li>
+                <li><span class="english-term">play table tennis</span> <span class="italian-translation">(giocare a ping-pong)</span></li>
+                <li><span class="english-term">go trekking</span> <span class="italian-translation">(fare trekking)</span></li>
+                <li><span class="english-term">play baseball</span> <span class="italian-translation">(giocare a baseball)</span></li>
+                <li><span class="english-term">go running</span> <span class="italian-translation">(fare corsa)</span></li>
+                <li><span class="english-term">go horse riding</span> <span class="italian-translation">(fare equitazione)</span></li>
+            </ul>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-4 text-center">Esercizio 1.1: Abbina Sport e Descrizioni</h3>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Abbina ogni sport alla sua descrizione più appropriata.
+            </p>
+            <div id="exercise1-1-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-4 text-center">Esercizio 1.2: Categorizza gli Sport</h3>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Completa le categorie con gli sport appropriati dall'elenco.
+            </p>
+            <div id="exercise1-2-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Sezione 2: Lavori -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Sezione 2: Lavori</h2>
+            <p class="text-gray-700 leading-relaxed mb-6">
+                Ecco un elenco di professioni comuni in inglese.
+            </p>
+            <ul class="vocabulary-list">
+                <li><span class="english-term">shop assistant</span> <span class="italian-translation">(commesso/a)</span></li>
+                <li><span class="english-term">office worker</span> <span class="italian-translation">(impiegato/a d'ufficio)</span></li>
+                <li><span class="english-term">factory worker</span> <span class="italian-translation">(operaio/a)</span></li>
+                <li><span class="english-term">nurse</span> <span class="italian-translation">(infermiere/a)</span></li>
+                <li><span class="english-term">housewife</span> <span class="italian-translation">(casalinga)</span></li>
+                <li><span class="english-term">bus driver</span> <span class="italian-translation">(autista di autobus)</span></li>
+                <li><span class="english-term">actor / actress</span> <span class="italian-translation">(attore/attrice)</span></li>
+                <li><span class="english-term">police officer</span> <span class="italian-translation">(agente di polizia)</span></li>
+                <li><span class="english-term">waiter / waitress</span> <span class="italian-translation">(cameriere/a)</span></li>
+                <li><span class="english-term">journalist</span> <span class="italian-translation">(giornalista)</span></li>
+                <li><span class="english-term">mechanic</span> <span class="italian-translation">(meccanico)</span></li>
+                <li><span class="english-term">hairdresser</span> <span class="italian-translation">(parrucchiere/a)</span></li>
+                <li><span class="english-term">farmer</span> <span class="italian-translation">(agricoltore/trice)</span></li>
+                <li><span class="english-term">cook</span> <span class="italian-translation">(cuoco/a)</span></li>
+            </ul>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-4 text-center">Esercizio 2.1: Indovina la Professione</h3>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Indovina la professione basandoti sulla descrizione.
+            </p>
+            <div id="exercise2-1-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <button id="check-all-answers" class="button-primary">Controlla Tutte le Risposte</button>
+            <button id="get-all-results" class="button-primary">I miei risultati</button>
+            <button id="reset-all-exercises" class="button-secondary">Reset Tutti gli Esercizi</button>
+        </div>
+    </div>
+
+    <script>
+        // Utility function to normalize text for comparison
+        function normalizeAnswer(answer) {
+            return answer.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
+        }
+
+        // --- Section 1: Sports Data ---
+        const sportsVocabulary = [
+            { en: 'go skateboarding', it: 'fare skateboard', description: 'You balance on a board with wheels and ride it.' },
+            { en: 'go swimming', it: 'fare nuoto', description: 'You move through water using your arms and legs.' },
+            { en: 'go skiing', it: 'fare sci', description: 'You slide over snow on long, flat runners attached to your boots.' },
+            { en: 'play rugby', it: 'giocare a rugby', description: 'A team sport played with an oval ball, involving tackling.' },
+            { en: 'go canoeing', it: 'fare canoa', description: 'You paddle a small, narrow boat through water.' },
+            { en: 'go snowboarding', it: 'fare snowboard', description: 'You ride down a snow-covered slope on a single board.' },
+            { en: 'play volleyball', it: 'giocare a pallavolo', description: 'Two teams hit a ball over a net, trying to make it land on the opponent\'s side.' },
+            { en: 'play ice hockey', it: 'giocare a hockey su ghiaccio', description: 'A team sport played on ice, where players use sticks to hit a puck into a net.' },
+            { en: 'do judo', it: 'fare judo', description: 'A Japanese martial art and Olympic sport focusing on throws and grappling.' },
+            { en: 'play basketball', it: 'giocare a pallacanestro', description: 'Two teams try to score points by shooting a ball through a hoop.' },
+            { en: 'go cycling', it: 'fare ciclismo', description: 'You ride a bicycle for sport or leisure.' },
+            { en: 'go rock climbing', it: 'fare arrampicata su roccia', description: 'You ascend steep rock faces using ropes and specialized equipment.' },
+            { en: 'play tennis', it: 'giocare a tennis', description: 'Two or four players hit a ball over a net with rackets.' },
+            { en: 'play table tennis', it: 'giocare a ping-pong', description: 'A miniature version of tennis played on a table with small rackets.' },
+            { en: 'go trekking', it: 'fare trekking', description: 'You go on a long, often difficult, journey on foot, especially in the mountains.' },
+            { en: 'play baseball', it: 'giocare a baseball', description: 'A bat-and-ball game played between two teams, popular in the US.' },
+            { en: 'go running', it: 'fare corsa', description: 'You move rapidly on foot, as a sport or for exercise.' },
+            { en: 'go horse riding', it: 'fare equitazione', description: 'You ride on the back of a horse.' }
+        ];
+
+        // Exercise 1.1: Match Sports and Descriptions
+        const exercise1_1_items = sportsVocabulary.map(sport => ({
+            id: sport.en.replace(/\s|\//g, ''), // Create a simple ID from the sport name
+            sport: sport.en,
+            correctDescription: sport.description
+        }));
+        const exercise1_1_container = document.getElementById('exercise1-1-container');
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function loadExercise1_1() {
+            exercise1_1_container.innerHTML = '';
+            const shuffledDescriptions = shuffleArray(sportsVocabulary.map(s => s.description));
+
+            exercise1_1_items.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'exercise-item';
+                div.innerHTML = `
+                    <label for="e1-1-select-${item.id}">${item.sport}:</label>
+                    <select id="e1-1-select-${item.id}">
+                        <option value="">Seleziona descrizione</option>
+                        ${shuffledDescriptions.map(desc => `<option value="${desc}">${desc}</option>`).join('')}
+                    </select>
+                    <div id="e1-1-feedback-${item.id}" class="feedback text-sm"></div>
+                `;
+                exercise1_1_container.appendChild(div);
+            });
+        }
+
+        function checkExercise1_1_Answers() {
+            let results = [];
+            exercise1_1_items.forEach(item => {
+                const selectElement = document.getElementById(`e1-1-select-${item.id}`);
+                const feedbackElement = document.getElementById(`e1-1-feedback-${item.id}`);
+                const selectedValue = selectElement.value;
+                const isCorrect = (normalizeAnswer(selectedValue) === normalizeAnswer(item.correctDescription));
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (selectedValue === '') {
+                    feedbackElement.textContent = 'Seleziona una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. Corretto: "${item.correctDescription}".`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: item.sport,
+                    yourAnswer: selectedValue || 'Non selezionato',
+                    correctAnswer: item.correctDescription,
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise1_1() {
+            exercise1_1_items.forEach(item => {
+                const selectElement = document.getElementById(`e1-1-select-${item.id}`);
+                const feedbackElement = document.getElementById(`e1-1-feedback-${item.id}`);
+                selectElement.value = '';
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+        // Exercise 1.2: Categorize Sports
+        const exercise1_2_categories = [
+            { title: 'Sport di Squadra', id: 'team-sports', correctSports: ['play rugby', 'play volleyball', 'play ice hockey', 'play basketball', 'play baseball'] },
+            { title: 'Sport Individuali', id: 'individual-sports', correctSports: ['go skateboarding', 'go swimming', 'go skiing', 'go canoeing', 'go snowboarding', 'do judo', 'go cycling', 'go rock climbing', 'play tennis', 'play table tennis', 'go trekking', 'go running', 'go horse riding'] },
+            { title: 'Sport Invernali', id: 'winter-sports', correctSports: ['go skiing', 'go snowboarding', 'play ice hockey'] },
+            { title: 'Sport con Palla', id: 'ball-sports', correctSports: ['play rugby', 'play volleyball', 'play ice hockey', 'play basketball', 'play tennis', 'play table tennis', 'play baseball'] }
+        ];
+        const exercise1_2_container = document.getElementById('exercise1-2-container');
+
+        function loadExercise1_2() {
+            exercise1_2_container.innerHTML = '';
+            exercise1_2_categories.forEach(category => {
+                const div = document.createElement('div');
+                div.className = 'container-card p-4'; // Use a smaller card for categories
+                div.innerHTML = `
+                    <h4 class="text-lg font-semibold text-gray-800 mb-3 text-center">${category.title}</h4>
+                    <div id="category-sports-${category.id}" class="flex flex-col gap-2"></div>
+                    <div id="e1-2-feedback-${category.id}" class="feedback text-sm mt-2"></div>
+                `;
+                exercise1_2_container.appendChild(div);
+
+                const sportsDropdownsContainer = document.getElementById(`category-sports-${category.id}`);
+                category.correctSports.forEach((_, index) => {
+                    const selectElement = document.createElement('select');
+                    selectElement.id = `e1-2-select-${category.id}-${index}`;
+                    selectElement.className = 'w-full p-2 border rounded-md';
+                    selectElement.innerHTML = `
+                        <option value="">Seleziona uno sport</option>
+                        ${sportsVocabulary.map(s => `<option value="${s.en}">${s.en}</option>`).join('')}
+                    `;
+                    sportsDropdownsContainer.appendChild(selectElement);
+                });
+            });
+        }
+
+        function checkExercise1_2_Answers() {
+            let results = [];
+            exercise1_2_categories.forEach(category => {
+                let correctCount = 0;
+                let studentAnswers = [];
+                const feedbackElement = document.getElementById(`e1-2-feedback-${category.id}`);
+
+                category.correctSports.forEach((correctSport, index) => {
+                    const selectElement = document.getElementById(`e1-2-select-${category.id}-${index}`);
+                    const selectedValue = selectElement.value;
+                    const isCorrect = (normalizeAnswer(selectedValue) === normalizeAnswer(correctSport));
+
+                    if (isCorrect) {
+                        correctCount++;
+                    }
+                    studentAnswers.push({
+                        your: selectedValue || 'Non selezionato',
+                        correct: correctSport,
+                        isCorrect: isCorrect
+                    });
+                });
+
+                const allCorrectForCategory = (correctCount === category.correctSports.length);
+
+                if (allCorrectForCategory) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. Hai ${correctCount} su ${category.correctSports.length} corrette.`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+
+                results.push({
+                    category: category.title,
+                    answers: studentAnswers,
+                    isCategoryCorrect: allCorrectForCategory,
+                    correctCount: correctCount,
+                    totalCount: category.correctSports.length
+                });
+            });
+            return results;
+        }
+
+        function resetExercise1_2() {
+            exercise1_2_categories.forEach(category => {
+                const feedbackElement = document.getElementById(`e1-2-feedback-${category.id}`);
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+                category.correctSports.forEach((_, index) => {
+                    const selectElement = document.getElementById(`e1-2-select-${category.id}-${index}`);
+                    selectElement.value = '';
+                });
+            });
+        }
+
+        // --- Section 2: Jobs Data ---
+        const jobsVocabulary = [
+            { en: 'shop assistant', it: 'commesso/a' },
+            { en: 'office worker', it: 'impiegato/a d\'ufficio' },
+            { en: 'factory worker', it: 'operaio/a' },
+            { en: 'nurse', it: 'infermiere/a' },
+            { en: 'housewife', it: 'casalinga' },
+            { en: 'bus driver', it: 'autista di autobus' },
+            { en: 'actor / actress', it: 'attore/attrice' },
+            { en: 'police officer', it: 'agente di polizia' },
+            { en: 'waiter / waitress', it: 'cameriere/a' },
+            { en: 'journalist', it: 'giornalista' },
+            { en: 'mechanic', it: 'meccanico' },
+            { en: 'hairdresser', it: 'parrucchiere/a' },
+            { en: 'farmer', it: 'agricoltore/trice' },
+            { en: 'cook', it: 'cuoco/a' }
+        ];
+
+        // Exercise 2.1: Guess the Job
+        const exercise2_1_items = [
+            { id: 'e2-1-1', description: 'This person produces fruit and vegetables.', correct: 'farmer', correctAlts: [] },
+            { id: 'e2-1-2', description: 'This person cuts people\'s hair.', correct: 'hairdresser', correctAlts: [] },
+            { id: 'e2-1-3', description: 'This person repairs cars.', correct: 'mechanic', correctAlts: [] },
+            { id: 'e2-1-4', description: 'This person serves customers in shops.', correct: 'shop assistant', correctAlts: [] },
+            { id: 'e2-1-5', description: 'This person serves customers in restaurants.', correct: 'waiter / waitress', correctAlts: ['waiter', 'waitress'] },
+            { id: 'e2-1-6', description: 'This person uses a computer in the office.', correct: 'office worker', correctAlts: [] },
+            { id: 'e2-1-7', description: 'This person assists doctors in a hospital.', correct: 'nurse', correctAlts: [] },
+            { id: 'e2-1-8', description: 'This person makes things in a factory.', correct: 'factory worker', correctAlts: [] },
+            { id: 'e2-1-9', description: 'This person drives a large vehicle carrying passengers.', correct: 'bus driver', correctAlts: [] },
+            { id: 'e2-1-10', description: 'This person writes articles for newspapers or magazines.', correct: 'journalist', correctAlts: [] }
+        ];
+        const exercise2_1_container = document.getElementById('exercise2-1-container');
+
+        function createExercise2_1_Item(item) {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.innerHTML = `
+                <label for="e2-1-input-${item.id}">${item.description}</label>
+                <input type="text" id="e2-1-input-${item.id}" placeholder="Indovina la professione">
+                <div id="e2-1-feedback-${item.id}" class="feedback text-sm"></div>
+            `;
+            exercise2_1_container.appendChild(div);
+        }
+
+        function loadExercise2_1() {
+            exercise2_1_container.innerHTML = '';
+            exercise2_1_items.forEach(createExercise2_1_Item);
+        }
+
+        function checkExercise2_1_Answers() {
+            let results = [];
+            exercise2_1_items.forEach(item => {
+                const inputElement = document.getElementById(`e2-1-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e2-1-feedback-${item.id}`);
+                const studentAnswer = normalizeAnswer(inputElement.value);
+
+                const correctForms = [normalizeAnswer(item.correct)];
+                if (item.correctAlts) {
+                    item.correctAlts.forEach(alt => correctForms.push(normalizeAnswer(alt)));
+                }
+
+                const isCorrect = correctForms.includes(studentAnswer);
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (inputElement.value.trim() === '') {
+                    feedbackElement.textContent = 'Inserisci una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    let correctText = item.correct;
+                    if (item.correctAlts && item.correctAlts.length > 0) {
+                        correctText += ` o "${item.correctAlts.join('" o "')}"`;
+                    }
+                    feedbackElement.textContent = `Sbagliato. Corretto: "${correctText}".`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: item.description,
+                    yourAnswer: inputElement.value.trim() || 'Non risposto',
+                    correctAnswer: item.correct,
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise2_1() {
+            exercise2_1_items.forEach(item => {
+                const inputElement = document.getElementById(`e2-1-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e2-1-feedback-${item.id}`);
+                inputElement.value = '';
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+        // --- Global Functions ---
+        const checkAllAnswersBtn = document.getElementById('check-all-answers');
+        const getAllResultsBtn = document.getElementById('get-all-results');
+        const resetAllExercisesBtn = document.getElementById('reset-all-exercises');
+
+        function checkAllExercises() {
+            checkExercise1_1_Answers();
+            checkExercise1_2_Answers();
+            checkExercise2_1_Answers();
+        }
+
+        function generateAllResultsPDF() {
+            const results1_1 = checkExercise1_1_Answers();
+            const results1_2 = checkExercise1_2_Answers();
+            const results2_1 = checkExercise2_1_Answers();
+
+            let totalCorrectOverall = 0;
+            let totalQuestionsOverall = 0;
+
+            let resultsContent = `
+                <h1 style="text-align: center; font-family: 'Inter', sans-serif;">I Miei Risultati - Vocabolario Sport e Lavori</h1>
+                <p style="font-family: 'Inter', sans-serif;">Data: ${new Date().toLocaleDateString()}</p>
+            `;
+
+            const appendExerciseResults = (title, results, isCategoryExercise = false) => {
+                let correctCount = 0;
+                let totalQuestions = 0;
+
+                resultsContent += `<h2 style="margin-top: 30px; font-family: 'Inter', sans-serif;">${title}</h2>`;
+                resultsContent += `
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-family: 'Inter', sans-serif;">
+                        <thead>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Domanda/Categoria</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">La Tua Risposta</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Risposta Corretta</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Esito</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                if (isCategoryExercise) {
+                    results.forEach(categoryResult => {
+                        resultsContent += `
+                            <tr>
+                                <td colspan="4" style="border: 1px solid #ddd; padding: 8px; background-color: #e2e8f0; font-weight: bold;">${categoryResult.category}</td>
+                            </tr>
+                        `;
+                        categoryResult.answers.forEach(answer => {
+                            if (answer.isCorrect) {
+                                correctCount++;
+                            }
+                            totalQuestions++;
+                            resultsContent += `
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 8px; padding-left: 20px;">- ${answer.correct}</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">${answer.your}</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">${answer.correct}</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px; color: ${answer.isCorrect ? '#10b981' : '#ef4444'}; font-weight: bold;">${answer.isCorrect ? 'Corretto' : 'Sbagliato'}</td>
+                                </tr>
+                            `;
+                        });
+                    });
+                } else {
+                    results.forEach(item => {
+                        if (item.isCorrect) {
+                            correctCount++;
+                        }
+                        totalQuestions++;
+                        resultsContent += `
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 8px;">${item.question}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">${item.yourAnswer}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">${item.correctAnswer}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px; color: ${item.isCorrect ? '#10b981' : '#ef4444'}; font-weight: bold;">${item.isCorrect ? 'Corretto' : 'Sbagliato'}</td>
+                            </tr>
+                        `;
+                    });
+                }
+                
+                resultsContent += `
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 10px; font-weight: bold; font-family: 'Inter', sans-serif;">
+                        Punteggio: ${correctCount} su ${totalQuestions} (${((correctCount / totalQuestions) * 100).toFixed(2)}%)
+                    </p>
+                `;
+                totalCorrectOverall += correctCount;
+                totalQuestionsOverall += totalQuestions;
+            };
+
+            appendExerciseResults("Esercizio 1.1: Abbina Sport e Descrizioni", results1_1);
+            appendExerciseResults("Esercizio 1.2: Categorizza gli Sport", results1_2, true);
+            appendExerciseResults("Esercizio 2.1: Indovina la Professione", results2_1);
+
+            const overallPercentage = (totalQuestionsOverall > 0) ? (totalCorrectOverall / totalQuestionsOverall) * 100 : 0;
+            resultsContent += `
+                <h2 style="margin-top: 30px; font-family: 'Inter', sans-serif;">Riepilogo Generale</h2>
+                <p style="font-weight: bold; font-family: 'Inter', sans-serif;">
+                    Punteggio Totale: ${totalCorrectOverall} su ${totalQuestionsOverall} (${overallPercentage.toFixed(2)}%)
+                </p>
+            `;
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>I Miei Risultati</title>');
+            printWindow.document.write('<style>');
+            printWindow.document.write(`
+                body { font-family: 'Inter', sans-serif; margin: 20px; }
+                h1, h2 { color: #1e293b; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+                .correct { color: #10b981; }
+                .incorrect { color: #ef4444; }
+            `);
+            printWindow.document.write('</style></head><body>');
+            printWindow.document.write(resultsContent);
+            printWindow.document.close();
+            printWindow.print(); // Trigger print dialog
+        }
+
+        function resetAllExercises() {
+            resetExercise1_1();
+            resetExercise1_2();
+            resetExercise2_1();
+        }
+
+        // Event Listeners for global buttons
+        checkAllAnswersBtn.addEventListener('click', checkAllExercises);
+        getAllResultsBtn.addEventListener('click', generateAllResultsPDF);
+        resetAllExercisesBtn.addEventListener('click', resetAllExercises);
+
+        // Load all exercises on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadExercise1_1();
+            loadExercise1_2();
+            loadExercise2_1();
+        });
+    </script>
+</body>
+</html>
