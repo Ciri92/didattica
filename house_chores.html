@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Faccende Domestiche</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+        }
+        .container-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .exercise-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .exercise-item label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #334155; /* Slate 700 */
+            text-align: center;
+            width: 100%;
+        }
+        .exercise-item input[type="text"], .exercise-item select {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #cbd5e1; /* Slate 300 */
+            background-color: #ffffff;
+            color: #1e293b; /* Slate 900 */
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .feedback {
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+        .feedback.correct {
+            color: #10b981; /* Emerald 500 */
+        }
+        .feedback.incorrect {
+            color: #ef4444; /* Red 500 */
+        }
+        .button-primary {
+            background-color: #3b82f6; /* Blue 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-primary:hover {
+            background-color: #2563eb; /* Blue 600 */
+        }
+        .button-secondary {
+            background-color: #64748b; /* Slate 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-secondary:hover {
+            background-color: #475569; /* Slate 600 */
+        }
+        .vocabulary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+        .vocabulary-item {
+            background-color: #f0f9ff; /* Sky 50 */
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .vocabulary-item .english-term {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+        .vocabulary-item .italian-translation {
+            font-size: 0.875rem;
+            color: #475569;
+            font-style: italic;
+        }
+        .category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .category-item .category-title {
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+        .category-item select {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-extrabold text-center text-gray-900 mb-8">Le Faccende Domestiche</h1>
+
+        <!-- Sezione Vocabolario -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Vocabolario: Faccende Domestiche</h2>
+            <p class="text-gray-700 leading-relaxed mb-6">
+                Ecco un elenco di faccende domestiche comuni in inglese, con la loro traduzione in italiano.
+            </p>
+            <div class="vocabulary-grid">
+                <div class="vocabulary-item">
+                    <div class="english-term">cook / do the cooking / help in the kitchen</div>
+                    <div class="italian-translation">(cucinare / aiutare in cucina)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">cut the grass / mow the lawn</div>
+                    <div class="italian-translation">(tagliare l'erba)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">do the laundry</div>
+                    <div class="italian-translation">(fare il bucato)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">do the shopping</div>
+                    <div class="italian-translation">(fare la spesa)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">do the washing-up / wash the dishes</div>
+                    <div class="italian-translation">(lavare i piatti)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">dust the furniture</div>
+                    <div class="italian-translation">(spolverare i mobili)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">feed the pet</div>
+                    <div class="italian-translation">(dare da mangiare all'animale domestico)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">hang out the washing</div>
+                    <div class="italian-translation">(stendere il bucato)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">iron / do the ironing</div>
+                    <div class="italian-translation">(stirare / fare la stiratura)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">lay the table</div>
+                    <div class="italian-translation">(apparecchiare la tavola)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">make the bed</div>
+                    <div class="italian-translation">(fare il letto)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">sweep the floor</div>
+                    <div class="italian-translation">(spazzare il pavimento)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">take out the rubbish</div>
+                    <div class="italian-translation">(portare fuori la spazzatura)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">tidy the room</div>
+                    <div class="italian-translation">(mettere in ordine la stanza)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">vacuum</div>
+                    <div class="italian-translation">(passare l'aspirapolvere)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">walk the dog</div>
+                    <div class="italian-translation">(portare a spasso il cane)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">wash the floor</div>
+                    <div class="italian-translation">(lavare il pavimento)</div>
+                </div>
+                <div class="vocabulary-item">
+                    <div class="english-term">water the plants / gardening</div>
+                    <div class="italian-translation">(innaffiare le piante / fare giardinaggio)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Esercizio 1: Traduci in Inglese -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Esercizio 1: Traduci in Inglese</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Traduci le seguenti faccende domestiche dall'italiano all'inglese.
+            </p>
+
+            <div id="exercise1-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Esercizio 2: Completa la tabella per categoria -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Esercizio 2: Categorizza le Faccende</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Abbina ogni faccenda domestica alla categoria più appropriata.
+            </p>
+
+            <div id="exercise2-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Category items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <button id="check-all-answers" class="button-primary">Controlla Tutte le Risposte</button>
+            <button id="get-all-results" class="button-primary">I miei risultati</button>
+            <button id="reset-all-exercises" class="button-secondary">Reset Tutti gli Esercizi</button>
+        </div>
+    </div>
+
+    <script>
+        // Utility function to normalize text for comparison
+        function normalizeAnswer(answer) {
+            return answer.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
+        }
+
+        // --- Vocabulary Data ---
+        const vocabulary = [
+            { en: 'cook / do the cooking / help in the kitchen', it: 'cucinare / aiutare in cucina' },
+            { en: 'cut the grass / mow the lawn', it: 'tagliare l\'erba' },
+            { en: 'do the laundry', it: 'fare il bucato' },
+            { en: 'do the shopping', it: 'fare la spesa' },
+            { en: 'do the washing-up / wash the dishes', it: 'lavare i piatti' },
+            { en: 'dust the furniture', it: 'spolverare i mobili' },
+            { en: 'feed the pet', it: 'dare da mangiare all\'animale domestico' },
+            { en: 'hang out the washing', it: 'stendere il bucato' },
+            { en: 'iron / do the ironing', it: 'stirare / fare la stiratura' },
+            { en: 'lay the table', it: 'apparecchiare la tavola' },
+            { en: 'make the bed', it: 'fare il letto' },
+            { en: 'sweep the floor', it: 'spazzare il pavimento' },
+            { en: 'take out the rubbish', it: 'portare fuori la spazzatura' },
+            { en: 'tidy the room', it: 'mettere in ordine la stanza' },
+            { en: 'vacuum', it: 'passare l\'aspirapolvere' },
+            { en: 'walk the dog', it: 'portare a spasso il cane' },
+            { en: 'wash the floor', it: 'lavare il pavimento' },
+            { en: 'water the plants / gardening', it: 'innaffiare le piante / fare giardinaggio' }
+        ];
+
+        // --- Exercise 1 Data (Translate into English) ---
+        const exercise1Items = [
+            { id: 'e1-1', italian: 'tosare l\'erba', correct: ['cut the grass', 'mow the lawn'] },
+            { id: 'e1-2', italian: 'dare da mangiare agli animali domestici', correct: ['feed the pet'] },
+            { id: 'e1-3', italian: 'apparecchiare la tavola', correct: ['lay the table'] },
+            { id: 'e1-4', italian: 'lavare i piatti', correct: ['do the washing-up', 'wash the dishes'] },
+            { id: 'e1-5', italian: 'fare la spesa', correct: ['do the shopping'] },
+            { id: 'e1-6', italian: 'portare fuori il cane', correct: ['walk the dog'] },
+            { id: 'e1-7', italian: 'fare il bucato', correct: ['do the laundry'] },
+            { id: 'e1-8', italian: 'stirare', correct: ['iron', 'do the ironing'] },
+            { id: 'e1-9', italian: 'spolverare i mobili', correct: ['dust the furniture'] },
+            { id: 'e1-10', italian: 'fare il letto', correct: ['make the bed'] }
+        ];
+        const exercise1Container = document.getElementById('exercise1-container');
+
+        function createExercise1Item(item) {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.innerHTML = `
+                <label for="e1-input-${item.id}">${item.italian}:</label>
+                <input type="text" id="e1-input-${item.id}" placeholder="Scrivi la traduzione in inglese">
+                <div id="e1-feedback-${item.id}" class="feedback text-sm"></div>
+            `;
+            exercise1Container.appendChild(div);
+        }
+
+        function loadExercise1() {
+            exercise1Container.innerHTML = '';
+            exercise1Items.forEach(createExercise1Item);
+        }
+
+        function checkExercise1Answers() {
+            let results = [];
+            exercise1Items.forEach(item => {
+                const inputElement = document.getElementById(`e1-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e1-feedback-${item.id}`);
+                const studentAnswer = normalizeAnswer(inputElement.value);
+                const correctNormalized = item.correct.map(ans => normalizeAnswer(ans));
+
+                const isCorrect = correctNormalized.includes(studentAnswer);
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (inputElement.value.trim() === '') {
+                    feedbackElement.textContent = 'Inserisci una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. Corretto: "${item.correct.join(' o ')}".`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: item.italian,
+                    yourAnswer: inputElement.value.trim() || 'Non risposto',
+                    correctAnswer: item.correct.join(' / '),
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise1() {
+            exercise1Items.forEach(item => {
+                const inputElement = document.getElementById(`e1-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e1-feedback-${item.id}`);
+                inputElement.value = '';
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+        // --- Exercise 2 Data (Categorize) ---
+        const allChoresForDropdown = vocabulary.map(v => v.en); // Use all English terms for dropdown
+        const exercise2Categories = [
+            { id: 'cat-garden', title: 'the garden', correctChores: ['cut the grass / mow the lawn', 'water the plants / gardening'] },
+            { id: 'cat-dinner', title: 'having dinner', correctChores: ['lay the table', 'do the washing-up / wash the dishes', 'cook / do the cooking / help in the kitchen'] },
+            { id: 'cat-pets', title: 'pets', correctChores: ['feed the pet', 'walk the dog'] },
+            { id: 'cat-hygiene', title: 'hygiene (house/clothes)', correctChores: ['do the laundry', 'hang out the washing', 'iron / do the ironing', 'sweep the floor', 'vacuum', 'wash the floor'] },
+            { id: 'cat-tidiness', title: 'tidiness', correctChores: ['dust the furniture', 'make the bed', 'tidy the room', 'take out the rubbish'] }
+        ];
+        const exercise2Container = document.getElementById('exercise2-container');
+
+        function createExercise2Category(category) {
+            const div = document.createElement('div');
+            div.className = 'category-item';
+            div.innerHTML = `
+                <div class="category-title">${category.title}</div>
+                <div id="category-chores-${category.id}"></div>
+                <div id="cat-feedback-${category.id}" class="feedback text-sm"></div>
+            `;
+            exercise2Container.appendChild(div);
+
+            const choresContainer = document.getElementById(`category-chores-${category.id}`);
+            category.correctChores.forEach((_, index) => {
+                const selectId = `select-${category.id}-${index}`;
+                const selectElement = document.createElement('select');
+                selectElement.id = selectId;
+                selectElement.innerHTML = `
+                    <option value="">Seleziona una faccenda</option>
+                    ${allChoresForDropdown.map(chore => `<option value="${chore}">${chore}</option>`).join('')}
+                `;
+                choresContainer.appendChild(selectElement);
+            });
+        }
+
+        function loadExercise2() {
+            exercise2Container.innerHTML = '';
+            exercise2Categories.forEach(createExercise2Category);
+        }
+
+        function checkExercise2Answers() {
+            let results = [];
+            exercise2Categories.forEach(category => {
+                let categoryCorrectCount = 0;
+                let categoryAnswers = [];
+                const feedbackElement = document.getElementById(`cat-feedback-${category.id}`);
+
+                category.correctChores.forEach((correctChore, index) => {
+                    const selectElement = document.getElementById(`select-${category.id}-${index}`);
+                    const selectedValue = selectElement.value;
+                    const isCorrect = (normalizeAnswer(selectedValue) === normalizeAnswer(correctChore));
+
+                    if (isCorrect) {
+                        categoryCorrectCount++;
+                    }
+                    categoryAnswers.push({
+                        your: selectedValue || 'Non selezionato',
+                        correct: correctChore,
+                        isCorrect: isCorrect
+                    });
+                });
+
+                const allCorrectForCategory = (categoryCorrectCount === category.correctChores.length);
+
+                if (allCorrectForCategory) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. Hai ${categoryCorrectCount} su ${category.correctChores.length} corrette.`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+
+                results.push({
+                    category: category.title,
+                    answers: categoryAnswers,
+                    isCategoryCorrect: allCorrectForCategory,
+                    correctCount: categoryCorrectCount,
+                    totalCount: category.correctChores.length
+                });
+            });
+            return results;
+        }
+
+        function resetExercise2() {
+            exercise2Categories.forEach(category => {
+                const feedbackElement = document.getElementById(`cat-feedback-${category.id}`);
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+                category.correctChores.forEach((_, index) => {
+                    const selectElement = document.getElementById(`select-${category.id}-${index}`);
+                    selectElement.value = '';
+                });
+            });
+        }
+
+        // --- Global Functions ---
+        const checkAllAnswersBtn = document.getElementById('check-all-answers');
+        const getAllResultsBtn = document.getElementById('get-all-results');
+        const resetAllExercisesBtn = document.getElementById('reset-all-exercises');
+
+        function checkAllExercises() {
+            checkExercise1Answers();
+            checkExercise2Answers();
+        }
+
+        function generateAllResultsPDF() {
+            const results1 = checkExercise1Answers();
+            const results2 = checkExercise2Answers();
+
+            let totalCorrectOverall = 0;
+            let totalQuestionsOverall = 0;
+
+            let resultsContent = `
+                <h1 style="text-align: center; font-family: 'Inter', sans-serif;">I Miei Risultati - Faccende Domestiche</h1>
+                <p style="font-family: 'Inter', sans-serif;">Data: ${new Date().toLocaleDateString()}</p>
+            `;
+
+            const appendExerciseResults = (title, results, isCategoryExercise = false) => {
+                let correctCount = 0;
+                let totalQuestions = 0;
+
+                resultsContent += `<h2 style="margin-top: 30px; font-family: 'Inter', sans-serif;">${title}</h2>`;
+                resultsContent += `
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-family: 'Inter', sans-serif;">
+                        <thead>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Domanda/Categoria</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">La Tua Risposta</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Risposta Corretta</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Esito</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                if (isCategoryExercise) {
+                    results.forEach(categoryResult => {
+                        resultsContent += `
+                            <tr>
+                                <td colspan="4" style="border: 1px solid #ddd; padding: 8px; background-color: #e2e8f0; font-weight: bold;">${categoryResult.category}</td>
+                            </tr>
+                        `;
+                        categoryResult.answers.forEach(answer => {
+                            if (answer.isCorrect) {
+                                correctCount++;
+                            }
+                            totalQuestions++;
+                            resultsContent += `
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 8px; padding-left: 20px;">- ${answer.correct}</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">${answer.your}</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">${answer.correct}</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px; color: ${answer.isCorrect ? '#10b981' : '#ef4444'}; font-weight: bold;">${answer.isCorrect ? 'Corretto' : 'Sbagliato'}</td>
+                                </tr>
+                            `;
+                        });
+                    });
+                } else {
+                    results.forEach(item => {
+                        if (item.isCorrect) {
+                            correctCount++;
+                        }
+                        totalQuestions++;
+                        resultsContent += `
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 8px;">${item.question}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">${item.yourAnswer}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">${item.correctAnswer}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px; color: ${item.isCorrect ? '#10b981' : '#ef4444'}; font-weight: bold;">${item.isCorrect ? 'Corretto' : 'Sbagliato'}</td>
+                            </tr>
+                        `;
+                    });
+                }
+                
+                resultsContent += `
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 10px; font-weight: bold; font-family: 'Inter', sans-serif;">
+                        Punteggio: ${correctCount} su ${totalQuestions} (${((correctCount / totalQuestions) * 100).toFixed(2)}%)
+                    </p>
+                `;
+                totalCorrectOverall += correctCount;
+                totalQuestionsOverall += totalQuestions;
+            };
+
+            appendExerciseResults("Esercizio 1: Traduci in Inglese", results1);
+            appendExerciseResults("Esercizio 2: Categorizza le Faccende", results2, true);
+
+            const overallPercentage = (totalCorrectOverall / totalQuestionsOverall) * 100;
+            resultsContent += `
+                <h2 style="margin-top: 30px; font-family: 'Inter', sans-serif;">Riepilogo Generale</h2>
+                <p style="font-weight: bold; font-family: 'Inter', sans-serif;">
+                    Punteggio Totale: ${totalCorrectOverall} su ${totalQuestionsOverall} (${overallPercentage.toFixed(2)}%)
+                </p>
+            `;
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>I Miei Risultati</title>');
+            printWindow.document.write('<style>');
+            printWindow.document.write(`
+                body { font-family: 'Inter', sans-serif; margin: 20px; }
+                h1, h2 { color: #1e293b; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+                .correct { color: #10b981; }
+                .incorrect { color: #ef4444; }
+            `);
+            printWindow.document.write('</style></head><body>');
+            printWindow.document.write(resultsContent);
+            printWindow.document.close();
+            printWindow.print(); // Trigger print dialog
+        }
+
+        function resetAllExercises() {
+            resetExercise1();
+            resetExercise2();
+        }
+
+        // Event Listeners for global buttons
+        checkAllAnswersBtn.addEventListener('click', checkAllExercises);
+        getAllResultsBtn.addEventListener('click', generateAllResultsPDF);
+        resetAllExercisesBtn.addEventListener('click', resetAllExercises);
+
+        // Load all exercises on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadExercise1();
+            loadExercise2();
+        });
+    </script>
+</body>
+</html>
