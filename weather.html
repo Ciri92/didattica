@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio sul Tempo Atmosferico</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- html2canvas CDN for converting HTML to canvas/image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* Custom font for a cleaner look */
+        body {
+            font-family: "Inter", sans-serif;
+        }
+        /* Ensure emojis are large enough */
+        .emoji {
+            font-size: 3rem; /* Larger emoji size */
+            line-height: 1; /* Adjust line height for better alignment */
+        }
+        /* Style for input fields */
+        .weather-input {
+            border: 1px solid #d1d5db; /* Light grey border */
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            width: 100%;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .weather-input:focus {
+            outline: none;
+            border-color: #6366f1; /* Indigo focus */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+        .correct-input {
+            border-color: #10b981; /* Green for correct */
+            background-color: #ecfdf5; /* Light green background */
+        }
+        .incorrect-input {
+            border-color: #ef4444; /* Red for incorrect */
+            background-color: #fef2f2; /* Light red background */
+        }
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+        }
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .result-item {
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .play-button {
+            background-color: #a78bfa; /* Purple-ish color */
+            color: white;
+            border: none;
+            border-radius: 0.375rem; /* Rounded corners */
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-right: 0.5rem; /* Space between button and text */
+        }
+        .play-button:hover {
+            background-color: #8b5cf6; /* Darker purple on hover */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div id="exercise-container" class="bg-white rounded-xl shadow-lg p-6 md:p-10 max-w-5xl w-full">
+        <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-8">Il Tempo Atmosferico</h1>
+
+        <!-- Sezione 1: Spiegazione -->
+        <div class="mb-12 p-6 bg-blue-50 rounded-lg shadow-inner">
+            <h2 class="text-2xl font-bold text-blue-700 mb-4 text-center">Come chiedere il tempo atmosferico</h2>
+            <p class="text-gray-800 leading-relaxed">
+                Per chiedere "Che tempo fa?" in inglese, si usa la domanda:
+                <br><strong class="text-indigo-600 text-xl">"What's the weather like?"</strong>
+            </p>
+            <p class="text-gray-800 leading-relaxed mt-4">
+                Per rispondere, si usa solitamente la struttura "It's + aggettivo":
+                <ul class="list-disc list-inside mt-2 text-gray-700">
+                    <li>It's sunny. (È soleggiato.) ☀️</li>
+                    <li>It's rainy. (È piovoso.) 🌧️</li>
+                    <li>It's windy. (È ventoso.) 🌬️</li>
+                    <li>It's cloudy. (È nuvoloso.) ☁️</li>
+                    <li>It's snowy. (È nevoso.) 🌨️</li>
+                    <li>It's foggy. (È nebbioso.) 🌫️</li>
+                    <li>It's hot. (Fa caldo.) 🔥</li>
+                    <li>It's cold. (Fa freddo.) ❄️</li>
+                </ul>
+            </p>
+        </div>
+
+        <!-- Sezione 2: Esercizi -->
+        <div class="space-y-12">
+            <!-- Esercizio 1: Completa le frasi con le emoji -->
+            <div class="p-6 bg-purple-50 rounded-lg shadow-inner">
+                <h2 class="text-2xl font-bold text-purple-700 mb-6 text-center">Esercizio 1: Completa le frasi</h2>
+                <p class="text-gray-800 mb-4">Guarda le emoji e completa le frasi con l'aggettivo corretto del tempo atmosferico.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+                        <span class="emoji">🌬️</span>
+                        <p class="text-lg mt-2">It's <input type="text" class="weather-input mt-1" data-correct="windy" id="ex1-q1"></p>
+                    </div>
+                    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+                        <span class="emoji">☀️</span>
+                        <p class="text-lg mt-2">It's <input type="text" class="weather-input mt-1" data-correct="sunny" id="ex1-q2"></p>
+                    </div>
+                    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+                        <span class="emoji">🌧️</span>
+                        <p class="text-lg mt-2">It's <input type="text" class="weather-input mt-1" data-correct="rainy" id="ex1-q3"></p>
+                    </div>
+                    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+                        <span class="emoji">☁️</span>
+                        <p class="text-lg mt-2">It's <input type="text" class="weather-input mt-1" data-correct="cloudy" id="ex1-q4"></p>
+                    </div>
+                    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+                        <span class="emoji">🌨️</span>
+                        <p class="text-lg mt-2">It's <input type="text" class="weather-input mt-1" data-correct="snowy" id="ex1-q5"></p>
+                    </div>
+                    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+                        <span class="emoji">🌫️</span>
+                        <p class="text-lg mt-2">It's <input type="text" class="weather-input mt-1" data-correct="foggy" id="ex1-q6"></p>
+                    </div>
+                </div>
+                <div class="text-center mt-8">
+                    <button id="checkEx1Btn" class="bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                        Controlla Esercizio 1
+                    </button>
+                </div>
+            </div>
+
+            <!-- Esercizio 2: Completa la tabella (Listening-like) -->
+            <div class="p-6 bg-teal-50 rounded-lg shadow-inner">
+                <h2 class="text-2xl font-bold text-teal-700 mb-6 text-center">Esercizio 2: Il tempo nel mondo</h2>
+                <p class="text-gray-800 mb-4">Clicca sul pulsante "Ascolta" per sentire le descrizioni del tempo atmosferico in diversi paesi e stagioni, poi completa la tabella.</p>
+                <div class="bg-white p-4 rounded-lg shadow-md mb-6">
+                    <h3 class="text-xl font-semibold text-teal-800 mb-3">Descrizioni Audio:</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>
+                            <button class="play-button" data-text="In New York in winter, it's usually very cold and snowy.">▶️ Ascolta</button>
+                            <!-- Testo rimosso per solo ascolto -->
+                            New York (Winter)
+                        </li>
+                        <li>
+                            <button class="play-button" data-text="In Rio de Janeiro in summer, it's hot and sunny.">▶️ Ascolta</button>
+                            <!-- Testo rimosso per solo ascolto -->
+                            Rio de Janeiro (Summer)
+                        </li>
+                        <li>
+                            <button class="play-button" data-text="In London in autumn, it's often cloudy and rainy.">▶️ Ascolta</button>
+                            <!-- Testo rimosso per solo ascolto -->
+                            London (Autumn)
+                        </li>
+                        <li>
+                            <button class="play-button" data-text="In Sydney in spring, it's warm and sometimes windy.">▶️ Ascolta</button>
+                            <!-- Testo rimosso per solo ascolto -->
+                            Sydney (Spring)
+                        </li>
+                        <li>
+                            <button class="play-button" data-text="In Cairo in summer, it's hot and dry.">▶️ Ascolta</button>
+                            <!-- Testo rimosso per solo ascolto -->
+                            Cairo (Summer)
+                        </li>
+                        <li>
+                            <button class="play-button" data-text="In Vancouver in winter, it's cold and rainy, sometimes snowy.">▶️ Ascolta</button>
+                            <!-- Testo rimosso per solo ascolto -->
+                            Vancouver (Winter)
+                        </li>
+                        <li>
+                            <button class="play-button" data-text="In Rome in spring, it's warm and sunny.">▶️ Ascolta</button>
+                            <!-- Testo rimosso per solo ascolto -->
+                            Rome (Spring)
+                        </li>
+                        <li>
+                            <button class="play-button" data-text="In Tokyo in autumn, it's cool and sometimes rainy.">▶️ Ascolta</button>
+                            <!-- Testo rimosso per solo ascolto -->
+                            Tokyo (Autumn)
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-lg shadow-md">
+                        <thead>
+                            <tr class="bg-teal-200 text-teal-900">
+                                <th class="py-3 px-4 text-left font-semibold rounded-tl-lg">Paese</th>
+                                <th class="py-3 px-4 text-left font-semibold">Stagione</th>
+                                <th class="py-3 px-4 text-left font-semibold rounded-tr-lg">Il Tempo (scrivi qui)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-teal-100">
+                                <td class="py-3 px-4">USA (New York)</td>
+                                <td class="py-3 px-4">Winter</td>
+                                <td class="py-3 px-4"><input type="text" class="weather-input" data-correct="cold and snowy" id="ex2-q1"></td>
+                            </tr>
+                            <tr class="border-b border-teal-100">
+                                <td class="py-3 px-4">Brazil (Rio)</td>
+                                <td class="py-3 px-4">Summer</td>
+                                <td class="py-3 px-4"><input type="text" class="weather-input" data-correct="hot and sunny" id="ex2-q2"></td>
+                            </tr>
+                            <tr class="border-b border-teal-100">
+                                <td class="py-3 px-4">UK (London)</td>
+                                <td class="py-3 px-4">Autumn</td>
+                                <td class="py-3 px-4"><input type="text" class="weather-input" data-correct="cloudy and rainy" id="ex2-q3"></td>
+                            </tr>
+                            <tr class="border-b border-teal-100">
+                                <td class="py-3 px-4">Australia (Sydney)</td>
+                                <td class="py-3 px-4">Spring</td>
+                                <td class="py-3 px-4"><input type="text" class="weather-input" data-correct="warm and sometimes windy" id="ex2-q4"></td>
+                            </tr>
+                            <tr class="border-b border-teal-100">
+                                <td class="py-3 px-4">Egypt (Cairo)</td>
+                                <td class="py-3 px-4">Summer</td>
+                                <td class="py-3 px-4"><input type="text" class="weather-input" data-correct="hot and dry" id="ex2-q5"></td>
+                            </tr>
+                            <tr class="border-b border-teal-100">
+                                <td class="py-3 px-4">Canada (Vancouver)</td>
+                                <td class="py-3 px-4">Winter</td>
+                                <td class="py-3 px-4"><input type="text" class="weather-input" data-correct="cold and rainy, sometimes snowy" id="ex2-q6"></td>
+                            </tr>
+                            <tr class="border-b border-teal-100">
+                                <td class="py-3 px-4">Italy (Rome)</td>
+                                <td class="py-3 px-4">Spring</td>
+                                <td class="py-3 px-4"><input type="text" class="weather-input" data-correct="warm and sunny" id="ex2-q7"></td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 rounded-bl-lg">Japan (Tokyo)</td>
+                                <td class="py-3 px-4">Autumn</td>
+                                <td class="py-3 px-4 rounded-br-lg"><input type="text" class="weather-input" data-correct="cool and sometimes rainy" id="ex2-q8"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-8">
+                    <button id="checkEx2Btn" class="bg-teal-700 hover:bg-teal-800 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                        Controlla Esercizio 2
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 text-center">
+            <button id="downloadPdfBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                Scarica i miei risultati (PDF)
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal per i risultati -->
+    <div id="resultsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3 class="text-2xl font-bold text-indigo-700 mb-4">I Tuoi Risultati</h3>
+            <div id="modalDetails" class="text-left text-gray-700"></div>
+            <button onclick="closeModal()" class="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full">Chiudi</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to check answers for a given exercise
+        function checkExercise(exerciseIdPrefix, questions) {
+            let correctCount = 0;
+            let totalQuestions = 0;
+            const results = [];
+
+            questions.forEach(q => {
+                totalQuestions++;
+                const inputElement = document.getElementById(`${exerciseIdPrefix}-q${q.id}`);
+                const userAnswer = inputElement.value.trim().toLowerCase();
+                const correctAnswer = q.correct.toLowerCase();
+
+                let isCorrect = false;
+                // For Exercise 1, exact match is preferred for single word answers
+                if (exerciseIdPrefix === "ex1") {
+                    isCorrect = (userAnswer === correctAnswer);
+                } else { // For Exercise 2, allow for partial matches or keyword presence
+                    // Split correct answer into keywords, filter out common conjunctions/adverbs
+                    const keywords = correctAnswer.split(/[\s,]+/).filter(word => word !== 'and' && word !== 'sometimes' && word !== 'usually' && word !== 'very' && word !== '');
+                    // Check if all keywords from the correct answer are present in the user's answer
+                    isCorrect = keywords.every(keyword => userAnswer.includes(keyword));
+                }
+
+
+                if (isCorrect) {
+                    correctCount++;
+                    inputElement.classList.add('correct-input');
+                    inputElement.classList.remove('incorrect-input');
+                } else {
+                    inputElement.classList.add('incorrect-input');
+                    inputElement.classList.remove('correct-input');
+                }
+
+                results.push({
+                    question: q.questionText || `Domanda ${q.id}`, // Use questionText for Ex2, generic for Ex1
+                    userAnswer: inputElement.value,
+                    correctAnswer: q.correct,
+                    isCorrect: isCorrect
+                });
+            });
+
+            return { correctCount, totalQuestions, results };
+        }
+
+        // Exercise 1 Questions Data
+        const ex1Questions = [
+            { id: 1, correct: "windy" },
+            { id: 2, correct: "sunny" },
+            { id: 3, correct: "rainy" },
+            { id: 4, correct: "cloudy" },
+            { id: 5, correct: "snowy" },
+            { id: 6, correct: "foggy" }
+        ];
+
+        // Exercise 2 Questions Data
+        const ex2Questions = [
+            { id: 1, questionText: "USA (New York) - Winter", correct: "cold and snowy" },
+            { id: 2, questionText: "Brazil (Rio) - Summer", correct: "hot and sunny" },
+            { id: 3, questionText: "UK (London) - Autumn", correct: "cloudy and rainy" },
+            { id: 4, questionText: "Australia (Sydney) - Spring", correct: "warm and sometimes windy" },
+            { id: 5, questionText: "Egypt (Cairo) - Summer", correct: "hot and dry" },
+            { id: 6, questionText: "Canada (Vancouver) - Winter", correct: "cold and rainy, sometimes snowy" },
+            { id: 7, questionText: "Italy (Rome) - Spring", correct: "warm and sunny" },
+            { id: 8, questionText: "Japan (Tokyo) - Autumn", correct: "cool and sometimes rainy" }
+        ];
+
+        // Function to display overall results in modal
+        function displayOverallResults() {
+            const ex1Result = checkExercise("ex1", ex1Questions);
+            const ex2Result = checkExercise("ex2", ex2Questions);
+
+            const totalCorrect = ex1Result.correctCount + ex2Result.correctCount;
+            const totalQuestions = ex1Result.totalQuestions + ex2Result.totalQuestions;
+
+            const modalDetails = document.getElementById('modalDetails');
+            modalDetails.innerHTML = ''; // Clear previous content
+
+            const h4Ex1 = document.createElement('h4');
+            h4Ex1.classList.add('text-lg', 'font-semibold', 'text-purple-700', 'mb-2', 'mt-4');
+            h4Ex1.textContent = `Esercizio 1: ${ex1Result.correctCount}/${ex1Result.totalQuestions} Corretti`;
+            modalDetails.appendChild(h4Ex1);
+
+            ex1Result.results.forEach(res => {
+                const p = document.createElement('p');
+                p.classList.add('result-item', res.isCorrect ? 'text-green-700' : 'text-red-700');
+                p.innerHTML = `Domanda ${res.question.replace('Domanda ', '')}: Hai scritto: <strong>${res.userAnswer || 'Nessuna risposta'}</strong>. Corretto: <strong>${res.correctAnswer}</strong>`;
+                modalDetails.appendChild(p);
+            });
+
+            const h4Ex2 = document.createElement('h4');
+            h4Ex2.classList.add('text-lg', 'font-semibold', 'text-teal-700', 'mb-2', 'mt-4');
+            h4Ex2.textContent = `Esercizio 2: ${ex2Result.correctCount}/${ex2Result.totalQuestions} Corretti`;
+            modalDetails.appendChild(h4Ex2);
+
+            ex2Result.results.forEach(res => {
+                const p = document.createElement('p');
+                p.classList.add('result-item', res.isCorrect ? 'text-green-700' : 'text-red-700');
+                p.innerHTML = `${res.question}: Hai scritto: <strong>${res.userAnswer || 'Nessuna risposta'}</strong>. Corretto: <strong>${res.correctAnswer}</strong>`;
+                modalDetails.appendChild(p);
+            });
+
+            const overallScoreP = document.createElement('p');
+            overallScoreP.classList.add('text-xl', 'font-bold', 'text-indigo-800', 'mt-6');
+            overallScoreP.textContent = `Punteggio Totale: ${totalCorrect} su ${totalQuestions}`;
+            modalDetails.appendChild(overallScoreP);
+
+            openModal();
+        }
+
+        // Modal functions
+        function openModal() {
+            document.getElementById('resultsModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('resultsModal').style.display = 'none';
+        }
+
+        // Function to generate and download PDF
+        async function generatePdf() {
+            const { jsPDF } = window.jspdf;
+            const element = document.getElementById('exercise-container'); // Capture the whole exercise container
+
+            const pdf = new jsPDF('p', 'pt', 'a4'); // 'p' for portrait, 'pt' for points, 'a4' for A4 size
+
+            // Options for html2canvas
+            const options = {
+                scale: 2, // Increase scale for better resolution
+                useCORS: true, // Important for images, though we use emojis
+                windowWidth: element.scrollWidth,
+                windowHeight: element.scrollHeight
+            };
+
+            // Generate canvas from HTML element
+            const canvas = await html2canvas(element, options);
+            const imgData = canvas.toDataURL('image/png');
+
+            const imgWidth = 595; // A4 width in points
+            const pageHeight = 842; // A4 height in points
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            let heightLeft = imgHeight;
+
+            let position = 0;
+
+            // Add image to PDF
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            pdf.save('I_miei_Risultati_Tempo_Atmosferico.pdf');
+        }
+
+        // Speech Synthesis setup
+        const synth = window.speechSynthesis;
+        let currentUtterance = null; // To keep track of the current speech utterance
+
+        function speakText(text) {
+            if (synth.speaking) {
+                synth.cancel(); // Stop any current speech
+            }
+
+            currentUtterance = new SpeechSynthesisUtterance(text);
+            currentUtterance.lang = 'en-US'; // Set language to English for weather descriptions
+            currentUtterance.rate = 0.9; // Slightly slower speech rate for clarity
+
+            synth.speak(currentUtterance);
+        }
+
+        // Attach event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('checkEx1Btn').addEventListener('click', () => checkExercise("ex1", ex1Questions));
+            document.getElementById('checkEx2Btn').addEventListener('click', () => checkExercise("ex2", ex2Questions));
+            document.getElementById('downloadPdfBtn').addEventListener('click', displayOverallResults);
+
+            // Attach click listeners to all play buttons
+            document.querySelectorAll('.play-button').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const textToSpeak = event.target.dataset.text;
+                    if (textToSpeak) {
+                        speakText(textToSpeak);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
