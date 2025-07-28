@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pronuncia della desinenza -ed</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+        }
+        .exercise-input {
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            width: 100%;
+            max-width: 200px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .exercise-input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+        .correct-input {
+            border-color: #10b981;
+            background-color: #ecfdf5;
+        }
+        .incorrect-input {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+        }
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .result-item {
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .play-button {
+            background-color: #a78bfa; /* Purple-ish color */
+            color: white;
+            border: none;
+            border-radius: 0.375rem; /* Rounded corners */
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-left: 0.5rem; /* Space between button and text */
+        }
+        .play-button:hover {
+            background-color: #8b5cf6; /* Darker purple on hover */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div id="page-content" class="bg-white rounded-xl shadow-lg p-6 md:p-10 max-w-5xl w-full">
+        <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-8">Pronuncia della desinenza -ed al Past Simple</h1>
+
+        <!-- Sezione Spiegazione -->
+        <div class="mb-12 p-6 bg-blue-50 rounded-lg shadow-inner">
+            <h2 class="text-2xl font-bold text-blue-700 mb-4 text-center">Come si pronuncia la desinenza -ed</h2>
+            <p class="text-gray-800 leading-relaxed mb-4">
+                La desinenza **-ed** dei verbi regolari al Past Simple e al Past Participle può essere pronunciata in tre modi diversi, a seconda del suono finale del verbo alla forma base (non della lettera!):
+            </p>
+
+            <h3 class="text-xl font-semibold text-blue-600 mb-2">1. Pronuncia /ɪd/ (come "id")</h3>
+            <p class="text-gray-800 leading-relaxed mb-4">
+                Si pronuncia /ɪd/ quando il verbo alla forma base termina con i suoni **/t/** o **/d/**.
+                <ul class="list-disc list-inside mt-2 text-gray-700">
+                    <li>Esempi: `want` → `wanted` /wɒntɪd/, `need` → `needed` /niːdɪd/</li>
+                </ul>
+            </p>
+
+            <h3 class="text-xl font-semibold text-blue-600 mb-2">2. Pronuncia /t/ (come "t")</h3>
+            <p class="text-gray-800 leading-relaxed mb-4">
+                Si pronuncia /t/ quando il verbo alla forma base termina con un **suono sordo** (voiceless sound). Sono suoni prodotti senza la vibrazione delle corde vocali.
+                <ul class="list-disc list-inside mt-2 text-gray-700">
+                    <li>Esempi: `look` → `looked` /lʊkt/ (suono finale /k/), `wash` → `washed` /wɒʃt/ (suono finale /ʃ/)</li>
+                    <li>Altri suoni sordi: /p/, /f/, /s/, /ʃ/, /tʃ/, /k/</li>
+                </ul>
+            </p>
+
+            <h3 class="text-xl font-semibold text-blue-600 mb-2">3. Pronuncia /d/ (come "d")</h3>
+            <p class="text-gray-800 leading-relaxed mb-4">
+                Si pronuncia /d/ quando il verbo alla forma base termina con un **suono sonoro** (voiced sound). Sono suoni prodotti con la vibrazione delle corde vocali.
+                <ul class="list-disc list-inside mt-2 text-gray-700">
+                    <li>Esempi: `play` → `played` /pleɪd/ (suono finale vocale), `love` → `loved` /lʌvd/ (suono finale /v/)</li>
+                    <li>Altri suoni sonori: /b/, /v/, /z/, /ʒ/, /dʒ/, /g/, /m/, /n/, /ŋ/, /l/, /r/, e tutte le vocali.</li>
+                </ul>
+            </p>
+            <p class="text-gray-800 leading-relaxed mt-4 italic">
+                Nota: Le regole di pronuncia si basano sul suono finale del verbo, non sulla sua ortografia.
+            </p>
+        </div>
+
+        <!-- Esercizio -->
+        <div class="mb-12 p-6 bg-purple-50 rounded-lg shadow-inner">
+            <h2 class="text-2xl font-bold text-purple-700 mb-6 text-center">Esercizio: Past Simple e Pronuncia -ed</h2>
+            <p class="text-gray-800 mb-4 text-center">
+                Ascolta il verbo, scrivi la sua forma al Past Simple e scegli la pronuncia corretta della desinenza -ed.
+            </p>
+            <div id="exercise-area" class="text-center">
+                <p class="text-3xl font-bold text-indigo-800 mb-4 flex items-center justify-center">
+                    <span id="current-verb"></span>
+                    <button class="play-button ml-4" id="play-verb-btn">▶️ Ascolta</button>
+                </p>
+                <input type="text" class="exercise-input text-lg text-center mb-4" id="past-simple-answer" placeholder="Past Simple">
+
+                <div class="flex flex-col items-center mb-4">
+                    <p class="text-lg font-semibold mb-2">Pronuncia della desinenza -ed:</p>
+                    <div class="flex space-x-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" class="form-radio text-indigo-600" name="pronunciation" value="/ɪd/" id="pron-id">
+                            <span class="ml-2 text-lg">/ɪd/</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" class="form-radio text-indigo-600" name="pronunciation" value="/t/" id="pron-t">
+                            <span class="ml-2 text-lg">/t/</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" class="form-radio text-indigo-600" name="pronunciation" value="/d/" id="pron-d">
+                            <span class="ml-2 text-lg">/d/</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-300 ease-in-out" id="check-btn">Verifica</button>
+                <p id="feedback" class="mt-2 text-lg font-semibold"></p>
+                <p id="progress" class="mt-4 text-gray-600"></p>
+                <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-300 ease-in-out mt-4 hidden" id="reset-btn">Ricominciada zero</button>
+            </div>
+        </div>
+
+        <div class="mt-10 text-center">
+            <button id="downloadPdfBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                Scarica i miei risultati (PDF)
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal per i risultati -->
+    <div id="resultsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3 class="text-2xl font-bold text-indigo-700 mb-4">I Tuoi Risultati</h3>
+            <div id="modalDetails" class="text-left text-gray-700"></div>
+            <button onclick="closeModal()" class="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full">Chiudi</button>
+        </div>
+    </div>
+
+    <script>
+        // Lista di verbi regolari con la loro pronuncia -ed
+        const regularVerbs = [
+            { present: "want", pastSimple: "wanted", pronunciation: "/ɪd/" },
+            { present: "need", pastSimple: "needed", pronunciation: "/ɪd/" },
+            { present: "start", pastSimple: "started", pronunciation: "/ɪd/" },
+            { present: "decide", pastSimple: "decided", pronunciation: "/ɪd/" },
+            { present: "wait", pastSimple: "waited", pronunciation: "/ɪd/" },
+
+            { present: "look", pastSimple: "looked", pronunciation: "/t/" },
+            { present: "wash", pastSimple: "washed", pronunciation: "/t/" },
+            { present: "stop", pastSimple: "stopped", pronunciation: "/t/" },
+            { present: "watch", pastSimple: "watched", pronunciation: "/t/" },
+            { present: "dance", pastSimple: "danced", pronunciation: "/t/" },
+            { present: "finish", pastSimple: "finished", pronunciation: "/t/" },
+            { present: "ask", pastSimple: "asked", pronunciation: "/t/" },
+            { present: "help", pastSimple: "helped", pronunciation: "/t/" },
+            { present: "work", pastSimple: "worked", pronunciation: "/t/" },
+            { present: "kiss", pastSimple: "kissed", pronunciation: "/t/" },
+
+            { present: "play", pastSimple: "played", pronunciation: "/d/" },
+            { present: "love", pastSimple: "loved", pronunciation: "/d/" },
+            { present: "live", pastSimple: "lived", pronunciation: "/d/" },
+            { present: "clean", pastSimple: "cleaned", pronunciation: "/d/" },
+            { present: "call", pastSimple: "called", pronunciation: "/d/" },
+            { present: "open", pastSimple: "opened", pronunciation: "/d/" },
+            { present: "arrive", pastSimple: "arrived", pronunciation: "/d/" },
+            { present: "enjoy", pastSimple: "enjoyed", pronunciation: "/d/" },
+            { present: "travel", pastSimple: "travelled", pronunciation: "/d/" },
+            { present: "listen", pastSimple: "listened", pronunciation: "/d/" }
+        ];
+
+        let remainingVerbs = [...regularVerbs];
+        let currentVerb = null;
+        const exerciseResults = {}; // Stores {presentForm: {userPastSimple: '', userPronunciation: '', isCorrectPastSimple: bool, isCorrectPronunciation: bool, correctPastSimple: '', correctPronunciation: ''}}
+
+        const currentVerbDisplay = document.getElementById('current-verb');
+        const pastSimpleInput = document.getElementById('past-simple-answer');
+        const pronunciationRadios = document.querySelectorAll('input[name="pronunciation"]');
+        const checkBtn = document.getElementById('check-btn');
+        const feedbackDisplay = document.getElementById('feedback');
+        const progressDisplay = document.getElementById('progress');
+        const resetBtn = document.getElementById('reset-btn');
+        const playVerbBtn = document.getElementById('play-verb-btn');
+
+        const synth = window.speechSynthesis;
+        let currentUtterance = null;
+
+        function speakText(text) {
+            if (synth.speaking) {
+                synth.cancel();
+            }
+            currentUtterance = new SpeechSynthesisUtterance(text);
+            currentUtterance.lang = 'en-US'; // Ensure English pronunciation
+            currentUtterance.rate = 0.9;
+            synth.speak(currentUtterance);
+        }
+
+        function displayNextVerb() {
+            if (remainingVerbs.length === 0) {
+                currentVerbDisplay.textContent = "Hai indovinato tutti i verbi! Complimenti!";
+                pastSimpleInput.disabled = true;
+                pronunciationRadios.forEach(radio => radio.disabled = true);
+                checkBtn.disabled = true;
+                checkBtn.classList.add('hidden');
+                resetBtn.classList.remove('hidden');
+                playVerbBtn.disabled = true;
+                feedbackDisplay.textContent = "Completato!";
+                updateProgress();
+                return;
+            }
+
+            const randomIndex = Math.floor(Math.random() * remainingVerbs.length);
+            currentVerb = remainingVerbs[randomIndex];
+            currentVerbDisplay.textContent = currentVerb.present;
+            pastSimpleInput.value = '';
+            pastSimpleInput.classList.remove('correct-input', 'incorrect-input');
+            pronunciationRadios.forEach(radio => {
+                radio.checked = false;
+                radio.closest('label').classList.remove('correct-input', 'incorrect-input'); // Clear visual feedback on labels
+            });
+            feedbackDisplay.textContent = '';
+            updateProgress();
+        }
+
+        function checkAnswer() {
+            if (!currentVerb) return;
+
+            const userPastSimple = pastSimpleInput.value.trim().toLowerCase();
+            const userPronunciation = document.querySelector('input[name="pronunciation"]:checked')?.value;
+
+            const isPastSimpleCorrect = (userPastSimple === currentVerb.pastSimple.toLowerCase());
+            const isPronunciationCorrect = (userPronunciation === currentVerb.pronunciation);
+
+            // Store results for PDF
+            exerciseResults[currentVerb.present] = {
+                userPastSimple: userPastSimple,
+                userPronunciation: userPronunciation || 'Nessuna scelta',
+                isCorrectPastSimple: isPastSimpleCorrect,
+                isCorrectPronunciation: isPronunciationCorrect,
+                correctPastSimple: currentVerb.pastSimple,
+                correctPronunciation: currentVerb.pronunciation
+            };
+
+            // Apply visual feedback to input
+            if (isPastSimpleCorrect) {
+                pastSimpleInput.classList.add('correct-input');
+                pastSimpleInput.classList.remove('incorrect-input');
+            } else {
+                pastSimpleInput.classList.add('incorrect-input');
+                pastSimpleInput.classList.remove('correct-input');
+            }
+
+            // Apply visual feedback to radio buttons
+            pronunciationRadios.forEach(radio => {
+                const label = radio.closest('label');
+                if (radio.value === currentVerb.pronunciation) {
+                    label.classList.add('correct-input');
+                    label.classList.remove('incorrect-input');
+                } else if (radio.checked) {
+                    label.classList.add('incorrect-input');
+                    label.classList.remove('correct-input');
+                } else {
+                    label.classList.remove('correct-input', 'incorrect-input');
+                }
+            });
+
+
+            if (isPastSimpleCorrect && isPronunciationCorrect) {
+                feedbackDisplay.textContent = "Corretto! ✅";
+                remainingVerbs = remainingVerbs.filter(v => v.present !== currentVerb.present);
+                setTimeout(displayNextVerb, 1000);
+            } else {
+                let msg = "Sbagliato. Riprova! ❌";
+                if (!isPastSimpleCorrect) {
+                    msg += ` Past Simple corretto: '${currentVerb.pastSimple}'.`;
+                }
+                if (!isPronunciationCorrect) {
+                    msg += ` Pronuncia corretta: '${currentVerb.pronunciation}'.`;
+                }
+                feedbackDisplay.textContent = msg;
+            }
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const total = regularVerbs.length;
+            const remaining = remainingVerbs.length;
+            progressDisplay.textContent = `Verbi indovinati: ${total - remaining} / ${total}`;
+        }
+
+        function resetExercise() {
+            remainingVerbs = [...regularVerbs];
+            pastSimpleInput.disabled = false;
+            pronunciationRadios.forEach(radio => radio.disabled = false);
+            checkBtn.disabled = false;
+            checkBtn.classList.remove('hidden');
+            resetBtn.classList.add('hidden');
+            playVerbBtn.disabled = false;
+            exerciseResults = {}; // Clear results
+            displayNextVerb();
+        }
+
+        // --- Overall Results / PDF Download Logic ---
+        function displayOverallResults() {
+            const modalDetails = document.getElementById('modalDetails');
+            modalDetails.innerHTML = '';
+
+            const correctCount = Object.values(exerciseResults).filter(res => res.isCorrectPastSimple && res.isCorrectPronunciation).length;
+            const totalCount = regularVerbs.length;
+
+            const h4 = document.createElement('h4');
+            h4.classList.add('text-lg', 'font-semibold', 'text-purple-700', 'mb-2', 'mt-4');
+            h4.textContent = `Risultati Esercizio: ${correctCount}/${totalCount} Corretti`;
+            modalDetails.appendChild(h4);
+
+            for (const presentForm in exerciseResults) {
+                const res = exerciseResults[presentForm];
+                const p = document.createElement('p');
+                p.classList.add('result-item', (res.isCorrectPastSimple && res.isCorrectPronunciation) ? 'text-green-700' : 'text-red-700');
+                p.innerHTML = `Verbo '${presentForm}':<br>
+                                Past Simple: <strong>${res.userPastSimple}</strong> ${res.isCorrectPastSimple ? '✅' : '❌'} (Corretto: ${res.correctPastSimple})<br>
+                                Pronuncia: <strong>${res.userPronunciation}</strong> ${res.isCorrectPronunciation ? '✅' : '❌'} (Corretto: ${res.correctPronunciation})`;
+                modalDetails.appendChild(p);
+            }
+
+            openModal();
+        }
+
+        // Modal functions
+        function openModal() {
+            document.getElementById('resultsModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('resultsModal').style.display = 'none';
+        }
+
+        // PDF Generation
+        async function generatePdf() {
+            const { jsPDF } = window.jspdf;
+            const element = document.getElementById('page-content');
+
+            const pdf = new jsPDF('p', 'pt', 'a4');
+            const options = {
+                scale: 2,
+                useCORS: true,
+                windowWidth: element.scrollWidth,
+                windowHeight: element.scrollHeight
+            };
+
+            const canvas = await html2canvas(element, options);
+            const imgData = canvas.toDataURL('image/png');
+
+            const imgWidth = 595;
+            const pageHeight = 842;
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            let heightLeft = imgHeight;
+            let position = 0;
+
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            pdf.save('I_miei_Risultati_Pronuncia_ED.pdf');
+        }
+
+        // --- Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            checkBtn.addEventListener('click', checkAnswer);
+            pastSimpleInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') checkAnswer();
+            });
+            pronunciationRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    // Optional: auto-check when radio is selected if input is also filled
+                    if (pastSimpleInput.value.trim() !== '') {
+                        // checkAnswer(); // Could auto-check, but user might want to review
+                    }
+                });
+            });
+            resetBtn.addEventListener('click', resetExercise);
+            playVerbBtn.addEventListener('click', () => speakText(currentVerb.present));
+            
+            document.getElementById('downloadPdfBtn').addEventListener('click', displayOverallResults);
+
+            displayNextVerb(); // Start the exercise
+        });
+    </script>
+</body>
+</html>
