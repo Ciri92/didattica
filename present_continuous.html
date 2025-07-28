@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Present Continuous: Riepilogo ed Esercizi</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- html2canvas CDN for converting HTML to canvas/image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* Custom font for a cleaner look */
+        body {
+            font-family: "Inter", sans-serif;
+        }
+        /* Style for input fields */
+        .exercise-input {
+            border: 1px solid #d1d5db; /* Light grey border */
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            width: 100%;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .exercise-input:focus {
+            outline: none;
+            border-color: #6366f1; /* Indigo focus */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+        .correct-input {
+            border-color: #10b981; /* Green for correct */
+            background-color: #ecfdf5; /* Light green background */
+        }
+        .incorrect-input {
+            border-color: #ef4444; /* Red for incorrect */
+            background-color: #fef2f2; /* Light red background */
+        }
+        /* Emoji styling for exercises */
+        .emoji-large {
+            font-size: 4rem; /* Larger emojis for visual exercises */
+            line-height: 1;
+        }
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+        }
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .result-item {
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div id="exercise-container" class="bg-white rounded-xl shadow-lg p-6 md:p-10 max-w-5xl w-full">
+        <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-8">Present Continuous: Riepilogo ed Esercizi</h1>
+
+        <!-- Sezione Riepilogo -->
+        <div class="mb-12 p-6 bg-blue-50 rounded-lg shadow-inner">
+            <h2 class="text-2xl font-bold text-blue-700 mb-4 text-center">Come si forma il Present Continuous</h2>
+            <p class="text-gray-800 leading-relaxed mb-4">
+                Il Present Continuous (o Present Progressive) si usa per descrivere azioni che si stanno svolgendo nel momento in cui si parla, o azioni temporanee.
+            </p>
+
+            <h3 class="text-xl font-semibold text-blue-600 mb-2">Forma Affermativa:</h3>
+            <div class="overflow-x-auto mb-4">
+                <table class="min-w-full bg-white rounded-lg shadow">
+                    <thead>
+                        <tr class="bg-blue-200 text-blue-800">
+                            <th class="py-2 px-4 text-left">Soggetto + am/are/is</th>
+                            <th class="py-2 px-4 text-left">+ verbo in -ing</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">I am (I'm)</td><td class="py-2 px-4">playing.</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">You are (You're)</td><td class="py-2 px-4">playing.</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">He is (He's)</td><td class="py-2 px-4">playing.</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">She is (She's)</td><td class="py-2 px-4">playing.</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">It is (It's)</td><td class="py-2 px-4">playing.</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">We are (We're)</td><td class="py-2 px-4">playing.</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">They are (They're)</td><td class="py-2 px-4">playing.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-gray-800 leading-relaxed mb-4">
+                Si ottiene aggiungendo <strong>am/are/is</strong> al verbo principale nella forma <strong>-ing</strong>.
+                <br>La forma contratta è usata nel linguaggio informale.
+            </p>
+
+            <h3 class="text-xl font-semibold text-blue-600 mb-2">Forma Negativa:</h3>
+            <div class="overflow-x-auto mb-4">
+                <table class="min-w-full bg-white rounded-lg shadow">
+                    <thead>
+                        <tr class="bg-blue-200 text-blue-800">
+                            <th class="py-2 px-4 text-left">Soggetto + am/are/is + not</th>
+                            <th class="py-2 px-4 text-left">+ verbo in -ing</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">I am not (I'm not)</td><td class="py-2 px-4">playing.</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">You are not (You aren't)</td><td class="py-2 px-4">playing.</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">He is not (He isn't)</td><td class="py-2 px-4">playing.</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">She is not (She isn't)</td><td class="py-2 px-4">playing.</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">It is not (It isn't)</td><td class="py-2 px-4">playing.</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">We are not (We aren't)</td><td class="py-2 px-4">playing.</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">They are not (They aren't)</td><td class="py-2 px-4">playing.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-gray-800 leading-relaxed mb-4">
+                La forma negativa si ottiene inserendo <strong>not</strong> tra <strong>am/are/is</strong> e il verbo principale in <strong>-ing</strong>.
+            </p>
+
+            <h3 class="text-xl font-semibold text-blue-600 mb-2">Forma Interrogativa:</h3>
+            <div class="overflow-x-auto mb-4">
+                <table class="min-w-full bg-white rounded-lg shadow">
+                    <thead>
+                        <tr class="bg-blue-200 text-blue-800">
+                            <th class="py-2 px-4 text-left">Am/Are/Is + soggetto</th>
+                            <th class="py-2 px-4 text-left">+ verbo in -ing</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">Am I</td><td class="py-2 px-4">playing?</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">Are you</td><td class="py-2 px-4">playing?</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">Is he</td><td class="py-2 px-4">playing?</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">Is she</td><td class="py-2 px-4">playing?</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">Is it</td><td class="py-2 px-4">playing?</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">Are we</td><td class="py-2 px-4">playing?</td></tr>
+                        <tr class="border-b border-blue-100"><td class="py-2 px-4">Are they</td><td class="py-2 px-4">playing?</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-gray-800 leading-relaxed mb-4">
+                La forma interrogativa si ottiene invertendo la posizione di <strong>am/are/is</strong> e il soggetto.
+            </p>
+
+            <h3 class="text-xl font-semibold text-blue-600 mb-2">Regole per la -ing form:</h3>
+            <ul class="list-disc list-inside mt-2 text-gray-700">
+                <li>La maggior parte dei verbi: aggiungi <strong>-ing</strong> (es. `play` -> `playing`).</li>
+                <li>Verbi che finiscono per -e muta: togli la -e e aggiungi <strong>-ing</strong> (es. `make` -> `making`).</li>
+                <li>Verbi che finiscono per vocale + consonante (e sono monosillabici o l'accento cade sull'ultima sillaba): raddoppia la consonante finale e aggiungi <strong>-ing</strong> (es. `run` -> `running`).</li>
+                <li>Verbi che finiscono per -ie: cambia -ie in -y e aggiungi <strong>-ing</strong> (es. `lie` -> `lying`).</li>
+            </ul>
+        </div>
+
+        <!-- Sezione Esercizi -->
+        <div class="space-y-12">
+            <!-- Esercizio 1: Scrivi la -ing form -->
+            <div class="p-6 bg-purple-50 rounded-lg shadow-inner">
+                <h2 class="text-2xl font-bold text-purple-700 mb-6 text-center">Esercizio 1: La -ing form</h2>
+                <p class="text-gray-800 mb-4">Scrivi la forma -ing dei seguenti verbi.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold">1. study:</span> <input type="text" class="exercise-input" data-correct="studying" id="ex1-q1">
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold">2. go:</span> <input type="text" class="exercise-input" data-correct="going" id="ex1-q2">
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold">3. finish:</span> <input type="text" class="exercise-input" data-correct="finishing" id="ex1-q3">
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold">4. come:</span> <input type="text" class="exercise-input" data-correct="coming" id="ex1-q4">
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold">5. meet:</span> <input type="text" class="exercise-input" data-correct="meeting" id="ex1-q5">
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold">6. say:</span> <input type="text" class="exercise-input" data-correct="saying" id="ex1-q6">
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold">7. tidy:</span> <input type="text" class="exercise-input" data-correct="tidying" id="ex1-q7">
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold">8. make:</span> <input type="text" class="exercise-input" data-correct="making" id="ex1-q8">
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold">9. chat:</span> <input type="text" class="exercise-input" data-correct="chatting" id="ex1-q9">
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold">10. answer:</span> <input type="text" class="exercise-input" data-correct="answering" id="ex1-q10">
+                    </div>
+                </div>
+                <div class="text-center mt-8">
+                    <button id="checkEx1Btn" class="bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                        Controlla Esercizio 1
+                    </button>
+                </div>
+            </div>
+
+            <!-- Esercizio 2: Completa le frasi (Fill-in-the-blanks) -->
+            <div class="p-6 bg-yellow-50 rounded-lg shadow-inner">
+                <h2 class="text-2xl font-bold text-yellow-700 mb-6 text-center">Esercizio 2: Completa con il Present Continuous</h2>
+                <p class="text-gray-800 mb-4">Completa le frasi usando il Present Continuous dei verbi tra parentesi.</p>
+                <div class="space-y-4">
+                    <p class="flex items-center"><span class="font-bold mr-2">1.</span> He <input type="text" class="exercise-input w-40 mx-2" data-correct="is washing" id="ex2-q1"> his hair. (wash)</p>
+                    <p class="flex items-center"><span class="font-bold mr-2">2.</span> They <input type="text" class="exercise-input w-40 mx-2" data-correct="are running" id="ex2-q2"> in the mountains. (run)</p>
+                    <p class="flex items-center"><span class="font-bold mr-2">3.</span> She <input type="text" class="exercise-input w-40 mx-2" data-correct="is learning" id="ex2-q3"> English. (learn)</p>
+                    <p class="flex items-center"><span class="font-bold mr-2">4.</span> We <input type="text" class="exercise-input w-40 mx-2" data-correct="are having" id="ex2-q4"> fun on this holiday. (have)</p>
+                    <p class="flex items-center"><span class="font-bold mr-2">5.</span> I <input type="text" class="exercise-input w-40 mx-2" data-correct="am doing" id="ex2-q5"> my homework. (do)</p>
+                    <p class="flex items-center"><span class="font-bold mr-2">6.</span> The students <input type="text" class="exercise-input w-40 mx-2" data-correct="are paying" id="ex2-q6"> attention. (pay)</p>
+                    <p class="flex items-center"><span class="font-bold mr-2">7.</span> Mum <input type="text" class="exercise-input w-40 mx-2" data-correct="is making" id="ex2-q7"> dinner. (make)</p>
+                    <p class="flex items-center"><span class="font-bold mr-2">8.</span> You <input type="text" class="exercise-input w-40 mx-2" data-correct="are listening" id="ex2-q8"> to me. (listen)</p>
+                </div>
+                <div class="text-center mt-8">
+                    <button id="checkEx2Btn" class="bg-yellow-700 hover:bg-yellow-800 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                        Controlla Esercizio 2
+                    </button>
+                </div>
+            </div>
+
+            <!-- Esercizio 3: Frasi Negative -->
+            <div class="p-6 bg-red-50 rounded-lg shadow-inner">
+                <h2 class="text-2xl font-bold text-red-700 mb-6 text-center">Esercizio 3: Scrivi le frasi in forma negativa</h2>
+                <p class="text-gray-800 mb-4">Riscrivi le seguenti frasi in forma negativa.</p>
+                <div class="space-y-4">
+                    <p class="flex items-center"><span class="font-bold mr-2">1.</span> They are doing a test. <input type="text" class="exercise-input w-full mx-2" data-correct="They aren't doing a test." id="ex3-q1"></p>
+                    <p class="flex items-center"><span class="font-bold mr-2">2.</span> It is raining today. <input type="text" class="exercise-input w-full mx-2" data-correct="It isn't raining today." id="ex3-q2"></p>
+                    <p class="flex items-center"><span class="font-bold mr-2">3.</span> We are having fun. <input type="text" class="exercise-input w-full mx-2" data-correct="We aren't having fun." id="ex3-q3"></p>
+                    <p class="flex items-center"><span class="font-bold mr-2">4.</span> She is writing a message. <input type="text" class="exercise-input w-full mx-2" data-correct="She isn't writing a message." id="ex3-q4"></p>
+                    <p class="flex items-center"><span class="font-bold mr-2">5.</span> You are eating an ice cream. <input type="text" class="exercise-input w-full mx-2" data-correct="You aren't eating an ice cream." id="ex3-q5"></p>
+                </div>
+                <div class="text-center mt-8">
+                    <button id="checkEx3Btn" class="bg-red-700 hover:bg-red-800 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                        Controlla Esercizio 3
+                    </button>
+                </div>
+            </div>
+
+            <!-- Esercizio 4: Traduci in inglese -->
+            <div class="p-6 bg-green-50 rounded-lg shadow-inner">
+                <h2 class="text-2xl font-bold text-green-700 mb-6 text-center">Esercizio 4: Traduci</h2>
+                <p class="text-gray-800 mb-4">Traduci le seguenti frasi in inglese.</p>
+                <div class="space-y-4">
+                    <p class="flex items-center"><span class="font-bold mr-2">1.</span> Jim sta andando a scuola. <input type="text" class="exercise-input w-full mx-2" data-correct="Jim is going to school." id="ex4-q1"></p>
+                    <p class="flex items-center"><span class="font-bold mr-2">2.</span> Sta nevicando. <input type="text" class="exercise-input w-full mx-2" data-correct="It is snowing." id="ex4-q2"></p>
+                    <p class="flex items-center"><span class="font-bold mr-2">3.</span> Luke sta facendo windsurf. <input type="text" class="exercise-input w-full mx-2" data-correct="Luke is windsurfing." id="ex4-q3"></p>
+                    <p class="flex items-center"><span class="font-bold mr-2">4.</span> Stanno facendo colazione. <input type="text" class="exercise-input w-full mx-2" data-correct="They are having breakfast." id="ex4-q4"></p>
+                    <p class="flex items-center"><span class="font-bold mr-2">5.</span> Sta piovendo. <input type="text" class="exercise-input w-full mx-2" data-correct="It is raining." id="ex4-q5"></p>
+                    <p class="flex items-center"><span class="font-bold mr-2">6.</span> Stanno dormendo. <input type="text" class="exercise-input w-full mx-2" data-correct="They are sleeping." id="ex4-q6"></p>
+                    <p class="flex items-center"><span class="font-bold mr-2">7.</span> (Lui) sta studiando. <input type="text" class="exercise-input w-full mx-2" data-correct="He is studying." id="ex4-q7"></p>
+                    <p class="flex items-center"><span class="font-bold mr-2">8.</span> (Lei) sta nuotando. <input type="text" class="exercise-input w-full mx-2" data-correct="She is swimming." id="ex4-q8"></p>
+                </div>
+                <div class="text-center mt-8">
+                    <button id="checkEx4Btn" class="bg-green-700 hover:bg-green-800 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                        Controlla Esercizio 4
+                    </button>
+                </div>
+            </div>
+
+            <!-- Esercizio 5: Descrivi le immagini (Emoji) -->
+            <div class="p-6 bg-blue-50 rounded-lg shadow-inner">
+                <h2 class="text-2xl font-bold text-blue-700 mb-6 text-center">Esercizio 5: Descrivi le azioni</h2>
+                <p class="text-gray-800 mb-4">Guarda le emoji e scrivi una frase che descrive l'azione usando il Present Continuous.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+                        <span class="emoji-large">😴</span>
+                        <p class="text-lg mt-2"><input type="text" class="exercise-input mt-1" data-correct="He is sleeping." id="ex5-q1"></p>
+                    </div>
+                    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+                        <span class="emoji-large">🎾🏖️</span>
+                        <p class="text-lg mt-2"><input type="text" class="exercise-input mt-1" data-correct="They are playing beach tennis." id="ex5-q2"></p>
+                    </div>
+                    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+                        <span class="emoji-large">📞👭</span>
+                        <p class="text-lg mt-2"><input type="text" class="exercise-input mt-1" data-correct="She is calling a friend." id="ex5-q3"></p>
+                    </div>
+                    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+                        <span class="emoji-large">👩‍👧‍👦🧼</span>
+                        <p class="text-lg mt-2"><input type="text" class="exercise-input mt-1" data-correct="He is helping his mother." id="ex5-q4"></p>
+                    </div>
+                    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+                        <span class="emoji-large">📺</span>
+                        <p class="text-lg mt-2"><input type="text" class="exercise-input mt-1" data-correct="They are watching TV." id="ex5-q5"></p>
+                    </div>
+                    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+                        <span class="emoji-large">🤿🐠</span>
+                        <p class="text-lg mt-2"><input type="text" class="exercise-input mt-1" data-correct="She is scuba diving." id="ex5-q6"></p>
+                    </div>
+                    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+                        <span class="emoji-large">🏃‍♂️</span>
+                        <p class="text-lg mt-2"><input type="text" class="exercise-input mt-1" data-correct="They are running." id="ex5-q7"></p>
+                    </div>
+                    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+                        <span class="emoji-large">🏫🎒</span>
+                        <p class="text-lg mt-2"><input type="text" class="exercise-input mt-1" data-correct="She is going to school." id="ex5-q8"></p>
+                    </div>
+                </div>
+                <div class="text-center mt-8">
+                    <button id="checkEx5Btn" class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                        Controlla Esercizio 5
+                    </button>
+                </div>
+            </div>
+
+            <!-- Esercizio 6: Present Simple vs Present Continuous -->
+            <div class="p-6 bg-gray-100 rounded-lg shadow-inner">
+                <h2 class="text-2xl font-bold text-gray-700 mb-6 text-center">Esercizio 6: Present Simple vs Present Continuous</h2>
+                <p class="text-gray-800 mb-4">Completa le frasi usando la forma corretta del Present Simple o Present Continuous dei verbi tra parentesi.</p>
+                <div class="space-y-4">
+                    <p class="flex items-center"><span class="font-bold mr-2">1.</span> It's a beautiful day today. The sun <input type="text" class="exercise-input w-40 mx-2" data-correct="is shining" id="ex6-q1"> and the birds <input type="text" class="exercise-input w-40 mx-2" data-correct="are singing" id="ex6-q2">. (shine / sing)</p>
+                    <p class="flex items-center"><span class="font-bold mr-2">2.</span> Ron is a taxi driver. At the moment he <input type="text" class="exercise-input w-40 mx-2" data-correct="is driving" id="ex6-q3"> a customer to the airport. (drive)</p>
+                    <p class="flex items-center"><span class="font-bold mr-2">3.</span> Oh no! It <input type="text" class="exercise-input w-40 mx-2" data-correct="is raining" id="ex6-q4"> again. (rain)</p>
+                    <p class="flex items-center"><span class="font-bold mr-2">4.</span> Mum: "Where's Nicole?" B: She <input type="text" class="exercise-input w-40 mx-2" data-correct="is sitting" id="ex6-q5"> in the garden. (sit)</p>
+                    <p class="flex items-center"><span class="font-bold mr-2">5.</span> Rachel always <input type="text" class="exercise-input w-40 mx-2" data-correct="gets" id="ex6-q6"> good marks in her tests. (get)</p>
+                    <p class="flex items-center"><span class="font-bold mr-2">6.</span> Nathaly's mum usually <input type="text" class="exercise-input w-40 mx-2" data-correct="washes" id="ex6-q7"> the dishes, but today Nathaly <input type="text" class="exercise-input w-40 mx-2" data-correct="is washing" id="ex6-q8"> them. (wash)</p>
+                    <p class="flex items-center"><span class="font-bold mr-2">7.</span> I never <input type="text" class="exercise-input w-40 mx-2" data-correct="eat" id="ex6-q9"> carrots. I <input type="text" class="exercise-input w-40 mx-2" data-correct="don't like" id="ex6-q10"> them. (eat / not like)</p>
+                </div>
+                <div class="text-center mt-8">
+                    <button id="checkEx6Btn" class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                        Controlla Esercizio 6
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 text-center">
+            <button id="downloadPdfBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                Scarica i miei risultati (PDF)
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal per i risultati -->
+    <div id="resultsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3 class="text-2xl font-bold text-indigo-700 mb-4">I Tuoi Risultati</h3>
+            <div id="modalDetails" class="text-left text-gray-700"></div>
+            <button onclick="closeModal()" class="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full">Chiudi</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to check answers for a given exercise
+        function checkExercise(exerciseIdPrefix, questions) {
+            let correctCount = 0;
+            let totalQuestions = 0;
+            const results = [];
+
+            questions.forEach(q => {
+                totalQuestions++;
+                const inputElement = document.getElementById(`${exerciseIdPrefix}-q${q.id}`);
+                const userAnswer = inputElement.value.trim().toLowerCase();
+                const correctAnswer = q.correct.toLowerCase();
+
+                let isCorrect = (userAnswer === correctAnswer); // Exact match for most exercises
+
+                if (isCorrect) {
+                    correctCount++;
+                    inputElement.classList.add('correct-input');
+                    inputElement.classList.remove('incorrect-input');
+                } else {
+                    inputElement.classList.add('incorrect-input');
+                    inputElement.classList.remove('correct-input');
+                }
+
+                results.push({
+                    question: q.questionText || `Domanda ${q.id}`,
+                    userAnswer: inputElement.value,
+                    correctAnswer: q.correct,
+                    isCorrect: isCorrect
+                });
+            });
+
+            return { correctCount, totalQuestions, results };
+        }
+
+        // --- Exercise Data ---
+        const ex1Questions = [
+            { id: 1, correct: "studying" }, { id: 2, correct: "going" },
+            { id: 3, correct: "finishing" }, { id: 4, correct: "coming" },
+            { id: 5, correct: "meeting" }, { id: 6, correct: "saying" },
+            { id: 7, correct: "tidying" }, { id: 8, correct: "making" },
+            { id: 9, correct: "chatting" }, { id: 10, correct: "answering" }
+        ];
+
+        const ex2Questions = [
+            { id: 1, correct: "is washing" }, { id: 2, correct: "are running" },
+            { id: 3, correct: "is learning" }, { id: 4, correct: "are having" },
+            { id: 5, correct: "am doing" }, { id: 6, correct: "are paying" },
+            { id: 7, correct: "is making" }, { id: 8, correct: "are listening" }
+        ];
+
+        const ex3Questions = [
+            { id: 1, correct: "They aren't doing a test." },
+            { id: 2, correct: "It isn't raining today." },
+            { id: 3, correct: "We aren't having fun." },
+            { id: 4, correct: "She isn't writing a message." },
+            { id: 5, correct: "You aren't eating an ice cream." }
+        ];
+
+        const ex4Questions = [
+            { id: 1, correct: "Jim is going to school." },
+            { id: 2, correct: "It is snowing." },
+            { id: 3, correct: "Luke is windsurfing." },
+            { id: 4, correct: "They are having breakfast." },
+            { id: 5, correct: "It is raining." },
+            { id: 6, correct: "They are sleeping." },
+            { id: 7, correct: "He is studying." },
+            { id: 8, correct: "She is swimming." }
+        ];
+
+        const ex5Questions = [
+            { id: 1, correct: "He is sleeping." },
+            { id: 2, correct: "They are playing beach tennis." },
+            { id: 3, correct: "She is calling a friend." },
+            { id: 4, correct: "He is helping his mother." },
+            { id: 5, correct: "They are watching TV." },
+            { id: 6, correct: "She is scuba diving." },
+            { id: 7, correct: "They are running." },
+            { id: 8, correct: "She is going to school." }
+        ];
+
+        const ex6Questions = [
+            { id: 1, correct: "is shining", questionText: "Ex6-Q1 (shine)" },
+            { id: 2, correct: "are singing", questionText: "Ex6-Q2 (sing)" },
+            { id: 3, correct: "is driving", questionText: "Ex6-Q3 (drive)" },
+            { id: 4, correct: "is raining", questionText: "Ex6-Q4 (rain)" },
+            { id: 5, correct: "gets", questionText: "Ex6-Q5 (get)" },
+            { id: 6, correct: "washes", questionText: "Ex6-Q6 (wash)" },
+            { id: 7, correct: "is washing", questionText: "Ex6-Q7 (wash)" },
+            { id: 8, correct: "eat", questionText: "Ex6-Q8 (eat)" },
+            { id: 9, correct: "don't like", questionText: "Ex6-Q9 (not like)" }
+        ];
+
+
+        // Function to display overall results in modal
+        function displayOverallResults() {
+            const allResults = [];
+            allResults.push({ title: "Esercizio 1: La -ing form", ...checkExercise("ex1", ex1Questions) });
+            allResults.push({ title: "Esercizio 2: Completa con il Present Continuous", ...checkExercise("ex2", ex2Questions) });
+            allResults.push({ title: "Esercizio 3: Scrivi le frasi in forma negativa", ...checkExercise("ex3", ex3Questions) });
+            allResults.push({ title: "Esercizio 4: Traduci", ...checkExercise("ex4", ex4Questions) });
+            allResults.push({ title: "Esercizio 5: Descrivi le azioni", ...checkExercise("ex5", ex5Questions) });
+            allResults.push({ title: "Esercizio 6: Present Simple vs Present Continuous", ...checkExercise("ex6", ex6Questions) });
+
+
+            let totalCorrect = 0;
+            let totalQuestions = 0;
+
+            const modalDetails = document.getElementById('modalDetails');
+            modalDetails.innerHTML = ''; // Clear previous content
+
+            allResults.forEach(exResult => {
+                totalCorrect += exResult.correctCount;
+                totalQuestions += exResult.totalQuestions;
+
+                const h4 = document.createElement('h4');
+                h4.classList.add('text-lg', 'font-semibold', 'text-indigo-700', 'mb-2', 'mt-4');
+                h4.textContent = `${exResult.title}: ${exResult.correctCount}/${exResult.totalQuestions} Corretti`;
+                modalDetails.appendChild(h4);
+
+                exResult.results.forEach(res => {
+                    const p = document.createElement('p');
+                    p.classList.add('result-item', res.isCorrect ? 'text-green-700' : 'text-red-700');
+                    p.innerHTML = `Domanda ${res.question.replace('Domanda ', '')}: Hai scritto: <strong>${res.userAnswer || 'Nessuna risposta'}</strong>. Corretto: <strong>${res.correctAnswer}</strong>`;
+                    modalDetails.appendChild(p);
+                });
+            });
+
+            const overallScoreP = document.createElement('p');
+            overallScoreP.classList.add('text-xl', 'font-bold', 'text-indigo-800', 'mt-6');
+            overallScoreP.textContent = `Punteggio Totale: ${totalCorrect} su ${totalQuestions}`;
+            modalDetails.appendChild(overallScoreP);
+
+            openModal();
+        }
+
+        // Modal functions
+        function openModal() {
+            document.getElementById('resultsModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('resultsModal').style.display = 'none';
+        }
+
+        // Function to generate and download PDF
+        async function generatePdf() {
+            const { jsPDF } = window.jspdf;
+            const element = document.getElementById('exercise-container'); // Capture the whole exercise container
+
+            const pdf = new jsPDF('p', 'pt', 'a4'); // 'p' for portrait, 'pt' for points, 'a4' for A4 size
+
+            // Options for html2canvas
+            const options = {
+                scale: 2, // Increase scale for better resolution
+                useCORS: true, // Important for images, though we use emojis
+                windowWidth: element.scrollWidth,
+                windowHeight: element.scrollHeight
+            };
+
+            // Generate canvas from HTML element
+            const canvas = await html2canvas(element, options);
+            const imgData = canvas.toDataURL('image/png');
+
+            const imgWidth = 595; // A4 width in points
+            const pageHeight = 842; // A4 height in points
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            let heightLeft = imgHeight;
+
+            let position = 0;
+
+            // Add image to PDF
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            pdf.save('I_miei_Risultati_Present_Continuous.pdf');
+        }
+
+        // Attach event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('checkEx1Btn').addEventListener('click', () => checkExercise("ex1", ex1Questions));
+            document.getElementById('checkEx2Btn').addEventListener('click', () => checkExercise("ex2", ex2Questions));
+            document.getElementById('checkEx3Btn').addEventListener('click', () => checkExercise("ex3", ex3Questions));
+            document.getElementById('checkEx4Btn').addEventListener('click', () => checkExercise("ex4", ex4Questions));
+            document.getElementById('checkEx5Btn').addEventListener('click', () => checkExercise("ex5", ex5Questions));
+            document.getElementById('checkEx6Btn').addEventListener('click', () => checkExercise("ex6", ex6Questions));
+            document.getElementById('downloadPdfBtn').addEventListener('click', displayOverallResults);
+        });
+    </script>
+</body>
+</html>
