@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Come Leggere l'Ora in Inglese</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+        }
+        .container-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .exercise-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .exercise-item label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #334155; /* Slate 700 */
+        }
+        .exercise-item input[type="text"] {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #cbd5e1; /* Slate 300 */
+            background-color: #ffffff;
+            color: #1e293b; /* Slate 900 */
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+        .feedback {
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+        .feedback.correct {
+            color: #10b981; /* Emerald 500 */
+        }
+        .feedback.incorrect {
+            color: #ef4444; /* Red 500 */
+        }
+        .button-primary {
+            background-color: #3b82f6; /* Blue 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-primary:hover {
+            background-color: #2563eb; /* Blue 600 */
+        }
+        .button-secondary {
+            background-color: #64748b; /* Slate 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-secondary:hover {
+            background-color: #475569; /* Slate 600 */
+        }
+        .action-button {
+            background-color: #10b981; /* Emerald 500 */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .action-button:hover {
+            background-color: #059669; /* Emerald 600 */
+        }
+        .listening-status {
+            color: #f97316; /* Orange 500 */
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-extrabold text-center text-gray-900 mb-8">Come Leggere l'Ora in Inglese</h1>
+
+        <!-- Spiegazione -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Spiegazione: Leggere l'Ora</h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                In inglese, ci sono diversi modi per leggere l'ora, ma seguono schemi precisi.
+            </p>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">1. O'clock (in punto)</h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Usato per le ore esatte.
+                <ul class="list-disc list-inside text-gray-700 pl-4">
+                    <li>1:00 &rarr; <em>It's one o'clock.</em></li>
+                    <li>7:00 &rarr; <em>It's seven o'clock.</em></li>
+                </ul>
+            </p>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">2. Past (dopo l'ora) - Minuti da 1 a 29</h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Si dice il numero dei minuti, poi "past", e poi l'ora.
+                <ul class="list-disc list-inside text-gray-700 pl-4">
+                    <li>5:05 &rarr; <em>It's five past five.</em> (o <em>five oh five</em>)</li>
+                    <li>2:10 &rarr; <em>It's ten past two.</em></li>
+                    <li>11:25 &rarr; <em>It's twenty-five past eleven.</em></li>
+                </ul>
+            </p>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">3. Half Past (e mezza)</h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Per i 30 minuti, si usa "half past" seguito dall'ora.
+                <ul class="list-disc list-inside text-gray-700 pl-4">
+                    <li>3:30 &rarr; <em>It's half past three.</em></li>
+                    <li>9:30 &rarr; <em>It's half past nine.</em></li>
+                </ul>
+            </p>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">4. To (all'ora successiva) - Minuti da 31 a 59</h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Si dice quanti minuti mancano all'ora successiva, poi "to", e poi l'ora successiva.
+                <ul class="list-disc list-inside text-gray-700 pl-4">
+                    <li>4:40 &rarr; <em>It's twenty to five.</em> (mancano 20 minuti alle 5)</li>
+                    <li>6:55 &rarr; <em>It's five to seven.</em> (mancano 5 minuti alle 7)</li>
+                </ul>
+            </p>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">5. Quarter Past / Quarter To (e un quarto / meno un quarto)</h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Per 15 minuti si usa "quarter past", per 45 minuti si usa "quarter to".
+                <ul class="list-disc list-inside text-gray-700 pl-4">
+                    <li>1:15 &rarr; <em>It's quarter past one.</em></li>
+                    <li>8:45 &rarr; <em>It's quarter to nine.</em></li>
+                </ul>
+            </p>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">6. AM / PM</h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Per distinguere tra mattina e pomeriggio/sera, si usano:
+                <ul class="list-disc list-inside text-gray-700 pl-4">
+                    <li>AM: <em>Ante Meridiem</em> (dalla mezzanotte a mezzogiorno)</li>
+                    <li>PM: <em>Post Meridiem</em> (da mezzogiorno a mezzanotte)</li>
+                </ul>
+                Esempi:
+                <ul class="list-disc list-inside text-gray-700 pl-4">
+                    <li>6:00 AM &rarr; <em>six o'clock in the morning</em></li>
+                    <li>6:00 PM &rarr; <em>six o'clock in the evening</em></li>
+                    <li>12:00 PM &rarr; <em>noon</em> o <em>midday</em></li>
+                    <li>12:00 AM &rarr; <em>midnight</em></li>
+                </ul>
+            </p>
+        </div>
+
+        <!-- Esercizio 1: Scrivi l'ora in lettere -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Esercizio 1: Scrivi l'ora in lettere</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Scrivi l'ora indicata in cifre, usando le parole.
+            </p>
+
+            <div id="exercise1-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Esercizio 2: Leggi l'ora a voce alta (Riconoscimento Vocale) -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Esercizio 2: Leggi l'ora a voce alta</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Clicca sul pulsante "Parla" e leggi l'ora visualizzata. Il sistema proverà a riconoscere ciò che dici.
+            </p>
+
+            <div id="exercise2-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Esercizio 3: Ascolta e scrivi l'ora -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Esercizio 3: Ascolta e scrivi l'ora</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Clicca sul pulsante "Ascolta" per sentire l'ora, poi scrivila in lettere.
+            </p>
+
+            <div id="exercise3-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <button id="check-all-answers" class="button-primary">Controlla Tutte le Risposte</button>
+            <button id="get-all-results" class="button-primary">I miei risultati</button>
+            <button id="reset-all-exercises" class="button-secondary">Reset Tutti gli Esercizi</button>
+        </div>
+    </div>
+
+    <script>
+        // Common utility to normalize answers for comparison
+        function normalizeText(text) {
+            let normalized = text.toLowerCase();
+            // Remove "it's" at the beginning
+            if (normalized.startsWith("it's ")) {
+                normalized = normalized.substring(5);
+            }
+            // Replace common time phrases with their AM/PM equivalents for comparison
+            normalized = normalized.replace(/in the morning/g, 'am');
+            normalized = normalized.replace(/in the afternoon/g, 'pm');
+            normalized = normalized.replace(/in the evening/g, 'pm');
+            normalized = normalized.replace(/at night/g, 'pm');
+            // Normalize "o'clock" and "o clock"
+            normalized = normalized.replace(/o'clock/g, 'oclock');
+            // Remove all non-alphanumeric characters except spaces, then trim and replace multiple spaces
+            normalized = normalized.replace(/[^a-z0-9\s]/g, '');
+            normalized = normalized.replace(/\s+/g, ' ').trim();
+            return normalized;
+        }
+
+        // --- Exercise 1 Data (Write the time) ---
+        const exercise1Items = [
+            { id: 'e1-1', time: '03:00 PM', correct: 'three o\'clock in the afternoon', correctAlts: ['three o\'clock pm'] },
+            { id: 'e1-2', time: '07:15 AM', correct: 'quarter past seven in the morning', correctAlts: ['quarter past seven am'] },
+            { id: 'e1-3', time: '10:30 PM', correct: 'half past ten in the evening', correctAlts: ['half past ten pm'] },
+            { id: 'e1-4', time: '02:40 PM', correct: 'twenty to three in the afternoon', correctAlts: ['twenty to three pm'] },
+            { id: 'e1-5', time: '06:05 AM', correct: 'five past six in the morning', correctAlts: ['five past six am'] },
+            { id: 'e1-6', time: '11:50 PM', correct: 'ten to twelve at night', correctAlts: ['ten to twelve pm'] },
+            { id: 'e1-7', time: '04:45 AM', correct: 'quarter to five in the morning', correctAlts: ['quarter to five am'] },
+            { id: 'e1-8', time: '09:20 AM', correct: 'twenty past nine in the morning', correctAlts: ['twenty past nine am'] },
+            { id: 'e1-9', time: '12:00 PM', correct: 'noon', correctAlts: ['twelve o\'clock pm', 'midday'] },
+            { id: 'e1-10', time: '12:00 AM', correct: 'midnight', correctAlts: ['twelve o\'clock am'] }
+        ];
+        const exercise1Container = document.getElementById('exercise1-container');
+
+        function createExercise1Item(item) {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.innerHTML = `
+                <label for="e1-input-${item.id}">${item.time}:</label>
+                <input type="text" id="e1-input-${item.id}" placeholder="Scrivi l'ora in lettere">
+                <div id="e1-feedback-${item.id}" class="feedback text-sm"></div>
+            `;
+            exercise1Container.appendChild(div);
+        }
+
+        function loadExercise1() {
+            exercise1Container.innerHTML = '';
+            exercise1Items.forEach(createExercise1Item);
+        }
+
+        function checkExercise1Answers() {
+            let results = [];
+            exercise1Items.forEach(item => {
+                const inputElement = document.getElementById(`e1-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e1-feedback-${item.id}`);
+                const studentAnswer = normalizeText(inputElement.value);
+
+                const correctForms = [normalizeText(item.correct)];
+                if (item.correctAlts) {
+                    item.correctAlts.forEach(alt => correctForms.push(normalizeText(alt)));
+                }
+
+                const isCorrect = correctForms.includes(studentAnswer);
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (inputElement.value.trim() === '') {
+                    feedbackElement.textContent = 'Inserisci una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    let correctText = item.correct;
+                    if (item.correctAlts) {
+                        correctText += ` o "${item.correctAlts.join('" o "')}"`;
+                    }
+                    feedbackElement.textContent = `Sbagliato. Corretto: "${correctText}".`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: item.time,
+                    yourAnswer: inputElement.value.trim() || 'Non risposto',
+                    correctAnswer: item.correct, // Use primary correct for PDF display
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise1() {
+            exercise1Items.forEach(item => {
+                const inputElement = document.getElementById(`e1-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e1-feedback-${item.id}`);
+                inputElement.value = '';
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+        // --- Exercise 2 Data (Speak the time - Voice Recognition) ---
+        const exercise2Items = [
+            { id: 'e2-1', time: '05:00 PM', correct: 'five o\'clock in the afternoon', correctAlts: ['five o\'clock pm'] },
+            { id: 'e2-2', time: '08:15 AM', correct: 'quarter past eight in the morning', correctAlts: ['quarter past eight am'] },
+            { id: 'e2-3', time: '01:30 PM', correct: 'half past one in the afternoon', correctAlts: ['half past one pm'] },
+            { id: 'e2-4', time: '07:40 AM', correct: 'twenty to eight in the morning', correctAlts: ['twenty to eight am'] },
+            { id: 'e2-5', time: '09:05 PM', correct: 'five past nine in the evening', correctAlts: ['five past nine pm'] },
+            { id: 'e2-6', time: '06:55 AM', correct: 'five to seven in the morning', correctAlts: ['five to seven am'] },
+            { id: 'e2-7', time: '10:45 PM', correct: 'quarter to eleven at night', correctAlts: ['quarter to eleven pm'] },
+            { id: 'e2-8', time: '01:20 AM', correct: 'twenty past one in the morning', correctAlts: ['twenty past one am'] },
+            { id: 'e2-9', time: '02:35 PM', correct: 'twenty-five to three in the afternoon', correctAlts: ['twenty-five to three pm'] },
+            { id: 'e2-10', time: '04:10 AM', correct: 'ten past four in the morning', correctAlts: ['ten past four am'] }
+        ];
+        const exercise2Container = document.getElementById('exercise2-container');
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = null;
+
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.lang = 'en-US'; // Recognize English
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+        } else {
+            console.warn('Speech Recognition API not supported in this browser.');
+            alert('Il tuo browser non supporta il riconoscimento vocale. L\'Esercizio 2 non sarà disponibile.');
+        }
+
+        function createExercise2Item(item) {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.innerHTML = `
+                <label>${item.time}:</label>
+                <button class="action-button" id="e2-speak-btn-${item.id}">Parla</button>
+                <div id="e2-recognized-${item.id}" class="text-gray-600 italic"></div>
+                <div id="e2-feedback-${item.id}" class="feedback text-sm"></div>
+            `;
+            exercise2Container.appendChild(div);
+
+            const speakBtn = document.getElementById(`e2-speak-btn-${item.id}`);
+            const recognizedDiv = document.getElementById(`e2-recognized-${item.id}`);
+            const feedbackDiv = document.getElementById(`e2-feedback-${item.id}`);
+
+            if (recognition) {
+                speakBtn.addEventListener('click', () => {
+                    recognizedDiv.textContent = 'Ascoltando...';
+                    feedbackDiv.textContent = '';
+                    recognition.start();
+
+                    recognition.onresult = (event) => {
+                        const transcript = event.results[0][0].transcript;
+                        recognizedDiv.textContent = `Hai detto: "${transcript}"`;
+                        
+                        const studentNormalized = normalizeText(transcript);
+                        const correctForms = [normalizeText(item.correct)];
+                        if (item.correctAlts) {
+                            item.correctAlts.forEach(alt => correctForms.push(normalizeText(alt)));
+                        }
+                        const isCorrect = correctForms.includes(studentNormalized);
+
+                        if (isCorrect) {
+                            feedbackDiv.textContent = 'Corretto!';
+                            feedbackDiv.className = 'feedback correct';
+                        } else {
+                             let correctText = item.correct;
+                            if (item.correctAlts) {
+                                correctText += ` o "${item.correctAlts.join('" o "')}"`;
+                            }
+                            feedbackDiv.textContent = `Sbagliato. Corretto: "${correctText}".`;
+                            feedbackDiv.className = 'feedback incorrect';
+                        }
+                        item.yourAnswer = transcript; // Store for PDF
+                        item.isCorrect = isCorrect; // Store for PDF
+                    };
+
+                    recognition.onerror = (event) => {
+                        recognizedDiv.textContent = 'Errore di riconoscimento vocale.';
+                        feedbackDiv.textContent = 'Riprova.';
+                        console.error('Speech recognition error', event.error);
+                    };
+
+                    recognition.onend = () => {
+                        if (recognizedDiv.textContent === 'Ascoltando...') {
+                            recognizedDiv.textContent = 'Nessuna voce rilevata.';
+                        }
+                    };
+                });
+            } else {
+                speakBtn.disabled = true;
+                speakBtn.textContent = 'Non disponibile';
+            }
+        }
+
+        function loadExercise2() {
+            exercise2Container.innerHTML = '';
+            exercise2Items.forEach(createExercise2Item);
+        }
+
+        function checkExercise2Answers() {
+            // For voice recognition, answers are checked on the fly.
+            // This function just collects the stored results.
+            return exercise2Items.map(item => ({
+                question: item.time,
+                yourAnswer: item.yourAnswer || 'Non risposto',
+                correctAnswer: item.correct, // Use primary correct for PDF display
+                isCorrect: item.isCorrect || false
+            }));
+        }
+
+        function resetExercise2() {
+            exercise2Items.forEach(item => {
+                item.yourAnswer = '';
+                item.isCorrect = false;
+                const recognizedDiv = document.getElementById(`e2-recognized-${item.id}`);
+                const feedbackDiv = document.getElementById(`e2-feedback-${item.id}`);
+                if (recognizedDiv) recognizedDiv.textContent = '';
+                if (feedbackDiv) {
+                    feedbackDiv.textContent = '';
+                    feedbackDiv.className = 'feedback text-sm';
+                }
+            });
+        }
+
+        // --- Exercise 3 Data (Listen and write the time) ---
+        const exercise3Items = [
+            { id: 'e3-1', timeText: 'ten past four in the morning', correct: 'ten past four in the morning', correctAlts: ['ten past four am'] },
+            { id: 'e3-2', timeText: 'quarter to six in the evening', correct: 'quarter to six in the evening', correctAlts: ['quarter to six pm'] },
+            { id: 'e3-3', timeText: 'half past one in the morning', correct: 'half past one in the morning', correctAlts: ['half past one am'] },
+            { id: 'e3-4', timeText: 'twenty-five past eleven at night', correct: 'twenty-five past eleven at night', correctAlts: ['twenty-five past eleven pm'] },
+            { id: 'e3-5', timeText: 'five to two in the afternoon', correct: 'five to two in the afternoon', correctAlts: ['five to two pm'] },
+            { id: 'e3-6', timeText: 'seven o\'clock in the morning', correct: 'seven o\'clock in the morning', correctAlts: ['seven o\'clock am'] },
+            { id: 'e3-7', timeText: 'twenty to twelve at night', correct: 'twenty to twelve at night', correctAlts: ['twenty to twelve pm'] },
+            { id: 'e3-8', timeText: 'quarter past three in the afternoon', correct: 'quarter past three in the afternoon', correctAlts: ['quarter past three pm'] },
+            { id: 'e3-9', timeText: 'ten past eight in the evening', correct: 'ten past eight in the evening', correctAlts: ['ten past eight pm'] },
+            { id: 'e3-10', timeText: 'half past five in the morning', correct: 'half past five in the morning', correctAlts: ['half past five am'] }
+        ];
+        const exercise3Container = document.getElementById('exercise3-container');
+        const speechSynthesis = window.speechSynthesis;
+
+        function createExercise3Item(item) {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.innerHTML = `
+                <button class="action-button" id="e3-listen-btn-${item.id}">Ascolta</button>
+                <input type="text" id="e3-input-${item.id}" placeholder="Scrivi l'ora che hai sentito">
+                <div id="e3-feedback-${item.id}" class="feedback text-sm"></div>
+            `;
+            exercise3Container.appendChild(div);
+
+            const listenBtn = document.getElementById(`e3-listen-btn-${item.id}`);
+            const inputElement = document.getElementById(`e3-input-${item.id}`);
+
+            listenBtn.addEventListener('click', () => {
+                if (speechSynthesis) {
+                    const utterance = new SpeechSynthesisUtterance(item.timeText);
+                    utterance.lang = 'en-US'; // Speak in English
+                    speechSynthesis.speak(utterance);
+                } else {
+                    alert('Il tuo browser non supporta la sintesi vocale. L\'Esercizio 3 non sarà disponibile.');
+                }
+            });
+        }
+
+        function loadExercise3() {
+            exercise3Container.innerHTML = '';
+            exercise3Items.forEach(createExercise3Item);
+        }
+
+        function checkExercise3Answers() {
+            let results = [];
+            exercise3Items.forEach(item => {
+                const inputElement = document.getElementById(`e3-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e3-feedback-${item.id}`);
+                const studentAnswer = normalizeText(inputElement.value);
+                
+                const correctForms = [normalizeText(item.correct)];
+                if (item.correctAlts) {
+                    item.correctAlts.forEach(alt => correctForms.push(normalizeText(alt)));
+                }
+                const isCorrect = correctForms.includes(studentAnswer);
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (inputElement.value.trim() === '') {
+                    feedbackElement.textContent = 'Inserisci una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    let correctText = item.correct;
+                    if (item.correctAlts) {
+                        correctText += ` o "${item.correctAlts.join('" o "')}"`;
+                    }
+                    feedbackElement.textContent = `Sbagliato. Corretto: "${correctText}".`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: item.timeText,
+                    yourAnswer: inputElement.value.trim() || 'Non risposto',
+                    correctAnswer: item.correct, // Use primary correct for PDF display
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise3() {
+            exercise3Items.forEach(item => {
+                const inputElement = document.getElementById(`e3-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e3-feedback-${item.id}`);
+                inputElement.value = '';
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+        // --- Global Functions ---
+        const checkAllAnswersBtn = document.getElementById('check-all-answers');
+        const getAllResultsBtn = document.getElementById('get-all-results');
+        const resetAllExercisesBtn = document.getElementById('reset-all-exercises');
+
+        function checkAllExercises() {
+            checkExercise1Answers();
+            checkExercise2Answers(); // This updates internal item.isCorrect and item.yourAnswer
+            checkExercise3Answers();
+        }
+
+        function generateAllResultsPDF() {
+            const results1 = checkExercise1Answers();
+            const results2 = checkExercise2Answers();
+            const results3 = checkExercise3Answers();
+
+            let totalCorrect = 0;
+            let totalQuestions = 0;
+
+            let resultsContent = `
+                <h1 style="text-align: center; font-family: 'Inter', sans-serif;">I Miei Risultati - Esercizio Leggere l'Ora</h1>
+                <p style="font-family: 'Inter', sans-serif;">Data: ${new Date().toLocaleDateString()}</p>
+            `;
+
+            const appendExerciseResults = (title, results) => {
+                let correctCount = 0;
+                resultsContent += `<h2 style="margin-top: 30px; font-family: 'Inter', sans-serif;">${title}</h2>`;
+                resultsContent += `
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-family: 'Inter', sans-serif;">
+                        <thead>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Domanda</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">La Tua Risposta</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Risposta Corretta</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Esito</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                results.forEach(item => {
+                    if (item.isCorrect) {
+                        correctCount++;
+                    }
+                    resultsContent += `
+                        <tr>
+                            <td style="border: 1px solid #ddd; padding: 8px;">${item.question}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">${item.yourAnswer}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">${item.correctAnswer}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px; color: ${item.isCorrect ? '#10b981' : '#ef4444'}; font-weight: bold;">${item.isCorrect ? 'Corretto' : 'Sbagliato'}</td>
+                        </tr>
+                    `;
+                });
+                resultsContent += `
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 10px; font-weight: bold; font-family: 'Inter', sans-serif;">
+                        Punteggio: ${correctCount} su ${results.length} (${((correctCount / results.length) * 100).toFixed(2)}%)
+                    </p>
+                `;
+                totalCorrect += correctCount;
+                totalQuestions += results.length;
+            };
+
+            appendExerciseResults("Esercizio 1: Scrivi l'ora in lettere", results1);
+            appendExerciseResults("Esercizio 2: Leggi l'ora a voce alta", results2);
+            appendExerciseResults("Esercizio 3: Ascolta e scrivi l'ora", results3);
+
+            const overallPercentage = (totalCorrect / totalQuestions) * 100;
+            resultsContent += `
+                <h2 style="margin-top: 30px; font-family: 'Inter', sans-serif;">Riepilogo Generale</h2>
+                <p style="font-weight: bold; font-family: 'Inter', sans-serif;">
+                    Punteggio Totale: ${totalCorrect} su ${totalQuestions} (${overallPercentage.toFixed(2)}%)
+                </p>
+            `;
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>I Miei Risultati</title>');
+            printWindow.document.write('<style>');
+            printWindow.document.write(`
+                body { font-family: 'Inter', sans-serif; margin: 20px; }
+                h1, h2 { color: #1e293b; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+                .correct { color: #10b981; }
+                .incorrect { color: #ef4444; }
+            `);
+            printWindow.document.write('</style></head><body>');
+            printWindow.document.write(resultsContent);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print(); // Trigger print dialog
+        }
+
+        function resetAllExercises() {
+            resetExercise1();
+            resetExercise2();
+            resetExercise3();
+        }
+
+        // Event Listeners for global buttons
+        checkAllAnswersBtn.addEventListener('click', checkAllExercises);
+        getAllResultsBtn.addEventListener('click', generateAllResultsPDF);
+        resetAllExercisesBtn.addEventListener('click', resetAllExercises);
+
+        // Load all exercises on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadExercise1();
+            loadExercise2();
+            loadExercise3();
+        });
+    </script>
+</body>
+</html>
