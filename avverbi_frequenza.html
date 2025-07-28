@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avverbi di Frequenza e Present Simple</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+        }
+        .container-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .exercise-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .exercise-item label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #334155; /* Slate 700 */
+            text-align: center; /* Center the label text */
+            width: 100%; /* Ensure label takes full width */
+        }
+        .exercise-item input[type="text"] {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #cbd5e1; /* Slate 300 */
+            background-color: #ffffff;
+            color: #1e293b; /* Slate 900 */
+            width: 100%;
+            max-width: 400px; /* Increased max-width for sentence inputs */
+            text-align: center;
+        }
+        .feedback {
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+        .feedback.correct {
+            color: #10b981; /* Emerald 500 */
+        }
+        .feedback.incorrect {
+            color: #ef4444; /* Red 500 */
+        }
+        .button-primary {
+            background-color: #3b82f6; /* Blue 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-primary:hover {
+            background-color: #2563eb; /* Blue 600 */
+        }
+        .button-secondary {
+            background-color: #64748b; /* Slate 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-secondary:hover {
+            background-color: #475569; /* Slate 600 */
+        }
+        .scrambled-words {
+            font-family: 'Courier New', monospace;
+            background-color: #e2e8f0;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            margin-top: 0.5rem; /* Added margin-top */
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: #1e293b;
+            text-align: center;
+            display: block; /* Ensure it takes full width and wraps */
+            width: fit-content; /* Adjust width to content */
+            max-width: 100%; /* Allow it to take full width of parent if needed */
+            word-wrap: break-word; /* Break long words */
+        }
+        .prompt-words {
+            background-color: #e0f2fe; /* Light blue for prompts */
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            margin-top: 0.5rem; /* Added margin-top */
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: #0c4a6e; /* Darker blue */
+            font-weight: 500;
+            text-align: center;
+            display: block; /* Ensure it takes full width and wraps */
+            width: fit-content; /* Adjust width to content */
+            max-width: 100%; /* Allow it to take full width of parent if needed */
+            word-wrap: break-word; /* Break long words */
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-extrabold text-center text-gray-900 mb-8">Avverbi di Frequenza e Present Simple</h1>
+
+        <!-- Spiegazione: Avverbi di Frequenza -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Avverbi di Frequenza</h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Gli avverbi di frequenza ci dicono con quale regolarità un'azione avviene. Sono spesso usati con il Present Simple per descrivere abitudini e routine.
+            </p>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Scala di Frequenza (dal più frequente al meno frequente):</h3>
+            <ul class="list-disc list-inside text-gray-700 mb-4 pl-4">
+                <li>Always (sempre) - 100%</li>
+                <li>Usually (di solito) - 80-90%</li>
+                <li>Often (spesso) - 50-70%</li>
+                <li>Sometimes (a volte) - 20-40%</li>
+                <li>Hardly ever / Rarely (quasi mai / raramente) - 5-10%</li>
+                <li>Never (mai) - 0%</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Posizione nella Frase:</h3>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                La posizione degli avverbi di frequenza è molto importante in inglese.
+            </p>
+            <ul class="list-disc list-inside text-gray-700 mb-4 pl-4">
+                <li>Prima del verbo principale:
+                    <ul class="list-circle list-inside ml-6">
+                        <li>She <em>always</em> drinks coffee in the morning. (Lei beve sempre caffè la mattina.)</li>
+                        <li>They <em>usually</em> go to the park on Sundays. (Di solito vanno al parco la domenica.)</li>
+                    </ul>
+                </li>
+                <li>Dopo il verbo "to be":
+                    <ul class="list-circle list-inside ml-6">
+                        <li>He <em>is</em> often late. (Lui è spesso in ritardo.)</li>
+                        <li>We <em>are</em> never bored. (Non ci annoiamo mai.)</li>
+                    </ul>
+                </li>
+                <li>Tra l'ausiliare e il verbo principale (in frasi con verbi ausiliari come "do", "does", "have", "will", ecc.):
+                    <ul class="list-circle list-inside ml-6">
+                        <li>I <em>don't</em> often <em>eat</em> fast food. (Non mangio spesso fast food.)</li>
+                        <li>She <em>doesn't</em> usually <em>watch</em> TV. (Di solito non guarda la TV.)</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Particolarità di "Never":</h3>
+            <p class="text-gray-700 leading-relaxed">
+                L'avverbio "never" ha un significato negativo, ma la frase in cui si trova deve rimanere affermativa (non si usa "not"). Questo perché "never" rende già la frase negativa.
+            </p>
+            <ul class="list-disc list-inside text-gray-700 pl-4">
+                <li>Corretto: I <em>never</em> eat meat. (Non mangio mai carne.)</li>
+                <li>Sbagliato: I don't never eat meat.</li>
+            </ul>
+        </div>
+
+        <!-- Esercizio 1: Riordina la Frase -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Esercizio 1: Riordina la Frase</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Riordina le parole per formare frasi corrette con gli avverbi di frequenza.
+            </p>
+
+            <div id="exercise1-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Esercizio 2: Costruisci la Frase (con negazione) -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Esercizio 2: Costruisci la Frase</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Costruisci frasi corrette al Present Simple usando i prompt forniti. Fai attenzione alla negazione e alla posizione dell'avverbio.
+            </p>
+
+            <div id="exercise2-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Spiegazione: Esprimere la Frequenza (How often?) -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Esprimere la Frequenza: "How often?"</h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Per chiedere la frequenza di un'azione, usiamo la domanda "How often...?".
+            </p>
+            <ul class="list-disc list-inside text-gray-700 mb-4 pl-4">
+                <li><em>How often do you go to the gym?</em> (Quanto spesso vai in palestra?)</li>
+            </ul>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Per rispondere in modo specifico, usiamo espressioni di frequenza che indicano quante volte un'azione si verifica in un determinato periodo.
+            </p>
+            <ul class="list-disc list-inside text-gray-700 mb-4 pl-4">
+                <li>Once / Twice / Three times...
+                    <ul class="list-circle list-inside ml-6">
+                        <li>Once (una volta)</li>
+                        <li>Twice (due volte)</li>
+                        <li>Three times (tre volte)</li>
+                        <li>Four times, ecc. (quattro volte, ecc.)</li>
+                    </ul>
+                </li>
+                <li>A + periodo di tempo:
+                    <ul class="list-circle list-inside ml-6">
+                        <li>...a day (al giorno)</li>
+                        <li>...a week (alla settimana)</li>
+                        <li>...a month (al mese)</li>
+                        <li>...a year (all'anno)</li>
+                    </ul>
+                    Esempi: <em>once a week</em>, <em>twice a day</em>, <em>three times a month</em>.
+                </li>
+                <li>Every + periodo di tempo:
+                    <ul class="list-circle list-inside ml-6">
+                        <li>...every day (ogni giorno)</li>
+                        <li>...every two days (ogni due giorni)</li>
+                        <li>...every month (ogni mese)</li>
+                        <li>...every year (ogni anno)</li>
+                    </ul>
+                    Esempi: <em>once every two days</em>, <em>three times every month</em>.
+                </li>
+            </ul>
+            <p class="text-gray-700 leading-relaxed">
+                Queste espressioni di frequenza si posizionano di solito alla fine della frase.
+            </p>
+            <ul class="list-disc list-inside text-gray-700 pl-4">
+                <li>I go to the cinema <em>once a month</em>.</li>
+                <li>She calls her parents <em>twice a week</em>.</li>
+            </ul>
+        </div>
+
+        <!-- Esercizio 3: Esprimi la Frequenza -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Esercizio 3: Esprimi la Frequenza</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Costruisci frasi che esprimono la frequenza usando i prompt forniti.
+            </p>
+
+            <div id="exercise3-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <button id="check-all-answers" class="button-primary">Controlla Tutte le Risposte</button>
+            <button id="get-all-results" class="button-primary">I miei risultati</button>
+            <button id="reset-all-exercises" class="button-secondary">Reset Tutti gli Esercizi</button>
+        </div>
+    </div>
+
+    <script>
+        // Utility function to normalize text for comparison
+        function normalizeAnswer(answer) {
+            return answer.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
+        }
+
+        // --- Exercise 1 Data (Sentence Reordering) ---
+        const exercise1Items = [
+            { id: 'e1-1', scrambled: ['always', 'she', 'early', 'wakes up'], correct: 'she always wakes up early' },
+            { id: 'e1-2', scrambled: ['often', 'they', 'don\'t', 'play', 'football'], correct: 'they don\'t often play football' },
+            { id: 'e1-3', scrambled: ['is', 'he', 'usually', 'on time'], correct: 'he is usually on time' },
+            { id: 'e1-4', scrambled: ['never', 'I', 'eat', 'meat'], correct: 'I never eat meat' },
+            { id: 'e1-5', scrambled: ['sometimes', 'we', 'watch', 'movies'], correct: 'we sometimes watch movies' },
+            { id: 'e1-6', scrambled: ['hardly ever', 'she', 'visits', 'her grandparents'], correct: 'she hardly ever visits her grandparents' },
+            { id: 'e1-7', scrambled: ['do', 'you', 'often', 'read', 'books', '?'], correct: 'do you often read books ?' },
+            { id: 'e1-8', scrambled: ['are', 'they', 'rarely', 'at home'], correct: 'they are rarely at home' },
+            { id: 'e1-9', scrambled: ['usually', 'he', 'doesn\'t', 'cook'], correct: 'he doesn\'t usually cook' },
+            { id: 'e1-10', scrambled: ['always', 'we', 'help', 'our friends'], correct: 'we always help our friends' }
+        ];
+        const exercise1Container = document.getElementById('exercise1-container');
+
+        function createExercise1Item(item) {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.innerHTML = `
+                <label for="e1-input-${item.id}">Riordina: <span class="scrambled-words">${item.scrambled.join(' / ')}</span></label>
+                <input type="text" id="e1-input-${item.id}" placeholder="Scrivi la frase riordinata">
+                <div id="e1-feedback-${item.id}" class="feedback text-sm"></div>
+            `;
+            exercise1Container.appendChild(div);
+        }
+
+        function loadExercise1() {
+            exercise1Container.innerHTML = '';
+            exercise1Items.forEach(createExercise1Item);
+        }
+
+        function checkExercise1Answers() {
+            let results = [];
+            exercise1Items.forEach(item => {
+                const inputElement = document.getElementById(`e1-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e1-feedback-${item.id}`);
+                const studentAnswer = normalizeAnswer(inputElement.value);
+                const correctNormalized = normalizeAnswer(item.correct);
+
+                const isCorrect = studentAnswer === correctNormalized;
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (inputElement.value.trim() === '') {
+                    feedbackElement.textContent = 'Inserisci una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. Corretto: "${item.correct}".`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: item.scrambled.join(' / '),
+                    yourAnswer: inputElement.value.trim() || 'Non risposto',
+                    correctAnswer: item.correct,
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise1() {
+            exercise1Items.forEach(item => {
+                const inputElement = document.getElementById(`e1-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e1-feedback-${item.id}`);
+                inputElement.value = '';
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+        // --- Exercise 2 Data (Sentence Construction with Negation) ---
+        const exercise2Items = [
+            { id: 'e2-1', prompt: 'She / not wake up / early / every morning (usually)', correct: 'she doesn\'t usually wake up early every morning' },
+            { id: 'e2-2', prompt: 'They / go / to the cinema / on Fridays (often)', correct: 'they often go to the cinema on fridays' },
+            { id: 'e2-3', prompt: 'He / be / late / for work (never)', correct: 'he is never late for work' },
+            { id: 'e2-4', prompt: 'I / not drink / coffee / in the evening (hardly ever)', correct: 'i hardly ever drink coffee in the evening' },
+            { id: 'e2-5', prompt: 'We / visit / our grandparents / at Christmas (always)', correct: 'we always visit our grandparents at christmas' },
+            { id: 'e2-6', prompt: 'You / study / English / on weekends (sometimes)', correct: 'you sometimes study english on weekends' },
+            { id: 'e2-7', prompt: 'The dog / bark / at strangers (usually)', correct: 'the dog usually barks at strangers' },
+            { id: 'e2-8', prompt: 'My parents / not watch / TV / after dinner (often)', correct: 'my parents don\'t often watch tv after dinner' },
+            { id: 'e2-9', prompt: 'She / be / happy / (always)', correct: 'she is always happy' },
+            { id: 'e2-10', prompt: 'We / not travel / abroad / (rarely)', correct: 'we rarely travel abroad' }
+        ];
+        const exercise2Container = document.getElementById('exercise2-container');
+
+        function createExercise2Item(item) {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.innerHTML = `
+                <label for="e2-input-${item.id}">Costruisci: <span class="prompt-words">${item.prompt}</span></label>
+                <input type="text" id="e2-input-${item.id}" placeholder="Scrivi la frase completa">
+                <div id="e2-feedback-${item.id}" class="feedback text-sm"></div>
+            `;
+            exercise2Container.appendChild(div);
+        }
+
+        function loadExercise2() {
+            exercise2Container.innerHTML = '';
+            exercise2Items.forEach(createExercise2Item);
+        }
+
+        function checkExercise2Answers() {
+            let results = [];
+            exercise2Items.forEach(item => {
+                const inputElement = document.getElementById(`e2-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e2-feedback-${item.id}`);
+                const studentAnswer = normalizeAnswer(inputElement.value);
+                const correctNormalized = normalizeAnswer(item.correct);
+
+                const isCorrect = studentAnswer === correctNormalized;
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (inputElement.value.trim() === '') {
+                    feedbackElement.textContent = 'Inserisci una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. Corretto: "${item.correct}".`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: item.prompt,
+                    yourAnswer: inputElement.value.trim() || 'Non risposto',
+                    correctAnswer: item.correct,
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise2() {
+            exercise2Items.forEach(item => {
+                const inputElement = document.getElementById(`e2-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e2-feedback-${item.id}`);
+                inputElement.value = '';
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+        // --- Exercise 3 Data (Expressing Frequency) ---
+        const exercise3Items = [
+            { id: 'e3-1', prompt: 'Go to the gym / 3 times / week', correct: 'I go to the gym three times a week' },
+            { id: 'e3-2', prompt: 'Visit grandparents / 1 time / month', correct: 'I visit my grandparents once a month' },
+            { id: 'e3-3', prompt: 'Eat pizza / 2 times / month', correct: 'I eat pizza twice a month' },
+            { id: 'e3-4', prompt: 'Travel abroad / 1 time / year', correct: 'I travel abroad once a year' },
+            { id: 'e3-5', prompt: 'Read a book / every / day', correct: 'I read a book every day' },
+            { id: 'e3-6', prompt: 'Call my best friend / 2 times / day', correct: 'I call my best friend twice a day' },
+            { id: 'e3-7', prompt: 'Watch a movie / 1 time / week', correct: 'I watch a movie once a week' },
+            { id: 'e3-8', prompt: 'Go shopping / every / two weeks', correct: 'I go shopping every two weeks' },
+            { id: 'e3-9', prompt: 'Play video games / 4 times / month', correct: 'I play video games four times a month' },
+            { id: 'e3-10', prompt: 'Clean the house / 1 time / week', correct: 'I clean the house once a week' }
+        ];
+        const exercise3Container = document.getElementById('exercise3-container');
+
+        function createExercise3Item(item) {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.innerHTML = `
+                <label for="e3-input-${item.id}">Prompt: <span class="prompt-words">${item.prompt}</span></label>
+                <input type="text" id="e3-input-${item.id}" placeholder="Costruisci la frase">
+                <div id="e3-feedback-${item.id}" class="feedback text-sm"></div>
+            `;
+            exercise3Container.appendChild(div);
+        }
+
+        function loadExercise3() {
+            exercise3Container.innerHTML = '';
+            exercise3Items.forEach(createExercise3Item);
+        }
+
+        function checkExercise3Answers() {
+            let results = [];
+            exercise3Items.forEach(item => {
+                const inputElement = document.getElementById(`e3-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e3-feedback-${item.id}`);
+                const studentAnswer = normalizeAnswer(inputElement.value);
+                const correctNormalized = normalizeAnswer(item.correct);
+
+                const isCorrect = studentAnswer === correctNormalized;
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (inputElement.value.trim() === '') {
+                    feedbackElement.textContent = 'Inserisci una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. Corretto: "${item.correct}".`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: item.prompt,
+                    yourAnswer: inputElement.value.trim() || 'Non risposto',
+                    correctAnswer: item.correct,
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise3() {
+            exercise3Items.forEach(item => {
+                const inputElement = document.getElementById(`e3-input-${item.id}`);
+                const feedbackElement = document.getElementById(`e3-feedback-${item.id}`);
+                inputElement.value = '';
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+        // --- Global Functions ---
+        const checkAllAnswersBtn = document.getElementById('check-all-answers');
+        const getAllResultsBtn = document.getElementById('get-all-results');
+        const resetAllExercisesBtn = document.getElementById('reset-all-exercises');
+
+        function checkAllExercises() {
+            checkExercise1Answers();
+            checkExercise2Answers();
+            checkExercise3Answers();
+        }
+
+        function generateAllResultsPDF() {
+            const results1 = checkExercise1Answers();
+            const results2 = checkExercise2Answers();
+            const results3 = checkExercise3Answers();
+
+            let totalCorrect = 0;
+            let totalQuestions = 0;
+
+            let resultsContent = `
+                <h1 style="text-align: center; font-family: 'Inter', sans-serif;">I Miei Risultati - Avverbi di Frequenza</h1>
+                <p style="font-family: 'Inter', sans-serif;">Data: ${new Date().toLocaleDateString()}</p>
+            `;
+
+            const appendExerciseResults = (title, results) => {
+                let correctCount = 0;
+                resultsContent += `<h2 style="margin-top: 30px; font-family: 'Inter', sans-serif;">${title}</h2>`;
+                resultsContent += `
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-family: 'Inter', sans-serif;">
+                        <thead>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Domanda</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">La Tua Risposta</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Risposta Corretta</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Esito</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                results.forEach(item => {
+                    if (item.isCorrect) {
+                        correctCount++;
+                    }
+                    resultsContent += `
+                        <tr>
+                            <td style="border: 1px solid #ddd; padding: 8px;">${item.question}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">${item.yourAnswer}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">${item.correctAnswer}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px; color: ${item.isCorrect ? '#10b981' : '#ef4444'}; font-weight: bold;">${item.isCorrect ? 'Corretto' : 'Sbagliato'}</td>
+                        </tr>
+                    `;
+                });
+                resultsContent += `
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 10px; font-weight: bold; font-family: 'Inter', sans-serif;">
+                        Punteggio: ${correctCount} su ${results.length} (${((correctCount / results.length) * 100).toFixed(2)}%)
+                    </p>
+                `;
+                totalCorrect += correctCount;
+                totalQuestions += results.length;
+            };
+
+            appendExerciseResults("Esercizio 1: Riordina la Frase", results1);
+            appendExerciseResults("Esercizio 2: Costruisci la Frase", results2);
+            appendExerciseResults("Esercizio 3: Esprimi la Frequenza", results3);
+
+            const overallPercentage = (totalCorrect / totalQuestions) * 100;
+            resultsContent += `
+                <h2 style="margin-top: 30px; font-family: 'Inter', sans-serif;">Riepilogo Generale</h2>
+                <p style="font-weight: bold; font-family: 'Inter', sans-serif;">
+                    Punteggio Totale: ${totalCorrect} su ${totalQuestions} (${overallPercentage.toFixed(2)}%)
+                </p>
+            `;
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>I Miei Risultati</title>');
+            printWindow.document.write('<style>');
+            printWindow.document.write(`
+                body { font-family: 'Inter', sans-serif; margin: 20px; }
+                h1, h2 { color: #1e293b; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+                .correct { color: #10b981; }
+                .incorrect { color: #ef4444; }
+            `);
+            printWindow.document.write('</style></head><body>');
+            printWindow.document.write(resultsContent);
+            printWindow.document.close();
+            printWindow.print(); // Trigger print dialog
+        }
+
+        function resetAllExercises() {
+            resetExercise1();
+            resetExercise2();
+            resetExercise3();
+        }
+
+        // Event Listeners for global buttons
+        checkAllAnswersBtn.addEventListener('click', checkAllExercises);
+        getAllResultsBtn.addEventListener('click', generateAllResultsPDF);
+        resetAllExercisesBtn.addEventListener('click', resetAllExercises);
+
+        // Load all exercises on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadExercise1();
+            loadExercise2();
+            loadExercise3();
+        });
+    </script>
+</body>
+</html>
