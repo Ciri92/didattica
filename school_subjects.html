@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio Materie Scolastiche in Inglese</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+        }
+        .container-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .exercise-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .exercise-item label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #334155; /* Slate 700 */
+        }
+        .exercise-item select, .exercise-item input[type="text"] {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #cbd5e1; /* Slate 300 */
+            background-color: #ffffff;
+            color: #1e293b; /* Slate 900 */
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+        .feedback {
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+        .feedback.correct {
+            color: #10b981; /* Emerald 500 */
+        }
+        .feedback.incorrect {
+            color: #ef4444; /* Red 500 */
+        }
+        .button-primary {
+            background-color: #3b82f6; /* Blue 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-primary:hover {
+            background-color: #2563eb; /* Blue 600 */
+        }
+        .button-secondary {
+            background-color: #64748b; /* Slate 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-secondary:hover {
+            background-color: #475569; /* Slate 600 */
+        }
+        /* Updated styles for Section 1 to be single column */
+        .match-grid {
+            display: flex; /* Changed to flexbox */
+            flex-direction: column; /* Stack items vertically */
+            gap: 1.5rem;
+        }
+        .match-item {
+            display: flex;
+            flex-direction: column; /* Stack content vertically within each item */
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            background-color: #ffffff;
+            text-align: center; /* Center text */
+        }
+        .match-item span {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #334155;
+        }
+        .match-item select {
+            width: 100%; /* Make select full width of its container */
+            max-width: 300px; /* Limit max width for better readability */
+            margin-left: 0; /* Remove previous margin */
+        }
+        .character-card {
+            background-color: #f0f9ff; /* Sky 50 */
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+        }
+        .character-card .emoji {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        .character-card .quote {
+            font-style: italic;
+            color: #475569; /* Slate 600 */
+            margin-bottom: 1rem;
+        }
+        .timetable-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Two columns for "Ora" and "Materia" */
+            gap: 0.5rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+        .timetable-header, .timetable-cell {
+            padding: 0.75rem;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+        }
+        .timetable-header {
+            background-color: #e2e8f0; /* Gray 200 */
+            font-weight: 700;
+            color: #334155;
+        }
+        .timetable-cell:nth-child(2n) {
+            border-right: none;
+        }
+        .timetable-cell:nth-last-child(-n+2) {
+            border-bottom: none;
+        }
+        .timetable-cell select {
+            width: 100%;
+            max-width: none;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-extrabold text-center text-gray-900 mb-8">Esercizio: Materie Scolastiche in Inglese</h1>
+
+        <!-- Sezione 1: Collega Materie e Descrizioni -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Sezione 1: Collega le Materie alle Loro Descrizioni</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Abbina ogni materia scolastica in inglese alla sua descrizione corretta.
+            </p>
+
+            <div id="exercise1-container" class="match-grid mb-8">
+                <!-- Items will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Sezione 2: Materie Preferite dei Personaggi -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Sezione 2: Qual è la Materia Preferita?</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Leggi cosa piace a ogni personaggio e seleziona la materia scolastica che pensi sia la sua preferita.
+            </p>
+
+            <div id="exercise2-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Character cards will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Sezione 3: Il Mio Orario Scolastico Perfetto -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Sezione 3: Il Mio Orario Scolastico Perfetto</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Immagina di creare il tuo orario scolastico perfetto per una giornata di sei ore. Assegna una materia a ogni ora.
+            </p>
+
+            <div id="exercise3-container" class="timetable-grid mb-8">
+                <div class="timetable-header">Ora</div>
+                <div class="timetable-header">Materia</div>
+                <!-- Timetable rows will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <!-- Removed 'Controlla Tutte le Risposte' button -->
+            <button id="get-all-results" class="button-primary">I miei risultati</button>
+            <button id="reset-all-exercises" class="button-secondary">Reset Tutti gli Esercizi</button>
+        </div>
+    </div>
+
+    <script>
+        // Data for all subjects
+        const allSubjects = [
+            { name: 'English', description: 'Studying literature, grammar, and writing skills.' },
+            { name: 'Math', description: 'Learning about numbers, calculations, and problem-solving.' },
+            { name: 'Science', description: 'Exploring the natural world through biology, chemistry, and physics.' },
+            { name: 'History', description: 'Understanding past events, people, and civilizations.' },
+            { name: 'Geography', description: 'Studying the Earth\'s physical features, climate, and human populations.' },
+            { name: 'Foreign Languages', description: 'Learning to speak, read, and write in another language.' },
+            { name: 'D&T (Design and Technology)', description: 'Designing and making products, understanding how things work.' },
+            { name: 'Art', description: 'Creating visual works using various mediums like painting and sculpture.' },
+            { name: 'Music', description: 'Learning about musical theory, instruments, and composition.' },
+            { name: 'PE (Physical Education)', description: 'Participating in sports and physical activities to stay healthy.' },
+            { name: 'RE (Religious Education)', description: 'Studying different religions and beliefs.' },
+            { name: 'Computer Science', description: 'Learning about computers, programming, and digital systems.' }
+        ];
+
+        // --- Exercise 1: Matching Subjects to Descriptions ---
+        const exercise1Container = document.getElementById('exercise1-container');
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function loadExercise1() {
+            exercise1Container.innerHTML = '';
+            const shuffledDescriptions = shuffleArray([...allSubjects.map(s => s.description)]);
+
+            allSubjects.forEach((subject, index) => {
+                const div = document.createElement('div');
+                div.className = 'match-item';
+                div.innerHTML = `
+                    <span>${subject.name}</span>
+                    <select id="match-select-${index}">
+                        <option value="">Seleziona descrizione</option>
+                        ${shuffledDescriptions.map(desc => `<option value="${desc}">${desc}</option>`).join('')}
+                    </select>
+                    <div id="match-feedback-${index}" class="feedback text-sm"></div>
+                `;
+                exercise1Container.appendChild(div);
+            });
+        }
+
+        function checkExercise1Answers() {
+            let results = [];
+            allSubjects.forEach((subject, index) => {
+                const selectElement = document.getElementById(`match-select-${index}`);
+                const feedbackElement = document.getElementById(`match-feedback-${index}`);
+                const selectedValue = selectElement.value;
+                const isCorrect = (selectedValue === subject.description);
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (selectedValue === '') {
+                    feedbackElement.textContent = 'Seleziona una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. Corretto: "${subject.description}".`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: subject.name,
+                    yourAnswer: selectedValue === '' ? 'Non selezionato' : selectedValue,
+                    correctAnswer: subject.description,
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise1() {
+            allSubjects.forEach((subject, index) => {
+                const selectElement = document.getElementById(`match-select-${index}`);
+                const feedbackElement = document.getElementById(`match-feedback-${index}`);
+                selectElement.value = '';
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+        // --- Exercise 2: Character Preferences ---
+        const exercise2Items = [
+            { emoji: '🎨', likes: 'I love drawing, painting, and visiting museums.', correctSubject: 'Art' },
+            { emoji: '⚽', likes: 'Running, playing team sports, and staying active is my passion.', correctSubject: 'PE (Physical Education)' },
+            { emoji: '📚', likes: 'Reading novels, writing stories, and analyzing poems are my favorite activities.', correctSubject: 'English' },
+            { emoji: '🧪', likes: 'I enjoy conducting experiments and learning about how the world works, from tiny atoms to vast galaxies.', correctSubject: 'Science' },
+            { emoji: '🗺️', likes: 'Exploring different countries, learning about cultures, and understanding maps fascinates me.', correctSubject: 'Geography' },
+            { emoji: '💻', likes: 'I like coding, building websites, and understanding how computers operate.', correctSubject: 'Computer Science' },
+            { emoji: '🎶', likes: 'Playing the piano, singing, and listening to different types of melodies brings me joy.', correctSubject: 'Music' }
+        ];
+        const exercise2Container = document.getElementById('exercise2-container');
+
+        function loadExercise2() {
+            exercise2Container.innerHTML = '';
+            exercise2Items.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'character-card exercise-item';
+                div.innerHTML = `
+                    <div class="emoji">${item.emoji}</div>
+                    <p class="quote">"${item.likes}"</p>
+                    <label for="char-subject-${index}">Materia preferita:</label>
+                    <select id="char-subject-${index}">
+                        <option value="">Seleziona una materia</option>
+                        ${allSubjects.map(s => `<option value="${s.name}">${s.name}</option>`).join('')}
+                    </select>
+                    <div id="char-feedback-${index}" class="feedback text-sm"></div>
+                `;
+                exercise2Container.appendChild(div);
+            });
+        }
+
+        function checkExercise2Answers() {
+            let results = [];
+            exercise2Items.forEach((item, index) => {
+                const selectElement = document.getElementById(`char-subject-${index}`);
+                const feedbackElement = document.getElementById(`char-feedback-${index}`);
+                const selectedValue = selectElement.value;
+                const isCorrect = (selectedValue === item.correctSubject);
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (selectedValue === '') {
+                    feedbackElement.textContent = 'Seleziona una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. Corretto: "${item.correctSubject}".`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+                results.push({
+                    question: `Personaggio ${item.emoji} (${item.likes})`,
+                    yourAnswer: selectedValue === '' ? 'Non selezionato' : selectedValue,
+                    correctAnswer: item.correctSubject,
+                    isCorrect: isCorrect
+                });
+            });
+            return results;
+        }
+
+        function resetExercise2() {
+            exercise2Items.forEach((item, index) => {
+                const selectElement = document.getElementById(`char-subject-${index}`);
+                const feedbackElement = document.getElementById(`char-feedback-${index}`);
+                selectElement.value = '';
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'feedback text-sm';
+            });
+        }
+
+        // --- Exercise 3: Perfect Timetable ---
+        const exercise3Container = document.getElementById('exercise3-container');
+        const totalHours = 6;
+
+        function loadExercise3() {
+            // Clear previous rows, but keep headers
+            const existingCells = exercise3Container.querySelectorAll('.timetable-cell');
+            existingCells.forEach(cell => cell.remove());
+
+            for (let i = 1; i <= totalHours; i++) {
+                const hourCell = document.createElement('div');
+                hourCell.className = 'timetable-cell';
+                hourCell.textContent = `Ora ${i}`;
+                exercise3Container.appendChild(hourCell);
+
+                const subjectCell = document.createElement('div');
+                subjectCell.className = 'timetable-cell';
+                subjectCell.innerHTML = `
+                    <select id="timetable-subject-${i}">
+                        <option value="">Seleziona una materia</option>
+                        ${allSubjects.map(s => `<option value="${s.name}">${s.name}</option>`).join('')}
+                    </select>
+                `;
+                exercise3Container.appendChild(subjectCell);
+            }
+        }
+
+        function checkExercise3Answers() {
+            let results = [];
+            let selectedSubjects = new Set();
+            for (let i = 1; i <= totalHours; i++) {
+                const selectElement = document.getElementById(`timetable-subject-${i}`);
+                const selectedValue = selectElement.value;
+                
+                results.push({
+                    question: `Ora ${i}`,
+                    yourAnswer: selectedValue === '' ? 'Non selezionato' : selectedValue,
+                    correctAnswer: 'Scelta personale', // This exercise has no single correct answer
+                    isCorrect: selectedValue !== '' // Consider correct if a subject is selected
+                });
+
+                if (selectedValue !== '') {
+                    selectedSubjects.add(selectedValue);
+                }
+            }
+            return results;
+        }
+
+        function resetExercise3() {
+            for (let i = 1; i <= totalHours; i++) {
+                const selectElement = document.getElementById(`timetable-subject-${i}`);
+                selectElement.value = '';
+            }
+        }
+
+        // --- Global Functions ---
+        // Removed checkAllAnswersBtn
+        const getAllResultsBtn = document.getElementById('get-all-results');
+        const resetAllExercisesBtn = document.getElementById('reset-all-exercises');
+
+        // The checkAllExercises function is now implicitly called by generateAllResultsPDF
+        function generateAllResultsPDF() {
+            const results1 = checkExercise1Answers();
+            const results2 = checkExercise2Answers();
+            const results3 = checkExercise3Answers(); // Get results from timetable
+
+            let totalCorrect = 0;
+            let totalQuestions = 0; // Only for exercises with definite correct answers
+
+            let resultsContent = `
+                <h1 style="text-align: center; font-family: 'Inter', sans-serif;">I Miei Risultati - Esercizio Materie Scolastiche</h1>
+                <p style="font-family: 'Inter', sans-serif;">Data: ${new Date().toLocaleDateString()}</p>
+            `;
+
+            const appendExerciseResults = (title, results, isGraded = true) => {
+                let correctCount = 0;
+                resultsContent += `<h2 style="margin-top: 30px; font-family: 'Inter', sans-serif;">${title}</h2>`;
+                resultsContent += `
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-family: 'Inter', sans-serif;">
+                        <thead>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Domanda</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">La Tua Risposta</th>
+                                ${isGraded ? '<th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Risposta Corretta</th>' : ''}
+                                ${isGraded ? '<th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Esito</th>' : ''}
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                results.forEach(item => {
+                    if (isGraded && item.isCorrect) {
+                        correctCount++;
+                    }
+                    resultsContent += `
+                        <tr>
+                            <td style="border: 1px solid #ddd; padding: 8px;">${item.question}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">${item.yourAnswer}</td>
+                            ${isGraded ? `<td style="border: 1px solid #ddd; padding: 8px;">${item.correctAnswer}</td>` : ''}
+                            ${isGraded ? `<td style="border: 1px solid #ddd; padding: 8px; color: ${item.isCorrect ? '#10b981' : '#ef4444'}; font-weight: bold;">${item.isCorrect ? 'Corretto' : 'Sbagliato'}</td>` : ''}
+                        </tr>
+                    `;
+                });
+                resultsContent += `
+                        </tbody>
+                    </table>
+                `;
+                if (isGraded) {
+                    resultsContent += `
+                        <p style="margin-top: 10px; font-weight: bold; font-family: 'Inter', sans-serif;">
+                            Punteggio: ${correctCount} su ${results.length} (${((correctCount / results.length) * 100).toFixed(2)}%)
+                        </p>
+                    `;
+                    totalCorrect += correctCount;
+                    totalQuestions += results.length;
+                }
+            };
+
+            appendExerciseResults("Sezione 1: Collega le Materie alle Loro Descrizioni", results1);
+            appendExerciseResults("Sezione 2: Qual è la Materia Preferita?", results2);
+            appendExerciseResults("Sezione 3: Il Mio Orario Scolastico Perfetto", results3, false); // Not graded
+
+            if (totalQuestions > 0) { // Only show overall score if there are graded questions
+                const overallPercentage = (totalCorrect / totalQuestions) * 100;
+                resultsContent += `
+                    <h2 style="margin-top: 30px; font-family: 'Inter', sans-serif;">Riepilogo Generale</h2>
+                    <p style="font-weight: bold; font-family: 'Inter', sans-serif;">
+                        Punteggio Totale (Esercizi 1 e 2): ${totalCorrect} su ${totalQuestions} (${overallPercentage.toFixed(2)}%)
+                    </p>
+                `;
+            } else {
+                resultsContent += `
+                    <h2 style="margin-top: 30px; font-family: 'Inter', sans-serif;">Riepilogo Generale</h2>
+                    <p style="font-weight: bold; font-family: 'Inter', sans-serif;">
+                        Nessun punteggio generale disponibile per questo set di esercizi.
+                    </p>
+                `;
+            }
+
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>I Miei Risultati</title>');
+            printWindow.document.write('<style>');
+            printWindow.document.write(`
+                body { font-family: 'Inter', sans-serif; margin: 20px; }
+                h1, h2 { color: #1e293b; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+                .correct { color: #10b981; }
+                .incorrect { color: #ef4444; }
+            `);
+            printWindow.document.write('</style></head><body>');
+            printWindow.document.write(resultsContent);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print(); // Trigger print dialog
+        }
+
+        function resetAllExercises() {
+            resetExercise1();
+            resetExercise2();
+            resetExercise3();
+        }
+
+        // Event Listeners for global buttons
+        // checkAllAnswersBtn.addEventListener('click', checkAllExercises); // Removed this button
+        getAllResultsBtn.addEventListener('click', generateAllResultsPDF);
+        resetAllExercisesBtn.addEventListener('click', resetAllExercises);
+
+        // Load all exercises on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadExercise1();
+            loadExercise2();
+            loadExercise3();
+        });
+    </script>
+</body>
+</html>
