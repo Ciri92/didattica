@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio Attività Tempo Libero</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+        }
+        .container-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .exercise-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .exercise-item label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #334155; /* Slate 700 */
+            text-align: center;
+            width: 100%;
+        }
+        .exercise-item select {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #cbd5e1; /* Slate 300 */
+            background-color: #ffffff;
+            color: #1e293b; /* Slate 900 */
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+        .feedback {
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+        .feedback.correct {
+            color: #10b981; /* Emerald 500 */
+        }
+        .feedback.incorrect {
+            color: #ef4444; /* Red 500 */
+        }
+        .button-primary {
+            background-color: #3b82f6; /* Blue 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-primary:hover {
+            background-color: #2563eb; /* Blue 600 */
+        }
+        .button-secondary {
+            background-color: #64748b; /* Slate 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-secondary:hover {
+            background-color: #475569; /* Slate 600 */
+        }
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .activity-item .emoji {
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        .activity-item .translation {
+            font-size: 0.875rem;
+            color: #64748b; /* Slate 500 */
+        }
+        .prompt-objects {
+            background-color: #e0f2fe; /* Light blue for prompts */
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: #0c4a6e; /* Darker blue */
+            font-weight: 500;
+            text-align: center;
+            display: block;
+            width: fit-content;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-extrabold text-center text-gray-900 mb-8">Esercizio: Attività nel Tempo Libero</h1>
+
+        <!-- Introduzione e Lista Attività -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Attività nel Tempo Libero</h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Ecco un elenco di attività comuni che le persone fanno nel loro tempo libero. Impararle ti aiuterà a parlare delle tue passioni e hobby.
+            </p>
+            <ul class="list-none mb-4 pl-0 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <li class="activity-item">
+                    <span class="emoji">📺</span> watch TV <span class="translation">(guardare la TV)</span>
+                </li>
+                <li class="activity-item">
+                    <span class="emoji">🛍️</span> go shopping <span class="translation">(fare shopping)</span>
+                </li>
+                <li class="activity-item">
+                    <span class="emoji">🤝</span> meet friends <span class="translation">(incontrare amici)</span>
+                </li>
+                <li class="activity-item">
+                    <span class="emoji">🏀</span> do sports <span class="translation">(fare sport)</span>
+                </li>
+                <li class="activity-item">
+                    <span class="emoji">🎬</span> go to the cinema <span class="translation">(andare al cinema)</span>
+                </li>
+                <li class="activity-item">
+                    <span class="emoji">🎸</span> play an instrument <span class="translation">(suonare uno strumento)</span>
+                </li>
+                <li class="activity-item">
+                    <span class="emoji">📖</span> read a book <span class="translation">(leggere un libro)</span>
+                </li>
+                <li class="activity-item">
+                    <span class="emoji">🎧</span> listen to music <span class="translation">(ascoltare musica)</span>
+                </li>
+                <li class="activity-item">
+                    <span class="emoji">❤️</span> volunteer <span class="translation">(fare volontariato)</span>
+                </li>
+                <li class="activity-item">
+                    <span class="emoji">📱</span> chat on social networks <span class="translation">(chattare sui social network)</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Esercizio: Abbina Oggetti all'Attività -->
+        <div class="container-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Abbina gli Oggetti all'Attività Corretta</h2>
+            <p class="text-gray-700 leading-relaxed text-center mb-6">
+                Per ogni set di oggetti/parole chiave, scegli l'attività nel tempo libero più appropriata dall'elenco.
+            </p>
+
+            <div id="exercise-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Exercise items will be dynamically inserted here by JavaScript -->
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="check-answers" class="button-primary">Controlla Risposte</button>
+                <button id="get-results" class="button-primary">I miei risultati</button>
+                <button id="reset-exercise" class="button-secondary">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // List of free-time activities with their emojis and Italian translations
+        const freeTimeActivities = [
+            { en: 'watch TV', it: 'guardare la TV', emoji: '📺' },
+            { en: 'go shopping', it: 'fare shopping', emoji: '🛍️' },
+            { en: 'meet friends', it: 'incontrare amici', emoji: '🤝' },
+            { en: 'do sports', it: 'fare sport', emoji: '🏀' },
+            { en: 'go to the cinema', it: 'andare al cinema', emoji: '🎬' },
+            { en: 'play an instrument', it: 'suonare uno strumento', emoji: '🎸' },
+            { en: 'read a book', it: 'leggere un libro', emoji: '📖' },
+            { en: 'listen to music', it: 'ascoltare musica', emoji: '🎧' },
+            { en: 'volunteer', it: 'fare volontariato', emoji: '❤️' },
+            { en: 'chat on social networks', it: 'chattare sui social network', emoji: '📱' }
+        ];
+
+        // Exercise items with object/keyword prompts and their correct activities
+        const exerciseItems = [
+            { id: 'q1', prompt: 'remote control, couch, popcorn', correct: 'watch TV' },
+            { id: 'q2', prompt: 'shopping bags, credit card, clothes, mall', correct: 'go shopping' },
+            { id: 'q3', prompt: 'coffee shop, laughter, conversation, park', correct: 'meet friends' },
+            { id: 'q4', prompt: 'running shoes, ball, gym, sweat', correct: 'do sports' },
+            { id: 'q5', prompt: 'tickets, big screen, dark room, movie', correct: 'go to the cinema' },
+            { id: 'q6', prompt: 'piano, guitar, sheet music, melody', correct: 'play an instrument' },
+            { id: 'q7', prompt: 'pages, silence, library, story', correct: 'read a book' },
+            { id: 'q8', prompt: 'headphones, speakers, favorite songs, rhythm', correct: 'listen to music' },
+            { id: 'q9', prompt: 'helping others, community, charity, kindness', correct: 'volunteer' },
+            { id: 'q10', prompt: 'smartphone, keyboard, emojis, online friends', correct: 'chat on social networks' }
+        ];
+
+        const exerciseContainer = document.getElementById('exercise-container');
+        const checkAnswersBtn = document.getElementById('check-answers');
+        const getResultsBtn = document.getElementById('get-results');
+        const resetExerciseBtn = document.getElementById('reset-exercise');
+
+        // Utility function to normalize answers for comparison
+        function normalizeAnswer(answer) {
+            return answer.toLowerCase().replace(/[^a-z\s]/g, '').replace(/\s+/g, ' ').trim();
+        }
+
+        function createExerciseItem(item) {
+            const div = document.createElement('div');
+            div.className = 'exercise-item';
+            div.innerHTML = `
+                <label for="select-${item.id}">Oggetti/Parole chiave: <span class="prompt-objects">${item.prompt}</span></label>
+                <select id="select-${item.id}">
+                    <option value="">Seleziona un'attività</option>
+                    ${freeTimeActivities.map(activity => `<option value="${activity.en}">${activity.en}</option>`).join('')}
+                </select>
+                <div id="feedback-${item.id}" class="feedback text-sm"></div>
+            `;
+            exerciseContainer.appendChild(div);
+        }
+
+        function loadExercise() {
+            exerciseContainer.innerHTML = ''; // Clear previous items
+            exerciseItems.forEach(createExerciseItem);
+        }
+
+        function checkAnswers() {
+            exerciseItems.forEach(item => {
+                const selectElement = document.getElementById(`select-${item.id}`);
+                const feedbackElement = document.getElementById(`feedback-${item.id}`);
+                const selectedValue = selectElement.value;
+                const isCorrect = (normalizeAnswer(selectedValue) === normalizeAnswer(item.correct));
+
+                if (isCorrect) {
+                    feedbackElement.textContent = 'Corretto!';
+                    feedbackElement.className = 'feedback correct';
+                } else if (selectedValue === '') {
+                    feedbackElement.textContent = 'Seleziona una risposta.';
+                    feedbackElement.className = 'feedback incorrect';
+                } else {
+                    feedbackElement.textContent = `Sbagliato. Corretto: "${item.correct}".`;
+                    feedbackElement.className = 'feedback incorrect';
+                }
+            });
+        }
+
+        function generateResultsPDF() {
+            let resultsContent = `
+                <h1 style="text-align: center; font-family: 'Inter', sans-serif;">I Miei Risultati - Esercizio Attività Tempo Libero</h1>
+                <p style="font-family: 'Inter', sans-serif;">Data: ${new Date().toLocaleDateString()}</p>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 20px; font-family: 'Inter', sans-serif;">
+                    <thead>
+                        <tr style="background-color: #f2f2f2;">
+                            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Oggetti/Parole chiave</th>
+                            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">La Tua Risposta</th>
+                            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Risposta Corretta</th>
+                            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Esito</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            let correctCount = 0;
+            exerciseItems.forEach(item => {
+                const selectElement = document.getElementById(`select-${item.id}`);
+                const selectedValue = selectElement.value;
+                const isCorrect = (normalizeAnswer(selectedValue) === normalizeAnswer(item.correct));
+
+                if (isCorrect) {
+                    correctCount++;
+                }
+
+                resultsContent += `
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${item.prompt}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${selectedValue === '' ? 'Non selezionato' : selectedValue}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${item.correct}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; color: ${isCorrect ? '#10b981' : '#ef4444'}; font-weight: bold;">${isCorrect ? 'Corretto' : 'Sbagliato'}</td>
+                    </tr>
+                `;
+            });
+
+            const totalQuestions = exerciseItems.length;
+            const percentage = (correctCount / totalQuestions) * 100;
+
+            resultsContent += `
+                    </tbody>
+                </table>
+                <p style="margin-top: 20px; font-weight: bold; font-family: 'Inter', sans-serif;">
+                    Punteggio Finale: ${correctCount} su ${totalQuestions} (${percentage.toFixed(2)}%)
+                </p>
+            `;
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>I Miei Risultati</title>');
+            printWindow.document.write('<style>');
+            printWindow.document.write(`
+                body { font-family: 'Inter', sans-serif; margin: 20px; }
+                h1 { color: #1e293b; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+                .correct { color: #10b981; }
+                .incorrect { color: #ef4444; }
+            `);
+            printWindow.document.write('</style></head><body>');
+            printWindow.document.write(resultsContent);
+            printWindow.document.close();
+            printWindow.print(); // Trigger print dialog
+        }
+
+        function resetExercise() {
+            exerciseItems.forEach(item => {
+                const selectElement = document.getElementById(`select-${item.id}`);
+                const feedbackElement = document.getElementById(`feedback-${item.id}`);
+                selectElement.value = ''; // Reset dropdown
+                feedbackElement.textContent = ''; // Clear feedback
+                feedbackElement.className = 'feedback text-sm'; // Reset class
+            });
+        }
+
+        // Event Listeners
+        checkAnswersBtn.addEventListener('click', checkAnswers);
+        getResultsBtn.addEventListener('click', generateResultsPDF);
+        resetExerciseBtn.addEventListener('click', resetExercise);
+
+        // Load exercise on page load
+        document.addEventListener('DOMContentLoaded', loadExercise);
+    </script>
+</body>
+</html>
