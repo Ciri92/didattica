@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio di Abbinamento</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- html2canvas CDN for converting HTML to canvas/image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* Custom font for a cleaner look */
+        body {
+            font-family: "Inter", sans-serif;
+        }
+        /* Ensure emojis are large enough */
+        .emoji {
+            font-size: 2.5rem; /* Larger emoji size */
+            line-height: 1; /* Adjust line height for better alignment */
+        }
+        /* Custom styling for lists for better readability */
+        ul li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e7eb; /* Light grey border */
+        }
+        ul li:last-child {
+            border-bottom: none;
+        }
+        /* Style for drag-and-drop elements */
+        .draggable-item {
+            cursor: grab;
+            padding: 0.25rem 0.5rem;
+            background-color: #e0e7ff; /* Light blue background */
+            border-radius: 0.5rem;
+            margin-right: 0.5rem;
+            display: inline-block;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            transition: background-color 0.2s ease;
+        }
+        .draggable-item:active {
+            cursor: grabbing;
+        }
+        .drop-zone {
+            min-height: 2.5rem; /* Ensure drop zone has height */
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .dropped-phrase-id {
+            font-weight: bold;
+            color: #4f46e5; /* Indigo color */
+            min-width: 1.5rem; /* Fixed width for alignment */
+            text-align: center;
+        }
+        .correct-match {
+            color: #10b981; /* Green for correct */
+        }
+        .incorrect-match {
+            color: #ef4444; /* Red for incorrect */
+        }
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+        }
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div id="exercise-container" class="bg-white rounded-xl shadow-lg p-6 md:p-10 max-w-4xl w-full">
+        <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-8">Esercizio di Vocabolario</h1>
+
+        <!-- Sezione 1: Tipi di Vacanze -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold text-indigo-600 mb-6 text-center">1. Abbina i tipi di vacanze (1-8) alle emoji (a-h).</h2>
+            <div class="flex flex-col md:flex-row justify-around gap-8">
+                <!-- Lista delle frasi draggable -->
+                <div class="w-full md:w-1/2 bg-indigo-50 p-6 rounded-lg shadow-inner">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-4">Tipi di Vacanze:</h3>
+                    <ul>
+                        <li class="flex items-center py-2"><span class="draggable-item" draggable="true" data-phrase-id="1-1">1.</span> go camping</li>
+                        <li class="flex items-center py-2"><span class="draggable-item" draggable="true" data-phrase-id="1-2">2.</span> go on an organised holiday</li>
+                        <li class="flex items-center py-2"><span class="draggable-item" draggable="true" data-phrase-id="1-3">3.</span> go to the mountains</li>
+                        <li class="flex items-center py-2"><span class="draggable-item" draggable="true" data-phrase-id="1-4">4.</span> go on an activity holiday</li>
+                        <li class="flex items-center py-2"><span class="draggable-item" draggable="true" data-phrase-id="1-5">5.</span> visit a city</li>
+                        <li class="flex items-center py-2"><span class="draggable-item" draggable="true" data-phrase-id="1-6">6.</span> go touring</li>
+                        <li class="flex items-center py-2"><span class="draggable-item" draggable="true" data-phrase-id="1-7">7.</span> go on a study holiday</li>
+                        <li class="flex items-center py-2"><span class="draggable-item" draggable="true" data-phrase-id="1-8">8.</span> go to the seaside</li>
+                    </ul>
+                </div>
+
+                <!-- Lista delle emoji (drop zones) -->
+                <div class="w-full md:w-1/2 bg-indigo-50 p-6 rounded-lg shadow-inner">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-4">Abbina qui:</h3>
+                    <ul>
+                        <li class="flex items-center py-2 drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-emoji-id="1-a" data-correct-match="1-1">
+                            <span class="dropped-phrase-id mr-2"></span> <span class="font-bold mr-2 text-indigo-700">a.</span> <span class="emoji">🏕️</span>
+                        </li>
+                        <li class="flex items-center py-2 drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-emoji-id="1-b" data-correct-match="1-2">
+                            <span class="dropped-phrase-id mr-2"></span> <span class="font-bold mr-2 text-indigo-700">b.</span> <span class="emoji">🚌</span>
+                        </li>
+                        <li class="flex items-center py-2 drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-emoji-id="1-c" data-correct-match="1-3">
+                            <span class="dropped-phrase-id mr-2"></span> <span class="font-bold mr-2 text-indigo-700">c.</span> <span class="emoji">⛰️</span>
+                        </li>
+                        <li class="flex items-center py-2 drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-emoji-id="1-d" data-correct-match="1-4">
+                            <span class="dropped-phrase-id mr-2"></span> <span class="font-bold mr-2 text-indigo-700">d.</span> <span class="emoji">🚴</span>
+                        </li>
+                        <li class="flex items-center py-2 drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-emoji-id="1-e" data-correct-match="1-5">
+                            <span class="dropped-phrase-id mr-2"></span> <span class="font-bold mr-2 text-indigo-700">e.</span> <span class="emoji">🏙️</span>
+                        </li>
+                        <li class="flex items-center py-2 drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-emoji-id="1-f" data-correct-match="1-6">
+                            <span class="dropped-phrase-id mr-2"></span> <span class="font-bold mr-2 text-indigo-700">f.</span> <span class="emoji">🗺️</span>
+                        </li>
+                        <li class="flex items-center py-2 drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-emoji-id="1-g" data-correct-match="1-7">
+                            <span class="dropped-phrase-id mr-2"></span> <span class="font-bold mr-2 text-indigo-700">g.</span> <span class="emoji">🎓</span>
+                        </li>
+                        <li class="flex items-center py-2 drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-emoji-id="1-h" data-correct-match="1-8">
+                            <span class="dropped-phrase-id mr-2"></span> <span class="font-bold mr-2 text-indigo-700">h.</span> <span class="emoji">🏖️</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione 2: Attività Estive -->
+        <div>
+            <h2 class="text-2xl font-bold text-indigo-600 mb-6 text-center">2. Abbina le attività estive (1-8) alle emoji (a-h).</h2>
+            <div class="flex flex-col md:flex-row justify-around gap-8">
+                <!-- Lista delle frasi draggable -->
+                <div class="w-full md:w-1/2 bg-indigo-50 p-6 rounded-lg shadow-inner">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-4">Attività Estive:</h3>
+                    <ul>
+                        <li class="flex items-center py-2"><span class="draggable-item" draggable="true" data-phrase-id="2-1">1.</span> sunbathe</li>
+                        <li class="flex items-center py-2"><span class="draggable-item" draggable="true" data-phrase-id="2-2">2.</span> play beach games</li>
+                        <li class="flex items-center py-2"><span class="draggable-item" draggable="true" data-phrase-id="2-3">3.</span> go swimming</li>
+                        <li class="flex items-center py-2"><span class="draggable-item" draggable="true" data-phrase-id="2-4">4.</span> go hiking</li>
+                        <li class="flex items-center py-2"><span class="draggable-item" draggable="true" data-phrase-id="2-5">5.</span> go sightseeing</li>
+                        <li class="flex items-center py-2"><span class="draggable-item" draggable="true" data-phrase-id="2-6">6.</span> visit museums and art galleries</li>
+                        <li class="flex items-center py-2"><span class="draggable-item" draggable="true" data-phrase-id="2-7">7.</span> go snorkelling</li>
+                        <li class="flex items-center py-2"><span class="draggable-item" draggable="true" data-phrase-id="2-8">8.</span> go windsurfing</li>
+                    </ul>
+                </div>
+
+                <!-- Lista delle emoji (drop zones) -->
+                <div class="w-full md:w-1/2 bg-indigo-50 p-6 rounded-lg shadow-inner">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-4">Abbina qui:</h3>
+                    <ul>
+                        <li class="flex items-center py-2 drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-emoji-id="2-a" data-correct-match="2-1">
+                            <span class="dropped-phrase-id mr-2"></span> <span class="font-bold mr-2 text-indigo-700">a.</span> <span class="emoji">☀️</span>
+                        </li>
+                        <li class="flex items-center py-2 drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-emoji-id="2-b" data-correct-match="2-2">
+                            <span class="dropped-phrase-id mr-2"></span> <span class="font-bold mr-2 text-indigo-700">b.</span> <span class="emoji">🏐</span>
+                        </li>
+                        <li class="flex items-center py-2 drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-emoji-id="2-c" data-correct-match="2-3">
+                            <span class="dropped-phrase-id mr-2"></span> <span class="font-bold mr-2 text-indigo-700">c.</span> <span class="emoji">🏊</span>
+                        </li>
+                        <li class="flex items-center py-2 drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-emoji-id="2-d" data-correct-match="2-4">
+                            <span class="dropped-phrase-id mr-2"></span> <span class="font-bold mr-2 text-indigo-700">d.</span> <span class="emoji">🚶‍♀️</span>
+                        </li>
+                        <li class="flex items-center py-2 drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-emoji-id="2-e" data-correct-match="2-5">
+                            <span class="dropped-phrase-id mr-2"></span> <span class="font-bold mr-2 text-indigo-700">e.</span> <span class="emoji">📸</span>
+                        </li>
+                        <li class="flex items-center py-2 drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-emoji-id="2-f" data-correct-match="2-6">
+                            <span class="dropped-phrase-id mr-2"></span> <span class="font-bold mr-2 text-indigo-700">f.</span> <span class="emoji">🏛️</span>
+                        </li>
+                        <li class="flex items-center py-2 drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-emoji-id="2-g" data-correct-match="2-7">
+                            <span class="dropped-phrase-id mr-2"></span> <span class="font-bold mr-2 text-indigo-700">g.</span> <span class="emoji">🐠</span>
+                        </li>
+                        <li class="flex items-center py-2 drop-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-emoji-id="2-h" data-correct-match="2-8">
+                            <span class="dropped-phrase-id mr-2"></span> <span class="font-bold mr-2 text-indigo-700">h.</span> <span class="emoji">🏄‍♀️</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 text-center space-x-4">
+            <button id="checkAnswersBtn" class="bg-indigo-700 hover:bg-indigo-800 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                Controlla le risposte
+            </button>
+            <button id="downloadPdfBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105 hidden">
+                Scarica i miei risultati (PDF)
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal per i risultati -->
+    <div id="resultsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3 class="text-2xl font-bold text-indigo-700 mb-4">I Tuoi Risultati</h3>
+            <p id="modalScore" class="text-xl mb-4"></p>
+            <div id="modalDetails" class="text-left text-gray-700"></div>
+            <button onclick="closeModal()" class="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full">Chiudi</button>
+        </div>
+    </div>
+
+    <script>
+        // Store the ID of the currently dragged item
+        let draggedItemId = null;
+
+        // Object to store user's answers for each section
+        // Format: { 'section1-emojiId': 'section1-phraseId', 'section2-emojiId': 'section2-phraseId' }
+        const userAnswers = {};
+
+        // Function to handle drag start event
+        function drag(event) {
+            draggedItemId = event.target.dataset.phraseId;
+            event.dataTransfer.setData("text/plain", draggedItemId); // Set data for drop
+            // Add a class to the dragged item for visual feedback (optional)
+            event.target.classList.add('opacity-50');
+        }
+
+        // Function to allow dropping
+        function allowDrop(event) {
+            event.preventDefault(); // Prevent default to allow drop
+        }
+
+        // Function to handle drop event
+        function drop(event) {
+            event.preventDefault();
+            const phraseId = event.dataTransfer.getData("text/plain");
+            const dropZone = event.target.closest('.drop-zone'); // Find the closest drop zone element
+            if (!dropZone) return; // If not a drop zone, do nothing
+
+            const emojiId = dropZone.dataset.emojiId;
+
+            // Update user answers
+            userAnswers[emojiId] = phraseId;
+
+            // Get the original number from the phraseId (e.g., "1-1" -> "1")
+            const phraseNumber = phraseId.split('-')[1];
+
+            // Update the display in the drop zone
+            const droppedPhraseDisplay = dropZone.querySelector('.dropped-phrase-id');
+            if (droppedPhraseDisplay) {
+                droppedPhraseDisplay.textContent = phraseNumber;
+            }
+
+            // Remove opacity from the dragged item (if it was added)
+            const draggedItemElement = document.querySelector(`[data-phrase-id="${phraseId}"]`);
+            if (draggedItemElement) {
+                draggedItemElement.classList.remove('opacity-50');
+            }
+        }
+
+        // Correct answers for Section 1
+        const correctAnswers1 = {
+            '1-a': '1-1', // go camping 🏕️
+            '1-b': '1-2', // go on an organised holiday 🚌
+            '1-c': '1-3', // go to the mountains ⛰️
+            '1-d': '1-4', // go on an activity holiday 🚴
+            '1-e': '1-5', // visit a city 🏙️
+            '1-f': '1-6', // go touring 🗺️
+            '1-g': '1-7', // go on a study holiday 🎓
+            '1-h': '1-8'  // go to the seaside 🏖️
+        };
+
+        // Correct answers for Section 2
+        const correctAnswers2 = {
+            '2-a': '2-1', // sunbathe ☀️
+            '2-b': '2-2', // play beach games 🏐
+            '2-c': '2-3', // go swimming 🏊
+            '2-d': '2-4', // go hiking 🚶‍♀️
+            '2-e': '2-5', // go sightseeing 📸
+            '2-f': '2-6', // visit museums and art galleries 🏛️
+            '2-g': '2-7', // go snorkelling 🐠
+            '2-h': '2-8'  // go windsurfing 🏄‍♀️
+        };
+
+        // Mapping from phrase ID to its text content for results display
+        const phraseTextMapping = {
+            '1-1': 'go camping',
+            '1-2': 'go on an organised holiday',
+            '1-3': 'go to the mountains',
+            '1-4': 'go on an activity holiday',
+            '1-5': 'visit a city',
+            '1-6': 'go touring',
+            '1-7': 'go on a study holiday',
+            '1-8': 'go to the seaside',
+            '2-1': 'sunbathe',
+            '2-2': 'play beach games',
+            '2-3': 'go swimming',
+            '2-4': 'go hiking',
+            '2-5': 'go sightseeing',
+            '2-6': 'visit museums and art galleries',
+            '2-7': 'go snorkelling',
+            '2-8': 'go windsurfing'
+        };
+
+        // Mapping from emoji ID to its text (e.g., 'a. 🏕️') for results display
+        const emojiTextMapping = {
+            '1-a': 'a. 🏕️', '1-b': 'b. 🚌', '1-c': 'c. ⛰️', '1-d': 'd. 🚴',
+            '1-e': 'e. 🏙️', '1-f': 'f. 🗺️', '1-g': 'g. 🎓', '1-h': 'h. 🏖️',
+            '2-a': 'a. ☀️', '2-b': 'b. 🏐', '2-c': 'c. 🏊', '2-d': 'd. 🚶‍♀️',
+            '2-e': 'e. 📸', '2-f': 'f. 🏛️', '2-g': 'g. 🐠', '2-h': 'h. 🏄‍♀️'
+        };
+
+
+        // Function to check answers and display results
+        function checkAnswers() {
+            let correctCount = 0;
+            let totalQuestions = 0;
+            const resultsDetails = document.getElementById('modalDetails');
+            resultsDetails.innerHTML = ''; // Clear previous results
+
+            const allDropZones = document.querySelectorAll('.drop-zone');
+            allDropZones.forEach(dropZone => {
+                const emojiId = dropZone.dataset.emojiId;
+                const correctMatchId = dropZone.dataset.correctMatch;
+                const userAnswerId = userAnswers[emojiId];
+                const droppedPhraseDisplay = dropZone.querySelector('.dropped-phrase-id');
+
+                // Determine which correctAnswers map to use
+                const correctMap = emojiId.startsWith('1-') ? correctAnswers1 : correctAnswers2;
+
+                totalQuestions++;
+
+                const p = document.createElement('p');
+                p.classList.add('mb-1');
+
+                if (userAnswerId === correctMap[emojiId]) {
+                    correctCount++;
+                    p.innerHTML = `<span class="font-semibold">${emojiTextMapping[emojiId]}</span>: <span class="correct-match">Corretto! (${phraseTextMapping[userAnswerId]})</span>`;
+                    if (droppedPhraseDisplay) droppedPhraseDisplay.classList.add('correct-match');
+                    if (droppedPhraseDisplay) droppedPhraseDisplay.classList.remove('incorrect-match');
+                } else {
+                    p.innerHTML = `<span class="font-semibold">${emojiTextMapping[emojiId]}</span>: <span class="incorrect-match">Sbagliato.</span> Hai messo: ${userAnswerId ? phraseTextMapping[userAnswerId] : 'Nessuna risposta'}. Corretto: ${phraseTextMapping[correctMap[emojiId]]}`;
+                    if (droppedPhraseDisplay) droppedPhraseDisplay.classList.add('incorrect-match');
+                    if (droppedPhraseDisplay) droppedPhraseDisplay.classList.remove('correct-match');
+                }
+                resultsDetails.appendChild(p);
+            });
+
+            const scoreText = `Hai risposto correttamente a ${correctCount} su ${totalQuestions} domande.`;
+            document.getElementById('modalScore').textContent = scoreText;
+
+            // Show PDF download button
+            document.getElementById('downloadPdfBtn').classList.remove('hidden');
+
+            // Show the modal
+            openModal();
+        }
+
+        // Modal functions
+        function openModal() {
+            document.getElementById('resultsModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('resultsModal').style.display = 'none';
+        }
+
+        // Function to generate and download PDF
+        async function generatePdf() {
+            const { jsPDF } = window.jspdf;
+            const element = document.getElementById('exercise-container'); // Capture the whole exercise container
+
+            const pdf = new jsPDF('p', 'pt', 'a4'); // 'p' for portrait, 'pt' for points, 'a4' for A4 size
+
+            // Options for html2canvas
+            const options = {
+                scale: 2, // Increase scale for better resolution
+                useCORS: true, // Important for images, though we use emojis
+                windowWidth: element.scrollWidth,
+                windowHeight: element.scrollHeight
+            };
+
+            // Generate canvas from HTML element
+            const canvas = await html2canvas(element, options);
+            const imgData = canvas.toDataURL('image/png');
+
+            const imgWidth = 595; // A4 width in points
+            const pageHeight = 842; // A4 height in points
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            let heightLeft = imgHeight;
+
+            let position = 0;
+
+            // Add image to PDF
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            pdf.save('I_miei_Risultati_Quiz_Inglese.pdf');
+        }
+
+        // Attach event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add dragstart listener to all draggable items
+            document.querySelectorAll('.draggable-item').forEach(item => {
+                item.addEventListener('dragstart', drag);
+            });
+
+            // Attach click listener to check answers button
+            document.getElementById('checkAnswersBtn').addEventListener('click', checkAnswers);
+
+            // Attach click listener to download PDF button
+            document.getElementById('downloadPdfBtn').addEventListener('click', generatePdf);
+        });
+    </script>
+</body>
+</html>
