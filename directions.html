@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio: Luoghi in Città e Preposizioni</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Stili personalizzati per estetica e interattività */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Sfondo azzurro-grigio chiaro */
+            color: #334155; /* Colore testo più scuro */
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 12px; /* Angoli più arrotondati */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Ombra più morbida */
+        }
+        h1, h2 {
+            color: #1e3a8a; /* Blu più scuro per i titoli */
+            font-weight: 700;
+        }
+        .section-box {
+            background-color: #e0f2fe; /* Azzurro più chiaro per le sezioni */
+            border-left: 6px solid #3b82f6; /* Bordo blu */
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .vocabulary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adattato per testo e bottone */
+            gap: 1rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .vocabulary-item {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .vocabulary-item span {
+            margin-bottom: 0.5rem;
+        }
+        .listen-button {
+            background-color: #10b981; /* Verde per il bottone ascolta */
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border: none;
+        }
+        .listen-button:hover {
+            background-color: #059669;
+        }
+        .emoji {
+            font-size: 1.5rem; /* Dimensione dell'emoji */
+            margin-right: 0.5rem;
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .exercise-text-container {
+            line-height: 2.5; /* Aumenta l'altezza della linea per una migliore spaziatura con gli input */
+            font-size: 1.125rem; /* text-lg */
+        }
+        .fill-in-blank-input {
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            width: 150px; /* Larghezza adeguata per le parole */
+            margin: 0 0.25rem; /* Margine più piccolo */
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+            display: inline-block; /* Permette agli input di fluire con il testo */
+        }
+        .fill-in-blank-input:focus {
+            border-color: #3b82f6;
+        }
+        .button-primary {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            border: none;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+        .button-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+        .button-primary:active {
+            transform: translateY(0);
+        }
+        .button-secondary {
+            background-color: #6b7280;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border: none;
+            margin-left: 1rem;
+        }
+        .button-secondary:hover {
+            background-color: #4b5563;
+        }
+        .feedback-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .feedback-correct {
+            background-color: #d1fae5; /* Verde per corretto */
+            color: #065f46;
+        }
+        .feedback-incorrect {
+            background-color: #fee2e2; /* Rosso per incorretto */
+            color: #991b1b;
+        }
+        /* Stili per la mappa SVG */
+        .city-map-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .city-map-svg {
+            border: 2px solid #a0aec0;
+            border-radius: 8px;
+            background-color: #e2e8f0; /* Sfondo strade */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .building {
+            fill: #4299e1; /* Blu edificio */
+            stroke: #2b6cb0;
+            stroke-width: 2;
+            rx: 5; /* Angoli arrotondati */
+            ry: 5;
+        }
+        .road {
+            fill: #cbd5e1; /* Grigio strada */
+            stroke: #a0aec0;
+            stroke-width: 1;
+        }
+        .building-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 8px; /* Dimensione testo etichetta */
+            fill: #ffffff; /* Colore testo etichetta */
+            text-anchor: middle;
+            dominant-baseline: middle;
+            font-weight: bold;
+        }
+        .road-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 7px;
+            fill: #4a5568;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+        .preposition-explanation ul {
+            list-style: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .preposition-explanation li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-4xl text-center mb-6">Pratica: Luoghi in Città e Preposizioni di Luogo</h1>
+
+        <!-- Sezione 1: Vocabolario -->
+        <div class="section-box">
+            <h2 class="text-2xl mb-4">Sezione 1: Vocabolario - Luoghi in Città</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                Ecco un elenco di luoghi comuni che puoi trovare in una città. Familiarizza con questi termini e ascolta la loro pronuncia prima di passare all'esercizio.
+            </p>
+            <ul class="vocabulary-grid">
+                <li class="vocabulary-item">
+                    <span class="emoji">🍞</span><span>Bakery (Panificio)</span>
+                    <button class="listen-button" onclick="speakWord('bakery', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🏦</span><span>Bank (Banca)</span>
+                    <button class="listen-button" onclick="speakWord('bank', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🥩</span><span>Butcher's (Macelleria)</span>
+                    <button class="listen-button" onclick="speakWord('butcher\'s', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">📚</span><span>Bookshop (Libreria)</span>
+                    <button class="listen-button" onclick="speakWord('bookshop', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">☕</span><span>Café (Caffetteria)</span>
+                    <button class="listen-button" onclick="speakWord('cafe', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🅿️</span><span>Car Park (Parcheggio)</span>
+                    <button class="listen-button" onclick="speakWord('car park', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">💊</span><span>Chemist's (Farmacia)</span>
+                    <button class="listen-button" onclick="speakWord('chemist\'s', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🎬</span><span>Cinema (Cinema)</span>
+                    <button class="listen-button" onclick="speakWord('cinema', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🧀</span><span>Delicatessen (Gastronomia)</span>
+                    <button class="listen-button" onclick="speakWord('delicatessen', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🛍️</span><span>Department Store (Grandi Magazzini)</span>
+                    <button class="listen-button" onclick="speakWord('department store', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🚒</span><span>Fire Station (Stazione dei Pompieri)</span>
+                    <button class="listen-button" onclick="speakWord('fire station', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🐟</span><span>Fishmonger's (Pescheria)</span>
+                    <button class="listen-button" onclick="speakWord('fishmonger\'s', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">💐</span><span>Florist's (Fiorista)</span>
+                    <button class="listen-button" onclick="speakWord('florist\'s', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🖼️</span><span>Gallery (Galleria d'arte)</span>
+                    <button class="listen-button" onclick="speakWord('gallery', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🎁</span><span>Gift Shop (Negozio di Souvenir)</span>
+                    <button class="listen-button" onclick="speakWord('gift shop', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🍎</span><span>Greengrocer's (Fruttivendolo)</span>
+                    <button class="listen-button" onclick="speakWord('greengrocer\'s', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🛒</span><span>Grocery (Negozio di Alimentari)</span>
+                    <button class="listen-button" onclick="speakWord('grocery', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">💇‍♀️</span><span>Hairdresser's (Parrucchiere)</span>
+                    <button class="listen-button" onclick="speakWord('hairdresser\'s', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🏥</span><span>Hospital (Ospedale)</span>
+                    <button class="listen-button" onclick="speakWord('hospital', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">📰</span><span>Newsagent's (Edicola)</span>
+                    <button class="listen-button" onclick="speakWord('newsagent\'s', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🐾</span><span>Pet Shop (Negozio di Animali)</span>
+                    <button class="listen-button" onclick="speakWord('pet shop', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">✉️</span><span>Post Office (Ufficio Postale)</span>
+                    <button class="listen-button" onclick="speakWord('post office', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🚓</span><span>Police Station (Stazione di Polizia)</span>
+                    <button class="listen-button" onclick="speakWord('police station', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">👟</span><span>Shoe Shop (Negozio di Scarpe)</span>
+                    <button class="listen-button" onclick="speakWord('shoe shop', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🏪</span><span>Supermarket (Supermercato)</span>
+                    <button class="listen-button" onclick="speakWord('supermarket', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🍽️</span><span>Restaurant (Ristorante)</span>
+                    <button class="listen-button" onclick="speakWord('restaurant', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🎭</span><span>Theatre (Teatro)</span>
+                    <button class="listen-button" onclick="speakWord('theatre', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🧸</span><span>Toy Shop (Negozio di Giocattoli)</span>
+                    <button class="listen-button" onclick="speakWord('toy shop', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🚆</span><span>Train Station (Stazione Ferroviaria)</span>
+                    <button class="listen-button" onclick="speakWord('train station', 'en-US')">Ascolta</button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Sezione 2: Esercizio -->
+        <div class="section-box">
+            <h2 class="text-2xl mb-4">Sezione 2: Esercizio - Completa le frasi</h2>
+
+            <h3 class="text-xl mt-6 mb-3">Ripasso: Preposizioni di Luogo</h3>
+            <div class="preposition-explanation text-lg leading-relaxed mb-4">
+                <p>Le preposizioni di luogo ci aiutano a indicare la posizione di qualcosa o qualcuno rispetto a qualcos'altro.</p>
+                <ul>
+                    <li><strong>Behind:</strong> Dietro a. (Es. The park is behind the school.)</li>
+                    <li><strong>Between:</strong> Tra due cose o persone. (Es. The bank is between the post office and the café.)</li>
+                    <li><strong>Next to:</strong> Accanto a. (Es. The bookshop is next to the bakery.)</li>
+                    <li><strong>In front of:</strong> Di fronte a, davanti a. (Es. The car park is in front of the cinema.)</li>
+                    <li><strong>Opposite:</strong> Di fronte a, dall'altra parte della strada o di uno spazio. (Es. The restaurant is opposite the fire station.)</li>
+                </ul>
+            </div>
+
+            <p class="text-lg mb-4">
+                Guarda la mappa qui sotto e completa le frasi usando le preposizioni di luogo corrette.
+            </p>
+
+            <div class="city-map-container">
+                <svg class="city-map-svg" width="600" height="450" viewBox="0 0 600 450">
+                    <!-- Roads -->
+                    <rect x="0" y="100" width="600" height="50" class="road"></rect>
+                    <rect x="0" y="300" width="600" height="50" class="road"></rect>
+                    <rect x="250" y="0" width="50" height="450" class="road"></rect>
+
+                    <!-- Road Labels -->
+                    <text x="300" y="125" class="road-label">King Street</text>
+                    <text x="300" y="325" class="road-label">Baker Street</text>
+                    <text x="275" y="225" class="road-label" transform="rotate(90 275 225)">Orchard Road</text>
+
+                    <!-- Buildings (Rectangles) -->
+                    <!-- Top Left Block -->
+                    <rect x="50" y="20" width="180" height="70" class="building"></rect>
+                    <text x="140" y="55" class="building-label">Department Store</text>
+
+                    <!-- Top Right Block -->
+                    <rect x="320" y="20" width="100" height="70" class="building"></rect>
+                    <text x="370" y="55" class="building-label">Café</text>
+
+                    <rect x="430" y="20" width="120" height="70" class="building"></rect>
+                    <text x="490" y="55" class="building-label">Bank</text>
+
+                    <!-- Middle Left Block -->
+                    <rect x="50" y="160" width="180" height="130" class="building"></rect>
+                    <text x="140" y="225" class="building-label">Cinema</text>
+
+                    <!-- Middle Right Block -->
+                    <rect x="320" y="160" width="100" height="60" class="building"></rect>
+                    <text x="370" y="190" class="building-label">Post Office</text>
+
+                    <rect x="430" y="160" width="120" height="60" class="building"></rect>
+                    <text x="490" y="190" class="building-label">Fire Station</text>
+
+                    <!-- Bottom Left Block -->
+                    <rect x="50" y="360" width="180" height="70" class="building"></rect>
+                    <text x="140" y="395" class="building-label">Museum</text>
+
+                    <!-- Bottom Right Block -->
+                    <rect x="320" y="360" width="100" height="70" class="building"></rect>
+                    <text x="370" y="395" class="building-label">Restaurant</text>
+
+                    <rect x="430" y="360" width="120" height="70" class="building"></rect>
+                    <text x="490" y="395" class="building-label">Police Station</text>
+                </svg>
+            </div>
+
+            <div id="fill-in-blanks-container" class="exercise-text-container">
+                <!-- Le frasi dell'esercizio verranno popolate qui dal JavaScript -->
+            </div>
+
+            <div class="flex justify-center mt-6">
+                <button class="button-primary" onclick="checkFillInBlanksExerciseAndGeneratePdf()">I miei risultati</button>
+                <button class="button-secondary" onclick="resetExercise()">Reset</button>
+            </div>
+            <div id="fill-in-blanks-feedback" class="feedback-message hidden"></div>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per la pronuncia delle parole
+        function speakWord(word, lang) {
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.lang = lang;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Dati per l'esercizio di completamento
+        const fillInBlanksData = [
+            { type: 'text', content: "1. The Department Store is " },
+            { type: 'blank', answer: "opposite" },
+            { type: 'text', content: " the Cinema." },
+
+            { type: 'text', content: "2. The Post Office is " },
+            { type: 'blank', answer: "next to" },
+            { type: 'text', content: " the Fire Station." },
+
+            { type: 'text', content: "3. The Police Station is " },
+            { type: 'blank', answer: "behind" },
+            { type: 'text', content: " the Fire Station." },
+
+            { type: 'text', content: "4. The Café is " },
+            { type: 'blank', answer: "between" },
+            { type: 'text', content: " the Bank and the Department Store." },
+
+            { type: 'text', content: "5. The Cinema is " },
+            { type: 'blank', answer: "in front of" },
+            { type: 'text', content: " the Museum." }
+        ];
+
+        // Funzione per creare l'esercizio di completamento
+        function createFillInBlanksExercise() {
+            const container = document.getElementById('fill-in-blanks-container');
+            container.innerHTML = ''; // Pulisce il contenuto precedente
+            let blankCounter = 0;
+
+            fillInBlanksData.forEach(part => {
+                if (part.type === 'text') {
+                    const span = document.createElement('span');
+                    span.textContent = part.content;
+                    container.appendChild(span);
+                } else if (part.type === 'blank') {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.classList.add('fill-in-blank-input');
+                    input.setAttribute('data-blank-id', blankCounter); // ID univoco per ogni blank
+                    container.appendChild(input);
+                    blankCounter++;
+                }
+            });
+        }
+
+        // Funzione per controllare le risposte e generare il PDF
+        function checkFillInBlanksExerciseAndGeneratePdf() {
+            const inputs = document.querySelectorAll('#fill-in-blanks-container .fill-in-blank-input');
+            let correctCount = 0;
+            let totalBlanks = 0;
+            const feedback = document.getElementById('fill-in-blanks-feedback');
+            let blankIndex = 0;
+            const resultsForPdf = [];
+
+            fillInBlanksData.forEach(part => {
+                if (part.type === 'text') {
+                    resultsForPdf.push({ type: 'text', content: part.content });
+                } else if (part.type === 'blank') {
+                    totalBlanks++;
+                    const input = inputs[blankIndex];
+                    const userAnswer = input.value.trim().toLowerCase();
+                    const correctAnswer = part.answer.toLowerCase();
+
+                    if (userAnswer === correctAnswer) {
+                        input.style.borderColor = '#10b981'; // Verde
+                        input.style.backgroundColor = '#ecfdf5'; // Sfondo verde chiaro
+                        correctCount++;
+                    } else {
+                        input.style.borderColor = '#ef4444'; // Rosso
+                        input.style.backgroundColor = '#fef2f2'; // Sfondo rosso chiaro
+                    }
+                    resultsForPdf.push({
+                        type: 'blank',
+                        userAnswer: input.value.trim(),
+                        correctAnswer: part.answer,
+                        isCorrect: (userAnswer === correctAnswer)
+                    });
+                    blankIndex++;
+                }
+            });
+
+            if (correctCount === totalBlanks) {
+                feedback.textContent = "Complimenti! Tutte le risposte sono corrette!";
+                feedback.classList.remove('feedback-incorrect', 'hidden');
+                feedback.classList.add('feedback-correct');
+            } else {
+                feedback.textContent = `Hai ${correctCount} risposte corrette su ${totalBlanks}. Riprova!`;
+                feedback.classList.remove('feedback-correct', 'hidden');
+                feedback.classList.add('feedback-incorrect');
+            }
+            feedback.classList.remove('hidden');
+
+            generatePdfReport(resultsForPdf, correctCount, totalBlanks);
+        }
+
+        function generatePdfReport(results, correctCount, totalBlanks) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(22);
+            doc.text("I Tuoi Risultati - Esercizio Luoghi e Preposizioni", 10, 20);
+
+            doc.setFontSize(14);
+            doc.text("Il tuo punteggio: " + correctCount + " / " + totalBlanks, 10, 35);
+            doc.text("--------------------------------------------------", 10, 45);
+
+            let yOffset = 55;
+            doc.setFontSize(12);
+
+            results.forEach(item => {
+                if (item.type === 'text') {
+                    // Aggiungi il testo normale
+                    doc.text(item.content, 10, yOffset, { maxWidth: 180 });
+                    yOffset += doc.getTextDimensions(item.content, { maxWidth: 180 }).h;
+                } else if (item.type === 'blank') {
+                    // Aggiungi la risposta dello studente e la correzione
+                    let line = `[La tua risposta: ${item.userAnswer} `;
+                    if (item.isCorrect) {
+                        doc.setTextColor(30, 130, 76); // Verde
+                        line += `(Corretta)]`;
+                    } else {
+                        doc.setTextColor(220, 50, 50); // Rosso
+                        line += `(Corretta: ${item.correctAnswer})]`;
+                    }
+                    doc.text(line, 10, yOffset);
+                    doc.setTextColor(0, 0, 0); // Resetta il colore a nero
+                    yOffset += 10; // Sposta in basso per la riga successiva
+                }
+            });
+
+            doc.save('Miei_Risultati_Luoghi_Preposizioni.pdf');
+        }
+
+        // Funzione per resettare l'esercizio
+        function resetExercise() {
+            const inputs = document.querySelectorAll('#fill-in-blanks-container .fill-in-blank-input');
+            const feedback = document.getElementById('fill-in-blanks-feedback');
+
+            inputs.forEach(input => {
+                input.value = '';
+                input.style.borderColor = ''; // Resetta al default
+                input.style.backgroundColor = ''; // Resetta al default
+            });
+            feedback.classList.add('hidden');
+            feedback.classList.remove('feedback-correct', 'feedback-incorrect');
+        }
+
+        // Inizializza l'esercizio al caricamento della pagina
+        document.addEventListener('DOMContentLoaded', () => {
+            createFillInBlanksExercise();
+        });
+    </script>
+</body>
+</html>
