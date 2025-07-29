@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obblighi e Descrizione Percorsi</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Stili personalizzati per estetica e interattività */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Sfondo azzurro-grigio chiaro */
+            color: #334155; /* Colore testo più scuro */
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 12px; /* Angoli più arrotondati */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Ombra più morbida */
+        }
+        h1, h2, h3 {
+            color: #1e3a8a; /* Blu più scuro per i titoli */
+            font-weight: 700;
+        }
+        .section-box {
+            background-color: #e0f2fe; /* Azzurro più chiaro per le sezioni */
+            border-left: 6px solid #3b82f6; /* Bordo blu */
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .explanation-points ul {
+            list-style: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .explanation-points li {
+            margin-bottom: 0.5rem;
+        }
+        .exercise-text-container {
+            line-height: 2; /* Aumenta l'altezza della linea per una migliore spaziatura con gli input */
+            font-size: 0.95rem; /* Testo leggermente più piccolo per far stare tutto su una riga */
+        }
+        .fill-in-blank-input {
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 0.4rem 0.6rem; /* Padding ridotto */
+            width: 180px; /* Larghezza adeguata per le risposte */
+            margin: 0 0.2rem; /* Margine più piccolo */
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+            display: inline-block; /* Permette agli input di fluire con il testo */
+            font-size: 0.9rem; /* Testo input leggermente più piccolo */
+        }
+        .fill-in-blank-input:focus {
+            border-color: #3b82f6;
+        }
+        .button-primary {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            border: none;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+        .button-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+        .button-primary:active {
+            transform: translateY(0);
+        }
+        .button-secondary {
+            background-color: #6b7280;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border: none;
+            margin-left: 1rem;
+        }
+        .button-secondary:hover {
+            background-color: #4b5563;
+        }
+        .feedback-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+            display: none; /* Hidden by default */
+        }
+        .feedback-correct {
+            background-color: #d1fae5; /* Verde per corretto */
+            color: #065f46;
+        }
+        .feedback-incorrect {
+            background-color: #fee2e2; /* Rosso per incorretto */
+            color: #991b1b;
+        }
+        .microphone-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #10b981; /* Green for microphone */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border: none;
+            margin-top: 1rem;
+        }
+        .microphone-button:hover {
+            background-color: #059669;
+        }
+        .microphone-button.recording {
+            background-color: #ef4444; /* Red when recording */
+        }
+        .microphone-button svg {
+            margin-right: 0.5rem;
+        }
+        .status-message {
+            margin-top: 1rem;
+            font-style: italic;
+            color: #64748b;
+        }
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.2s ease-in-out;
+        }
+        textarea:focus {
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-4xl text-center mb-6">Obblighi e Descrizione Percorsi</h1>
+
+        <!-- Sezione 1: Have to vs. Must/Mustn't -->
+        <div class="section-box">
+            <h2 class="text-2xl mb-4">Sezione 1: Have to vs. Must / Mustn't</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                "Must" e "Have to" esprimono entrambi un obbligo o una necessità, ma con sfumature diverse. La scelta tra i due dipende dalla fonte dell'obbligo.
+            </p>
+            <div class="explanation-points">
+                <h3 class="text-xl mb-2">Must:</h3>
+                <ul>
+                    <li><strong>Obbligo personale o forte raccomandazione:</strong> Si usa quando l'obbligo o la necessità provengono da chi parla (un'opinione personale, un forte desiderio, una regola autoimposta). <br>
+                        Esempio: I <strong>must</strong> study hard for my exam. (Devo studiare molto per il mio esame - è una mia decisione/necessità interna.)</li>
+                    <li><strong>Regole o leggi generali (spesso scritte):</strong> Può essere usato per regole che si applicano a tutti. <br>
+                        Esempio: Passengers <strong>must</strong> wear seatbelts. (I passeggeri devono indossare le cinture di sicurezza.)</li>
+                    <li><strong>Mustn't (Must not):</strong> Esprime un divieto forte, qualcosa che è proibito o non permesso. <br>
+                        Esempio: You <strong>mustn't</strong> smoke in here. (Non devi fumare qui - è proibito.)</li>
+                </ul>
+                <h3 class="text-xl mb-2">Have to:</h3>
+                <ul>
+                    <li><strong>Obbligo esterno:</strong> Si usa quando l'obbligo o la necessità derivano da una situazione esterna, da regole imposte da altri, o da circostanze. <br>
+                        Esempio: I <strong>have to</strong> work until 7 PM today. (Devo lavorare fino alle 19 oggi - è un obbligo imposto dal lavoro.)</li>
+                    <li><strong>Don't have to (Do not have to):</strong> Esprime la mancanza di obbligo, qualcosa che non è necessario fare. <br>
+                        Esempio: You <strong>don't have to</strong> come if you're busy. (Non devi venire se sei occupato - non è necessario.)</li>
+                </ul>
+                <h3 class="text-xl mb-2">Must/Mustn't al Passato (Had to):</h3>
+                <ul>
+                    <li>È importante sapere che **must** e **mustn't** non hanno una forma al passato. Per esprimere un obbligo o una necessità nel passato, si usa sempre **had to**. <br>
+                        Esempio: I <strong>had to</strong> leave early yesterday. (Ho dovuto partire presto ieri.) <br>
+                        Esempio (negativo): We <strong>didn't have to</strong> pay for the tickets. (Non abbiamo dovuto pagare i biglietti.)</li>
+                </ul>
+            </div>
+
+            <h3 class="text-xl mt-6 mb-3">Esercizio: Completa le frasi</h3>
+            <p class="text-lg leading-relaxed mb-4">
+                Completa le frasi con la forma corretta: **have to**, **must**, **mustn't** o **had to**.
+            </p>
+            <div id="obligations-exercise-container" class="exercise-text-container"></div>
+            <div class="flex justify-center mt-6">
+                <button class="button-primary" onclick="checkObligationsExercise()">I miei risultati (Sezione 1)</button>
+                <button class="button-secondary" onclick="resetObligationsExercise()">Reset</button>
+            </div>
+            <div id="obligations-feedback" class="feedback-message"></div>
+        </div>
+
+        <!-- Sezione 2: Descrivere un Percorso con Google Maps -->
+        <div class="section-box">
+            <h2 class="text-2xl mb-4">Sezione 2: Descrivere un Percorso con Google Maps</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                Per descrivere un percorso in inglese, immagina di dare indicazioni a qualcuno usando Google Maps. Sii chiaro e usa frasi semplici.
+            </p>
+            <h3 class="text-xl mb-2">Esempio di Descrizione:</h3>
+            <p class="text-lg leading-relaxed mb-4">
+                "To get from the train station to the main library: First, you need to exit the station and turn left onto Station Road. Walk straight for about 200 meters. You will pass a large supermarket on your right. Then, at the traffic lights, turn right onto Library Avenue. The library will be on your left, just opposite the park. It's a big, modern building."
+            </p>
+
+            <h3 class="text-xl mt-6 mb-3">Esercizio: Descrivi un Percorso a Voce</h3>
+            <p class="text-lg leading-relaxed mb-4">
+                Descrivi a voce come si arriva da un posto che conosci a un altro posto che conosci. Clicca il microfono per registrare la tua risposta.
+            </p>
+            <div id="route-exercise-container">
+                <div class="mb-4">
+                    <p class="text-lg mb-2">1. Come si arriva da casa tua alla stazione più vicina?</p>
+                    <button id="microphoneBtn1" class="microphone-button" onclick="toggleSpeechRecognition(0)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                            <path d="M8.25 4.5a3.75 3.75 0 1 1 7.5 0v8.25a3.75 3.75 0 1 1-7.5 0V4.5Z" />
+                            <path d="M6 10.5a.75.75 0 0 1 .75.75v1.5a5.25 5.25 0 1 0 10.5 0v-1.5a.75.75 0 0 1 1.5 0v1.5a6.75 6.75 0 1 1-13.5 0v-1.5A.75.75 0 0 1 6 10.5Z" />
+                            <path d="M9.75 18a.75.75 0 0 1 .75.75v.75a2.25 2.25 0 0 0 4.5 0v-.75a.75.75 0 0 1 1.5 0v.75a3.75 3.75 0 0 1-7.5 0v-.75a.75.75 0 0 1 .75-.75Z" />
+                        </svg>
+                        Avvia Registrazione
+                    </button>
+                    <p id="speech-status-0" class="status-message"></p>
+                    <textarea id="transcribedText-0" placeholder="La tua descrizione apparirà qui..." readonly></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-lg mb-2">2. Come si arriva dalla tua scuola/lavoro al tuo ristorante preferito?</p>
+                    <button id="microphoneBtn2" class="microphone-button" onclick="toggleSpeechRecognition(1)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                            <path d="M8.25 4.5a3.75 3.75 0 1 1 7.5 0v8.25a3.75 3.75 0 1 1-7.5 0V4.5Z" />
+                            <path d="M6 10.5a.75.75 0 0 1 .75.75v1.5a5.25 5.25 0 1 0 10.5 0v-1.5a.75.75 0 0 1 1.5 0v1.5a6.75 6.75 0 1 1-13.5 0v-1.5A.75.75 0 0 1 6 10.5Z" />
+                            <path d="M9.75 18a.75.75 0 0 1 .75.75v.75a2.25 2.25 0 0 0 4.5 0v-.75a.75.75 0 0 1 1.5 0v.75a3.75 3.75 0 0 1-7.5 0v-.75a.75.75 0 0 1 .75-.75Z" />
+                        </svg>
+                        Avvia Registrazione
+                    </button>
+                    <p id="speech-status-1" class="status-message"></p>
+                    <textarea id="transcribedText-1" placeholder="La tua descrizione apparirà qui..." readonly></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-lg mb-2">3. Come si arriva dal centro della tua città al museo principale?</p>
+                    <button id="microphoneBtn3" class="microphone-button" onclick="toggleSpeechRecognition(2)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                            <path d="M8.25 4.5a3.75 3.75 0 1 1 7.5 0v8.25a3.75 3.75 0 1 1-7.5 0V4.5Z" />
+                            <path d="M6 10.5a.75.75 0 0 1 .75.75v1.5a5.25 5.25 0 1 0 10.5 0v-1.5a.75.75 0 0 1 1.5 0v1.5a6.75 6.75 0 1 1-13.5 0v-1.5A.75.75 0 0 1 6 10.5Z" />
+                            <path d="M9.75 18a.75.75 0 0 1 .75.75v.75a2.25 2.25 0 0 0 4.5 0v-.75a.75.75 0 0 1 1.5 0v.75a3.75 3.75 0 0 1-7.5 0v-.75a.75.75 0 0 1 .75-.75Z" />
+                        </svg>
+                        Avvia Registrazione
+                    </button>
+                    <p id="speech-status-2" class="status-message"></p>
+                    <textarea id="transcribedText-2" placeholder="La tua descrizione apparirà qui..." readonly></textarea>
+                </div>
+            </div>
+            <div class="flex justify-center mt-6">
+                <button class="button-primary" onclick="generateRoutePdfReport()">I miei risultati (Sezione 2)</button>
+                <button class="button-secondary" onclick="resetRouteExercise()">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Section 1: Obligations Exercise ---
+        const obligationsData = [
+            { sentence: "1. I ____ (study) hard for my exam, it's very important for me.", answer: "must study" },
+            { sentence: "2. You ____ (wear) a uniform at this school, it's a strict rule.", answer: "have to wear" },
+            { sentence: "3. Passengers ____ (not / smoke) on the plane.", answer: "mustn't smoke" },
+            { sentence: "4. Yesterday, we ____ (finish) the report before going home.", answer: "had to finish" },
+            { sentence: "5. She ____ (not / work) on Sundays, it's her day off.", answer: "doesn't have to work" },
+            { sentence: "6. When I was a child, I ____ (go) to bed early every night.", answer: "had to go" },
+            { sentence: "7. You ____ (be) quiet in the library.", answer: "must be" },
+            { sentence: "8. He ____ (get) a visa to travel to that country.", answer: "has to get" },
+            { sentence: "9. We ____ (not / forget) to buy milk on the way home.", answer: "mustn't forget" },
+            { sentence: "10. Last year, they ____ (not / pay) for parking, it was free.", answer: "didn't have to pay" }
+        ];
+
+        function createObligationsExercise() {
+            const container = document.getElementById('obligations-exercise-container');
+            container.innerHTML = '';
+            obligationsData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('flex', 'items-center', 'flex-wrap', 'gap-2', 'mb-2');
+
+                const parts = q.sentence.split('____');
+                parts.forEach((part, i) => {
+                    if (part) {
+                        const span = document.createElement('span');
+                        span.textContent = part.trim();
+                        questionDiv.appendChild(span);
+                    }
+                    if (i < parts.length - 1) {
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.classList.add('fill-in-blank-input');
+                        input.setAttribute('data-index', index);
+                        input.setAttribute('data-part', i);
+                        questionDiv.appendChild(input);
+                    }
+                });
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function checkObligationsExercise() {
+            console.log("checkObligationsExercise: Funzione avviata.");
+            const inputs = document.querySelectorAll('#obligations-exercise-container .fill-in-blank-input');
+            let correctCount = 0;
+            let totalBlanks = 0;
+            const feedback = document.getElementById('obligations-feedback');
+            const resultsForPdf = [];
+
+            obligationsData.forEach((q, qIndex) => {
+                const currentQuestionInputs = Array.from(inputs).filter(input => parseInt(input.getAttribute('data-index')) === qIndex);
+                const correctAnswers = q.answer.split(' ');
+
+                let questionResult = {
+                    sentence: q.sentence,
+                    userAnswers: [],
+                    correctAnswers: correctAnswers,
+                    isCorrect: true
+                };
+
+                currentQuestionInputs.forEach((input, inputPartIndex) => {
+                    totalBlanks++;
+                    const userAnswer = input.value.trim().toLowerCase();
+                    const correctAnswerPart = correctAnswers[inputPartIndex] ? correctAnswers[inputPartIndex].toLowerCase() : '';
+
+                    questionResult.userAnswers.push(input.value.trim());
+
+                    if (userAnswer === correctAnswerPart) {
+                        input.style.borderColor = '#10b981';
+                        input.style.backgroundColor = '#ecfdf5';
+                        correctCount++;
+                    } else {
+                        input.style.borderColor = '#ef4444';
+                        input.style.backgroundColor = '#fef2f2';
+                        questionResult.isCorrect = false;
+                    }
+                });
+                resultsForPdf.push(questionResult);
+            });
+
+            feedback.style.display = 'block';
+            if (correctCount === totalBlanks) {
+                feedback.classList.remove('feedback-incorrect');
+                feedback.classList.add('feedback-correct');
+                feedback.textContent = "Complimenti! Tutte le risposte sono corrette!";
+            } else {
+                feedback.classList.remove('feedback-correct');
+                feedback.classList.add('feedback-incorrect');
+                feedback.textContent = `Hai ${correctCount} risposte corrette su ${totalBlanks}. Riprova!`;
+            }
+
+            try {
+                generateObligationsPdfReport(resultsForPdf, correctCount, totalBlanks);
+                console.log("checkObligationsExercise: Generazione PDF avviata.");
+            } catch (error) {
+                console.error("checkObligationsExercise: Errore durante la generazione del PDF:", error);
+                feedback.textContent = "Si è verificato un errore durante la generazione del PDF. Controlla la console del browser.";
+                feedback.classList.remove('feedback-correct');
+                feedback.classList.add('feedback-incorrect');
+            }
+        }
+
+        function resetObligationsExercise() {
+            const inputs = document.querySelectorAll('#obligations-exercise-container .fill-in-blank-input');
+            inputs.forEach(input => {
+                input.value = '';
+                input.style.borderColor = '';
+                input.style.backgroundColor = '';
+            });
+            document.getElementById('obligations-feedback').style.display = 'none';
+            console.log("resetObligationsExercise: Esercizio resettato.");
+        }
+
+        function generateObligationsPdfReport(results, correctCount, totalQuestions) {
+            console.log("generateObligationsPdfReport: Funzione avviata.");
+            if (typeof window.jspdf === 'undefined') {
+                console.error("generateObligationsPdfReport: Libreria jsPDF non caricata.");
+                alert("Errore: La libreria per la generazione del PDF non è stata caricata correttamente. Riprova più tardi.");
+                return;
+            }
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                doc.setFontSize(22);
+                doc.text("Risultati Esercizio Obblighi", 10, 20);
+
+                doc.setFontSize(14);
+                doc.text("Il tuo punteggio: " + correctCount + " / " + totalQuestions, 10, 35);
+                doc.text("--------------------------------------------------", 10, 45);
+
+                let yOffset = 55;
+                doc.setFontSize(12);
+
+                results.forEach(item => {
+                    let sentenceDisplay = item.sentence;
+                    let currentBlank = 0;
+                    sentenceDisplay = sentenceDisplay.replace(/____/g, () => {
+                        const userAnswer = item.userAnswers[currentBlank] || '';
+                        currentBlank++;
+                        return `[${userAnswer}]`;
+                    });
+
+                    doc.text(sentenceDisplay, 10, yOffset, { maxWidth: 180 });
+                    yOffset += doc.getTextDimensions(sentenceDisplay, { maxWidth: 180 }).h + 2;
+
+                    let correctnessLine = "Corretta: ";
+                    if (item.isCorrect) {
+                        doc.setTextColor(30, 130, 76);
+                        correctnessLine += "Sì";
+                    } else {
+                        doc.setTextColor(220, 50, 50);
+                        correctnessLine += `No (Risposta/e corretta/e: ${item.correctAnswers.join(' ')})`;
+                    }
+                    doc.text(correctnessLine, 15, yOffset);
+                    doc.setTextColor(0, 0, 0);
+                    yOffset += 12;
+                });
+
+                doc.save(`Risultati_Obblighi.pdf`);
+                console.log("generateObligationsPdfReport: PDF salvato con successo.");
+            } catch (error) {
+                console.error("generateObligationsPdfReport: Errore nella funzione jsPDF:", error);
+                alert("Si è verificato un errore durante la creazione del PDF. Controlla la console del browser.");
+            }
+        }
+
+        // --- Section 2: Route Description Exercise ---
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = [];
+        let isRecording = [false, false, false];
+        const routePrompts = [
+            "Come si arriva da casa tua alla stazione più vicina?",
+            "Come si arriva dalla tua scuola/lavoro al tuo ristorante preferito?",
+            "Come si arriva dal centro della tua città al museo principale?"
+        ];
+
+        function initializeSpeechRecognition() {
+            if (SpeechRecognition) {
+                routePrompts.forEach((_, index) => {
+                    recognition[index] = new SpeechRecognition();
+                    recognition[index].continuous = true;
+                    recognition[index].interimResults = true;
+                    recognition[index].lang = 'en-US'; // Set language to English for transcription
+
+                    const microphoneBtn = document.getElementById(`microphoneBtn${index + 1}`);
+                    const speechStatus = document.getElementById(`speech-status-${index}`);
+                    const transcribedTextarea = document.getElementById(`transcribedText-${index}`);
+
+                    recognition[index].onstart = () => {
+                        isRecording[index] = true;
+                        microphoneBtn.classList.add('recording');
+                        microphoneBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M8.25 4.5a3.75 3.75 0 1 1 7.5 0v8.25a3.75 3.75 0 1 1-7.5 0V4.5Z" /><path d="M6 10.5a.75.75 0 0 1 .75.75v1.5a5.25 5.25 0 1 0 10.5 0v-1.5a.75.75 0 0 1 1.5 0v1.5a6.75 6.75 0 1 1-13.5 0v-1.5A.75.75 0 0 1 6 10.5Z" /><path d="M9.75 18a.75.75 0 0 1 .75.75v.75a2.25 2.25 0 0 0 4.5 0v-.75a.75.75 0 0 1 1.5 0v.75a3.75 3.75 0 0 1-7.5 0v-.75a.75.75 0 0 1 .75-.75Z" /></svg> Ferma Registrazione';
+                        speechStatus.textContent = "Registrando...";
+                    };
+
+                    recognition[index].onresult = (event) => {
+                        let interimTranscript = '';
+                        let finalTranscript = '';
+                        for (let i = event.resultIndex; i < event.results.length; ++i) {
+                            if (event.results[i].isFinal) {
+                                finalTranscript += event.results[i][0].transcript;
+                            } else {
+                                interimTranscript += event.results[i][0].transcript;
+                            }
+                        }
+                        transcribedTextarea.value = finalTranscript + interimTranscript;
+                    };
+
+                    recognition[index].onend = () => {
+                        isRecording[index] = false;
+                        microphoneBtn.classList.remove('recording');
+                        microphoneBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M8.25 4.5a3.75 3.75 0 1 1 7.5 0v8.25a3.75 3.75 0 1 1-7.5 0V4.5Z" /><path d="M6 10.5a.75.75 0 0 1 .75.75v1.5a5.25 5.25 0 1 0 10.5 0v-1.5a.75.75 0 0 1 1.5 0v1.5a6.75 6.75 0 1 1-13.5 0v-1.5A.75.75 0 0 1 6 10.5Z" /><path d="M9.75 18a.75.75 0 0 1 .75.75v.75a2.25 2.25 0 0 0 4.5 0v-.75a.75.75 0 0 1 1.5 0v.75a3.75 3.75 0 0 1-7.5 0v-.75a.75.75 0 0 1 .75-.75Z" /></svg> Avvia Registrazione';
+                        speechStatus.textContent = "Registrazione terminata.";
+                    };
+
+                    recognition[index].onerror = (event) => {
+                        console.error('Speech recognition error:', event.error);
+                        speechStatus.textContent = `Errore: ${event.error}. Riprova.`;
+                        isRecording[index] = false;
+                        microphoneBtn.classList.remove('recording');
+                        microphoneBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M8.25 4.5a3.75 3.75 0 1 1 7.5 0v8.25a3.75 3.75 0 1 1-7.5 0V4.5Z" /><path d="M6 10.5a.75.75 0 0 1 .75.75v1.5a5.25 5.25 0 1 0 10.5 0v-1.5a.75.75 0 0 1 1.5 0v1.5a6.75 6.75 0 1 1-13.5 0v-1.5A.75.75 0 0 1 6 10.5Z" /><path d="M9.75 18a.75.75 0 0 1 .75.75v.75a2.25 2.25 0 0 0 4.5 0v-.75a.75.75 0 0 1 1.5 0v.75a3.75 3.75 0 0 1-7.5 0v-.75a.75.75 0 0 1 .75-.75Z" /></svg> Avvia Registrazione';
+                    };
+                });
+            } else {
+                for (let i = 1; i <= 3; i++) {
+                    document.getElementById(`microphoneBtn${i}`).disabled = true;
+                    document.getElementById(`speech-status-${i - 1}`).textContent = "Il riconoscimento vocale non è supportato in questo browser. Utilizza Chrome o Edge.";
+                }
+            }
+        }
+
+        function toggleSpeechRecognition(index) {
+            if (isRecording[index]) {
+                recognition[index].stop();
+                console.log(`toggleSpeechRecognition: Registrazione ${index} fermata.`);
+            } else {
+                document.getElementById(`transcribedText-${index}`).value = '';
+                recognition[index].start();
+                console.log(`toggleSpeechRecognition: Registrazione ${index} avviata.`);
+            }
+        }
+
+        function generateRoutePdfReport() {
+            console.log("generateRoutePdfReport: Funzione avviata.");
+            if (typeof window.jspdf === 'undefined') {
+                console.error("generateRoutePdfReport: Libreria jsPDF non caricata.");
+                alert("Errore: La libreria per la generazione del PDF non è stata caricata correttamente. Riprova più tardi.");
+                return;
+            }
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                doc.setFontSize(22);
+                doc.text("I Tuoi Risultati - Descrizione Percorsi", 10, 20);
+
+                doc.setFontSize(14);
+                doc.text("--------------------------------------------------", 10, 35);
+
+                let yOffset = 45;
+                doc.setFontSize(12);
+
+                routePrompts.forEach((prompt, index) => {
+                    const transcribedText = document.getElementById(`transcribedText-${index}`).value;
+
+                    doc.text(`${index + 1}. ${prompt}`, 10, yOffset, { maxWidth: 180 });
+                    yOffset += doc.getTextDimensions(`${index + 1}. ${prompt}`, { maxWidth: 180 }).h + 2;
+
+                    if (transcribedText.trim() === "") {
+                        doc.text("Nessuna descrizione fornita.", 15, yOffset);
+                    } else {
+                        const lines = doc.splitTextToSize(transcribedText, 170);
+                        doc.text(lines, 15, yOffset);
+                        yOffset += doc.getTextDimensions(transcribedText, { maxWidth: 170 }).h;
+                    }
+                    yOffset += 10; // Spazio tra le domande
+                });
+
+                doc.save(`Risultati_Descrizione_Percorsi.pdf`);
+                console.log("generateRoutePdfReport: PDF salvato con successo.");
+            } catch (error) {
+                console.error("generateRoutePdfReport: Errore nella funzione jsPDF:", error);
+                alert("Si è verificato un errore durante la creazione del PDF. Controlla la console del browser.");
+            }
+        }
+
+        function resetRouteExercise() {
+            for (let i = 0; i < 3; i++) {
+                if (isRecording[i]) {
+                    recognition[i].stop();
+                }
+                document.getElementById(`transcribedText-${i}`).value = '';
+                document.getElementById(`speech-status-${i}`).textContent = '';
+            }
+            console.log("resetRouteExercise: Esercizio percorso resettato.");
+        }
+
+        // Initialize exercises on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            createObligationsExercise();
+            initializeSpeechRecognition();
+            console.log("Pagina caricata e esercizi inizializzati.");
+        });
+    </script>
+</body>
+</html>
