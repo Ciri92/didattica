@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Conjunctions</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Custom styles for better aesthetics and interactivity */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            color: #334155; /* Darker text color */
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 12px; /* More rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Softer shadow */
+        }
+        h1, h2 {
+            color: #1e3a8a; /* Darker blue for headings */
+            font-weight: 700;
+        }
+        .explanation-box {
+            background-color: #e0f2fe; /* Lighter blue for explanation */
+            border-left: 6px solid #3b82f6; /* Blue border */
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .example-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .example-list li::before {
+            content: '•';
+            color: #3b82f6;
+            position: absolute;
+            left: 0;
+        }
+        .exercise-section {
+            background-color: #f8fafc; /* Very light gray for exercises */
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            border: 1px solid #e2e8f0;
+        }
+        .fill-in-blank-input {
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            width: 120px; /* Slightly smaller width for better flow in text */
+            margin: 0 0.25rem; /* Smaller margin */
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+            display: inline-block; /* Allow inputs to flow with text */
+        }
+        .fill-in-blank-input:focus {
+            border-color: #3b82f6;
+        }
+        .feedback-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .feedback-correct {
+            background-color: #d1fae5; /* Green for correct */
+            color: #065f46;
+        }
+        .feedback-incorrect {
+            background-color: #fee2e2; /* Red for incorrect */
+            color: #991b1b;
+        }
+        .button-primary {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            border: none;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+        .button-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+        .button-primary:active {
+            transform: translateY(0);
+        }
+        .reset-button {
+            background-color: #ef4444;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border: none;
+            margin-left: 1rem;
+        }
+        .reset-button:hover {
+            background-color: #dc2626;
+        }
+        .fill-in-blanks-text-container {
+            line-height: 2.5; /* Increase line height for better spacing with inputs */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-4xl text-center mb-6">Time Conjunctions: First, After that, Then, Finally</h1>
+
+        <div class="explanation-box">
+            <h2 class="text-2xl mb-4">What are Time Conjunctions?</h2>
+            <p class="text-lg leading-relaxed">
+                Time conjunctions are words or phrases we use to connect events or actions in chronological order. They help us understand the sequence in which things happen. The conjunctions we will look at today are: <strong>first</strong>, <strong>after that</strong>, <strong>then</strong>, and <strong>finally</strong>.
+            </p>
+
+            <h3 class="text-xl mt-6 mb-3">Detailed Explanation:</h3>
+            <ul class="example-list text-lg">
+                <li>
+                    <strong>First:</strong> We use "first" to indicate the initial event or action in a sequence.
+                    <br><em>Example:</em> <span class="font-semibold text-blue-700">First</span>, I wake up.
+                </li>
+                <li>
+                    <strong>After that:</strong> We use "after that" to indicate an event that immediately follows the previous one. It can be used interchangeably with "then" in many contexts, but "after that" emphasizes the direct temporal consequence more.
+                    <br><em>Example:</em> I eat breakfast. <span class="font-semibold text-blue-700">After that</span>, I brush my teeth.
+                </li>
+                <li>
+                    <strong>Then:</strong> We use "then" to indicate the next action in a sequence. It is very common and versatile.
+                    <br><em>Example:</em> I brush my teeth. <span class="font-semibold text-blue-700">Then</span>, I get dressed.
+                </li>
+                <li>
+                    <strong>Finally:</strong> We use "finally" to indicate the last event or action in a sequence.
+                    <br><em>Example:</em> I get dressed. <span class="font-semibold text-blue-700">Finally</span>, I leave for work.
+                </li>
+            </ul>
+        </div>
+
+        <div class="exercise-section mt-8">
+            <h2 class="text-2xl mb-4">Exercise: Complete the Text</h2>
+            <p class="mb-4">Complete the following text with the correct time conjunction: <strong>first, after that, then, finally</strong>.</p>
+
+            <div id="fill-in-blanks-container" class="fill-in-blanks-text-container text-lg">
+                <!-- Fill-in-blanks will be populated by JS -->
+            </div>
+
+            <div class="flex justify-center mt-6">
+                <button class="button-primary" onclick="checkFillInBlanksExerciseAndGeneratePdf()">My Results</button>
+                <button class="reset-button" onclick="resetFillInBlanksExercise()">Reset</button>
+            </div>
+            <div id="fill-in-blanks-feedback" class="feedback-message hidden"></div>
+        </div>
+    </div>
+
+    <script>
+        // Exercise: Fill in the Blanks
+        const fillInBlanksData = [
+            { type: 'text', content: "My day starts early. " },
+            { type: 'blank', answer: "First" },
+            { type: 'text', content: ", I wake up and have breakfast. " },
+            { type: 'blank', answer: "After that" },
+            { type: 'text', content: ", I get ready for work. " },
+            { type: 'blank', answer: "Then" },
+            { type: 'text', content: ", I leave the house and take the bus. " },
+            { type: 'blank', answer: "Then" },
+            { type: 'text', content: ", I arrive at the office and start working. " },
+            { type: 'blank', answer: "After that" },
+            { type: 'text', content: ", I come back home and have dinner. " },
+            { type: 'blank', answer: "Then" },
+            { type: 'text', content: ", I read a book or watch a movie. " },
+            { type: 'blank', answer: "Finally" },
+            { type: 'text', content: ", I go to bed." }
+        ];
+
+        function createFillInBlanksExercise() {
+            const container = document.getElementById('fill-in-blanks-container');
+            container.innerHTML = ''; // Clear previous content
+            let blankCounter = 0;
+
+            fillInBlanksData.forEach(part => {
+                if (part.type === 'text') {
+                    const span = document.createElement('span');
+                    span.textContent = part.content;
+                    container.appendChild(span);
+                } else if (part.type === 'blank') {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.classList.add('fill-in-blank-input');
+                    input.setAttribute('data-blank-id', blankCounter); // Unique ID for each blank
+                    container.appendChild(input);
+                    blankCounter++;
+                }
+            });
+        }
+
+        function checkFillInBlanksExerciseAndGeneratePdf() {
+            const inputs = document.querySelectorAll('#fill-in-blanks-container .fill-in-blank-input');
+            let correctCount = 0;
+            let totalBlanks = 0;
+            const feedback = document.getElementById('fill-in-blanks-feedback');
+            let blankIndex = 0;
+            const resultsForPdf = [];
+
+            fillInBlanksData.forEach(part => {
+                if (part.type === 'text') {
+                    resultsForPdf.push({ type: 'text', content: part.content });
+                } else if (part.type === 'blank') {
+                    totalBlanks++;
+                    const input = inputs[blankIndex];
+                    const userAnswer = input.value.trim().toLowerCase();
+                    const correctAnswer = part.answer.toLowerCase();
+
+                    if (userAnswer === correctAnswer) {
+                        input.style.borderColor = '#10b981'; // Green
+                        input.style.backgroundColor = '#ecfdf5'; // Light green background
+                        correctCount++;
+                    } else {
+                        input.style.borderColor = '#ef4444'; // Red
+                        input.style.backgroundColor = '#fef2f2'; // Light red background
+                    }
+                    resultsForPdf.push({
+                        type: 'blank',
+                        userAnswer: input.value.trim(),
+                        correctAnswer: part.answer,
+                        isCorrect: (userAnswer === correctAnswer)
+                    });
+                    blankIndex++;
+                }
+            });
+
+            if (correctCount === totalBlanks) {
+                feedback.textContent = "Congratulations! All answers are correct!";
+                feedback.classList.remove('feedback-incorrect', 'hidden');
+                feedback.classList.add('feedback-correct');
+            } else {
+                feedback.textContent = `You got ${correctCount} out of ${totalBlanks} correct. Keep trying!`;
+                feedback.classList.remove('feedback-correct', 'hidden');
+                feedback.classList.add('feedback-incorrect');
+            }
+            feedback.classList.remove('hidden');
+
+            generatePdfReport(resultsForPdf, correctCount, totalBlanks);
+        }
+
+        function generatePdfReport(results, correctCount, totalBlanks) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(22);
+            doc.text("Time Conjunctions Exercise Results", 10, 20);
+
+            doc.setFontSize(14);
+            doc.text("Your Score: " + correctCount + " / " + totalBlanks, 10, 35);
+            doc.text("--------------------------------------------------", 10, 45);
+
+            let yOffset = 55;
+            doc.setFontSize(12);
+
+            results.forEach(item => {
+                if (item.type === 'text') {
+                    doc.text(item.content, 10, yOffset, { maxWidth: 180 });
+                    yOffset += doc.getTextDimensions(item.content, { maxWidth: 180 }).h;
+                } else if (item.type === 'blank') {
+                    let line = "";
+                    if (item.isCorrect) {
+                        doc.setTextColor(30, 130, 76); // Green
+                        line = `[Your Answer: ${item.userAnswer} (Correct)]`;
+                    } else {
+                        doc.setTextColor(220, 50, 50); // Red
+                        line = `[Your Answer: ${item.userAnswer} (Correct: ${item.correctAnswer})]`;
+                    }
+                    doc.text(line, 10, yOffset);
+                    doc.setTextColor(0, 0, 0); // Reset color to black
+                    yOffset += 10; // Move down for the next line
+                }
+            });
+
+            doc.save('Time_Conjunctions_Results.pdf');
+        }
+
+        function resetFillInBlanksExercise() {
+            const inputs = document.querySelectorAll('#fill-in-blanks-container .fill-in-blank-input');
+            const feedback = document.getElementById('fill-in-blanks-feedback');
+
+            inputs.forEach(input => {
+                input.value = '';
+                input.style.borderColor = ''; // Reset to default
+                input.style.backgroundColor = ''; // Reset to default
+            });
+            feedback.classList.add('hidden');
+            feedback.classList.remove('feedback-correct', 'feedback-incorrect');
+        }
+
+        // Initialize exercises on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            createFillInBlanksExercise();
+        });
+    </script>
+</body>
+</html>
