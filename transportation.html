@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio: Mezzi di Trasporto</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Stili personalizzati per estetica e interattività */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Sfondo azzurro-grigio chiaro */
+            color: #334155; /* Colore testo più scuro */
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 12px; /* Angoli più arrotondati */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Ombra più morbida */
+        }
+        h1, h2, h3 {
+            color: #1e3a8a; /* Blu più scuro per i titoli */
+            font-weight: 700;
+        }
+        .section-box {
+            background-color: #e0f2fe; /* Azzurro più chiaro per le sezioni */
+            border-left: 6px solid #3b82f6; /* Bordo blu */
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .matching-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Due colonne per l'abbinamento */
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .matching-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 0.75rem;
+        }
+        .matching-item .emoji {
+            font-size: 2rem;
+        }
+        .matching-item input[type="text"] {
+            width: 120px;
+            padding: 0.5rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s ease-in-out;
+        }
+        .matching-item input[type="text"]:focus {
+            border-color: #3b82f6;
+        }
+        .exercise-text-container {
+            line-height: 2; /* Aumenta l'altezza della linea per una migliore spaziatura con gli input */
+            font-size: 0.95rem; /* Testo leggermente più piccolo */
+        }
+        .fill-in-blank-input {
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 0.4rem 0.6rem;
+            width: 100%; /* Larghezza completa per la frase */
+            margin: 0.5rem 0;
+            text-align: left;
+            outline: none;
+            transition: border-color 0.2s ease-in-out;
+        }
+        .fill-in-blank-input:focus {
+            border-color: #3b82f6;
+        }
+        .button-primary {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            border: none;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+        .button-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+        .button-primary:active {
+            transform: translateY(0);
+        }
+        .button-secondary {
+            background-color: #6b7280;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border: none;
+            margin-left: 1rem;
+        }
+        .button-secondary:hover {
+            background-color: #4b5563;
+        }
+        .feedback-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+            display: none; /* Hidden by default */
+        }
+        .feedback-correct {
+            background-color: #d1fae5; /* Green for correct */
+            color: #065f46;
+        }
+        .feedback-incorrect {
+            background-color: #fee2e2; /* Red for incorrect */
+            color: #991b1b;
+        }
+        .how-long-prompt {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .word-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+        .word-list-item {
+            background-color: #e0f2fe;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 500;
+            color: #1e3a8a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-4xl text-center mb-6">Esercizio: Mezzi di Trasporto e Durata</h1>
+
+        <!-- Sezione 1: Collega Emoji e Nomi -->
+        <div class="section-box">
+            <h2 class="text-2xl mb-4">Sezione 1: Collega l'Emoji al Mezzo di Trasporto</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                Abbina ogni emoji al nome corrispondente del mezzo di trasporto. Scrivi il nome del mezzo di trasporto accanto all'emoji.
+            </p>
+            <div class="word-list">
+                <span class="word-list-item">car</span>
+                <span class="word-list-item">bike</span>
+                <span class="word-list-item">bus</span>
+                <span class="word-list-item">coach</span>
+                <span class="word-list-item">scooter</span>
+                <span class="word-list-item">train</span>
+                <span class="word-list-item">ship</span>
+                <span class="word-list-item">boat</span>
+                <span class="word-list-item">underground</span>
+                <span class="word-list-item">sports car</span>
+                <span class="word-list-item">lorry/truck</span>
+                <span class="word-list-item">van</span>
+                <span class="word-list-item">camper van</span>
+                <span class="word-list-item">helicopter</span>
+                <span class="word-list-item">yacht</span>
+            </div>
+            <div id="matching-exercise-container" class="matching-grid">
+                <!-- Items will be populated by JavaScript -->
+            </div>
+            <div class="flex justify-center mt-6">
+                <button class="button-primary" onclick="checkMatchingExercise()">I miei risultati (Sezione 1)</button>
+                <button class="button-secondary" onclick="resetMatchingExercise()">Reset</button>
+            </div>
+            <div id="matching-feedback" class="feedback-message"></div>
+        </div>
+
+        <!-- Sezione 2: How long does it take...? -->
+        <div class="section-box">
+            <h2 class="text-2xl mb-4">Sezione 2: "How long does it take...?"</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                Usiamo la formula "How long does it take...?" per chiedere quanto tempo è necessario per fare qualcosa o per andare da un posto all'altro.
+            </p>
+            <h3 class="text-xl mb-2">Struttura:</h3>
+            <p class="text-lg leading-relaxed mb-4">
+                <strong>How long does it take + [soggetto/pronome] + to go by [mezzo di trasporto] + from [luogo A] + to [luogo B]?</strong>
+                <br>Esempio: <em>How long does it take you to go by car from your home to school?</em>
+            </p>
+
+            <h3 class="text-xl mt-6 mb-3">Esercizio: Scrivi la domanda completa</h3>
+            <p class="text-lg leading-relaxed mb-4">
+                Per ogni riga, scrivi la domanda completa usando la formula "How long does it take...?" e le informazioni fornite.
+            </p>
+            <div id="how-long-exercise-container" class="exercise-text-container">
+                <!-- Items will be populated by JavaScript -->
+            </div>
+            <div class="flex justify-center mt-6">
+                <button class="button-primary" onclick="checkHowLongExercise()">I miei risultati (Sezione 2)</button>
+                <button class="button-secondary" onclick="resetHowLongExercise()">Reset</button>
+            </div>
+            <div id="how-long-feedback" class="feedback-message"></div>
+        </div>
+    </div>
+
+    <script>
+        // Data for Section 1: Matching Exercise
+        const transportData = [
+            { emoji: '🚗', name: 'car' },
+            { emoji: '🚲', name: 'bike' },
+            { emoji: '🚌', name: 'bus' },
+            { emoji: '🚍', name: 'coach' },
+            { emoji: '🛵', name: 'scooter' },
+            { emoji: '🚆', name: 'train' },
+            { emoji: '🚢', name: 'ship' },
+            { emoji: '🚤', name: 'boat' },
+            { emoji: '🚇', name: 'underground' },
+            { emoji: '🏎️', name: 'sports car' },
+            { emoji: '🚚', name: 'lorry/truck' },
+            { emoji: '🚐', name: 'van' },
+            { emoji: '🏕️', name: 'camper van' },
+            { emoji: '🚁', name: 'helicopter' },
+            { emoji: '⛵', name: 'yacht' }
+        ];
+
+        // Data for Section 2: How long does it take...? Exercise
+        const howLongQuestions = [
+            { id: 1, emoji: '🚶‍♂️', subject: 'you', transport: 'foot', from: 'your home', to: 'the nearest park' },
+            { id: 2, emoji: '🚌', subject: 'your friend', transport: 'bus', from: 'the city center', to: 'the hospital' },
+            { id: 3, emoji: '✈️', subject: 'they', transport: 'plane', from: 'Rome', to: 'New York' },
+            { id: 4, emoji: '🚲', subject: 'she', transport: 'bike', from: 'her house', to: 'the supermarket' },
+            { id: 5, emoji: '🚗', subject: 'he', transport: 'car', from: 'Milan', to: 'Florence' },
+            { id: 6, emoji: '🚆', subject: 'we', transport: 'train', from: 'London', to: 'Paris' },
+            { id: 7, emoji: '🛵', subject: 'you', transport: 'scooter', from: 'your office', to: 'the gym' },
+            { id: 8, emoji: '🚤', subject: 'the boat', transport: 'boat', from: 'the island', to: 'the mainland' },
+            { id: 9, emoji: '🚇', subject: 'I', transport: 'underground', from: 'this station', to: 'the museum' },
+            { id: 10, emoji: '🚁', subject: 'they', transport: 'helicopter', from: 'the mountain top', to: 'the base' }
+        ];
+
+        // --- Section 1 Functions ---
+        function createMatchingExercise() {
+            const container = document.getElementById('matching-exercise-container');
+            container.innerHTML = '';
+            const shuffledData = [...transportData];
+            shuffleArray(shuffledData);
+
+            shuffledData.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('matching-item');
+
+                const emojiSpan = document.createElement('span');
+                emojiSpan.classList.add('emoji');
+                emojiSpan.textContent = item.emoji;
+                itemDiv.appendChild(emojiSpan);
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.setAttribute('data-emoji', item.emoji); // Store emoji to match later
+                input.setAttribute('data-correct-name', item.name); // Store correct name
+                input.placeholder = 'Nome mezzo';
+                itemDiv.appendChild(input);
+
+                container.appendChild(itemDiv);
+            });
+        }
+
+        function checkMatchingExercise() {
+            const inputs = document.querySelectorAll('#matching-exercise-container input[type="text"]');
+            let correctCount = 0;
+            const results = [];
+
+            inputs.forEach(input => {
+                const userAnswer = input.value.trim().toLowerCase();
+                const correctName = input.getAttribute('data-correct-name').toLowerCase();
+                const emoji = input.getAttribute('data-emoji');
+                const isCorrect = (userAnswer === correctName);
+
+                if (isCorrect) {
+                    input.style.borderColor = '#10b981'; /* Green */
+                    input.style.backgroundColor = '#ecfdf5'; /* Light green */
+                    correctCount++;
+                } else {
+                    input.style.borderColor = '#ef4444'; /* Red */
+                    input.style.backgroundColor = '#fef2f2'; /* Light red */
+                }
+
+                results.push({
+                    emoji: emoji,
+                    userAnswer: input.value.trim(),
+                    correctAnswer: input.getAttribute('data-correct-name'),
+                    isCorrect: isCorrect
+                });
+            });
+
+            const feedback = document.getElementById('matching-feedback');
+            feedback.style.display = 'block';
+            if (correctCount === inputs.length) {
+                feedback.classList.remove('feedback-incorrect');
+                feedback.classList.add('feedback-correct');
+                feedback.textContent = "Complimenti! Tutte le risposte sono corrette!";
+            } else {
+                feedback.classList.remove('feedback-correct');
+                feedback.classList.add('feedback-incorrect');
+                feedback.textContent = `Hai ${correctCount} risposte corrette su ${inputs.length}. Riprova!`;
+            }
+
+            generatePdfReport(results, 'matching');
+        }
+
+        function resetMatchingExercise() {
+            const inputs = document.querySelectorAll('#matching-exercise-container input[type="text"]');
+            inputs.forEach(input => {
+                input.value = '';
+                input.style.borderColor = '';
+                input.style.backgroundColor = '';
+            });
+            document.getElementById('matching-feedback').style.display = 'none';
+            createMatchingExercise(); // Reshuffle and recreate
+        }
+
+        // --- Section 2 Functions ---
+        function createHowLongExercise() {
+            const container = document.getElementById('how-long-exercise-container');
+            container.innerHTML = '';
+
+            howLongQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('mb-4');
+
+                const promptP = document.createElement('p');
+                promptP.classList.add('how-long-prompt');
+                promptP.innerHTML = `${index + 1}. ${q.emoji} Soggetto: <strong>${q.subject}</strong>, Mezzo: <strong>${q.transport}</strong>, Da: <strong>${q.from}</strong>, A: <strong>${q.to}</strong>`;
+                questionDiv.appendChild(promptP);
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.classList.add('fill-in-blank-input');
+                input.setAttribute('data-id', q.id);
+                input.placeholder = 'Scrivi la domanda completa qui...';
+                questionDiv.appendChild(input);
+
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function checkHowLongExercise() {
+            const inputs = document.querySelectorAll('#how-long-exercise-container input[type="text"]');
+            const results = [];
+
+            inputs.forEach(input => {
+                const qId = parseInt(input.getAttribute('data-id'));
+                const questionData = howLongQuestions.find(q => q.id === qId);
+                const userAnswer = input.value.trim();
+
+                const modelAnswer = `How long does it take ${questionData.subject} to go by ${questionData.transport} from ${questionData.from} to ${questionData.to}?`;
+
+                results.push({
+                    prompt: `${questionData.emoji} Soggetto: ${questionData.subject}, Mezzo: ${questionData.transport}, Da: ${questionData.from}, A: ${questionData.to}`,
+                    userAnswer: userAnswer,
+                    modelAnswer: modelAnswer
+                });
+            });
+
+            const feedback = document.getElementById('how-long-feedback');
+            feedback.style.display = 'block';
+            feedback.classList.remove('feedback-correct', 'feedback-incorrect');
+            feedback.textContent = "I tuoi risultati sono pronti per essere scaricati!";
+
+            generatePdfReport(results, 'how-long');
+        }
+
+        function resetHowLongExercise() {
+            const inputs = document.querySelectorAll('#how-long-exercise-container input[type="text"]');
+            inputs.forEach(input => {
+                input.value = '';
+                input.style.borderColor = '';
+                input.style.backgroundColor = '';
+            });
+            document.getElementById('how-long-feedback').style.display = 'none';
+        }
+
+        // --- PDF Generation Function ---
+        function generatePdfReport(results, exerciseType) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(22);
+            doc.text("I Tuoi Risultati", 10, 20);
+
+            doc.setFontSize(14);
+            doc.text("--------------------------------------------------", 10, 35);
+
+            let yOffset = 45;
+            doc.setFontSize(12);
+
+            if (exerciseType === 'matching') {
+                doc.text("Sezione 1: Collega l'Emoji al Mezzo di Trasporto", 10, yOffset);
+                yOffset += 10;
+                results.forEach(item => {
+                    const line1 = `${item.emoji} La tua risposta: ${item.userAnswer}`;
+                    const line2 = `Corretta: ${item.correctAnswer} (${item.isCorrect ? 'Sì' : 'No'})`;
+
+                    doc.text(line1, 10, yOffset);
+                    yOffset += 7;
+                    if (item.isCorrect) {
+                        doc.setTextColor(30, 130, 76); // Green
+                    } else {
+                        doc.setTextColor(220, 50, 50); // Red
+                    }
+                    doc.text(line2, 15, yOffset);
+                    doc.setTextColor(0, 0, 0); // Reset color
+                    yOffset += 12;
+                });
+            } else if (exerciseType === 'how-long') {
+                doc.text("Sezione 2: How long does it take...?", 10, yOffset);
+                yOffset += 10;
+                results.forEach((item, index) => {
+                    const promptText = `${index + 1}. ${item.prompt}`;
+                    const userAnswerText = `La tua domanda: ${item.userAnswer}`;
+                    const modelAnswerText = `Domanda modello: ${item.modelAnswer}`;
+
+                    doc.text(promptText, 10, yOffset, { maxWidth: 180 });
+                    yOffset += doc.getTextDimensions(promptText, { maxWidth: 180 }).h + 2;
+
+                    doc.text(userAnswerText, 15, yOffset, { maxWidth: 180 });
+                    yOffset += doc.getTextDimensions(userAnswerText, { maxWidth: 180 }).h + 2;
+
+                    doc.text(modelAnswerText, 15, yOffset, { maxWidth: 180 });
+                    yOffset += doc.getTextDimensions(modelAnswerText, { maxWidth: 180 }).h + 5;
+                });
+            }
+
+            doc.save(`Risultati_Esercizio_Trasporto_${exerciseType}.pdf`);
+        }
+
+        // Utility function to shuffle an array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Initialize exercises on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            createMatchingExercise();
+            createHowLongExercise();
+        });
+    </script>
+</body>
+</html>
