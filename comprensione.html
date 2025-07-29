@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprensione Testo</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Stili personalizzati per estetica e interattività */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Sfondo azzurro-grigio chiaro */
+            color: #334155; /* Colore testo più scuro */
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 12px; /* Angoli più arrotondati */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Ombra più morbida */
+        }
+        h1, h2, h3 {
+            color: #1e3a8a; /* Blu più scuro per i titoli */
+            font-weight: 700;
+        }
+        .section-box {
+            background-color: #e0f2fe; /* Azzurro più chiaro per le sezioni */
+            border-left: 6px solid #3b82f6; /* Bordo blu */
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .comprehension-text {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+        .comprehension-question {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background-color: #f8fafc;
+        }
+        .comprehension-question p {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .comprehension-question label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .comprehension-question input[type="radio"] {
+            margin-right: 0.5rem;
+        }
+        .button-primary {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            border: none;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+        .button-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+        .button-primary:active {
+            transform: translateY(0);
+        }
+        .button-secondary {
+            background-color: #6b7280;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border: none;
+            margin-left: 1rem;
+        }
+        .button-secondary:hover {
+            background-color: #4b5563;
+        }
+        .feedback-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+            display: none; /* Hidden by default */
+        }
+        .feedback-correct {
+            background-color: #d1fae5; /* Verde per corretto */
+            color: #065f46;
+        }
+        .feedback-incorrect {
+            background-color: #fee2e2; /* Rosso per incorretto */
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-4xl text-center mb-6">Comprensione del Testo</h1>
+
+        <!-- Sezione 2: Comprensione del Testo -->
+        <div class="section-box">
+            <h2 class="text-2xl mb-4">Comprensione del Testo</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                Leggi il testo seguente, che parla di trasporti, obblighi e pronomi possessivi, e rispondi alle domande.
+            </p>
+            <div class="comprehension-text">
+                <h3 class="text-xl mb-2">A Day of Journeys and Responsibilities</h3>
+                <p>My name is Alex, and my daily commute is always an adventure. Every morning, I <strong>have to</strong> leave home by 7:30 AM to catch <strong>my</strong> train. If I miss <strong>it</strong>, I <strong>must</strong> take the bus, which is much slower. Yesterday, <strong>my</strong> car wouldn't start, so I <strong>had to</strong> walk to the bus stop in the rain. It was a long walk, but I knew I <strong>mustn't</strong> be late for <strong>my</strong> important meeting.</p>
+                <p>On the train, I usually read a book. Sarah, a colleague of <strong>mine</strong>, often takes the same train. Her journey is different from <strong>mine</strong>; she lives further away, so <strong>hers</strong> is longer. Sometimes, if the weather is good, she rides <strong>her</strong> bike to the station. I admire <strong>her</strong> dedication!</p>
+                <p>When I arrived at the office, the first thing I <strong>had to</strong> do was check <strong>my</strong> emails. Our team has a new project, and we <strong>must</strong> collaborate closely. It's <strong>our</strong> responsibility to ensure <strong>its</strong> success. My boss, Mr. Henderson, always says, 'Your work reflects on <strong>yourselves</strong> and the company.' He always takes <strong>his</strong> car to work, but I prefer public transportation. It's less stressful, and it means I <strong>don't have to</strong> worry about parking. My colleagues often ask why I don't drive more, but it's just <strong>my</strong> preference.</p>
+                <p>After work, I usually go to the gym. Today, I <strong>must</strong> remember to pack <strong>my</strong> gym clothes. Last week, I forgot <strong>theirs</strong> (my friend's clothes, not mine!) and I <strong>had to</strong> go straight home. It was quite embarrassing for <strong>me</strong>! So, remembering <strong>mine</strong> is crucial. Public transportation makes <strong>my</strong> life easier, even with the occasional bus delay. It's a system that works for <strong>us</strong>.</p>
+            </div>
+
+            <h3 class="text-xl mt-6 mb-3">Esercizio: Domande di Comprensione</h3>
+            <p class="text-lg leading-relaxed mb-4">
+                Scegli la risposta corretta per ogni domanda basata sul testo.
+            </p>
+            <div id="comprehension-questions-container">
+                <!-- Questions will be populated by JavaScript -->
+            </div>
+            <div class="flex justify-center mt-6">
+                <button class="button-primary" onclick="checkComprehensionExercise()">I miei risultati</button>
+                <button class="button-secondary" onclick="resetComprehensionExercise()">Reset</button>
+            </div>
+            <div id="comprehension-feedback" class="feedback-message"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- Section 2: Comprehension Exercise ---
+        const comprehensionQuestions = [
+            {
+                question: "1. What time does Alex have to leave home every morning?",
+                options: ["a) 7:00 AM", "b) 7:30 AM", "c) 8:00 AM", "d) It doesn't say."],
+                correctAnswer: "b) 7:30 AM"
+            },
+            {
+                question: "2. What must Alex do if he misses his train?",
+                options: ["a) Take a taxi", "b) Walk to work", "c) Take the bus", "d) Stay home"],
+                correctAnswer: "c) Take the bus"
+            },
+            {
+                question: "3. Why did Alex have to walk to the bus stop yesterday?",
+                options: ["a) He wanted to exercise.", "b) His car didn't start.", "c) The bus was late.", "d) He missed the train."],
+                correctAnswer: "b) His car didn't start."
+            },
+            {
+                question: "4. What is Alex's personal obligation regarding his meeting?",
+                options: ["a) He must arrive early.", "b) He mustn't be late.", "c) He must take notes.", "d) He must prepare a presentation."],
+                correctAnswer: "b) He mustn't be late."
+            },
+            {
+                question: "5. Who is Sarah in relation to Alex?",
+                options: ["a) His boss", "b) His friend", "c) His colleague", "d) His sister"],
+                correctAnswer: "c) His colleague"
+            },
+            {
+                question: "6. How is Sarah's journey different from Alex's?",
+                options: ["a) She drives her car.", "b) Hers is longer.", "c) She always takes the bus.", "d) She walks to work."],
+                correctAnswer: "b) Hers is longer."
+            },
+            {
+                question: "7. What is the first thing Alex had to do when he arrived at the office?",
+                options: ["a) Have a meeting.", "b) Ride his bike.", "c) Check his emails.", "d) Talk to Mr. Henderson."],
+                correctAnswer: "c) Check his emails."
+            },
+            {
+                question: "8. What is the team's responsibility regarding the new project?",
+                options: ["a) To finish it quickly.", "b) To ensure its success.", "c) To present it to Mr. Henderson.", "d) To collaborate with other teams."],
+                correctAnswer: "b) To ensure its success."
+            },
+            {
+                question: "9. Why does Alex prefer public transportation?",
+                options: ["a) It's faster.", "b) It's cheaper.", "c) It's less stressful and avoids parking worries.", "d) His car is broken."],
+                correctAnswer: "c) It's less stressful and avoids parking worries."
+            },
+            {
+                question: "10. What did Alex forget last week that caused him embarrassment?",
+                options: ["a) His keys.", "b) His friend's gym clothes.", "c) His own gym clothes.", "d) His book."],
+                correctAnswer: "b) His friend's gym clothes."
+            }
+        ];
+
+        function createComprehensionExercise() {
+            const container = document.getElementById('comprehension-questions-container');
+            container.innerHTML = '';
+            comprehensionQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('comprehension-question');
+                questionDiv.innerHTML = `<p>${q.question}</p>`;
+                q.options.forEach((option, optionIndex) => {
+                    questionDiv.innerHTML += `
+                        <label>
+                            <input type="radio" name="question${index}" value="${option}">
+                            ${option}
+                        </label>
+                    `;
+                });
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function checkComprehensionExercise() {
+            const questionsDivs = document.querySelectorAll('#comprehension-questions-container .comprehension-question');
+            let correctCount = 0;
+            const resultsForPdf = [];
+
+            comprehensionQuestions.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                const userAnswer = selectedOption ? selectedOption.value : "Nessuna risposta";
+                const isCorrect = (userAnswer === q.correctAnswer);
+
+                if (selectedOption) {
+                    selectedOption.closest('label').style.backgroundColor = isCorrect ? '#d1fae5' : '#fee2e2';
+                }
+
+                resultsForPdf.push({
+                    question: q.question,
+                    userAnswer: userAnswer,
+                    correctAnswer: q.correctAnswer,
+                    isCorrect: isCorrect
+                });
+
+                if (isCorrect) {
+                    correctCount++;
+                }
+            });
+
+            const feedback = document.getElementById('comprehension-feedback');
+            feedback.style.display = 'block';
+            if (correctCount === comprehensionQuestions.length) {
+                feedback.classList.remove('feedback-incorrect');
+                feedback.classList.add('feedback-correct');
+                feedback.textContent = "Complimenti! Tutte le risposte sono corrette!";
+            } else {
+                feedback.classList.remove('feedback-correct');
+                feedback.classList.add('feedback-incorrect');
+                feedback.textContent = `Hai ${correctCount} risposte corrette su ${comprehensionQuestions.length}. Riprova!`;
+            }
+
+            generateComprehensionPdfReport(resultsForPdf, correctCount, comprehensionQuestions.length);
+        }
+
+        function resetComprehensionExercise() {
+            const radioButtons = document.querySelectorAll('#comprehension-questions-container input[type="radio"]');
+            radioButtons.forEach(radio => {
+                radio.checked = false;
+                radio.closest('label').style.backgroundColor = ''; // Reset background
+            });
+            document.getElementById('comprehension-feedback').style.display = 'none';
+        }
+
+        function generateComprehensionPdfReport(results, correctCount, totalQuestions) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(22);
+            doc.text("Risultati Comprensione del Testo", 10, 20);
+
+            doc.setFontSize(14);
+            doc.text("Il tuo punteggio: " + correctCount + " / " + totalQuestions, 10, 35);
+            doc.text("--------------------------------------------------", 10, 45);
+
+            let yOffset = 55;
+            doc.setFontSize(12);
+
+            results.forEach((item, index) => {
+                const questionText = `${index + 1}. ${item.question}`;
+                const userAnswerText = `La tua risposta: ${item.userAnswer}`;
+                const correctAnswerText = `Corretta: ${item.correctAnswer}`;
+
+                doc.text(questionText, 10, yOffset, { maxWidth: 180 });
+                yOffset += doc.getTextDimensions(questionText, { maxWidth: 180 }).h + 2;
+
+                doc.text(userAnswerText, 15, yOffset, { maxWidth: 175 });
+                yOffset += doc.getTextDimensions(userAnswerText, { maxWidth: 175 }).h + 2;
+
+                if (item.isCorrect) {
+                    doc.setTextColor(30, 130, 76); // Green
+                } else {
+                    doc.setTextColor(220, 50, 50); // Red
+                }
+                doc.text(correctAnswerText, 15, yOffset, { maxWidth: 175 });
+                doc.setTextColor(0, 0, 0); // Reset color
+                yOffset += doc.getTextDimensions(correctAnswerText, { maxWidth: 175 }).h + 5;
+            });
+
+            doc.save(`Risultati_Comprensione_Testo.pdf`);
+        }
+
+        // Initialize exercises on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            createComprehensionExercise();
+            console.log("Pagina caricata e esercizi inizializzati.");
+        });
+    </script>
+</body>
+</html>
