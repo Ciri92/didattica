@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio: Descrivere l'Abbigliamento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #334155;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .input-field {
+            border: 1px solid #cbd5e1;
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            width: 100%;
+            transition: border-color 0.2s;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        .correct {
+            border-color: #10b981;
+            background-color: #ecfdf5;
+        }
+        .incorrect {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+        .result-message {
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+        }
+        .result-message.success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        .result-message.error {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        .button-primary {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.2s, transform 0.1s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+        .button-primary:active {
+            background-color: #1d4ed8;
+            transform: translateY(0);
+        }
+        .summary-box {
+            background-color: #e0f2fe;
+            border: 1px solid #90cdf4;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-top: 2rem;
+        }
+        .summary-item {
+            margin-bottom: 0.75rem;
+        }
+        .summary-item strong {
+            color: #1e40af;
+        }
+        .summary-item .correct-answer {
+            color: #065f46;
+            font-weight: 500;
+        }
+        .summary-item .incorrect-answer {
+            color: #991b1b;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="container">
+        <h1 class="text-4xl font-bold text-center mb-6 text-gray-800">Esercizio: Descrivere l'Abbigliamento</h1>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">Come descrivere l'abbigliamento di una persona</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                Per descrivere l'abbigliamento di una persona in inglese, puoi seguire una struttura semplice:
+            </p>
+            <ul class="list-disc list-inside space-y-2 mb-4 text-gray-600">
+                <li>Inizia con il tipo di indumento (es. "a T-shirt", "a skirt", "pants").</li>
+                <li>Aggiungi un aggettivo per il motivo o la fantasia (es. "striped", "polka-dot", "plaid", "checked").</li>
+                <li>Combina il tutto: "She is wearing a <span class="font-bold">striped T-shirt</span>." (Indossa una maglietta a righe.)</li>
+                <li>Puoi anche aggiungere il colore prima del motivo: "He has a <span class="font-bold">blue checked shirt</span>." (Ha una camicia a quadri blu.)</li>
+            </ul>
+            <p class="text-lg leading-relaxed">
+                Ricorda che alcuni indumenti come "jeans", "pants", "gloves", "boots", "sneakers", "shoes" sono spesso usati al plurale.
+            </p>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">Esercizio 1: Completa le frasi</h2>
+            <p class="text-lg mb-6 text-gray-600">Completa le frasi con la parola corretta dal vocabolario che abbiamo imparato. Fai attenzione agli spazi e alla punteggiatura.</p>
+
+            <form id="clothing-quiz-part1" class="space-y-6">
+                <div>
+                    <label for="q1" class="block text-lg font-medium text-gray-700 mb-2">1. She is wearing a beautiful ______ dress. (a pois)</label>
+                    <input type="text" id="q1" name="q1" class="input-field" data-answer="polka-dot">
+                    <div id="feedback-q1" class="result-message hidden"></div>
+                </div>
+
+                <div>
+                    <label for="q2" class="block text-lg font-medium text-gray-700 mb-2">2. He has a new ______ shirt. (a quadri)</label>
+                    <input type="text" id="q2" name="q2" class="input-field" data-answer="checked">
+                    <div id="feedback-q2" class="result-message hidden"></div>
+                </div>
+
+                <div>
+                    <label for="q3" class="block text-lg font-medium text-gray-700 mb-2">3. I need a warm ______ for winter. (cappotto)</label>
+                    <input type="text" id="q3" name="q3" class="input-field" data-answer="coat">
+                    <div id="feedback-q3" class="result-message hidden"></div>
+                </div>
+
+                <div>
+                    <label for="q4" class="block text-lg font-medium text-gray-700 mb-2">4. She bought a red and white ______ scarf. (a righe)</label>
+                    <input type="text" id="q4" name="q4" class="input-field" data-answer="striped">
+                    <div id="feedback-q4" class="result-message hidden"></div>
+                </div>
+
+                <div>
+                    <label for="q5" class="block text-lg font-medium text-gray-700 mb-2">5. My grandfather always wears a ______ vest. (gilet)</label>
+                    <input type="text" id="q5" name="q5" class="input-field" data-answer="vest">
+                    <div id="feedback-q5" class="result-message hidden"></div>
+                </div>
+
+                <div>
+                    <label for="q6" class="block text-lg font-medium text-gray-700 mb-2">6. He put on his ______ before going out in the snow. (guanti)</label>
+                    <input type="text" id="q6" name="q6" class="input-field" data-answer="gloves">
+                    <div id="feedback-q6" class="result-message hidden"></div>
+                </div>
+
+                <div>
+                    <label for="q7" class="block text-lg font-medium text-gray-700 mb-2">7. I love her new ______ skirt. (scozzese)</label>
+                    <input type="text" id="q7" name="q7" class="input-field" data-answer="plaid">
+                    <div id="feedback-q7" class="result-message hidden"></div>
+                </div>
+
+                <div>
+                    <label for="q8" class="block text-lg font-medium text-gray-700 mb-2">8. He's wearing comfortable blue ______. (jeans)</label>
+                    <input type="text" id="q8" name="q8" class="input-field" data-answer="jeans">
+                    <div id="feedback-q8" class="result-message hidden"></div>
+                </div>
+
+                <div>
+                    <label for="q9" class="block text-lg font-medium text-gray-700 mb-2">9. She prefers to wear ______ (maglietta) in summer.</label>
+                    <input type="text" id="q9" name="q9" class="input-field" data-answer="t-shirt">
+                    <div id="feedback-q9" class="result-message hidden"></div>
+                </div>
+
+                <div>
+                    <label for="q10" class="block text-lg font-medium text-gray-700 mb-2">10. He always wears a ______ (cappello) when it's sunny.</label>
+                    <input type="text" id="q10" name="q10" class="input-field" data-answer="hat">
+                    <div id="feedback-q10" class="result-message hidden"></div>
+                </div>
+
+                <div>
+                    <label for="q11" class="block text-lg font-medium text-gray-700 mb-2">11. I need new running ______. (scarpe da ginnastica)</label>
+                    <input type="text" id="q11" name="q11" class="input-field" data-answer="sneakers">
+                    <div id="feedback-q11" class="result-message hidden"></div>
+                </div>
+
+                <div>
+                    <label for="q12" class="block text-lg font-medium text-gray-700 mb-2">12. She usually carries a small ______ (borsetta) with her.</label>
+                    <input type="text" id="q12" name="q12" class="input-field" data-answer="handbag">
+                    <div id="feedback-q12" class="result-message hidden"></div>
+                </div>
+            </form>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">La formula "used to" per abitudini passate</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                La struttura "used to + verbo all'infinito" si usa per parlare di abitudini o stati che erano veri nel passato ma che non lo sono più nel presente.
+            </p>
+            <ul class="list-disc list-inside space-y-2 mb-4 text-gray-600">
+                <li>Affermativa: Soggetto + used to + verbo (es. "I used to wear...")</li>
+                <li>Negativa: Soggetto + didn't use to + verbo (es. "I didn't use to like...")</li>
+                <li>Interrogativa: Did + soggetto + use to + verbo? (es. "Did you use to play...?")</li>
+            </ul>
+            <p class="text-lg leading-relaxed mb-4">
+                Non si usa "used to" per azioni che sono accadute solo una volta o per un periodo di tempo specifico e terminato. In quei casi, si usa il Past Simple.
+            </p>
+
+            <h3 class="text-xl font-semibold mb-3 text-gray-700">Testo di esempio: Cosa indossavo da adolescente</h3>
+            <div class="bg-blue-50 p-4 rounded-lg mb-6 shadow-sm">
+                <p class="italic text-gray-700">
+                    "Hi, I'm Mark, and I'm 40 years old. When I was a teenager, I used to wear very different clothes compared to now. I used to love baggy jeans and oversized T-shirts with band logos. I also used to wear a lot of checked shirts, especially flannel ones. My favorite shoes used to be high-top sneakers. I didn't use to wear formal clothes at all; I always preferred comfortable and casual outfits. Sometimes, I used to wear a baseball cap backwards. My parents used to complain that my clothes were too loose, but I used to think they were cool!"
+                </p>
+            </div>
+
+            <h3 class="text-xl font-semibold mb-3 text-gray-700">Esercizio 2: Comprensione del testo</h3>
+            <form id="clothing-quiz-part2" class="space-y-6">
+                <div>
+                    <label for="q13" class="block text-lg font-medium text-gray-700 mb-2">1. What kind of jeans did Mark use to wear as a teenager?</label>
+                    <div class="mt-2 space-y-2">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="q13" value="tight" class="form-radio" data-correct="false">
+                            <span class="ml-2 text-gray-600">Tight jeans</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="q13" value="baggy" class="form-radio" data-correct="true">
+                            <span class="ml-2 text-gray-600">Baggy jeans</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="q13" value="skinny" class="form-radio" data-correct="false">
+                            <span class="ml-2 text-gray-600">Skinny jeans</span>
+                        </label>
+                    </div>
+                    <div id="feedback-q13" class="result-message hidden"></div>
+                </div>
+
+                <div>
+                    <label for="q14" class="block text-lg font-medium text-gray-700 mb-2">2. What type of shirts did he often wear?</label>
+                    <div class="mt-2 space-y-2">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="q14" value="striped" class="form-radio" data-correct="false">
+                            <span class="ml-2 text-gray-600">Striped shirts</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="q14" value="checked" class="form-radio" data-correct="true">
+                            <span class="ml-2 text-gray-600">Checked shirts</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="q14" value="polka-dot" class="form-radio" data-correct="false">
+                            <span class="ml-2 text-gray-600">Polka-dot shirts</span>
+                        </label>
+                    </div>
+                    <div id="feedback-q14" class="result-message hidden"></div>
+                </div>
+
+                <div>
+                    <label for="q15" class="block text-lg font-medium text-gray-700 mb-2">3. Did Mark use to wear formal clothes?</label>
+                    <div class="mt-2 space-y-2">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="q15" value="yes" class="form-radio" data-correct="false">
+                            <span class="ml-2 text-gray-600">Yes, often</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="q15" value="no" class="form-radio" data-correct="true">
+                            <span class="ml-2 text-gray-600">No, not at all</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="q15" value="sometimes" class="form-radio" data-correct="false">
+                            <span class="ml-2 text-gray-600">Sometimes</span>
+                        </label>
+                    </div>
+                    <div id="feedback-q15" class="result-message hidden"></div>
+                </div>
+            </form>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">Esercizio 3: Descrivi l'abbigliamento dei tuoi genitori (o di un parente)</h2>
+            <p class="text-lg mb-6 text-gray-600">
+                Usa la formula "used to" per descrivere cosa indossava tua madre o tuo padre (o un altro parente) quando era giovane. Scrivi almeno 3-4 frasi.
+                Questo esercizio non verrà corretto automaticamente, ma il tuo testo apparirà nel riepilogo dei risultati.
+            </p>
+            <textarea id="free-text-q" name="free-text-q" rows="6" class="input-field"></textarea>
+        </section>
+
+        <div class="flex justify-center mt-8">
+            <button type="button" onclick="checkAllAnswers()" class="button-primary">
+                Controlla tutti gli esercizi e vedi i risultati
+            </button>
+        </div>
+
+        <div id="results-summary" class="summary-box hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">I tuoi risultati</h2>
+            <div id="summary-content"></div>
+            <p class="text-sm text-gray-600 mt-4">
+                In un'applicazione reale, questo riepilogo potrebbe essere scaricato come PDF.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function checkAllAnswers() {
+            // Part 1: Fill-in-the-blanks
+            const quizPart1 = document.getElementById('clothing-quiz-part1');
+            const inputsPart1 = quizPart1.querySelectorAll('input[type="text"]');
+            let part1Results = [];
+
+            inputsPart1.forEach(input => {
+                const userAnswer = input.value.trim().toLowerCase();
+                const correctAnswer = input.dataset.answer.toLowerCase();
+                const feedbackDiv = document.getElementById(`feedback-${input.id}`);
+
+                input.classList.remove('correct', 'incorrect');
+                feedbackDiv.classList.add('hidden');
+                feedbackDiv.classList.remove('success', 'error');
+
+                let isCorrect = (userAnswer === correctAnswer);
+                part1Results.push({
+                    question: input.previousElementSibling.textContent,
+                    userAnswer: input.value,
+                    correctAnswer: correctAnswer,
+                    isCorrect: isCorrect
+                });
+
+                if (isCorrect) {
+                    input.classList.add('correct');
+                    feedbackDiv.textContent = 'Corretto!';
+                    feedbackDiv.classList.add('success');
+                } else {
+                    input.classList.add('incorrect');
+                    feedbackDiv.textContent = `Sbagliato. La risposta corretta è: ${correctAnswer}`;
+                    feedbackDiv.classList.add('error');
+                }
+                feedbackDiv.classList.remove('hidden');
+            });
+
+            // Part 2: Multiple Choice
+            const quizPart2 = document.getElementById('clothing-quiz-part2');
+            const questionsPart2 = quizPart2.querySelectorAll('div[id^="feedback-q"]'); // Select divs containing feedback
+            let part2Results = [];
+
+            questionsPart2.forEach(feedbackDiv => {
+                const questionId = feedbackDiv.id.replace('feedback-', '');
+                const radios = quizPart2.querySelectorAll(`input[name="${questionId}"]`);
+                let userAnswer = '';
+                let correctAnswer = '';
+                let isCorrect = false;
+                let questionText = '';
+
+                radios.forEach(radio => {
+                    if (radio.checked) {
+                        userAnswer = radio.value;
+                    }
+                    if (radio.dataset.correct === 'true') {
+                        correctAnswer = radio.value;
+                    }
+                    // Get the question text from the label associated with the radio group
+                    if (!questionText) {
+                        questionText = radio.closest('div').querySelector('label').textContent;
+                    }
+                });
+
+                if (userAnswer === correctAnswer) {
+                    isCorrect = true;
+                }
+
+                feedbackDiv.classList.add('hidden');
+                feedbackDiv.classList.remove('success', 'error');
+
+                if (isCorrect) {
+                    feedbackDiv.textContent = 'Corretto!';
+                    feedbackDiv.classList.add('success');
+                } else {
+                    feedbackDiv.textContent = `Sbagliato. La risposta corretta è: ${correctAnswer}`;
+                    feedbackDiv.classList.add('error');
+                }
+                feedbackDiv.classList.remove('hidden');
+
+                part2Results.push({
+                    question: questionText,
+                    userAnswer: userAnswer,
+                    correctAnswer: correctAnswer,
+                    isCorrect: isCorrect
+                });
+            });
+
+            // Part 3: Free Text
+            const freeTextAnswer = document.getElementById('free-text-q').value.trim();
+
+            // Display Summary
+            const summaryContent = document.getElementById('summary-content');
+            summaryContent.innerHTML = ''; // Clear previous summary
+
+            // Summary for Part 1
+            let correctCountPart1 = 0;
+            part1Results.forEach((res, index) => {
+                const item = document.createElement('p');
+                item.classList.add('summary-item');
+                if (res.isCorrect) {
+                    item.innerHTML = `<strong>Domanda ${index + 1} (Esercizio 1):</strong> Corretto! Hai risposto: <span class="correct-answer">${res.userAnswer}</span>`;
+                    correctCountPart1++;
+                } else {
+                    item.innerHTML = `<strong>Domanda ${index + 1} (Esercizio 1):</strong> Sbagliato. Hai risposto: <span class="incorrect-answer">${res.userAnswer}</span>. La risposta corretta era: <span class="correct-answer">${res.correctAnswer}</span>`;
+                }
+                summaryContent.appendChild(item);
+            });
+            const scorePart1 = document.createElement('p');
+            scorePart1.classList.add('summary-item', 'font-bold', 'mt-2');
+            scorePart1.textContent = `Punteggio Esercizio 1: ${correctCountPart1} / ${part1Results.length}`;
+            summaryContent.appendChild(scorePart1);
+            summaryContent.appendChild(document.createElement('hr')).className = 'my-4 border-t border-gray-200';
+
+
+            // Summary for Part 2
+            let correctCountPart2 = 0;
+            part2Results.forEach((res, index) => {
+                const item = document.createElement('p');
+                item.classList.add('summary-item');
+                if (res.isCorrect) {
+                    item.innerHTML = `<strong>Domanda ${index + 1} (Esercizio 2):</strong> Corretto! Hai risposto: <span class="correct-answer">${res.userAnswer}</span>`;
+                    correctCountPart2++;
+                } else {
+                    item.innerHTML = `<strong>Domanda ${index + 1} (Esercizio 2):</strong> Sbagliato. Hai risposto: <span class="incorrect-answer">${res.userAnswer}</span>. La risposta corretta era: <span class="correct-answer">${res.correctAnswer}</span>`;
+                }
+                summaryContent.appendChild(item);
+            });
+            const scorePart2 = document.createElement('p');
+            scorePart2.classList.add('summary-item', 'font-bold', 'mt-2');
+            scorePart2.textContent = `Punteggio Esercizio 2: ${correctCountPart2} / ${part2Results.length}`;
+            summaryContent.appendChild(scorePart2);
+            summaryContent.appendChild(document.createElement('hr')).className = 'my-4 border-t border-gray-200';
+
+
+            // Summary for Part 3
+            const freeTextItem = document.createElement('div');
+            freeTextItem.classList.add('summary-item');
+            freeTextItem.innerHTML = `<h3 class="text-xl font-bold text-gray-800 mb-2">Esercizio 3: La tua descrizione</h3><p class="bg-gray-50 p-3 rounded-md italic">${freeTextAnswer || 'Nessun testo inserito.'}</p>`;
+            summaryContent.appendChild(freeTextItem);
+
+            document.getElementById('results-summary').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
