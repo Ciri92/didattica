@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Past Continuous</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Stili personalizzati per estetica e interattività */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Sfondo azzurro-grigio chiaro */
+            color: #334155; /* Colore testo più scuro */
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 12px; /* Angoli più arrotondati */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Ombra più morbida */
+        }
+        h1, h2, h3 {
+            color: #1e3a8a; /* Blu più scuro per i titoli */
+            font-weight: 700;
+        }
+        .section-box {
+            background-color: #e0f2fe; /* Azzurro più chiaro per le sezioni */
+            border-left: 6px solid #3b82f6; /* Bordo blu */
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .explanation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .explanation-table th, .explanation-table td {
+            border: 1px solid #90cdf4;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        .explanation-table th {
+            background-color: #63b3ed;
+            color: white;
+        }
+        .explanation-table td {
+            background-color: #ebf8ff;
+        }
+        .explanation-points ul {
+            list-style: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .explanation-points li {
+            margin-bottom: 0.5rem;
+        }
+        .exercise-text-container {
+            line-height: 2; /* Aumenta l'altezza della linea per una migliore spaziatura con gli input */
+            font-size: 0.95rem; /* Testo leggermente più piccolo per far stare tutto su una riga */
+        }
+        .fill-in-blank-input {
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 0.4rem 0.6rem; /* Padding ridotto */
+            width: 160px; /* Larghezza adeguata per le risposte */
+            margin: 0 0.2rem; /* Margine più piccolo */
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+            display: inline-block; /* Permette agli input di fluire con il testo */
+            font-size: 0.9rem; /* Testo input leggermente più piccolo */
+        }
+        .fill-in-blank-input:focus {
+            border-color: #3b82f6;
+        }
+        .button-primary {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            border: none;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+        .button-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+        .button-primary:active {
+            transform: translateY(0);
+        }
+        .button-secondary {
+            background-color: #6b7280;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border: none;
+            margin-left: 1rem;
+        }
+        .button-secondary:hover {
+            background-color: #4b5563;
+        }
+        .feedback-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .feedback-correct {
+            background-color: #d1fae5; /* Verde per corretto */
+            color: #065f46;
+        }
+        .feedback-incorrect {
+            background-color: #fee2e2; /* Rosso per incorretto */
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-4xl text-center mb-6">Past Continuous: Spiegazione ed Esercizi</h1>
+
+        <div class="section-box">
+            <h2 class="text-2xl mb-4">Introduzione al Past Continuous</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                Il <strong>Past Continuous</strong> (o Past Progressive) è un tempo verbale inglese utilizzato per parlare di azioni che erano in corso di svolgimento in un momento specifico nel passato. È fondamentale per raccontare eventi passati, descrivere scene o indicare che un'azione è stata interrotta da un'altra.
+            </p>
+            <div class="explanation-points">
+                <h3 class="text-xl mb-2">Quando si usa il Past Continuous:</h3>
+                <ul>
+                    <li>Per descrivere un'azione che era in progresso in un momento specifico nel passato. <br>
+                        Esempio: At 7 o'clock last night, I <strong>was having</strong> dinner. (Alle 7 in punto ieri sera, stavo cenando.)</li>
+                    <li>Per descrivere un'azione in progresso nel passato che è stata interrotta da un'altra azione (espressa al Past Simple). <br>
+                        Esempio: I <strong>was having</strong> dinner when the phone rang. (Stavo cenando quando il telefono squillò.)</li>
+                    <li>Per descrivere due o più azioni che stavano succedendo contemporaneamente nel passato. <br>
+                        Esempio: While I <strong>was studying</strong>, my brother <strong>was playing</strong> video games. (Mentre stavo studiando, mio fratello stava giocando ai videogiochi.)</li>
+                    <li>Per descrivere l'atmosfera o il contesto di una storia nel passato. <br>
+                        Esempio: The sun <strong>was shining</strong> and the birds <strong>were singing</strong>. (Il sole splendeva e gli uccelli cantavano.)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Sezione 1: Forma Affermativa -->
+        <div class="section-box">
+            <h2 class="text-2xl mb-4">Sezione 1: Forma Affermativa</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                La forma affermativa del Past Continuous si costruisce usando il passato del verbo "to be" (was/were) seguito dalla forma in -ing del verbo principale.
+            </p>
+            <table class="explanation-table">
+                <thead>
+                    <tr>
+                        <th>Soggetto</th>
+                        <th>Verbo "to be" (Past Simple)</th>
+                        <th>Verbo (forma -ing)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>I / He / She / It</td>
+                        <td>was</td>
+                        <td rowspan="2">verb-ing (e.g., eating, working, studying)</td>
+                    </tr>
+                    <tr>
+                        <td>We / You / They</td>
+                        <td>were</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="text-lg leading-relaxed mb-4">
+                Esempio: At 7 o'clock last night, I <strong>was having</strong> dinner. (Alle 7 in punto ieri sera, stavo cenando.)
+            </p>
+
+            <h3 class="text-xl mt-6 mb-3">Esercizio: Completa con la forma affermativa del Past Continuous</h3>
+            <div id="affirmative-exercise" class="exercise-text-container"></div>
+            <div class="flex justify-center mt-6">
+                <button class="button-primary" onclick="checkExercise('affirmative')">I miei risultati (Affermativa)</button>
+                <button class="button-secondary" onclick="resetExercise('affirmative')">Reset</button>
+            </div>
+            <div id="affirmative-feedback" class="feedback-message hidden"></div>
+        </div>
+
+        <!-- Sezione 2: Forma Negativa -->
+        <div class="section-box">
+            <h2 class="text-2xl mb-4">Sezione 2: Forma Negativa</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                Per formare la forma negativa del Past Continuous, inseriamo "not" tra il verbo "to be" (was/were) e il verbo principale in -ing. Le forme contratte sono le più comuni.
+            </p>
+            <table class="explanation-table">
+                <thead>
+                    <tr>
+                        <th>Soggetto</th>
+                        <th>Verbo "to be" (negativo)</th>
+                        <th>Verbo (forma -ing)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>I / He / She / It</td>
+                        <td>wasn't (was not)</td>
+                        <td rowspan="2">verb-ing (e.g., eating, working, studying)</td>
+                    </tr>
+                    <tr>
+                        <td>We / You / They</td>
+                        <td>weren't (were not)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="text-lg leading-relaxed mb-4">
+                Esempio: They <strong>weren't playing</strong> tennis at 12:00 p.m. yesterday. (Non stavano giocando a tennis alle 12:00 di ieri.)
+            </p>
+
+            <h3 class="text-xl mt-6 mb-3">Esercizio: Completa con la forma negativa del Past Continuous</h3>
+            <div id="negative-exercise" class="exercise-text-container"></div>
+            <div class="flex justify-center mt-6">
+                <button class="button-primary" onclick="checkExercise('negative')">I miei risultati (Negativa)</button>
+                <button class="button-secondary" onclick="resetExercise('negative')">Reset</button>
+            </div>
+            <div id="negative-feedback" class="feedback-message hidden"></div>
+        </div>
+
+        <!-- Sezione 3: Forma Interrogativa -->
+        <div class="section-box">
+            <h2 class="text-2xl mb-4">Sezione 3: Forma Interrogativa</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                Per formare la forma interrogativa del Past Continuous, invertiamo la posizione del soggetto e del verbo "to be" (was/were).
+            </p>
+            <table class="explanation-table">
+                <thead>
+                    <tr>
+                        <th>Verbo "to be" (Past Simple)</th>
+                        <th>Soggetto</th>
+                        <th>Verbo (forma -ing)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Was</td>
+                        <td>I / he / she / it</td>
+                        <td rowspan="2">verb-ing (e.g., eating, working, studying)</td>
+                    </tr>
+                    <tr>
+                        <td>Were</td>
+                        <td>we / you / they</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="text-lg leading-relaxed mb-4">
+                Esempio: Were you <strong>sleeping</strong> at 11 o'clock last night? (Stavi dormendo alle 11 di ieri sera?)
+            </p>
+
+            <h3 class="text-xl mt-6 mb-3">Esercizio: Completa con la forma interrogativa del Past Continuous</h3>
+            <div id="interrogative-exercise" class="exercise-text-container"></div>
+            <div class="flex justify-center mt-6">
+                <button class="button-primary" onclick="checkExercise('interrogative')">I miei risultati (Interrogativa)</button>
+                <button class="button-secondary" onclick="resetExercise('interrogative')">Reset</button>
+            </div>
+            <div id="interrogative-feedback" class="feedback-message hidden"></div>
+        </div>
+
+        <!-- Sezione 4: Esercizio Misto -->
+        <div class="section-box">
+            <h2 class="text-2xl mb-4">Sezione 4: Esercizio Misto</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                Completa le frasi con la forma corretta (affermativa, negativa o interrogativa) del Past Continuous.
+            </p>
+            <div id="mixed-exercise" class="exercise-text-container"></div>
+            <div class="flex justify-center mt-6">
+                <button class="button-primary" onclick="checkExercise('mixed')">I miei risultati (Misto)</button>
+                <button class="button-secondary" onclick="resetExercise('mixed')">Reset</button>
+            </div>
+            <div id="mixed-feedback" class="feedback-message hidden"></div>
+        </div>
+    </div>
+
+    <script>
+        // Dati per gli esercizi
+        const exercisesData = {
+            affirmative: [
+                { sentence: "1. At 8 PM last night, I ____ (watch) a movie.", answer: "was watching" },
+                { sentence: "2. She ____ (study) for her exam all afternoon.", answer: "was studying" },
+                { sentence: "3. They ____ (play) football when it started to rain.", answer: "were playing" },
+                { sentence: "4. He ____ (work) on his project all day yesterday.", answer: "was working" },
+                { sentence: "5. We ____ (have) a picnic when the storm hit.", answer: "were having" },
+                { sentence: "6. The dog ____ (bark) loudly all night.", answer: "was barking" },
+                { sentence: "7. You ____ (listen) to music while I was reading.", answer: "were listening" },
+                { sentence: "8. My parents ____ (travel) to Rome at this time last year.", answer: "were traveling" },
+                { sentence: "9. The sun ____ (shine) brightly when we left the house.", answer: "was shining" },
+                { sentence: "10. The children ____ (sleep) peacefully when I checked on them.", answer: "were sleeping" }
+            ],
+            negative: [
+                { sentence: "1. I ____ (not / feel) well yesterday morning.", answer: "wasn't feeling" },
+                { sentence: "2. They ____ (not / listen) to the teacher.", answer: "weren't listening" },
+                { sentence: "3. She ____ (not / wear) a coat, even though it was cold.", answer: "wasn't wearing" },
+                { sentence: "4. We ____ (not / expect) you to come so early.", answer: "weren't expecting" },
+                { sentence: "5. He ____ (not / pay) attention during the meeting.", answer: "wasn't paying" },
+                { sentence: "6. The phone ____ (not / ring) when I was in the shower.", answer: "wasn't ringing" },
+                { sentence: "7. You ____ (not / work) on that report yesterday afternoon.", answer: "weren't working" },
+                { sentence: "8. The cat ____ (not / sleep) on the sofa when I came in.", answer: "wasn't sleeping" },
+                { sentence: "9. My friends ____ (not / wait) for me at the station.", answer: "weren't waiting" },
+                { sentence: "10. It ____ (not / snow) when we left for school.", answer: "wasn't snowing" }
+            ],
+            interrogative: [
+                { sentence: "1. ____ you ____ (sleep) when I called?", answer: "Were sleeping" },
+                { sentence: "2. ____ she ____ (read) a book at midnight?", answer: "Was reading" },
+                { sentence: "3. ____ they ____ (argue) about politics?", answer: "Were arguing" },
+                { sentence: "4. ____ he ____ (cook) dinner when you arrived?", answer: "Was cooking" },
+                { sentence: "5. ____ I ____ (dream) when I heard that noise?", answer: "Was dreaming" },
+                { sentence: "6. ____ it ____ (rain) heavily all day?", answer: "Was raining" },
+                { sentence: "7. ____ we ____ (make) too much noise?", answer: "Were making" },
+                { sentence: "8. ____ your brother ____ (play) video games all evening?", answer: "Was playing" },
+                { sentence: "9. ____ the students ____ (take) notes during the lecture?", answer: "Were taking" },
+                { sentence: "10. ____ the baby ____ (cry) for a long time?", answer: "Was crying" }
+            ],
+            mixed: [
+                { sentence: "1. What ____ you ____ (do) when the accident happened?", answer: "were doing" },
+                { sentence: "2. She ____ (not / listen) to me at all.", answer: "wasn't listening" },
+                { sentence: "3. My phone ____ (ring) while I ____ (drive).", answer: "was ringing was driving" },
+                { sentence: "4. ____ they ____ (have) a good time at the party?", answer: "Were having" },
+                { sentence: "5. I ____ (not / expect) him to be there.", answer: "wasn't expecting" },
+                { sentence: "6. While he ____ (walk) home, he saw a strange light.", answer: "was walking" },
+                { sentence: "7. The children ____ (play) in the garden all morning.", answer: "were playing" },
+                { sentence: "8. ____ it ____ (snow) when you left the house?", answer: "Was snowing" },
+                { sentence: "9. We ____ (not / talk) about you, I promise!", answer: "weren't talking" },
+                { sentence: "10. At 3 PM, my sister ____ (sleep) and my brother ____ (read).", answer: "was sleeping was reading" }
+            ]
+        };
+
+        // Funzione per creare gli esercizi
+        function createExercise(type) {
+            const container = document.getElementById(`${type}-exercise`);
+            container.innerHTML = '';
+            const questions = exercisesData[type];
+
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('flex', 'items-center', 'flex-wrap', 'gap-2', 'mb-2');
+
+                const parts = q.sentence.split('____');
+                parts.forEach((part, i) => {
+                    if (part) {
+                        const span = document.createElement('span');
+                        span.textContent = part.trim();
+                        questionDiv.appendChild(span);
+                    }
+                    if (i < parts.length - 1) { // Se non è l'ultima parte, aggiungi un input
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.classList.add('fill-in-blank-input');
+                        input.setAttribute('data-index', index);
+                        input.setAttribute('data-part', i); // Per gestire più blank nella stessa frase
+                        questionDiv.appendChild(input);
+                    }
+                });
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Funzione per controllare gli esercizi e generare il PDF
+        function checkExercise(type) {
+            const inputs = document.querySelectorAll(`#${type}-exercise .fill-in-blank-input`);
+            let correctCount = 0;
+            let totalBlanks = 0;
+            const feedback = document.getElementById(`${type}-feedback`);
+            const questions = exercisesData[type];
+            const resultsForPdf = [];
+
+            questions.forEach((q, qIndex) => {
+                const currentQuestionInputs = Array.from(inputs).filter(input => parseInt(input.getAttribute('data-index')) === qIndex);
+                const correctAnswers = q.answer.split(' '); // Split correct answer into parts if multiple blanks
+
+                let questionResult = {
+                    sentence: q.sentence,
+                    userAnswers: [],
+                    correctAnswers: correctAnswers,
+                    isCorrect: true // Assume correct until proven otherwise
+                };
+
+                currentQuestionInputs.forEach((input, inputPartIndex) => {
+                    totalBlanks++;
+                    const userAnswer = input.value.trim().toLowerCase();
+                    const correctAnswerPart = correctAnswers[inputPartIndex] ? correctAnswers[inputPartIndex].toLowerCase() : '';
+
+                    questionResult.userAnswers.push(input.value.trim());
+
+                    if (userAnswer === correctAnswerPart) {
+                        input.style.borderColor = '#10b981'; // Green
+                        input.style.backgroundColor = '#ecfdf5'; // Light green background
+                        correctCount++;
+                    } else {
+                        input.style.borderColor = '#ef4444'; // Red
+                        input.style.backgroundColor = '#fef2f2'; // Light red background
+                        questionResult.isCorrect = false;
+                    }
+                });
+                resultsForPdf.push(questionResult);
+            });
+
+            if (correctCount === totalBlanks) {
+                feedback.textContent = "Complimenti! Tutte le risposte sono corrette!";
+                feedback.classList.remove('feedback-incorrect', 'hidden');
+                feedback.classList.add('feedback-correct');
+            } else {
+                feedback.textContent = `Hai ${correctCount} risposte corrette su ${totalBlanks}. Riprova!`;
+                feedback.classList.remove('feedback-correct', 'hidden');
+                feedback.classList.add('feedback-incorrect');
+            }
+            feedback.classList.remove('hidden');
+
+            generatePdfReport(resultsForPdf, correctCount, totalBlanks, type);
+        }
+
+        // Funzione per generare il report PDF
+        function generatePdfReport(results, correctCount, totalQuestions, exerciseType) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(22);
+            doc.text(`Risultati Past Continuous - ${exerciseType.charAt(0).toUpperCase() + exerciseType.slice(1)}`, 10, 20);
+
+            doc.setFontSize(14);
+            doc.text("Il tuo punteggio: " + correctCount + " / " + totalQuestions, 10, 35);
+            doc.text("--------------------------------------------------", 10, 45);
+
+            let yOffset = 55;
+            doc.setFontSize(12);
+
+            results.forEach(item => {
+                let sentenceDisplay = item.sentence;
+                // Replace blanks with user answers for display in PDF
+                let currentBlank = 0;
+                sentenceDisplay = sentenceDisplay.replace(/____/g, () => {
+                    const userAnswer = item.userAnswers[currentBlank] || '';
+                    currentBlank++;
+                    return `[${userAnswer}]`;
+                });
+
+                doc.text(sentenceDisplay, 10, yOffset, { maxWidth: 180 });
+                yOffset += doc.getTextDimensions(sentenceDisplay, { maxWidth: 180 }).h + 2; // Add some padding
+
+                let correctnessLine = "Corretta: ";
+                if (item.isCorrect) {
+                    doc.setTextColor(30, 130, 76); // Green
+                    correctnessLine += "Sì";
+                } else {
+                    doc.setTextColor(220, 50, 50); // Red
+                    correctnessLine += `No (Risposta/e corretta/e: ${item.correctAnswers.join(' ')})`;
+                }
+                doc.text(correctnessLine, 15, yOffset);
+                doc.setTextColor(0, 0, 0); // Reset color
+                yOffset += 12; // More spacing for next question
+            });
+
+            doc.save(`Risultati_Past_Continuous_${exerciseType}.pdf`);
+        }
+
+        // Funzione per resettare gli esercizi
+        function resetExercise(type) {
+            const inputs = document.querySelectorAll(`#${type}-exercise .fill-in-blank-input`);
+            const feedback = document.getElementById(`${type}-feedback`);
+
+            inputs.forEach(input => {
+                input.value = '';
+                input.style.borderColor = '';
+                input.style.backgroundColor = '';
+            });
+            feedback.classList.add('hidden');
+            feedback.classList.remove('feedback-correct', 'feedback-incorrect');
+        }
+
+        // Inizializza tutti gli esercizi al caricamento della pagina
+        document.addEventListener('DOMContentLoaded', () => {
+            createExercise('affirmative');
+            createExercise('negative');
+            createExercise('interrogative');
+            createExercise('mixed');
+        });
+    </script>
+</body>
+</html>
