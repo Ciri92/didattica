@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Can / Could: Esercizio Misto</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Stili personalizzati per estetica e interattività */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Sfondo azzurro-grigio chiaro */
+            color: #334155; /* Colore testo più scuro */
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 12px; /* Angoli più arrotondati */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Ombra più morbida */
+        }
+        h1, h2, h3 {
+            color: #1e3a8a; /* Blu più scuro per i titoli */
+            font-weight: 700;
+        }
+        .section-box {
+            background-color: #e0f2fe; /* Azzurro più chiaro per le sezioni */
+            border-left: 6px solid #3b82f6; /* Bordo blu */
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .explanation-points ul {
+            list-style: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .explanation-points li {
+            margin-bottom: 0.5rem;
+        }
+        .exercise-text-container {
+            line-height: 2; /* Aumenta l'altezza della linea per una migliore spaziatura con gli input */
+            font-size: 0.95rem; /* Testo leggermente più piccolo per far stare tutto su una riga */
+        }
+        .fill-in-blank-input {
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 0.4rem 0.6rem; /* Padding ridotto */
+            width: 120px; /* Larghezza adeguata per le risposte "can/could" */
+            margin: 0 0.2rem; /* Margine più piccolo */
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+            display: inline-block; /* Permette agli input di fluire con il testo */
+            font-size: 0.9rem; /* Testo input leggermente più piccolo */
+        }
+        .fill-in-blank-input:focus {
+            border-color: #3b82f6;
+        }
+        .button-primary {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            border: none;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+        .button-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+        .button-primary:active {
+            transform: translateY(0);
+        }
+        .button-secondary {
+            background-color: #6b7280;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border: none;
+            margin-left: 1rem;
+        }
+        .button-secondary:hover {
+            background-color: #4b5563;
+        }
+        .feedback-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .feedback-correct {
+            background-color: #d1fae5; /* Verde per corretto */
+            color: #065f46;
+        }
+        .feedback-incorrect {
+            background-color: #fee2e2; /* Rosso per incorretto */
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-4xl text-center mb-6">Can / Could / Can't / Couldn't: Esercizio Misto</h1>
+
+        <div class="section-box">
+            <h2 class="text-2xl mb-4">Can vs. Could: Differenze e Usi</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                "Can" e "Could" sono verbi modali molto comuni in inglese, ma hanno significati e usi diversi a seconda del contesto.
+            </p>
+            <div class="explanation-points">
+                <h3 class="text-xl mb-2">Can:</h3>
+                <ul>
+                    <li><strong>Abilità nel presente:</strong> Indica la capacità di fare qualcosa ora. <br>
+                        Esempio: I <strong>can</strong> swim. (So nuotare / Sono in grado di nuotare.)</li>
+                    <li><strong>Permesso nel presente:</strong> Chiedere o dare permesso. <br>
+                        Esempio: You <strong>can</strong> sit here. (Puoi sederti qui.)</li>
+                    <li><strong>Possibilità generale:</strong> Indica che qualcosa è possibile. <br>
+                        Esempio: It <strong>can</strong> get very cold in winter. (Può fare molto freddo in inverno.)</li>
+                    <li><strong>Richieste informali:</strong> Per fare una richiesta in modo informale. <br>
+                        Esempio: <strong>Can</strong> you help me? (Puoi aiutarmi?)</li>
+                    <li><strong>Forma negativa:</strong> <strong>Can't</strong> (cannot) - per indicare incapacità o divieto. <br>
+                        Esempio: I <strong>can't</strong> speak French. (Non so parlare francese.)</li>
+                </ul>
+                <h3 class="text-xl mb-2">Could:</h3>
+                <ul>
+                    <li><strong>Abilità nel passato:</strong> Indica la capacità di fare qualcosa nel passato. È il passato di "can". <br>
+                        Esempio: When I was seven, I <strong>could</strong> swim. (Quando avevo sette anni, sapevo nuotare.)</li>
+                    <li><strong>Permesso nel passato:</strong> Chiedere o dare permesso nel passato. <br>
+                        Esempio: We <strong>could</strong> leave early yesterday. (Potevamo partire presto ieri.)</li>
+                    <li><strong>Possibilità futura o ipotetica:</strong> Indica che qualcosa è possibile, ma meno certo di "can". <br>
+                        Esempio: It <strong>could</strong> rain tomorrow. (Potrebbe piovere domani.)</li>
+                    <li><strong>Richieste più formali o educate:</strong> Per fare una richiesta in modo più cortese. <br>
+                        Esempio: <strong>Could</strong> you please pass the salt? (Potresti per favore passarmi il sale?)</li>
+                    <li><strong>Forma negativa:</strong> <strong>Couldn't</strong> (could not) - per indicare incapacità nel passato o impossibilità. <br>
+                        Esempio: I <strong>couldn't</strong> find my keys. (Non riuscivo a trovare le mie chiavi.)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <h2 class="text-2xl mb-4">Esercizio: Completa le frasi</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                Completa le frasi con la forma corretta: **can**, **can't**, **could** o **couldn't**. Presta attenzione al contesto temporale (presente o passato).
+            </p>
+            <div id="mixed-exercise-container" class="exercise-text-container"></div>
+            <div class="flex justify-center mt-6">
+                <button class="button-primary" onclick="checkExercise('mixed')">I miei risultati</button>
+                <button class="button-secondary" onclick="resetExercise('mixed')">Reset</button>
+            </div>
+            <div id="mixed-feedback" class="feedback-message hidden"></div>
+        </div>
+    </div>
+
+    <script>
+        // Dati per l'esercizio misto
+        const exercisesData = {
+            mixed: [
+                { sentence: "1. I ____ swim when I was five, but now I ____ swim very well.", answer: "could can" },
+                { sentence: "2. She ____ speak French fluently now, but last year she ____ understand much.", answer: "can couldn't" },
+                { sentence: "3. My grandfather ____ hear very well these days, so you need to speak loudly.", answer: "can't" },
+                { sentence: "4. When I was a child, I ____ climb trees, but I ____ climb them anymore.", answer: "could can't" },
+                { sentence: "5. We ____ go to the concert tonight because all the tickets are sold out.", answer: "can't" },
+                { sentence: "6. He ____ play the piano beautifully when he was young, but he doesn't play anymore.", answer: "could" },
+                { sentence: "7. ____ you please help me with this heavy box? I ____ lift it alone.", answer: "Could can't" },
+                { sentence: "8. They ____ find their way home last night because it was too dark.", answer: "couldn't" },
+                { sentence: "9. My little sister ____ read yet, but she ____ recognize all the letters.", answer: "can't can" },
+                { sentence: "10. I ____ believe how much snow fell last night! I ____ open the door.", answer: "can't can't" },
+                { sentence: "11. Last week, I ____ finish the project on time, even though I tried my best.", answer: "couldn't" },
+                { sentence: "12. ____ you see the stage from here? The view is great!", answer: "Can" },
+                { sentence: "13. Before the accident, he ____ walk without a cane, but now he ____.", answer: "could can't" },
+                { sentence: "14. We ____ visit the museum tomorrow if the weather is good.", answer: "could" },
+                { sentence: "15. She ____ remember where she put her keys yesterday, so she was late.", answer: "couldn't" }
+            ]
+        };
+
+        // Funzione per creare l'esercizio
+        function createExercise(type) {
+            const container = document.getElementById(`${type}-exercise-container`);
+            container.innerHTML = '';
+            const questions = exercisesData[type];
+
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('flex', 'items-center', 'flex-wrap', 'gap-2', 'mb-2');
+
+                const parts = q.sentence.split('____');
+                parts.forEach((part, i) => {
+                    if (part) {
+                        const span = document.createElement('span');
+                        span.textContent = part.trim();
+                        questionDiv.appendChild(span);
+                    }
+                    if (i < parts.length - 1) { // Se non è l'ultima parte, aggiungi un input
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.classList.add('fill-in-blank-input');
+                        input.setAttribute('data-index', index);
+                        input.setAttribute('data-part', i); // Per gestire più blank nella stessa frase
+                        questionDiv.appendChild(input);
+                    }
+                });
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Funzione per controllare l'esercizio e generare il PDF
+        function checkExercise(type) {
+            const inputs = document.querySelectorAll(`#${type}-exercise-container .fill-in-blank-input`);
+            let correctCount = 0;
+            let totalBlanks = 0;
+            const feedback = document.getElementById(`${type}-feedback`);
+            const questions = exercisesData[type];
+            const resultsForPdf = [];
+
+            questions.forEach((q, qIndex) => {
+                const currentQuestionInputs = Array.from(inputs).filter(input => parseInt(input.getAttribute('data-index')) === qIndex);
+                const correctAnswers = q.answer.split(' '); // Split correct answer into parts if multiple blanks
+
+                let questionResult = {
+                    sentence: q.sentence,
+                    userAnswers: [],
+                    correctAnswers: correctAnswers,
+                    isCorrect: true // Assume correct until proven otherwise
+                };
+
+                currentQuestionInputs.forEach((input, inputPartIndex) => {
+                    totalBlanks++;
+                    const userAnswer = input.value.trim().toLowerCase();
+                    const correctAnswerPart = correctAnswers[inputPartIndex] ? correctAnswers[inputPartIndex].toLowerCase() : '';
+
+                    questionResult.userAnswers.push(input.value.trim());
+
+                    if (userAnswer === correctAnswerPart) {
+                        input.style.borderColor = '#10b981'; // Green
+                        input.style.backgroundColor = '#ecfdf5'; // Light green background
+                        correctCount++;
+                    } else {
+                        input.style.borderColor = '#ef4444'; // Red
+                        input.style.backgroundColor = '#fef2f2'; // Light red background
+                        questionResult.isCorrect = false;
+                    }
+                });
+                resultsForPdf.push(questionResult);
+            });
+
+            if (correctCount === totalBlanks) {
+                feedback.textContent = "Complimenti! Tutte le risposte sono corrette!";
+                feedback.classList.remove('feedback-incorrect', 'hidden');
+                feedback.classList.add('feedback-correct');
+            } else {
+                feedback.textContent = `Hai ${correctCount} risposte corrette su ${totalBlanks}. Riprova!`;
+                feedback.classList.remove('feedback-correct', 'hidden');
+                feedback.classList.add('feedback-incorrect');
+            }
+            feedback.classList.remove('hidden');
+
+            generatePdfReport(resultsForPdf, correctCount, totalBlanks, type);
+        }
+
+        // Funzione per generare il report PDF
+        function generatePdfReport(results, correctCount, totalQuestions, exerciseType) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(22);
+            doc.text(`Risultati Can/Could - Esercizio Misto`, 10, 20);
+
+            doc.setFontSize(14);
+            doc.text("Il tuo punteggio: " + correctCount + " / " + totalQuestions, 10, 35);
+            doc.text("--------------------------------------------------", 10, 45);
+
+            let yOffset = 55;
+            doc.setFontSize(12);
+
+            results.forEach(item => {
+                let sentenceDisplay = item.sentence;
+                // Replace blanks with user answers for display in PDF
+                let currentBlank = 0;
+                sentenceDisplay = sentenceDisplay.replace(/____/g, () => {
+                    const userAnswer = item.userAnswers[currentBlank] || '';
+                    currentBlank++;
+                    return `[${userAnswer}]`;
+                });
+
+                doc.text(sentenceDisplay, 10, yOffset, { maxWidth: 180 });
+                yOffset += doc.getTextDimensions(sentenceDisplay, { maxWidth: 180 }).h + 2; // Add some padding
+
+                let correctnessLine = "Corretta: ";
+                if (item.isCorrect) {
+                    doc.setTextColor(30, 130, 76); // Green
+                    correctnessLine += "Sì";
+                } else {
+                    doc.setTextColor(220, 50, 50); // Red
+                    correctnessLine += `No (Risposta/e corretta/e: ${item.correctAnswers.join(' ')})`;
+                }
+                doc.text(correctnessLine, 15, yOffset);
+                doc.setTextColor(0, 0, 0); // Reset color
+                yOffset += 12; // More spacing for next question
+            });
+
+            doc.save(`Risultati_Can_Could_Misto.pdf`);
+        }
+
+        // Funzione per resettare l'esercizio
+        function resetExercise(type) {
+            const inputs = document.querySelectorAll(`#${type}-exercise-container .fill-in-blank-input`);
+            const feedback = document.getElementById(`${type}-feedback`);
+
+            inputs.forEach(input => {
+                input.value = '';
+                input.style.borderColor = '';
+                input.style.backgroundColor = '';
+            });
+            feedback.classList.add('hidden');
+            feedback.classList.remove('feedback-correct', 'feedback-incorrect');
+            createExercise(type); // Ricrea l'esercizio per resettare
+        }
+
+        // Inizializza l'esercizio al caricamento della pagina
+        document.addEventListener('DOMContentLoaded', () => {
+            createExercise('mixed');
+        });
+    </script>
+</body>
+</html>
