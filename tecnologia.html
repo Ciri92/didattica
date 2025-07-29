@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio: Tecnologia e Gadget</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Custom styles for aesthetics and interactivity */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            color: #334155; /* Darker text color */
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 12px; /* More rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Softer shadow */
+        }
+        h1, h2 {
+            color: #1e3a8a; /* Darker blue for headings */
+            font-weight: 700;
+        }
+        .section-box {
+            background-color: #e0f2fe; /* Lighter blue for sections */
+            border-left: 6px solid #3b82f6; /* Blue border */
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .vocabulary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Adjusted for content */
+            gap: 1rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .vocabulary-item {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .vocabulary-item span {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .listen-button {
+            background-color: #10b981; /* Green for listen button */
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border: none;
+        }
+        .listen-button:hover {
+            background-color: #059669;
+        }
+        .emoji {
+            font-size: 1.5rem; /* Emoji size */
+            margin-right: 0.5rem;
+        }
+        .exercise-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .matching-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+        .matching-row:last-child {
+            border-bottom: none;
+        }
+        .english-phrase {
+            flex: 2;
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+        .italian-options {
+            flex: 3;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .italian-option-item {
+            background-color: #f0f4f8;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.9rem;
+        }
+        .match-input {
+            width: 60px;
+            padding: 0.5rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+            outline: none;
+            transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        }
+        .match-input:focus {
+            border-color: #3b82f6;
+        }
+        .button-primary {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            border: none;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+        .button-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+        .button-primary:active {
+            transform: translateY(0);
+        }
+        .button-secondary {
+            background-color: #6b7280;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border: none;
+            margin-left: 1rem;
+        }
+        .button-secondary:hover {
+            background-color: #4b5563;
+        }
+        .feedback-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .feedback-correct {
+            background-color: #d1fae5; /* Green for correct */
+            color: #065f46;
+        }
+        .feedback-incorrect {
+            background-color: #fee2e2; /* Red for incorrect */
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-4xl text-center mb-6">Esercizio di Lessico: Tecnologia e Gadget</h1>
+
+        <!-- Sezione 1: Vocabolario -->
+        <div class="section-box">
+            <h2 class="text-2xl mb-4">Sezione 1: Vocabolario - Tecnologia e Gadget</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                Ecco un elenco di gadget tecnologici. Familiarizza con questi termini, la loro traduzione in italiano e ascolta la loro pronuncia.
+            </p>
+            <ul class="vocabulary-grid">
+                <li class="vocabulary-item">
+                    <span class="emoji">📱</span><span>Smartphone (Telefono intelligente)</span>
+                    <button class="listen-button" onclick="speakWord('smartphone', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">💻</span><span>Laptop (Computer portatile)</span>
+                    <button class="listen-button" onclick="speakWord('laptop', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🎮</span><span>Games Console (Console per videogiochi)</span>
+                    <button class="listen-button" onclick="speakWord('games console', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🖱️</span><span>Mouse (Mouse)</span>
+                    <button class="listen-button" onclick="speakWord('mouse', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">⌨️</span><span>Keyboard (Tastiera)</span>
+                    <button class="listen-button" onclick="speakWord('keyboard', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🖨️</span><span>Printer (Stampante)</span>
+                    <button class="listen-button" onclick="speakWord('printer', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🎧</span><span>Headphones (Cuffie)</span>
+                    <button class="listen-button" onclick="speakWord('headphones', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🎤</span><span>Speaker (Altoparlante)</span>
+                    <button class="listen-button" onclick="speakWord('speaker', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🔋</span><span>Charger (Caricabatterie)</span>
+                    <button class="listen-button" onclick="speakWord('charger', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">💾</span><span>Pendrive (Chiavetta USB)</span>
+                    <button class="listen-button" onclick="speakWord('pendrive', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">📷</span><span>Webcam (Webcam)</span>
+                    <button class="listen-button" onclick="speakWord('webcam', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">👆</span><span>Touchscreen (Schermo tattile)</span>
+                    <button class="listen-button" onclick="speakWord('touchscreen', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🖥️</span><span>Display (Schermo)</span>
+                    <button class="listen-button" onclick="speakWord('display', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">👂</span><span>Earbuds (Auricolari)</span>
+                    <button class="listen-button" onclick="speakWord('earbuds', 'en-US')">Ascolta</button>
+                </li>
+                <li class="vocabulary-item">
+                    <span class="emoji">🎶</span><span>MP3 Player (Lettore MP3)</span>
+                    <button class="listen-button" onclick="speakWord('MP3 player', 'en-US')">Ascolta</button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Sezione 2: Esercizio di Abbinamento -->
+        <div class="section-box">
+            <h2 class="text-2xl mb-4">Sezione 2: Esercizio - Abbina le Operazioni</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                Abbina le operazioni tecnologiche in inglese (a-f) con le loro traduzioni in italiano (1-6). Digita il numero corrispondente accanto alla frase inglese.
+            </p>
+
+            <div class="exercise-container">
+                <div class="matching-row font-bold text-gray-700">
+                    <div class="english-phrase">Frase in Inglese</div>
+                    <div>Il tuo abbinamento</div>
+                    <div class="italian-options">Opzioni in Italiano</div>
+                </div>
+
+                <!-- Matching Rows will be generated by JavaScript -->
+            </div>
+
+            <div class="flex justify-center mt-6">
+                <button class="button-primary" onclick="checkMatchingExerciseAndGeneratePdf()">I miei risultati</button>
+                <button class="button-secondary" onclick="resetExercise()">Reset</button>
+            </div>
+            <div id="feedback-message" class="feedback-message hidden"></div>
+        </div>
+    </div>
+
+    <script>
+        // Function to speak words
+        function speakWord(word, lang) {
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.lang = lang;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Data for the matching exercise
+        const matchingData = [
+            { english: "a. download files / apps / games", italian: "1. scaricare file / app / giochi" },
+            { english: "b. go online", italian: "2. andare su internet" },
+            { english: "c. play video games", italian: "3. giocare con i videogiochi" },
+            { english: "d. send an email / an attachment", italian: "4. inviare un'email / un allegato" },
+            { english: "e. stream music", italian: "5. ascoltare musica in streaming" },
+            { english: "f. charge the smartphone", italian: "6. caricare lo smartphone" }
+        ];
+
+        // Function to shuffle an array (Fisher-Yates algorithm)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+        }
+
+        // Function to create the matching exercise
+        function createMatchingExercise() {
+            const exerciseContainer = document.querySelector('.exercise-container');
+            // Remove previous rows except the header
+            Array.from(exerciseContainer.children).slice(1).forEach(child => child.remove());
+
+            const englishPhrases = matchingData.map(item => item.english);
+            const italianTranslations = matchingData.map(item => item.italian);
+            const shuffledItalianTranslations = [...italianTranslations];
+            shuffleArray(shuffledItalianTranslations);
+
+            englishPhrases.forEach((phrase, index) => {
+                const row = document.createElement('div');
+                row.classList.add('matching-row');
+
+                const englishDiv = document.createElement('div');
+                englishDiv.classList.add('english-phrase');
+                englishDiv.textContent = phrase;
+                row.appendChild(englishDiv);
+
+                const inputDiv = document.createElement('div');
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.classList.add('match-input');
+                input.setAttribute('data-english-index', index);
+                input.maxLength = 1; // Expecting a single digit (1-6)
+                inputDiv.appendChild(input);
+                row.appendChild(inputDiv);
+
+                // Add Italian options only once below the header row
+                if (index === 0) {
+                    const italianOptionsDiv = document.createElement('div');
+                    italianOptionsDiv.classList.add('italian-options');
+                    shuffledItalianTranslations.forEach(option => {
+                        const optionSpan = document.createElement('span');
+                        optionSpan.classList.add('italian-option-item');
+                        optionSpan.textContent = option;
+                        italianOptionsDiv.appendChild(optionSpan);
+                    });
+                    row.appendChild(italianOptionsDiv);
+                } else {
+                    // For subsequent rows, add an empty div to maintain layout
+                    const emptyDiv = document.createElement('div');
+                    emptyDiv.classList.add('italian-options'); // Use same class for spacing
+                    row.appendChild(emptyDiv);
+                }
+
+                exerciseContainer.appendChild(row);
+            });
+        }
+
+        // Function to check answers and generate PDF
+        function checkMatchingExerciseAndGeneratePdf() {
+            const inputs = document.querySelectorAll('.match-input');
+            let correctCount = 0;
+            const resultsForPdf = [];
+
+            inputs.forEach(input => {
+                const englishIndex = parseInt(input.getAttribute('data-english-index'));
+                const userAnswer = input.value.trim().toLowerCase();
+                const correctItalianPhrase = matchingData[englishIndex].italian;
+                const correctMatchNumber = correctItalianPhrase.split('.')[0]; // Get the number (e.g., "1")
+
+                const isCorrect = (userAnswer === correctMatchNumber);
+
+                if (isCorrect) {
+                    input.style.borderColor = '#10b981'; // Green
+                    input.style.backgroundColor = '#ecfdf5'; // Light green background
+                    correctCount++;
+                } else {
+                    input.style.borderColor = '#ef4444'; // Red
+                    input.style.backgroundColor = '#fef2f2'; // Light red background
+                }
+
+                resultsForPdf.push({
+                    englishPhrase: matchingData[englishIndex].english,
+                    userAnswer: userAnswer,
+                    correctAnswer: correctMatchNumber,
+                    isCorrect: isCorrect
+                });
+            });
+
+            const feedbackMessage = document.getElementById('feedback-message');
+            if (correctCount === matchingData.length) {
+                feedbackMessage.textContent = "Complimenti! Tutte le risposte sono corrette!";
+                feedbackMessage.classList.remove('feedback-incorrect', 'hidden');
+                feedbackMessage.classList.add('feedback-correct');
+            } else {
+                feedbackMessage.textContent = `Hai ${correctCount} risposte corrette su ${matchingData.length}. Riprova!`;
+                feedbackMessage.classList.remove('feedback-correct', 'hidden');
+                feedbackMessage.classList.add('feedback-incorrect');
+            }
+
+            generatePdfReport(resultsForPdf, correctCount, matchingData.length);
+        }
+
+        // Function to generate PDF report
+        function generatePdfReport(results, correctCount, totalQuestions) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(22);
+            doc.text("I Tuoi Risultati - Esercizio di Lessico", 10, 20);
+
+            doc.setFontSize(14);
+            doc.text("Il tuo punteggio: " + correctCount + " / " + totalQuestions, 10, 35);
+            doc.text("--------------------------------------------------", 10, 45);
+
+            let yOffset = 55;
+            doc.setFontSize(12);
+
+            results.forEach(item => {
+                const englishLine = item.englishPhrase;
+                const userAnswerLine = `La tua risposta: ${item.userAnswer}`;
+                const correctness = item.isCorrect ? "(Corretta)" : `(Corretta: ${item.correctAnswer})`;
+
+                doc.text(englishLine, 10, yOffset);
+                yOffset += 7; // Small spacing
+
+                if (item.isCorrect) {
+                    doc.setTextColor(30, 130, 76); // Green
+                } else {
+                    doc.setTextColor(220, 50, 50); // Red
+                }
+                doc.text(`${userAnswerLine} ${correctness}`, 15, yOffset);
+                doc.setTextColor(0, 0, 0); // Reset color
+                yOffset += 15; // More spacing for next question
+            });
+
+            doc.save('Miei_Risultati_Lessico_Tecnologia.pdf');
+        }
+
+        // Function to reset the exercise
+        function resetExercise() {
+            const inputs = document.querySelectorAll('.match-input');
+            inputs.forEach(input => {
+                input.value = '';
+                input.style.borderColor = '';
+                input.style.backgroundColor = '';
+            });
+            document.getElementById('feedback-message').classList.add('hidden');
+            document.getElementById('feedback-message').classList.remove('feedback-correct', 'feedback-incorrect');
+            createMatchingExercise(); // Re-shuffle options
+        }
+
+        // Initialize exercise on page load
+        document.addEventListener('DOMContentLoaded', createMatchingExercise);
+    </script>
+</body>
+</html>
