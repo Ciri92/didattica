@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammatica Inglese: Zero Conditional</title>
+    <!-- Tailwind CSS per lo stile -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Libreria jsPDF per generare il PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Font Inter per un look pulito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .feedback-icon {
+            display: inline-block;
+            width: 24px;
+            text-align: center;
+            font-size: 1.25rem;
+        }
+        .condition-item {
+            cursor: grab;
+            touch-action: none;
+        }
+        .condition-item:active {
+            cursor: grabbing;
+        }
+        .result-box {
+            transition: background-color 0.2s;
+        }
+        .result-box.drag-over {
+            background-color: #cffafe; /* cyan-100 */
+            border-style: solid;
+        }
+        .result-box.correct {
+            border-color: #16a34a; /* green-600 */
+            background-color: #f0fdf4; /* green-50 */
+        }
+        .result-box.incorrect {
+             border-color: #dc2626; /* red-600 */
+             background-color: #fef2f2; /* red-50 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-4xl">
+
+        <!-- Sezione Titolo -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-cyan-600">Zero Conditional</h1>
+            <p class="mt-2 text-lg text-gray-600">Impara a parlare di fatti, abitudini e verità generali.</p>
+        </header>
+
+        <!-- Sezione Spiegazione -->
+        <section class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg mb-12">
+            <h2 class="text-3xl font-bold mb-6 text-gray-700">Cos'è lo Zero Conditional?</h2>
+            <p class="text-lg mb-4">Lo Zero Conditional si usa per parlare di cose che sono sempre vere, come fatti scientifici, verità generali, abitudini o per dare istruzioni. La frase è composta da due parti: una condizione (introdotta da <strong class="text-cyan-600">if</strong> o <strong class="text-cyan-600">when</strong>) e un risultato.</p>
+            
+            <div class="bg-cyan-50 border-l-4 border-cyan-500 p-4 rounded-lg my-6">
+                <h3 class="font-bold text-xl text-cyan-800">Struttura</h3>
+                <p class="text-lg mt-2">If / When + <span class="font-semibold">Present Simple</span>, ... <span class="font-semibold">Present Simple</span>.</p>
+                <p class="text-md mt-1">Esempio: <span class="italic">If you heat water to 100 degrees, it boils.</span></p>
+            </div>
+
+            <h3 class="text-2xl font-bold mt-8 mb-4 text-gray-700">Quando si usa</h3>
+            <ul class="list-disc list-inside space-y-2 text-lg">
+                <li><strong>Verità generali e fatti scientifici:</strong> <span class="italic">If you mix red and blue, you get purple.</span></li>
+                <li><strong>Istruzioni:</strong> <span class="italic">If the alarm rings, leave the building immediately.</span></li>
+                <li><strong>Abitudini:</strong> <span class="italic">When I get home from work, I usually watch TV.</span></li>
+            </ul>
+        </section>
+
+        <!-- Esercizio 1 (ex. 24) -->
+        <section class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg mb-12">
+            <h2 class="text-2xl font-bold mb-4">Esercizio 1: Abbina la condizione al risultato</h2>
+            <p class="mb-6">Trascina la condizione (frase con "If") nel riquadro del risultato corretto.</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Colonna delle condizioni (trascinabili) -->
+                <div id="conditions-list" class="space-y-3">
+                    <div id="cond-1" data-match="res-1" draggable="true" class="condition-item p-3 bg-gray-200 rounded-lg shadow-sm">1. If you heat ice...</div>
+                    <div id="cond-2" data-match="res-2" draggable="true" class="condition-item p-3 bg-gray-200 rounded-lg shadow-sm">2. If you don't eat...</div>
+                    <div id="cond-3" data-match="res-3" draggable="true" class="condition-item p-3 bg-gray-200 rounded-lg shadow-sm">3. If I miss the bus...</div>
+                    <div id="cond-4" data-match="res-4" draggable="true" class="condition-item p-3 bg-gray-200 rounded-lg shadow-sm">4. If you press that button...</div>
+                </div>
+                <!-- Colonna dei risultati (zone di rilascio) -->
+                <div class="space-y-3">
+                    <div id="res-4" data-match="res-4" class="result-box p-3 border-2 border-dashed rounded-lg h-14 flex items-center">a. the TV turns on.</div>
+                    <div id="res-2" data-match="res-2" class="result-box p-3 border-2 border-dashed rounded-lg h-14 flex items-center">b. you get hungry.</div>
+                    <div id="res-1" data-match="res-1" class="result-box p-3 border-2 border-dashed rounded-lg h-14 flex items-center">c. it melts.</div>
+                    <div id="res-3" data-match="res-3" class="result-box p-3 border-2 border-dashed rounded-lg h-14 flex items-center">d. I am late for work.</div>
+                </div>
+            </div>
+            <button onclick="checkMatchingExercise()" class="mt-6 px-6 py-2 bg-cyan-600 text-white font-semibold rounded-lg shadow-md hover:bg-cyan-700">Verifica Esercizio 1</button>
+        </section>
+
+        <!-- Esercizio 2 (ex. 25) -->
+        <section class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg mb-12">
+            <h2 class="text-2xl font-bold mb-4">Esercizio 2: Completa le frasi</h2>
+            <p class="mb-6">Scrivi frasi complete usando lo Zero Conditional e le parole date.</p>
+            <div id="ex2-form" class="space-y-4">
+                <div class="flex items-center">
+                    <p class="flex-grow">1. (If / plants not get / enough water / they die) -> <input type="text" id="q2-1" class="w-full mt-1 p-1 border rounded" data-answer="if plants don't get enough water, they die."></p>
+                    <span id="feedback-2-1" class="feedback-icon"></span>
+                </div>
+                <div class="flex items-center">
+                    <p class="flex-grow">2. (When / I feel tired / I drink / a coffee) -> <input type="text" id="q2-2" class="w-full mt-1 p-1 border rounded" data-answer="when i feel tired, i drink a coffee."></p>
+                    <span id="feedback-2-2" class="feedback-icon"></span>
+                </div>
+            </div>
+            <button onclick="checkTextExercise()" class="mt-6 px-6 py-2 bg-cyan-600 text-white font-semibold rounded-lg shadow-md hover:bg-cyan-700">Verifica Esercizio 2</button>
+        </section>
+
+        <!-- Esercizio 3 (ex. 26) -->
+        <section class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg mb-12">
+            <h2 class="text-2xl font-bold mb-4">Esercizio 3: Completa con le tue idee</h2>
+            <div id="ex3-form" class="space-y-4">
+                <div>
+                    <label for="q3-1" class="block font-medium">1. If I am late for school, ...</label>
+                    <input type="text" id="q3-1" class="w-full mt-1 p-2 border rounded">
+                </div>
+                <div>
+                    <label for="q3-2" class="block font-medium">2. If I don't understand the teacher, ...</label>
+                    <input type="text" id="q3-2" class="w-full mt-1 p-2 border rounded">
+                </div>
+            </div>
+        </section>
+
+        <!-- Sezione Download Riepilogo -->
+        <section class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg text-center">
+            <h2 class="text-3xl font-bold mb-4 text-gray-700">Riepilogo Esercizi</h2>
+            <p class="text-gray-600 mb-6">Quando hai finito, clicca qui per scaricare un PDF con i tuoi risultati.</p>
+            <button id="download-summary-btn" class="px-8 py-3 bg-green-600 text-white font-bold rounded-lg shadow-lg hover:bg-green-700 transition-all">
+                Scarica Riepilogo PDF
+            </button>
+        </section>
+    </div>
+
+    <script>
+        // --- Drag and Drop Logic ---
+        const conditions = document.querySelectorAll('.condition-item');
+        const resultBoxes = document.querySelectorAll('.result-box');
+
+        conditions.forEach(cond => {
+            cond.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', e.target.id);
+                setTimeout(() => e.target.classList.add('invisible'), 0);
+            });
+            cond.addEventListener('dragend', (e) => {
+                e.target.classList.remove('invisible');
+            });
+        });
+
+        resultBoxes.forEach(box => {
+            box.addEventListener('dragover', e => {
+                e.preventDefault();
+                box.classList.add('drag-over');
+            });
+            box.addEventListener('dragleave', () => box.classList.remove('drag-over'));
+            box.addEventListener('drop', e => {
+                e.preventDefault();
+                box.classList.remove('drag-over');
+                const draggedId = e.dataTransfer.getData('text/plain');
+                const draggedEl = document.getElementById(draggedId);
+                
+                // If the box already has an item, return it to the list
+                if (box.children.length > 0) {
+                    document.getElementById('conditions-list').appendChild(box.children[0]);
+                }
+                box.appendChild(draggedEl);
+            });
+        });
+
+        function checkMatchingExercise() {
+            resultBoxes.forEach(box => {
+                const isCorrect = box.children.length > 0 && box.children[0].dataset.match === box.dataset.match;
+                box.classList.remove('correct', 'incorrect');
+                if (isCorrect) {
+                    box.classList.add('correct');
+                } else if (box.children.length > 0) {
+                    box.classList.add('incorrect');
+                }
+            });
+        }
+
+        // --- Text Input Logic ---
+        function checkTextExercise() {
+            for (let i = 1; i <= 2; i++) {
+                const input = document.getElementById(`q2-${i}`);
+                const feedback = document.getElementById(`feedback-2-${i}`);
+                const userAnswer = input.value.trim().toLowerCase().replace(/[.,!]/g, '');
+                const correctAnswer = input.dataset.answer.toLowerCase().replace(/[.,!]/g, '');
+                if (userAnswer === correctAnswer) {
+                    feedback.textContent = '✔️';
+                    feedback.className = 'feedback-icon text-green-600';
+                } else {
+                    feedback.textContent = '❌';
+                    feedback.className = 'feedback-icon text-red-600';
+                }
+            }
+        }
+
+        // --- PDF Download Logic ---
+        document.getElementById('download-summary-btn').addEventListener('click', () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            let y = 20;
+
+            doc.setFontSize(18);
+            doc.text("Riepilogo Esercizi: Zero Conditional", 105, y, { align: 'center' });
+            y += 20;
+
+            function addText(text, x, currentY, isBold = false) {
+                 doc.setFont(undefined, isBold ? 'bold' : 'normal');
+                 const lines = doc.splitTextToSize(text, 180);
+                 doc.text(lines, x, currentY);
+                 return currentY + (lines.length * 7);
+            }
+
+            // Esercizio 1
+            y = addText("Esercizio 1: Abbina la condizione al risultato", 14, y, true);
+            y += 4;
+            doc.setFontSize(10);
+            resultBoxes.forEach(box => {
+                const resultText = box.textContent;
+                const conditionText = box.children.length > 0 ? box.children[0].textContent : '(Nessun abbinamento)';
+                const isCorrect = box.children.length > 0 && box.children[0].dataset.match === box.dataset.match;
+                y = addText(`${conditionText} -> ${resultText} (${isCorrect ? 'Corretto' : 'Sbagliato'})`, 14, y);
+            });
+            
+            y += 10;
+
+            // Esercizio 2
+            y = addText("Esercizio 2: Completa le frasi", 14, y, true);
+            y += 4;
+            doc.setFontSize(10);
+            for(let i=1; i<=2; i++) {
+                const input = document.getElementById(`q2-${i}`);
+                const prompt = input.parentElement.textContent.split('->')[0].trim();
+                const userAnswer = input.value || '(nessuna risposta)';
+                const isCorrect = input.value.trim().toLowerCase().replace(/[.,!]/g, '') === input.dataset.answer.toLowerCase().replace(/[.,!]/g, '');
+                y = addText(`${prompt}\nRisposta: ${userAnswer} (${isCorrect ? 'Corretto' : 'Sbagliato'})`, 14, y);
+                y += 4;
+            }
+            
+            y += 10;
+            
+            // Esercizio 3
+            y = addText("Esercizio 3: Risposte personali", 14, y, true);
+            y += 4;
+            doc.setFontSize(10);
+            for(let i=1; i<=2; i++) {
+                const label = document.querySelector(`label[for="q3-${i}"]`).textContent;
+                const answer = document.getElementById(`q3-${i}`).value || '(nessuna risposta)';
+                y = addText(`${label}\nRisposta: ${answer}`, 14, y);
+                y += 4;
+            }
+
+            doc.save('riepilogo-zero-conditional.pdf');
+        });
+    </script>
+</body>
+</html>
