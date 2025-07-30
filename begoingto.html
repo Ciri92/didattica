@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammatica Inglese: 'be going to'</title>
+    <!-- Tailwind CSS per lo stile -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Libreria jsPDF per generare il PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Font Inter per un look pulito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .feedback-icon {
+            display: inline-block;
+            width: 24px;
+            text-align: center;
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-4xl">
+
+        <!-- Sezione Titolo -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-teal-600">Il Futuro con "be going to"</h1>
+            <p class="mt-2 text-lg text-gray-600">Impara a parlare di intenzioni e previsioni in inglese.</p>
+        </header>
+
+        <!-- Sezione Spiegazione -->
+        <section class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg mb-12">
+            <h2 class="text-3xl font-bold mb-6 text-gray-700">Quando si usa "be going to"?</h2>
+            <div class="space-y-4 text-lg">
+                <p><strong class="text-teal-600">1. Intenzioni future:</strong> Per parlare di qualcosa che abbiamo già deciso di fare nel futuro.</p>
+                <p class="ml-4 italic">Esempio: <span class="font-semibold">I'm going to watch a movie tonight.</span> (Ho intenzione di guardare un film stasera).</p>
+                <p><strong class="text-teal-600">2. Previsioni basate su prove:</strong> Per dire che qualcosa sta per accadere, basandoci su ciò che vediamo ora.</p>
+                <p class="ml-4 italic">Esempio: <span class="font-semibold">Look at those black clouds! It's going to rain.</span> (Guarda quelle nuvole nere! Sta per piovere).</p>
+            </div>
+
+            <h3 class="text-2xl font-bold mt-8 mb-4 text-gray-700">Come si costruisce</h3>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Forma Affermativa -->
+                <div>
+                    <h4 class="font-bold text-xl text-green-600 mb-2">Forma Affermativa</h4>
+                    <p class="mb-2">Soggetto + be (am/is/are) + going to + verbo</p>
+                    <ul class="list-disc list-inside bg-green-50 p-3 rounded-lg">
+                        <li>I <span class="font-bold">am going to</span> study.</li>
+                        <li>He/She <span class="font-bold">is going to</span> play.</li>
+                        <li>We/You/They <span class="font-bold">are going to</span> leave.</li>
+                    </ul>
+                </div>
+                <!-- Forma Negativa -->
+                <div>
+                    <h4 class="font-bold text-xl text-red-600 mb-2">Forma Negativa</h4>
+                    <p class="mb-2">Soggetto + be + not + going to + verbo</p>
+                     <ul class="list-disc list-inside bg-red-50 p-3 rounded-lg">
+                        <li>I <span class="font-bold">am not going to</span> study.</li>
+                        <li>He/She <span class="font-bold">is not (isn't) going to</span> play.</li>
+                        <li>We/You/They <span class="font-bold">are not (aren't) going to</span> leave.</li>
+                    </ul>
+                </div>
+                <!-- Forma Interrogativa -->
+                <div>
+                    <h4 class="font-bold text-xl text-blue-600 mb-2">Forma Interrogativa</h4>
+                    <p class="mb-2">Be + soggetto + going to + verbo?</p>
+                     <ul class="list-disc list-inside bg-blue-50 p-3 rounded-lg">
+                        <li><span class="font-bold">Am</span> I <span class="font-bold">going to</span> study?</li>
+                        <li><span class="font-bold">Is</span> he/she <span class="font-bold">going to</span> play?</li>
+                        <li><span class="font-bold">Are</span> we/you/they <span class="font-bold">going to</span> leave?</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Esercizio 1: Affermativa -->
+        <section class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg mb-12">
+            <h2 class="text-2xl font-bold mb-4">Esercizio 1: Forma Affermativa</h2>
+            <p class="mb-6">Completa le frasi con la forma affermativa corretta di "be going to" e il verbo tra parentesi.</p>
+            <div id="ex1-form" class="space-y-4">
+                <div class="flex items-center">
+                    <p class="flex-grow">1. She <input type="text" id="q1-1" class="w-48 mx-2 p-1 border rounded" data-answer="is going to buy"> a new phone. (buy)</p>
+                    <span id="feedback-1-1" class="feedback-icon"></span>
+                </div>
+                 <div class="flex items-center">
+                    <p class="flex-grow">2. We <input type="text" id="q1-2" class="w-48 mx-2 p-1 border rounded" data-answer="are going to visit"> our grandparents. (visit)</p>
+                    <span id="feedback-1-2" class="feedback-icon"></span>
+                </div>
+                 <div class="flex items-center">
+                    <p class="flex-grow">3. I <input type="text" id="q1-3" class="w-48 mx-2 p-1 border rounded" data-answer="am going to start"> a new course. (start)</p>
+                    <span id="feedback-1-3" class="feedback-icon"></span>
+                </div>
+            </div>
+            <button onclick="checkExercise(1, 3)" class="mt-6 px-6 py-2 bg-teal-600 text-white font-semibold rounded-lg shadow-md hover:bg-teal-700">Verifica Esercizio 1</button>
+        </section>
+
+        <!-- Esercizio 2: Negativa -->
+        <section class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg mb-12">
+            <h2 class="text-2xl font-bold mb-4">Esercizio 2: Forma Negativa</h2>
+            <p class="mb-6">Trasforma le frasi in negative. Sono accettate più forme di contrazione.</p>
+            <div id="ex2-form" class="space-y-4">
+                <div class="flex items-center">
+                    <p class="flex-grow">1. He is going to play football. -> <input type="text" id="q2-1" class="w-full mt-1 p-1 border rounded" data-answer="he isn't going to play football|he's not going to play football|he is not going to play football"></p>
+                    <span id="feedback-2-1" class="feedback-icon"></span>
+                </div>
+                 <div class="flex items-center">
+                    <p class="flex-grow">2. They are going to watch the film. -> <input type="text" id="q2-2" class="w-full mt-1 p-1 border rounded" data-answer="they aren't going to watch the film|they're not going to watch the film|they are not going to watch the film"></p>
+                    <span id="feedback-2-2" class="feedback-icon"></span>
+                </div>
+            </div>
+            <button onclick="checkExercise(2, 2)" class="mt-6 px-6 py-2 bg-teal-600 text-white font-semibold rounded-lg shadow-md hover:bg-teal-700">Verifica Esercizio 2</button>
+        </section>
+
+        <!-- Esercizio 3: Interrogativa -->
+        <section class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg mb-12">
+            <h2 class="text-2xl font-bold mb-4">Esercizio 3: Forma Interrogativa</h2>
+            <p class="mb-6">Metti le parole nell'ordine corretto per formare una domanda.</p>
+            <div id="ex3-form" class="space-y-4">
+                <div class="flex items-center">
+                    <p class="flex-grow">1. you / to / are / travel / going / ? -> <input type="text" id="q3-1" class="w-full mt-1 p-1 border rounded" data-answer="are you going to travel"></p>
+                    <span id="feedback-3-1" class="feedback-icon"></span>
+                </div>
+                 <div class="flex items-center">
+                    <p class="flex-grow">2. she / going / is / to / a cake / make / ? -> <input type="text" id="q3-2" class="w-full mt-1 p-1 border rounded" data-answer="is she going to make a cake"></p>
+                    <span id="feedback-3-2" class="feedback-icon"></span>
+                </div>
+            </div>
+            <button onclick="checkExercise(3, 2)" class="mt-6 px-6 py-2 bg-teal-600 text-white font-semibold rounded-lg shadow-md hover:bg-teal-700">Verifica Esercizio 3</button>
+        </section>
+        
+        <!-- Esercizio 4: Misto -->
+        <section class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg mb-12">
+            <h2 class="text-2xl font-bold mb-4">Esercizio 4: Misto</h2>
+            <p class="mb-6">Scegli l'opzione corretta per completare il dialogo.</p>
+            <div id="ex4-form" class="space-y-6">
+                <div>
+                    <p>1. A: What are your plans for the weekend?</p>
+                    <p class="mb-2">B: I think I ______ a book.</p>
+                    <div class="flex items-center space-x-4">
+                        <label><input type="radio" name="q4-1" value="a"> am going to read</label>
+                        <label><input type="radio" name="q4-1" value="b"> is going to read</label>
+                    </div>
+                    <span id="feedback-4-1" class="feedback-icon"></span>
+                </div>
+                <div>
+                    <p>2. A: Look at the time! We ______ the train!</p>
+                    <p class="mb-2">B: Let's hurry!</p>
+                    <div class="flex items-center space-x-4">
+                        <label><input type="radio" name="q4-2" value="a"> aren't going to miss</label>
+                        <label><input type="radio" name="q4-2" value="b"> are going to miss</label>
+                    </div>
+                     <span id="feedback-4-2" class="feedback-icon"></span>
+                </div>
+            </div>
+            <button onclick="checkMixedExercise()" class="mt-6 px-6 py-2 bg-teal-600 text-white font-semibold rounded-lg shadow-md hover:bg-teal-700">Verifica Esercizio 4</button>
+        </section>
+
+        <!-- Sezione Download Riepilogo -->
+        <section class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg text-center">
+            <h2 class="text-3xl font-bold mb-4 text-gray-700">Riepilogo Esercizi</h2>
+            <p class="text-gray-600 mb-6">Quando hai finito, clicca qui per scaricare un PDF con i tuoi risultati.</p>
+            <button id="download-summary-btn" class="px-8 py-3 bg-green-600 text-white font-bold rounded-lg shadow-lg hover:bg-green-700 transition-all">
+                Scarica Riepilogo PDF
+            </button>
+        </section>
+
+    </div>
+
+    <script>
+        // Funzione per controllare gli esercizi di tipo input text
+        function checkExercise(exNum, numQuestions) {
+            for (let i = 1; i <= numQuestions; i++) {
+                const input = document.getElementById(`q${exNum}-${i}`);
+                const feedback = document.getElementById(`feedback-${exNum}-${i}`);
+                
+                // Pulisce la risposta dell'utente: toglie spazi inutili, converte in minuscolo, rimuove la punteggiatura comune.
+                const userAnswer = input.value.trim().toLowerCase().replace(/[.?,!]/g, '').replace(/\s+/g, ' ');
+                
+                // Ottiene la lista di risposte corrette, separate da '|'
+                const correctAnswers = input.dataset.answer.split('|').map(ans => ans.trim().toLowerCase());
+
+                // Controlla se la risposta dell'utente è inclusa nella lista di risposte corrette
+                if (correctAnswers.includes(userAnswer)) {
+                    feedback.textContent = '✔️';
+                    feedback.className = 'feedback-icon text-green-600';
+                } else {
+                    feedback.textContent = '❌';
+                    feedback.className = 'feedback-icon text-red-600';
+                }
+            }
+        }
+        
+        // Funzione per controllare l'esercizio misto (radio button)
+        function checkMixedExercise() {
+            const correctAnswers = { 'q4-1': 'a', 'q4-2': 'b' };
+            for (const qId in correctAnswers) {
+                const selected = document.querySelector(`input[name="${qId}"]:checked`);
+                const feedback = document.getElementById(`feedback-${qId.replace('q', '')}`);
+                if (selected && selected.value === correctAnswers[qId]) {
+                    feedback.textContent = '✔️';
+                    feedback.className = 'feedback-icon text-green-600';
+                } else {
+                    feedback.textContent = '❌';
+                    feedback.className = 'feedback-icon text-red-600';
+                }
+            }
+        }
+
+        // Funzione per generare e scaricare il riepilogo in PDF
+        document.getElementById('download-summary-btn').addEventListener('click', () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            let y = 20;
+
+            doc.setFontSize(18);
+            doc.text("Riepilogo Esercizi: 'be going to'", 105, y, { align: 'center' });
+            y += 20;
+
+            // Helper function to add text and manage y position
+            function addText(text, x, currentY) {
+                 const lines = doc.splitTextToSize(text, 180);
+                 doc.text(lines, x, currentY);
+                 return currentY + (lines.length * 7);
+            }
+            
+            // Funzione per verificare la correttezza per il PDF
+            function isCorrect(inputElement) {
+                const userAnswer = inputElement.value.trim().toLowerCase().replace(/[.?,!]/g, '').replace(/\s+/g, ' ');
+                const correctAnswers = inputElement.dataset.answer.split('|').map(ans => ans.trim().toLowerCase());
+                return correctAnswers.includes(userAnswer);
+            }
+
+            // Esercizio 1
+            doc.setFontSize(14);
+            doc.text("Esercizio 1: Forma Affermativa", 14, y);
+            y += 10;
+            doc.setFontSize(10);
+            for(let i=1; i<=3; i++) {
+                const input = document.getElementById(`q1-${i}`);
+                const userAnswer = input.value || '(nessuna risposta)';
+                y = addText(`Domanda ${i}: ${userAnswer} (${isCorrect(input) ? 'Corretto' : 'Sbagliato'})`, 14, y);
+                y += 2;
+            }
+            
+            y += 10;
+
+            // Esercizio 2
+            doc.setFontSize(14);
+            doc.text("Esercizio 2: Forma Negativa", 14, y);
+            y += 10;
+            doc.setFontSize(10);
+             for(let i=1; i<=2; i++) {
+                const input = document.getElementById(`q2-${i}`);
+                const userAnswer = input.value || '(nessuna risposta)';
+                y = addText(`Domanda ${i}: ${userAnswer} (${isCorrect(input) ? 'Corretto' : 'Sbagliato'})`, 14, y);
+                y += 2;
+            }
+            
+            y += 10;
+            
+            // Esercizio 3
+            doc.setFontSize(14);
+            doc.text("Esercizio 3: Forma Interrogativa", 14, y);
+            y += 10;
+            doc.setFontSize(10);
+             for(let i=1; i<=2; i++) {
+                const input = document.getElementById(`q3-${i}`);
+                const userAnswer = input.value || '(nessuna risposta)';
+                y = addText(`Domanda ${i}: ${userAnswer} (${isCorrect(input) ? 'Corretto' : 'Sbagliato'})`, 14, y);
+                y += 2;
+            }
+            
+            y += 10;
+            
+            // Esercizio 4
+            doc.setFontSize(14);
+            doc.text("Esercizio 4: Misto", 14, y);
+            y += 10;
+            doc.setFontSize(10);
+            const correctAnswersMixed = { 'q4-1': 'a', 'q4-2': 'b' };
+            for (const qId in correctAnswersMixed) {
+                 const selected = document.querySelector(`input[name="${qId}"]:checked`);
+                 const userAnswer = selected ? selected.parentElement.textContent : '(nessuna risposta)';
+                 const isCorrect = selected && selected.value === correctAnswersMixed[qId];
+                 y = addText(`Domanda ${qId.slice(-1)}: ${userAnswer} (${isCorrect ? 'Corretto' : 'Sbagliato'})`, 14, y);
+                 y += 2;
+            }
+
+
+            doc.save('riepilogo-be-going-to.pdf');
+        });
+    </script>
+
+</body>
+</html>
