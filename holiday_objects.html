@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lessico: Luoghi e Oggetti da Viaggio</title>
+    <!-- Tailwind CSS per lo stile -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Inter per un look pulito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Stile personalizzato per un aspetto migliore */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Evidenzia la zona di rilascio quando si trascina un elemento sopra */
+        .drop-zone.drag-over {
+            background-color: #e0f2fe; /* light-blue-100 */
+            border-style: solid;
+        }
+        /* Stile per le parole trascinabili */
+        .draggable-word {
+            touch-action: none; /* Ottimizzazione per il tocco */
+            cursor: grab;
+        }
+        .draggable-word:active {
+            cursor: grabbing;
+        }
+        /* Animazione per una risposta errata */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+
+        <!-- Sezione Titolo -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-indigo-600">Esplorare il Mondo</h1>
+            <p class="mt-2 text-lg text-gray-600">Impara il lessico per i luoghi da visitare e gli oggetti da portare in viaggio.</p>
+        </header>
+
+        <!-- Sezione 1: Esercizio Luoghi da Visitare -->
+        <section id="exercise-places" class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg mb-12">
+            <h2 class="text-3xl font-bold mb-2 text-center text-gray-700">Section 1: Places to Visit</h2>
+            <p class="text-center text-gray-600 mb-6">Trascina il nome del luogo sulla emoji corretta.</p>
+            
+            <div id="words-container-places" class="flex flex-wrap justify-center items-center gap-3 p-4 mb-8 bg-gray-100 rounded-xl">
+                <!-- Le parole per questo esercizio verranno inserite qui -->
+            </div>
+
+            <div id="emoji-grid-places" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4">
+                <!-- Le emoji per questo esercizio verranno inserite qui -->
+            </div>
+            
+            <div class="mt-8 text-center">
+                <p id="feedback-places" class="h-8 text-xl font-medium">&nbsp;</p>
+                <button id="reset-btn-places" class="mt-2 px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 transition-colors">
+                    Ricomincia Esercizio 1
+                </button>
+            </div>
+        </section>
+
+        <!-- Sezione 2: Domande in Inglese -->
+        <section id="questions" class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg mb-12">
+            <h2 class="text-3xl font-bold mb-6 text-center text-gray-700">Section 2: Talk about you</h2>
+            <div class="space-y-6">
+                <div>
+                    <label for="q1" class="block text-lg font-medium text-gray-800 mb-2">Is there a castle in your town? How old is it?</label>
+                    <textarea id="q1" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"></textarea>
+                </div>
+                <div>
+                    <label for="q2" class="block text-lg font-medium text-gray-800 mb-2">Are there any archaeological sites near your town? How old are they?</label>
+                    <textarea id="q2" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"></textarea>
+                </div>
+                <div>
+                    <label for="q3" class="block text-lg font-medium text-gray-800 mb-2">When did you last go to a museum or art gallery? What did you see there?</label>
+                    <textarea id="q3" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"></textarea>
+                </div>
+                <div>
+                    <label for="q4" class="block text-lg font-medium text-gray-800 mb-2">Do many tourists visit your town or region? What do they come to see?</label>
+                    <textarea id="q4" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"></textarea>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sezione 3: Esercizio Oggetti da Viaggio -->
+        <section id="exercise-items" class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg mb-12">
+            <h2 class="text-3xl font-bold mb-2 text-center text-gray-700">Section 3: What do you take on holiday?</h2>
+            <p class="text-center text-gray-600 mb-6">Trascina l'oggetto sulla emoji corretta.</p>
+            
+            <div id="words-container-items" class="flex flex-wrap justify-center items-center gap-3 p-4 mb-8 bg-gray-100 rounded-xl">
+                <!-- Le parole per questo esercizio verranno inserite qui -->
+            </div>
+
+            <div id="emoji-grid-items" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                <!-- Le emoji per questo esercizio verranno inserite qui -->
+            </div>
+            
+            <div class="mt-8 text-center">
+                <p id="feedback-items" class="h-8 text-xl font-medium">&nbsp;</p>
+                <button id="reset-btn-items" class="mt-2 px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 transition-colors">
+                    Ricomincia Esercizio 2
+                </button>
+            </div>
+        </section>
+        
+        <!-- Sezione 4: Download Riepilogo -->
+        <section id="summary" class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+            <h2 class="text-3xl font-bold mb-6 text-center text-gray-700">Riepilogo Esercizi</h2>
+            <p class="text-center text-gray-600 mb-6">Quando hai finito, clicca qui per scaricare un riepilogo delle tue risposte.</p>
+            <div class="text-center">
+                 <button id="download-summary-btn" class="px-8 py-3 bg-green-600 text-white font-bold rounded-lg shadow-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition-all">
+                    Scarica Riepilogo
+                </button>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Definiamo i dati per i due esercizi
+        const vocabularyPlaces = [
+            { word: 'Castle', emoji: '🏰' },
+            { word: 'Museum', emoji: '🏛️' },
+            { word: 'Art gallery', emoji: '🖼️' },
+            { word: 'City walls', emoji: '🧱' },
+            { word: 'Market', emoji: '🛒' },
+            { word: 'Archaeological site', emoji: '🏺' }
+        ];
+
+        const vocabularyItems = [
+            { word: 'Suitcase', emoji: '🧳' },
+            { word: 'Ticket', emoji: '🎟️' },
+            { word: 'Passport', emoji: '🛂' },
+            { word: 'Identity card', emoji: '💳' },
+            { word: 'Sunscreen', emoji: '🧴' },
+            { word: 'Swimming costume', emoji: '👙' },
+            { word: 'Guidebook', emoji: '📖' },
+            { word: 'Sunglasses', emoji: '😎' }
+        ];
+
+        // Funzione generica per inizializzare un esercizio di abbinamento
+        function initMatchingGame(gameId, vocabulary) {
+            const wordsContainer = document.getElementById(`words-container-${gameId}`);
+            const emojiGrid = document.getElementById(`emoji-grid-${gameId}`);
+            const feedbackEl = document.getElementById(`feedback-${gameId}`);
+            const resetButton = document.getElementById(`reset-btn-${gameId}`);
+
+            function shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            function setupExercise() {
+                wordsContainer.innerHTML = '';
+                emojiGrid.innerHTML = '';
+                feedbackEl.innerHTML = '&nbsp;';
+                feedbackEl.classList.remove('text-green-600', 'text-red-600');
+
+                const shuffledWords = shuffle([...vocabulary]);
+                const shuffledEmojis = shuffle([...vocabulary]);
+
+                shuffledWords.forEach(item => {
+                    const wordEl = document.createElement('div');
+                    const wordId = `word-${gameId}-${item.word.toLowerCase().replace(/ /g, '-')}`;
+                    wordEl.id = wordId;
+                    wordEl.textContent = item.word;
+                    wordEl.draggable = true;
+                    wordEl.className = 'draggable-word bg-indigo-500 text-white px-4 py-2 rounded-lg shadow cursor-pointer transition-transform hover:scale-105';
+                    wordEl.addEventListener('dragstart', handleDragStart);
+                    wordsContainer.appendChild(wordEl);
+                });
+
+                shuffledEmojis.forEach(item => {
+                    const dropZoneContainer = document.createElement('div');
+                    dropZoneContainer.className = 'flex flex-col items-center justify-center p-2 bg-gray-50 rounded-xl';
+                    
+                    const emojiEl = document.createElement('span');
+                    emojiEl.className = 'text-5xl mb-2';
+                    emojiEl.textContent = item.emoji;
+
+                    const dropZone = document.createElement('div');
+                    dropZone.className = 'drop-zone w-full h-16 bg-gray-200 rounded-lg border-2 border-dashed border-gray-400 flex items-center justify-center transition-colors';
+                    dropZone.dataset.targetWord = `word-${gameId}-${item.word.toLowerCase().replace(/ /g, '-')}`;
+                    
+                    dropZone.addEventListener('dragover', handleDragOver);
+                    dropZone.addEventListener('dragleave', handleDragLeave);
+                    dropZone.addEventListener('drop', handleDrop);
+
+                    dropZoneContainer.appendChild(emojiEl);
+                    dropZoneContainer.appendChild(dropZone);
+                    emojiGrid.appendChild(dropZoneContainer);
+                });
+            }
+
+            function handleDragStart(event) {
+                event.dataTransfer.setData('text/plain', event.target.id);
+                event.dataTransfer.effectAllowed = 'move';
+            }
+
+            function handleDragOver(event) {
+                event.preventDefault();
+                event.currentTarget.classList.add('drag-over');
+            }
+
+            function handleDragLeave(event) {
+                event.currentTarget.classList.remove('drag-over');
+            }
+
+            function handleDrop(event) {
+                event.preventDefault();
+                const dropZone = event.currentTarget;
+                dropZone.classList.remove('drag-over');
+
+                if (dropZone.children.length > 0) return;
+
+                const draggedId = event.dataTransfer.getData('text/plain');
+                const draggedEl = document.getElementById(draggedId);
+
+                if (draggedId === dropZone.dataset.targetWord) {
+                    dropZone.appendChild(draggedEl);
+                    draggedEl.draggable = false;
+                    draggedEl.className = 'bg-green-600 text-white px-4 py-2 rounded-lg shadow';
+                    dropZone.classList.remove('border-dashed', 'border-gray-400');
+                    dropZone.classList.add('border-solid', 'border-green-500');
+                    
+                    feedbackEl.textContent = 'Corretto!';
+                    feedbackEl.className = 'text-green-600 font-medium';
+                } else {
+                    feedbackEl.textContent = 'Sbagliato, riprova!';
+                    feedbackEl.className = 'text-red-600 font-medium';
+                    draggedEl.classList.add('shake');
+                    setTimeout(() => draggedEl.classList.remove('shake'), 300);
+                }
+            }
+
+            resetButton.addEventListener('click', setupExercise);
+            setupExercise();
+        }
+        
+        // Funzione per generare e scaricare il riepilogo
+        function handleDownloadSummary() {
+            let summary = "Riepilogo Esercizi di Viaggio\n";
+            summary += "================================\n\n";
+
+            // Riepilogo Esercizio 1: Luoghi
+            summary += "Sezione 1: Luoghi da Visitare\n";
+            summary += "-----------------------------\n";
+            const dropZonesPlaces = document.querySelectorAll('#emoji-grid-places .drop-zone');
+            dropZonesPlaces.forEach(zone => {
+                const targetId = zone.dataset.targetWord;
+                const wordData = vocabularyPlaces.find(v => `word-places-${v.word.toLowerCase().replace(/ /g, '-')}` === targetId);
+                const emoji = zone.previousElementSibling.textContent;
+                
+                if (zone.children.length > 0 && zone.children[0].id === targetId) {
+                    summary += `${emoji} ${wordData.word}: Corretto\n`;
+                } else {
+                    summary += `${emoji} ${wordData.word}: Non completato o errato\n`;
+                }
+            });
+
+            summary += "\n";
+
+            // Riepilogo Esercizio 2: Oggetti
+            summary += "Sezione 3: Cosa Porti in Vacanza?\n";
+            summary += "-----------------------------------\n";
+             const dropZonesItems = document.querySelectorAll('#emoji-grid-items .drop-zone');
+            dropZonesItems.forEach(zone => {
+                const targetId = zone.dataset.targetWord;
+                const wordData = vocabularyItems.find(v => `word-items-${v.word.toLowerCase().replace(/ /g, '-')}` === targetId);
+                const emoji = zone.previousElementSibling.textContent;
+                
+                if (zone.children.length > 0 && zone.children[0].id === targetId) {
+                    summary += `${emoji} ${wordData.word}: Corretto\n`;
+                } else {
+                    summary += `${emoji} ${wordData.word}: Non completato o errato\n`;
+                }
+            });
+            
+            summary += "\n";
+
+            // Riepilogo Domande a risposta aperta
+            summary += "Sezione 2: Le tue risposte\n";
+            summary += "---------------------------\n";
+            const questions = document.querySelectorAll('#questions .space-y-6 > div');
+            questions.forEach(q => {
+                const label = q.querySelector('label').textContent;
+                const answer = q.querySelector('textarea').value;
+                summary += `Q: ${label}\n`;
+                summary += `A: ${answer || '(Nessuna risposta)'}\n\n`;
+            });
+
+            // Creazione e download del file
+            const blob = new Blob([summary], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'riepilogo-esercizi.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+
+        // Inizializza entrambi gli esercizi al caricamento della pagina
+        document.addEventListener('DOMContentLoaded', () => {
+            initMatchingGame('places', vocabularyPlaces);
+            initMatchingGame('items', vocabularyItems);
+            
+            // Aggiunge l'evento al pulsante di download
+            const downloadBtn = document.getElementById('download-summary-btn');
+            downloadBtn.addEventListener('click', handleDownloadSummary);
+        });
+
+    </script>
+
+</body>
+</html>
