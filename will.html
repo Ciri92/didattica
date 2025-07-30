@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuro: Will vs. Be Going To</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .explanation-box {
+            background-color: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+        }
+        .compare-box {
+            background-color: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+        }
+        .exercise-box {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+        }
+        .correct {
+            color: #16a34a;
+        }
+        .incorrect {
+            color: #dc2626;
+        }
+        .feedback {
+            font-weight: 500;
+            margin-left: 0.5rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 sm:p-6 md:p-8">
+
+    <div class="max-w-4xl mx-auto">
+
+        <h1 class="text-3xl sm:text-4xl font-bold text-blue-600 mb-6">Il Futuro con "Will"</h1>
+
+        <!-- Spiegazione di WILL -->
+        <div class="explanation-box">
+            <h2 class="text-2xl font-bold mb-4 text-gray-900">Quando si usa WILL?</h2>
+            <p class="mb-2"><strong>Will</strong> è un verbo modale e si usa principalmente per:</p>
+            <ul class="list-disc list-inside space-y-2">
+                <li>Fare <strong>previsioni</strong> o dare un'<strong>opinione</strong> su eventi futuri.
+                    <br><em class="text-gray-600 ml-4">Esempio: "I think it <strong>will be</strong> very windy tomorrow."</em>
+                </li>
+                <li>Affermare un <strong>fatto</strong> che accadrà con certezza nel futuro.
+                    <br><em class="text-gray-600 ml-4">Esempio: "I'<strong>ll be</strong> 14 in September."</em>
+                </li>
+                <li><strong>Offrirsi</strong> di fare qualcosa per qualcuno.
+                    <br><em class="text-gray-600 ml-4">Esempio: "I'<strong>ll help</strong> you with your homework."</em>
+                </li>
+                <li>Prendere una <strong>decisione immediata</strong>, nel momento in cui si parla.
+                    <br><em class="text-gray-600 ml-4">Esempio: "Would you like orange juice or cola? I'<strong>ll have</strong> orange juice, please."</em>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Struttura di WILL -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="explanation-box !border-green-500">
+                <h3 class="text-xl font-bold mb-3">Forma Affermativa</h3>
+                <p class="mb-2">Soggetto + <strong>will</strong> + verbo (forma base)</p>
+                <p class="bg-green-100 p-2 rounded">I / you / he / she / it / we / they <strong class="text-green-700">'ll go</strong>.</p>
+                <p class="mt-2 text-sm text-gray-600">La forma contratta <strong>'ll</strong> è molto comune.</p>
+            </div>
+            <div class="explanation-box !border-red-500">
+                <h3 class="text-xl font-bold mb-3">Forma Negativa</h3>
+                <p class="mb-2">Soggetto + <strong>will not</strong> + verbo (forma base)</p>
+                <p class="bg-red-100 p-2 rounded">I / you / he / she / it / we / they <strong class="text-red-700">won't go</strong>.</p>
+                <p class="mt-2 text-sm text-gray-600">La forma contratta è <strong>won't</strong>.</p>
+            </div>
+             <div class="explanation-box !border-purple-500 md:col-span-2">
+                <h3 class="text-xl font-bold mb-3">Forma Interrogativa e Risposte Brevi</h3>
+                <p class="mb-2"><strong>Will</strong> + soggetto + verbo (forma base)?</p>
+                <p class="bg-purple-100 p-2 rounded mb-3"><strong class="text-purple-700">Will</strong> they <strong class="text-purple-700">go</strong>?</p>
+                <p><strong>Risposte brevi:</strong></p>
+                <p>Yes, I / you / he / she / it / we / they <strong>will</strong>.</p>
+                <p>No, I / you / he / she / it / we / they <strong>won't</strong>.</p>
+            </div>
+        </div>
+
+        <!-- Confronto WILL vs BE GOING TO -->
+        <div class="compare-box">
+             <h2 class="text-2xl font-bold mb-4 text-gray-900">Compare! Will vs. Be Going To</h2>
+             <div class="space-y-4">
+                 <div>
+                     <h3 class="font-bold text-lg text-blue-700">WILL</h3>
+                     <p>Si usa per <strong>decisioni prese sul momento</strong>, <strong>offerte</strong> e <strong>previsioni</strong> basate su opinioni.</p>
+                     <p class="mt-1 p-3 bg-blue-50 rounded-lg"><em>It's very hot in this room. I'<strong>ll open</strong> the window.</em><br><span class="text-sm text-gray-600">(La decisione di aprire la finestra è stata presa adesso).</span></p>
+                 </div>
+                 <div>
+                     <h3 class="font-bold text-lg text-amber-700">BE GOING TO</h3>
+                     <p>Si usa per esprimere un'<strong>intenzione</strong>, un <strong>piano</strong> o una <strong>previsione basata su un'evidenza</strong>.</p>
+                     <p class="mt-1 p-3 bg-amber-50 rounded-lg"><em>My sister <strong>is going to study</strong> Chinese at university.</em><br><span class="text-sm text-gray-600">(La decisione di studiare cinese è stata presa in passato, è un piano).</span></p>
+                 </div>
+             </div>
+        </div>
+
+        <!-- Esercizi -->
+        <h2 class="text-3xl font-bold text-blue-600 my-8">Esercizi</h2>
+
+        <!-- Esercizio 1 -->
+        <div class="exercise-box">
+            <h3 class="text-xl font-bold mb-4">1. Completa le frasi con la forma corretta di WILL e il verbo tra parentesi.</h3>
+            <div class="space-y-4" id="exercise1">
+                <div class="flex items-center"><span>1. Don't worry, I <input type="text" data-answer="will help" class="mx-2 p-1 border rounded w-32"> you with the maths problem. (help)</span><span class="feedback"></span></div>
+                <div class="flex items-center"><span>2. I think Brazil <input type="text" data-answer="won't win" class="mx-2 p-1 border rounded w-32"> the next World Cup. (not / win)</span><span class="feedback"></span></div>
+                <div class="flex items-center"><span>3. <input type="text" data-answer="Will people drive" class="mx-2 p-1 border rounded w-32"> only electric cars by 2030? (people / drive)</span><span class="feedback"></span></div>
+                <div class="flex items-center"><span>4. "The phone is ringing!" "Ok, I <input type="text" data-answer="will answer" class="mx-2 p-1 border rounded w-32"> it." (answer)</span><span class="feedback"></span></div>
+                <div class="flex items-center"><span>5. I'm tired. I think I <input type="text" data-answer="will go" class="mx-2 p-1 border rounded w-32"> to bed now. (go)</span><span class="feedback"></span></div>
+                <div class="flex items-center"><span>6. She promises she <input type="text" data-answer="won't be" class="mx-2 p-1 border rounded w-32"> late for the meeting. (not / be)</span><span class="feedback"></span></div>
+                <div class="flex items-center"><span>7. <input type="text" data-answer="Will you marry" class="mx-2 p-1 border rounded w-32"> me? (you / marry)</span><span class="feedback"></span></div>
+                <div class="flex items-center"><span>8. Maybe we <input type="text" data-answer="will see" class="mx-2 p-1 border rounded w-32"> that new film tonight. (see)</span><span class="feedback"></span></div>
+            </div>
+            <button onclick="checkExercise(1)" class="mt-6 bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition-colors">Controlla Esercizio 1</button>
+        </div>
+
+        <!-- Esercizio 2 -->
+        <div class="exercise-box">
+            <h3 class="text-xl font-bold mb-4">2. Scegli l'opzione corretta: WILL o BE GOING TO?</h3>
+            <div class="space-y-4" id="exercise2">
+                <div><p>1. Next summer we <select class="p-1 border rounded" data-answer="are going to visit"><option selected disabled>---</option><option>will visit</option><option>are going to visit</option></select> America. It's our plan!</p><span class="feedback"></span></div>
+                <div><p>2. A: I can't do this. B: Don't worry, I <select class="p-1 border rounded" data-answer="will help"><option selected disabled>---</option><option>am going to help</option><option>will help</option></select> you.</p><span class="feedback"></span></div>
+                <div><p>3. Matthew and Lara <select class="p-1 border rounded" data-answer="are going to join"><option selected disabled>---</option><option>are going to join</option><option>will join</option></select> a volunteering organisation. They decided last week.</p><span class="feedback"></span></div>
+                <div><p>4. Look at the sky! It <select class="p-1 border rounded" data-answer="is going to rain"><option selected disabled>---</option><option>is going to rain</option><option>will rain</option></select>.</p><span class="feedback"></span></div>
+                <div><p>5. I'm cold. I think I <select class="p-1 border rounded" data-answer="will close"><option selected disabled>---</option><option>will close</option><option>am going to close</option></select> the window.</p><span class="feedback"></span></div>
+                <div><p>6. He has a ticket. He <select class="p-1 border rounded" data-answer="is going to fly"><option selected disabled>---</option><option>will fly</option><option>is going to fly</option></select> to New York tomorrow.</p><span class="feedback"></span></div>
+                <div><p>7. I predict that in 2050, robots <select class="p-1 border rounded" data-answer="will do"><option selected disabled>---</option><option>are going to do</option><option>will do</option></select> most of the jobs.</p><span class="feedback"></span></div>
+                <div><p>8. A: Why are you turning on the TV? B: Because I <select class="p-1 border rounded" data-answer="am going to watch"><option selected disabled>---</option><option>will watch</option><option>am going to watch</option></select> a film.</p><span class="feedback"></span></div>
+            </div>
+             <button onclick="checkExercise(2)" class="mt-6 bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition-colors">Controlla Esercizio 2</button>
+        </div>
+
+        <!-- Risultati -->
+        <div class="text-center mt-10">
+             <button onclick="generatePDF()" class="bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700 transition-colors text-lg">I miei risultati (Scarica PDF)</button>
+        </div>
+
+    </div>
+
+    <script>
+        // Funzione per controllare gli esercizi a input e select
+        function checkExercise(exerciseNumber) {
+            if (exerciseNumber === 1) {
+                const inputs = document.querySelectorAll('#exercise1 input');
+                inputs.forEach(input => {
+                    const feedback = input.parentElement.querySelector('.feedback');
+                    const userAnswer = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+                    const correctAnswer = input.dataset.answer.toLowerCase();
+                    if (userAnswer === correctAnswer) {
+                        feedback.textContent = 'Corretto!';
+                        feedback.className = 'feedback correct';
+                    } else {
+                        feedback.textContent = `Sbagliato. Corretta: ${input.dataset.answer}`;
+                        feedback.className = 'feedback incorrect';
+                    }
+                });
+            } else if (exerciseNumber === 2) {
+                const selects = document.querySelectorAll('#exercise2 select');
+                selects.forEach(select => {
+                    const feedback = select.parentElement.querySelector('.feedback');
+                    const userAnswer = select.value;
+                    const correctAnswer = select.dataset.answer;
+                    if (userAnswer === correctAnswer) {
+                        feedback.textContent = 'Corretto!';
+                        feedback.className = 'feedback correct';
+                    } else if (userAnswer === '---') {
+                         feedback.textContent = 'Scegli una risposta.';
+                         feedback.className = 'feedback incorrect';
+                    }
+                    else {
+                        feedback.textContent = `Sbagliato. Corretta: ${correctAnswer}`;
+                        feedback.className = 'feedback incorrect';
+                    }
+                });
+            }
+        }
+
+        // Funzione per generare il PDF
+        async function generatePDF() {
+            // Prima controlla le risposte per avere i feedback aggiornati
+            checkExercise(1);
+            checkExercise(2);
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            let y = 20; // Posizione verticale iniziale
+            let totalCorrect = 0;
+            let totalQuestions = 0;
+            
+            doc.setFont('Helvetica', 'bold');
+            doc.setFontSize(20);
+            doc.text('Riepilogo Risultati Quiz', 105, y, { align: 'center' });
+            y += 15;
+
+            // Esercizio 1
+            doc.setFontSize(16);
+            doc.text('Esercizio 1: Completa le frasi', 14, y);
+            y += 10;
+            doc.setFont('Helvetica', 'normal');
+            doc.setFontSize(10);
+
+            const questions1 = document.querySelectorAll('#exercise1 > div');
+            questions1.forEach((q, index) => {
+                totalQuestions++;
+                const questionText = q.querySelector('span').innerText.split('(')[0].trim();
+                const userAnswer = q.querySelector('input').value;
+                const feedback = q.querySelector('.feedback').textContent;
+                const isCorrect = feedback.includes('Corretto');
+                if(isCorrect) totalCorrect++;
+
+                doc.text(`${index + 1}. ${questionText}`, 14, y);
+                y += 6;
+                doc.text(`La tua risposta: ${userAnswer || 'Nessuna risposta'}`, 20, y);
+                y += 6;
+                doc.setTextColor(isCorrect ? '#16a34a' : '#dc2626');
+                doc.text(`Risultato: ${feedback}`, 20, y);
+                doc.setTextColor('#000000');
+                y += 10;
+                 if (y > 280) { doc.addPage(); y = 20; }
+            });
+
+            if (y > 260) { doc.addPage(); y = 20; } else { y += 10; }
+
+            // Esercizio 2
+            doc.setFont('Helvetica', 'bold');
+            doc.setFontSize(16);
+            doc.text("Esercizio 2: Scegli l'opzione corretta", 14, y);
+            y += 10;
+            doc.setFont('Helvetica', 'normal');
+            doc.setFontSize(10);
+
+            const questions2 = document.querySelectorAll('#exercise2 > div');
+            questions2.forEach((q, index) => {
+                totalQuestions++;
+                const questionText = q.querySelector('p').innerText;
+                const userAnswer = q.querySelector('select').value;
+                const feedback = q.querySelector('.feedback').textContent;
+                const isCorrect = feedback.includes('Corretto');
+                 if(isCorrect) totalCorrect++;
+
+                doc.text(`${index + 1}. ${questionText}`, 14, y, { maxWidth: 180 });
+                y += 12;
+                doc.text(`La tua risposta: ${userAnswer}`, 20, y);
+                y += 6;
+                doc.setTextColor(isCorrect ? '#16a34a' : '#dc2626');
+                doc.text(`Risultato: ${feedback}`, 20, y);
+                doc.setTextColor('#000000');
+                y += 10;
+                 if (y > 280) { doc.addPage(); y = 20; }
+            });
+
+            // Punteggio finale
+            if (y > 270) { doc.addPage(); y = 20; } else { y += 15; }
+            doc.setFont('Helvetica', 'bold');
+            doc.setFontSize(18);
+            doc.text('Punteggio Finale', 105, y, { align: 'center' });
+            y += 12;
+            doc.setFontSize(14);
+            doc.text(`Hai risposto correttamente a ${totalCorrect} domande su ${totalQuestions}.`, 105, y, { align: 'center' });
+
+            // Salva il file
+            doc.save('Riepilogo_Risultati_Quiz.pdf');
+        }
+    </script>
+
+</body>
+</html>
