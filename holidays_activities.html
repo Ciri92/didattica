@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lessico: Tipi di Vacanze</title>
+    <!-- Tailwind CSS per lo stile -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Inter per un look pulito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Stile personalizzato per un aspetto migliore */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Evidenzia la zona di rilascio quando si trascina un elemento sopra */
+        .drop-zone.drag-over {
+            background-color: #e0f2fe; /* light-blue-100 */
+            border-style: solid;
+        }
+        /* Stile per le parole trascinabili */
+        .draggable-word {
+            touch-action: none; /* Ottimizzazione per il tocco */
+            cursor: grab;
+        }
+        .draggable-word:active {
+            cursor: grabbing;
+        }
+        /* Animazione per una risposta errata */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+
+        <!-- Sezione Titolo -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-blue-600">Tipi di Vacanze e Viaggi</h1>
+            <p class="mt-2 text-lg text-gray-600">Impara il lessico per descrivere la tua vacanza ideale!</p>
+        </header>
+
+        <!-- Sezione Spiegazione del Lessico -->
+        <section id="vocabulary" class="mb-12">
+            <h2 class="text-3xl font-bold mb-6 text-center text-gray-700">Spiegazione del Lessico</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card per ogni parola -->
+                <div class="bg-white p-5 rounded-xl shadow-md">
+                    <h3 class="font-bold text-xl text-blue-500">Seaside</h3>
+                    <p class="text-gray-600 mt-1">Vacanze al mare, perfette per rilassarsi sulla spiaggia.</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-md">
+                    <h3 class="font-bold text-xl text-blue-500">Camping</h3>
+                    <p class="text-gray-600 mt-1">Vivere all'aria aperta, dormendo in tenda o camper.</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-md">
+                    <h3 class="font-bold text-xl text-blue-500">Cruise</h3>
+                    <p class="text-gray-600 mt-1">Viaggio in nave da crociera visitando diverse destinazioni.</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-md">
+                    <h3 class="font-bold text-xl text-blue-500">Hiking</h3>
+                    <p class="text-gray-600 mt-1">Lunga camminata o escursione, specialmente in montagna.</p>
+                </div>
+                 <div class="bg-white p-5 rounded-xl shadow-md">
+                    <h3 class="font-bold text-xl text-blue-500">Sailing</h3>
+                    <p class="text-gray-600 mt-1">Andare in barca a vela, spinti dalla forza del vento.</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-md">
+                    <h3 class="font-bold text-xl text-blue-500">Safari</h3>
+                    <p class="text-gray-600 mt-1">Viaggio per osservare gli animali selvatici nel loro habitat naturale.</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-md">
+                    <h3 class="font-bold text-xl text-blue-500">Sightseeing</h3>
+                    <p class="text-gray-600 mt-1">Visitare i luoghi famosi e i monumenti di una città.</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-md">
+                    <h3 class="font-bold text-xl text-blue-500">Skiing</h3>
+                    <p class="text-gray-600 mt-1">Scendere da una montagna innevata con gli sci.</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-md">
+                    <h3 class="font-bold text-xl text-blue-500">Spa</h3>
+                    <p class="text-gray-600 mt-1">Soggiorno dedicato al benessere e alla cura del corpo.</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-md">
+                    <h3 class="font-bold text-xl text-blue-500">Tour</h3>
+                    <p class="text-gray-600 mt-1">Viaggio organizzato che tocca diverse tappe in un paese.</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-md">
+                    <h3 class="font-bold text-xl text-blue-500">Scuba diving</h3>
+                    <p class="text-gray-600 mt-1">Immersione subacquea per esplorare i fondali marini.</p>
+                </div>
+                 <div class="bg-white p-5 rounded-xl shadow-md">
+                    <h3 class="font-bold text-xl text-blue-500">Volunteering</h3>
+                    <p class="text-gray-600 mt-1">Viaggiare per fare volontariato e aiutare una comunità.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sezione Esercizio -->
+        <section id="exercise" class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+            <h2 class="text-3xl font-bold mb-2 text-center text-gray-700">Esercizio di Abbinamento</h2>
+            <p class="text-center text-gray-600 mb-6">Trascina la parola sulla emoji corretta. Buona fortuna!</p>
+            
+            <!-- Contenitore per le parole da trascinare -->
+            <div id="words-container" class="flex flex-wrap justify-center items-center gap-3 p-4 mb-8 bg-gray-100 rounded-xl">
+                <!-- Le parole verranno inserite qui da JavaScript -->
+            </div>
+
+            <!-- Griglia per le emoji (zone di rilascio) -->
+            <div id="emoji-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                <!-- Le emoji e le drop zones verranno inserite qui da JavaScript -->
+            </div>
+            
+            <!-- Messaggio di feedback e pulsante Reset -->
+            <div class="mt-8 text-center">
+                <p id="feedback" class="h-8 text-xl font-medium">&nbsp;</p>
+                <button id="reset-btn" class="mt-2 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-colors">
+                    Ricomincia
+                </button>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Definiamo le coppie parola-emoji
+        const vocabulary = [
+            { word: 'Safari', emoji: '🦁' },
+            { word: 'Tour', emoji: '🗺️' },
+            { word: 'Volunteering', emoji: '🙌' },
+            { word: 'Skiing', emoji: '⛷️' },
+            { word: 'Sightseeing', emoji: '🏛️' },
+            { word: 'Seaside', emoji: '🏖️' },
+            { word: 'Scuba diving', emoji: '🤿' },
+            { word: 'Cruise', emoji: '🛳️' },
+            { word: 'Sailing', emoji: '⛵' },
+            { word: 'Camping', emoji: '⛺' },
+            { word: 'Hiking', emoji: '🥾' },
+            { word: 'Spa', emoji: '💆‍♀️' }
+        ];
+
+        // Riferimenti agli elementi del DOM
+        const wordsContainer = document.getElementById('words-container');
+        const emojiGrid = document.getElementById('emoji-grid');
+        const feedbackEl = document.getElementById('feedback');
+        const resetButton = document.getElementById('reset-btn');
+
+        // Funzione per mescolare un array (algoritmo di Fisher-Yates)
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Funzione per inizializzare o resettare l'esercizio
+        function setupExercise() {
+            // Pulisce i contenitori
+            wordsContainer.innerHTML = '';
+            emojiGrid.innerHTML = '';
+            feedbackEl.textContent = '';
+            feedbackEl.classList.remove('text-green-600', 'text-red-600');
+            
+            // Mescola le parole e le emoji per rendere l'esercizio diverso ogni volta
+            const shuffledWords = shuffle([...vocabulary]);
+            const shuffledEmojis = shuffle([...vocabulary]);
+
+            // Crea e aggiunge le parole trascinabili
+            shuffledWords.forEach(item => {
+                const wordEl = document.createElement('div');
+                wordEl.id = `word-${item.word.toLowerCase().replace(' ', '-')}`;
+                wordEl.textContent = item.word;
+                wordEl.draggable = true;
+                wordEl.className = 'draggable-word bg-blue-500 text-white px-4 py-2 rounded-lg shadow cursor-pointer transition-transform hover:scale-105';
+                wordEl.addEventListener('dragstart', handleDragStart);
+                wordsContainer.appendChild(wordEl);
+            });
+
+            // Crea e aggiunge le zone di rilascio con le emoji
+            shuffledEmojis.forEach(item => {
+                const dropZoneContainer = document.createElement('div');
+                dropZoneContainer.className = 'flex flex-col items-center justify-center p-2 bg-gray-50 rounded-xl';
+                
+                const emojiEl = document.createElement('span');
+                emojiEl.className = 'text-5xl mb-2';
+                emojiEl.textContent = item.emoji;
+
+                const dropZone = document.createElement('div');
+                dropZone.className = 'drop-zone w-full h-16 bg-gray-200 rounded-lg border-2 border-dashed border-gray-400 flex items-center justify-center transition-colors';
+                dropZone.dataset.targetWord = `word-${item.word.toLowerCase().replace(' ', '-')}`; // Associa l'emoji alla parola corretta
+                
+                // Aggiunge gli event listener per il drag & drop
+                dropZone.addEventListener('dragover', handleDragOver);
+                dropZone.addEventListener('dragleave', handleDragLeave);
+                dropZone.addEventListener('drop', handleDrop);
+
+                dropZoneContainer.appendChild(emojiEl);
+                dropZoneContainer.appendChild(dropZone);
+                emojiGrid.appendChild(dropZoneContainer);
+            });
+        }
+
+        // Gestisce l'inizio del trascinamento
+        function handleDragStart(event) {
+            event.dataTransfer.setData('text/plain', event.target.id);
+            event.dataTransfer.effectAllowed = 'move';
+        }
+
+        // Gestisce il passaggio sopra una zona di rilascio
+        function handleDragOver(event) {
+            event.preventDefault(); // Necessario per permettere il drop
+            event.currentTarget.classList.add('drag-over');
+        }
+
+        // Gestisce l'uscita da una zona di rilascio
+        function handleDragLeave(event) {
+            event.currentTarget.classList.remove('drag-over');
+        }
+
+        // Gestisce il rilascio di un elemento
+        function handleDrop(event) {
+            event.preventDefault();
+            const dropZone = event.currentTarget;
+            dropZone.classList.remove('drag-over');
+
+            // Controlla che la zona di rilascio sia vuota
+            if (dropZone.children.length > 0) {
+                return;
+            }
+
+            const draggedId = event.dataTransfer.getData('text/plain');
+            const draggedEl = document.getElementById(draggedId);
+
+            // Controlla se la parola è corretta per questa zona
+            if (draggedId === dropZone.dataset.targetWord) {
+                // Successo!
+                dropZone.appendChild(draggedEl);
+                draggedEl.draggable = false; // Disabilita ulteriore trascinamento
+                draggedEl.className = 'bg-green-600 text-white px-4 py-2 rounded-lg shadow'; // Cambia stile
+                dropZone.classList.remove('border-dashed', 'border-gray-400');
+                dropZone.classList.add('border-solid', 'border-green-500');
+                
+                feedbackEl.textContent = 'Corretto! Ottimo lavoro!';
+                feedbackEl.className = 'text-green-600 font-medium';
+            } else {
+                // Errore!
+                feedbackEl.textContent = 'Sbagliato, riprova!';
+                feedbackEl.className = 'text-red-600 font-medium';
+                draggedEl.classList.add('shake');
+                // Rimuove l'animazione dopo che è finita
+                setTimeout(() => draggedEl.classList.remove('shake'), 300);
+            }
+        }
+
+        // Aggiunge l'evento al pulsante di reset
+        resetButton.addEventListener('click', setupExercise);
+
+        // Inizializza l'esercizio al caricamento della pagina
+        document.addEventListener('DOMContentLoaded', setupExercise);
+
+    </script>
+
+</body>
+</html>
