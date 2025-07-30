@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>May e Might: Possibilità Future</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .explanation-box {
+            background-color: #f8fafc;
+            border-left: 4px solid #4f46e5;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+        }
+        .compare-box {
+            background-color: #fefce8;
+            border-left: 4px solid #eab308;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+        }
+        .exercise-box {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+        }
+        .verb-box {
+            background-color: #eef2ff;
+            border: 1px dashed #a5b4fc;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            text-align: center;
+        }
+        .correct {
+            color: #16a34a;
+        }
+        .incorrect {
+            color: #dc2626;
+        }
+        .feedback {
+            font-weight: 500;
+            margin-left: 0.5rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 sm:p-6 md:p-8">
+
+    <div class="max-w-4xl mx-auto">
+
+        <h1 class="text-3xl sm:text-4xl font-bold text-indigo-600 mb-6">May / Might (Possibilità Futura)</h1>
+
+        <!-- Spiegazione di MAY / MIGHT -->
+        <div class="explanation-box">
+            <h2 class="text-2xl font-bold mb-4 text-gray-900">Come si usano MAY e MIGHT?</h2>
+            <p class="mb-4"><strong>May</strong> e <strong>might</strong> sono verbi modali che si usano per esprimere la <strong>possibilità</strong> che un'azione accada nel futuro. In questo contesto, sono quasi sempre intercambiabili.</p>
+            
+            <h3 class="text-xl font-bold mb-3">Struttura</h3>
+            <p class="mb-2">La struttura è la stessa per tutte le persone:</p>
+            <p class="bg-indigo-100 p-3 rounded mb-4">Soggetto + <strong>may / might</strong> + verbo (forma base)</p>
+
+            <h3 class="text-xl font-bold mb-3">Forma Negativa</h3>
+            <p class="mb-2">Le forme negative sono <strong>may not</strong> e <strong>might not</strong>.</p>
+            <p class="bg-indigo-100 p-3 rounded">Soggetto + <strong>may not / might not</strong> + verbo (forma base)</p>
+        </div>
+
+        <!-- Confronto MAY/MIGHT vs BE GOING TO -->
+        <div class="compare-box">
+             <h2 class="text-2xl font-bold mb-4 text-gray-900">Compare! Possibilità vs. Piano</h2>
+             <div class="space-y-4">
+                 <div>
+                     <h3 class="font-bold text-lg text-green-700">BE GOING TO (Piano)</h3>
+                     <p>Si usa per parlare di un'azione già programmata, un piano definito.</p>
+                     <p class="mt-1 p-3 bg-green-50 rounded-lg"><em>We'<strong>re going to</strong> Sardinia in August.</em><br><span class="text-sm text-gray-600">(Abbiamo già deciso e probabilmente prenotato. È un piano).</span></p>
+                 </div>
+                 <div>
+                     <h3 class="font-bold text-lg text-yellow-700">MAY / MIGHT (Possibilità)</h3>
+                     <p>Si usa per parlare di una semplice possibilità, un'azione non ancora programmata.</p>
+                     <p class="mt-1 p-3 bg-yellow-50 rounded-lg"><em>We <strong>may go / might go</strong> to Sardinia in August.</em><br><span class="text-sm text-gray-600">(È un'idea, una possibilità, ma non è ancora un piano sicuro).</span></p>
+                 </div>
+             </div>
+        </div>
+
+        <!-- Esercizi -->
+        <h2 class="text-3xl font-bold text-indigo-600 my-8">Esercizi</h2>
+
+        <div class="exercise-box">
+            <h3 class="text-xl font-bold mb-4">Completa le frasi con MAY o MIGHT e un verbo dal riquadro.</h3>
+            <div class="verb-box mb-6">
+                <p>buy &nbsp;&bull;&nbsp; be &nbsp;&bull;&nbsp; see &nbsp;&bull;&nbsp; have &nbsp;&bull;&nbsp; go</p>
+            </div>
+            <div class="space-y-6" id="exercise">
+                <div>
+                    <p class="mb-1"><strong>1.</strong> A: What are you going to do after lunch?</p>
+                    <p class="flex items-center">B: I don't know. I <input type="text" data-verb="go" class="mx-2 p-1 border rounded w-40"> for a walk in the park.</p>
+                    <span class="feedback ml-8"></span>
+                </div>
+                <div>
+                    <p class="mb-1"><strong>2.</strong> A: I'm going to have the chocolate and vanilla split. What about you?</p>
+                    <p class="flex items-center">B: I'm not sure. I <input type="text" data-verb="have" class="mx-2 p-1 border rounded w-40"> the tiramisu.</p>
+                    <span class="feedback ml-8"></span>
+                </div>
+                <div>
+                    <p class="mb-1"><strong>3.</strong> A: We're going to the market on Saturday.</p>
+                    <p class="flex items-center">B: Oh, really? I'm going, too. I <input type="text" data-verb="see" class="mx-2 p-1 border rounded w-40"> you there.</p>
+                    <span class="feedback ml-8"></span>
+                </div>
+                <div>
+                    <p class="mb-1"><strong>4.</strong> A: Are you going to buy that pink T-shirt?</p>
+                    <p class="flex items-center">B: I don't know. I <input type="text" data-verb="buy" class="mx-2 p-1 border rounded w-40"> the yellow one.</p>
+                    <span class="feedback ml-8"></span>
+                </div>
+                <div>
+                    <p class="mb-1"><strong>5.</strong> A: Mum, I can't find my new trainers.</p>
+                    <p class="flex items-center">B: Look under your bed. They <input type="text" data-verb="be" class="mx-2 p-1 border rounded w-40"> there.</p>
+                    <span class="feedback ml-8"></span>
+                </div>
+            </div>
+            <button onclick="checkExercise()" class="mt-8 bg-indigo-600 text-white font-bold py-2 px-4 rounded hover:bg-indigo-700 transition-colors">Controlla Risposte</button>
+        </div>
+
+    </div>
+
+    <script>
+        function checkExercise() {
+            const inputs = document.querySelectorAll('#exercise input');
+            inputs.forEach(input => {
+                const feedback = input.parentElement.parentElement.querySelector('.feedback');
+                const userAnswer = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+                const correctVerb = input.dataset.verb;
+
+                const correctAnswerMay = `may ${correctVerb}`;
+                const correctAnswerMight = `might ${correctVerb}`;
+
+                if (userAnswer === correctAnswerMay || userAnswer === correctAnswerMight) {
+                    feedback.textContent = 'Corretto!';
+                    feedback.className = 'feedback correct';
+                } else if (userAnswer === '') {
+                    feedback.textContent = 'Inserisci una risposta.';
+                    feedback.className = 'feedback incorrect';
+                } else {
+                    feedback.textContent = `Sbagliato. Risposta corretta: may ${correctVerb} / might ${correctVerb}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
