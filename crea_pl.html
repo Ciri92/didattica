@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizzatore di Copioni per Doppiaggio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Libreria per leggere file .docx -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <!-- Libreria per creare file Excel .xlsx -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-8 rounded-2xl shadow-lg max-w-lg w-full text-center">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Analizzatore Copioni</h1>
+        <p class="text-gray-600 mb-6">Carica il tuo file .docx per contare le <strong>righe</strong> dei personaggi e generare un report Excel.</p>
+        
+        <div class="border-2 border-dashed border-gray-300 p-8 rounded-lg">
+            <input type="file" id="docx-file" class="hidden" accept=".docx">
+            <button id="upload-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">
+                Seleziona File .docx
+            </button>
+            <p id="file-name" class="mt-4 text-gray-500"></p>
+        </div>
+
+        <div id="status" class="mt-6 h-10 flex items-center justify-center">
+            <!-- Qui apparirà il loader o i messaggi di stato -->
+        </div>
+
+    </div>
+
+    <script>
+        // --- PARAMETRO MODIFICABILE ---
+        // Calibrato secondo l'analisi dell'utente.
+        const CARATTERI_PER_RIGA = 53;
+
+        const uploadButton = document.getElementById('upload-button');
+        const fileInput = document.getElementById('docx-file');
+        const fileNameDisplay = document.getElementById('file-name');
+        const statusDisplay = document.getElementById('status');
+
+        uploadButton.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                fileNameDisplay.textContent = `File selezionato: ${file.name}`;
+                statusDisplay.innerHTML = `<div class="loader"></div>`;
+                processFile(file);
+            }
+        });
+
+        function processFile(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const arrayBuffer = e.target.result;
+                mammoth.extractRawText({ arrayBuffer: arrayBuffer })
+                    .then(result => {
+                        const text = result.value;
+                        analyzeScript(text);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        statusDisplay.innerHTML = `<p class="text-red-600 font-semibold">Errore nella lettura del file. Assicurati che sia un .docx valido.</p>`;
+                    });
+            };
+            reader.readAsArrayBuffer(file);
+        }
+        
+        function analyzeScript(text) {
+            const character_data = {};
+            let current_scene = 0;
+            const character_regex = /^([A-Z0-9 /]+(?:\s+[A-Z0-9 /]+)*)\s+/;
+            const ignored_keywords = ['SCENA', 'BRUSIO', 'CARTELLO', 'FINE', 'SINOSSI', 'PERSONAGGI', 'TITOLO ITALIANO'];
+            const lines = text.split('\n');
+
+            let current_dialogue = { character: null, text: '' };
+
+            function processDialogue() {
+                if (current_dialogue.character && current_dialogue.text && current_scene > 0) {
+                    const character_name = current_dialogue.character;
+                     if (!character_data[character_name]) {
+                        character_data[character_name] = {};
+                    }
+
+                    const num_chars = current_dialogue.text.trim().length;
+
+                    let line_count = 0;
+                    if (num_chars > 0) {
+                        line_count = Math.ceil(num_chars / CARATTERI_PER_RIGA);
+                    }
+                    
+                    const current_scene_lines = character_data[character_name][current_scene] || 0;
+                    character_data[character_name][current_scene] = current_scene_lines + line_count;
+                }
+                // Reset for the next dialogue block
+                current_dialogue = { character: null, text: '' };
+            }
+
+            for (const line of lines) {
+                const trimmedLine = line.trim();
+
+                if (trimmedLine.startsWith('SCENA')) {
+                    processDialogue(); // Process any pending dialogue before changing scene
+                    const match = trimmedLine.match(/SCENA\s+(\d+)/);
+                    if (match) {
+                        current_scene = parseInt(match[1], 10);
+                    }
+                    continue;
+                }
+                
+                const dialog_match = line.match(character_regex);
+
+                if (dialog_match) {
+                    const potential_name = dialog_match[1].trim();
+                    if (!ignored_keywords.some(keyword => potential_name.includes(keyword))) {
+                        processDialogue(); // Process the previous character's full dialogue
+                        current_dialogue.character = potential_name;
+                        let dialogue_text_part = line.substring(dialog_match[0].length).trim();
+                        // Rimuove il timecode se presente
+                        dialogue_text_part = dialogue_text_part.replace(/^\d{2}:\d{2}\s*/, '').trim();
+                        current_dialogue.text = dialogue_text_part;
+                        continue;
+                    }
+                }
+
+                if (current_dialogue.character && trimmedLine) {
+                    // This is a continuation of the current dialogue
+                    current_dialogue.text += ' ' + trimmedLine;
+                } else if (!trimmedLine) {
+                     // An empty line definitely ends a dialogue block
+                     processDialogue();
+                }
+            }
+            processDialogue(); // Process the very last dialogue in the file
+
+
+            if (Object.keys(character_data).length > 0) {
+                generateExcel(character_data);
+                statusDisplay.innerHTML = `<p class="text-green-600 font-semibold">Analisi completata! Il download del file Excel è partito.</p>`;
+            } else {
+                statusDisplay.innerHTML = `<p class="text-red-600 font-semibold">Nessun dialogo trovato. Controlla la formattazione del copione.</p>`;
+            }
+        }
+
+
+        function generateExcel(data) {
+            let allScenes = new Set();
+            Object.values(data).forEach(scenes => {
+                Object.keys(scenes).forEach(sceneNum => allScenes.add(parseInt(sceneNum)));
+            });
+
+            if (allScenes.size === 0) {
+                 statusDisplay.innerHTML = `<p class="text-yellow-600 font-semibold">Personaggi trovati, ma nessuna scena numerata. Impossibile generare il report.</p>`;
+                 return;
+            }
+
+            const sceneArray = Array.from(allScenes).sort((a, b) => a - b);
+            const maxScene = sceneArray[sceneArray.length - 1];
+            const fullSceneList = Array.from({length: maxScene}, (_, i) => i + 1);
+
+            const sortedCharacters = Object.keys(data).sort();
+            
+            const headers = ['Personaggio', ...fullSceneList.map(s => `${s}`), 'Totale Righe'];
+            const excelData = [headers];
+
+            let sceneTotals = {};
+            fullSceneList.forEach(s => sceneTotals[s] = 0);
+
+            sortedCharacters.forEach(char => {
+                let totalRighe = 0;
+                const row = [char];
+                fullSceneList.forEach(sceneNum => {
+                    const lines = data[char][sceneNum] || 0;
+                    row.push(lines);
+                    totalRighe += lines;
+                    sceneTotals[sceneNum] += lines;
+                });
+                row.push(totalRighe);
+                excelData.push(row);
+            });
+
+            const totalRow = ['TOTALE'];
+            let grandTotal = 0;
+            fullSceneList.forEach(sceneNum => {
+                const total = sceneTotals[sceneNum];
+                totalRow.push(total);
+                grandTotal += total;
+            });
+            totalRow.push(grandTotal);
+            excelData.push(totalRow);
+
+            const ws = XLSX.utils.aoa_to_sheet(excelData);
+            
+            ws['!cols'] = [{ wch: 25 }];
+            for (let i = 0; i < fullSceneList.length + 1; i++) {
+                ws['!cols'].push({ wch: 8 });
+            }
+
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Analisi Copione');
+
+            XLSX.writeFile(wb, 'analisi_copione.xlsx');
+        }
+    </script>
+</body>
+</html>
+
